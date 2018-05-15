@@ -1,0 +1,326 @@
+﻿@model SKC.Entity.Models.LoginModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@Html.GetTansByLan("account-login-title", "SilkChain - Login")</title>
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <environment include="Development">
+        <link href="~/css/vendors.stripped.min.css" rel="stylesheet" />
+        <link href="~/css/style.bundle.min.css" rel="stylesheet" />
+        <link href="~/css/main.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/css/vendors.stripped.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/style.bundle.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/main.css" rel="stylesheet" asp-append-version="true" />
+        <link rel="shortcut icon" href="~/favicon.ico" />
+    </environment>
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-5Q7VH5Q');</script>
+    <!-- End Google Tag Manager -->
+</head>
+<style type="text/css">
+    .text-xs-center {
+        text-align: center;
+        padding: 21px;
+    }
+    .g-recaptcha {
+        display: inline-block;
+    }
+    .m-form .m-form__group label.error {
+        color: #f4516c;
+    }
+    .m-topbar {width:100%;box-shadow:0px 1px 10px 1px rgba(113, 106, 202, 0.2);}
+    .m-teleg__join {background-color:#eee;padding:15px 0;}
+    .btn.btn-bg-color {background-color:#fff;}
+    .btn.btn-bg-color:hover {background-color:#3399cc;}
+</style>
+<body class="m--skin- m-header--static m-header--static-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+    <div class="m-grid m-grid--hor m-grid--root m-page">
+        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor m-login m-login--singin m-login--2 m-login-2--skin-2" id="m_login">
+            @if (Model.LuckMoneyInfo==null) {
+            <header class="m-grid__item m-header">
+                <div class="m-topbar m-stack m-stack--ver m-stack--general" style="margin-top:0;">
+                    <div class="m-stack__item m-topbar__lang-wrapper" style="cursor:pointer">                       
+                        @if (Html.GetLang() == "en")
+                        {<span id="chinesesLanguage"><img src="/images/chinese-language.png" /> <span style="vertical-align:middle;">中文</span></span>}
+                        else
+                        {<span id="englishLanguage"><img src="/images/english-language.png" /> <span style="vertical-align:middle;">English</span></span>}                       
+                    </div>
+                </div>
+            </header>
+            <div class="m-grid__item m-grid__item--fluid m-login__wrapper" style="padding-top:4rem;">
+                <div class="m-login__container">
+                    <div class="m-login__logo">
+                        <a href="#">
+                            <img src="/images/silkchain_s65.png">
+                        </a>
+                    </div>
+                    <div class="m-login__signin">
+                        <div class="m-login__head">
+                            <h3 class="m-login__title">
+                                @Html.GetTansByLan("account-login-01", "Sign In")
+                            </h3>
+                        </div>
+                        <form class="m-login__form m-form" method="POST" action="/Account/ChkLogin" style="margin-top: 0;">
+                            <input type="hidden" name="_token" value="nQKKO9jaGOmHTAM41HwtACNeadXEOJUAStuQVabb">
+                            <input type="hidden" name="BackUrl" value="@Html.Raw(Model.BackUrl)" />
+                            <div class="form-group m-form__group">
+                                <input class="form-control m-input" type="text" placeholder="@Html.GetTansByLan("account-login-02", "Email/UserName")" name="UserName" value="" autocomplete="off" required autofocus>
+                            </div>
+                            <div class="form-group m-form__group">
+                                <input class="form-control m-input m-login__form-input--last" type="password" autocomplete="off" placeholder="@Html.GetTansByLan("account-login-03", "Password")" name="UserPwd" id="password">
+                            </div>
+                            <div class="form-group m-form__group">
+                            </div>
+                            <div class="row m-login__form-sub">
+                                <div class="col m--align-left m-login__form-left">
+                                    <label class="m-checkbox  m-checkbox--focus">
+                                        <input type="checkbox" name="Remember" value="true">
+                                        @Html.GetTansByLan("account-login-04", "Remember me")
+                                        <span></span>
+                                    </label>
+                                </div>
+                                <div class="col m--align-right m-login__form-right" style="">
+                                    <a href="/account/FindPassWord" id="m_login_forget_password" class="m-link">@Html.GetTansByLan("account-login-05", "Forget Password?")</a>
+                                </div>
+                            </div>
+                            <div class="text-xs-center">
+                            </div>
+                            <div class="m-login__form-action">
+                                <input value="@Html.GetTansByLan("account-login-06", "Sign In")" type="submit" id="m_login_submit" class="btn btn-focus m-btn  m-btn--custom m-btn--air  m-login__btn m-login__btn--primary" />
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div class="m-login__account">
+                        <span class="m-login__account-msg">
+                            @Html.GetTansByLan("account-login-07", "Don't have an account yet?")
+                        </span>
+                        &nbsp;&nbsp;
+                        <a href="/Account/register" id="m_login_signup" class="m-link m-link--light m-login__account-link">
+                            @Html.GetTansByLan("account-login-08", "Sign Up")
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <footer class="fixed-bottom m-teleg__join text-center" style="display:none">
+                <span class="d-inline-block align-middle mr-sm-4">@Html.GetTansByLan("account-login-foot1", "If you have any questions, Pease join Telegram group for help")</span><a class="btn btn-outline-focus m-btn--pill btn-bg-color" href="@("en".Equals(Html.GetLang())?" https://t.me/silkchain":"https://t.me/silkchainchinese")" target="_blank"><i class="fa fa-paper-plane"></i> Join Telegram</a>
+            </footer>
+            }else{
+
+<style>
+.btn-danger{color:#fff;background-color:#e13c23;border-color:#e13c23;}
+.btn-danger:hover{color:#fff;background-color:#f22d4e;border-color:#f12143;}
+.btn-danger:focus, .btn-danger.focus{box-shadow:0 0 0 3px rgba(244, 81, 108, 0.5);}
+.btn-danger.disabled, .btn-danger:disabled{background-color:#e13c23;border-color:#e13c23;}
+.btn-danger:active, .btn-danger.active,
+.show > .btn-danger.dropdown-toggle{background-color:#f22d4e;background-image:none;border-color:#f12143;}
+.btn-lg, .btn-group-lg > .btn {padding:0.65rem 1.75rem;}
+.m-login.m-login--2 .m-login__wrapper .m-login__container .m-login__form .m-form__group .form-control {padding:1rem 1.25rem;border-color:#eee;background-color:#f8f8f8;font-size:1.1428rem;}
+.m-login.m-login--2 .m-login__wrapper.m-redpacket__wrapper .m-login__container .m-login__form .m-login__form-action {margin-top:4px;padding:0 15px;}
+.m-login.m-login--2 .m-login__wrapper.m-redpacket__wrapper .m-login__container {flex:1 0 auto;display:flex;flex-direction:column;}
+.m-redpacket__wrapper .ft12 {font-size:0.8571rem !important;}
+.m-redpacket__wrapper .login-box-wrapper {flex:1 0 auto;}
+.m-redpacket__wrapper .m-checkbox.m-checkbox--focus > span:after{border-color:#e13c23;}
+.m-redpacket__wrapper .m-checkbox.m-checkbox--focus > input:checked ~ span{border-color:#e13c23;}
+.m-redpacket__wrapper {position:relative;background:#f0f0f0;border-radius:8px;border:1px solid #f0f0f0;}
+.m-redpacket__wrapper .svg-wrap {border-radius: 10px; overflow: hidden; }
+.m-redpacket__wrapper .svg-wrap .pathfillellipse { width: 100%; vertical-align:middle;}
+.m-redpacket__wrapper .red-packet { position: relative; text-align: center; color: #f0c88c; }
+.m-redpacket__wrapper .avatar { display: flex; align-items: center; justify-content: center; width: 5rem; height: 5rem; margin: -3rem auto 0; border-radius: 0.4285714rem; border: 1px solid #ff6400; background-color: #fff; }
+.m-redpacket__wrapper .avatar > img { max-width: 100%; max-height: 100%; }
+.m-redpacket__wrapper .sendname { font-size: 1.25rem; margin: 1rem 0 0.3rem 0; }
+.m-redpacket__wrapper .red-packet { padding-bottom: 20px; text-align: center; color: #333; }
+.m-redpacket__wrapper .sendname { font-size: 1.15rem; margin: 1rem 0 0.3rem 0; }
+.m-redpacket__wrapper .sendname strong,
+.m-redpacket__wrapper .sendname i {display:inline-block;vertical-align:middle;}
+.m-redpacket__wrapper .sendname i { width: 1.428571rem; height: 1.428571rem; background-color: #ff9600; color: #fff; text-align: center; line-height: 1.428571rem; font-size: 1rem; font-style: normal; margin-left: 0.5rem; border-radius: 4px; }
+.m-redpacket__wrapper .sendopt { font-size: 1rem; margin-left:30px;margin-right:30px;}
+.m-redpacket__wrapper .login-box-wrapper {padding:2rem;margin-left:-2rem;margin-right:-2rem;background-color:#fff;}
+@@media (max-width:576px){
+.m-redpacket__wrapper {border:none;}
+}
+</style>
+            <div class="m-grid__item m-grid__item--fluid m-login__wrapper m-redpacket__wrapper" style="display:flex;padding:0 2rem;margin-bottom:0;">
+                <div class="m-login__container">
+                    <div class="svg-wrap" style="margin:0 -2rem;">
+                        <img class="pathfillellipse" src="data:image/svg+xml;base64,PHN2ZyBjbGFzcz0icGF0aGZpbGxlbGxpcHNlIiB3aWR0aD0iMzYwIiBoZWlnaHQ9IjkwIiB2aWV3Qm94PSIwIDAgMzYwIDkwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPg0KICAgIDxwYXRoIGQ9Ik0wIDAgTDM2MCAwIEwzNjAgNTAgUTE4MCAxMjUgMCA1MCBMMCAwIFoiIGZpbGwtb3BhY2l0eT0ibnVsbCIgc3Ryb2tlLW9wYWNpdHk9Im51bGwiIHN0cm9rZS13aWR0aD0iMCIgc3Ryb2tlPSIjZTEzYzIzIiBmaWxsPSIjZTEzYzIzIj48L3BhdGg+DQo8L3N2Zz4NCg==" />
+                    </div>
+                    <div class="red-packet">
+                        <div class="avatar"><img width="90%" src="/images/ba-active/red-packet-logo.png" /></div>
+                        <div class="sendname">
+                            <strong>@Model.LuckMoneyInfo.SendUser @Html.Raw(Html.GetTansByLan("packet-packetIndex-25", "Sent you a red packet"))</strong>
+                            @if (Model.LuckMoneyInfo.PacketType == 0)
+                            {
+                                 <i>@Html.Raw(Html.GetTansByLan("packet-packetIndex-26", "R"))</i>
+                            }
+                            else
+                            {
+                                 <i>@Html.Raw(Html.GetTansByLan("packet-packetIndex-26", "I"))</i>
+                            }
+                        </div>
+                        <div class="sendopt">@Html.Raw(Model.LuckMoneyInfo.Message ?? Html.GetTansByLan("packet-send-08", "Best wishes"))</div>
+                        @*<div class="sendopt mt-2">
+                            @Html.Raw(string.Format(Html.GetTansByLan("account-login-luck-02", "已有{0}人领取了该红包，市值 {1} SILK"),Model.LuckMoneyInfo.OpenCount,Model.LuckMoneyInfo.OpenAmount.ToString("N3"))),
+                            <br />@Html.Raw(Html.GetTansByLan("account-login-luck-03", "请先登录再领红包"))
+                        </div>*@
+                    </div>
+                    <div class="login-box-wrapper">
+                        <form class="m-login__form m-form" method="POST" action="/Account/ChkLogin" style="margin-top: 0;">
+                            <input type="hidden" name="_token" value="nQKKO9jaGOmHTAM41HwtACNeadXEOJUAStuQVabb">
+                            <input type="hidden" name="BackUrl" value="@Html.Raw(Model.BackUrl)" />
+                            <div class="form-group m-form__group">
+                                <input class="form-control m-input" type="text" placeholder="@Html.GetTansByLan("account-login-02", "Email/UserName")" name="UserName" value="" autocomplete="off" required autofocus>
+                            </div>
+                            <div class="form-group m-form__group">
+                                <input class="form-control m-input m-login__form-input--last" type="password" autocomplete="off" placeholder="@Html.GetTansByLan("account-login-03", "Password")" name="UserPwd" id="password">
+                            </div>
+                            <div class="form-group m-form__group">
+                            </div>
+                            <div class="row no-gutters m-login__form-sub" style="padding:0;">
+                                <div class="col m--align-left m-login__form-left">
+                                    <label class="m-checkbox  m-checkbox--focus"><input type="checkbox" name="Remember" value="true">@Html.GetTansByLan("account-login-04", "Remember me")<span></span></label>
+                                </div>
+                                <div class="col m--align-right m-login__form-right" style="">
+                                    <a href="/account/FindPassWord" id="m_login_forget_password" class="m-link">@Html.GetTansByLan("account-login-05", "Forget Password?")</a>
+                                </div>
+                            </div>
+                            <div class="text-xs-center">
+                            </div>
+                            <div class="m-login__form-action">
+                                <input value="@Html.GetTansByLan("account-login-luck-06", "Sign In")" type="submit" id="m_login_submit" class="btn btn-block btn-danger m-btn--pill btn-lg" />
+                            </div>
+                        </form>
+
+                        <div class="row no-gutters m-login__account">
+                            <div class="col-8 m--align-left">
+                                <span class="m-login__account-msg ft12">@Html.GetTansByLan("account-login-07", "Don't have an account yet?")</span>&nbsp;&nbsp;
+                                <a href="/Account/register" id="m_login_signup" class="m-link m-link--light m-login__account-link ft12">
+                                    @Html.GetTansByLan("account-login-08", "Sign Up")
+                                </a>
+                            </div>
+                            <div class="col-4 m--align-right" style="cursor:pointer">                      
+                                @if (Html.GetLang() == "en")
+                                {<span id="chinesesLanguage"><img src="/images/chinese-language.png" /> <span style="vertical-align:middle;">中文</span></span>}
+                                else
+                                {<span id="englishLanguage"><img src="/images/english-language.png" /> <span style="vertical-align:middle;">English</span></span>}  
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</body>
+</html>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<environment include="Development">
+    <script src="https://cdn.bootcss.com/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+</environment>
+<environment exclude="Development">
+    <script src="https://cdn.bootcss.com/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+</environment>
+
+<script type="text/javascript">
+        var error = '@(Model.ErrorMsg)';
+var SnippetLogin = function() {
+    var login = $('#m_login');
+    var showErrorMsg = function(form, type, msg) {
+        var alert = $('<div class="m-alert m-alert--outline alert alert-' + type + ' alert-dismissible" role="alert">\
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>\
+			<span></span>\
+		</div>');
+
+        form.find('.alert').remove();
+        alert.prependTo(form);
+        alert.find('span').html(msg);
+    }
+    //== Private Functions
+    var displaySignInForm = function() {
+        login.removeClass('m-login--forget-password');
+        login.removeClass('m-login--signup');
+        login.addClass('m-login--signin');
+    }
+    var handleSignInFormSubmit = function() {
+        $('#m_login_submit').click(function(e) {
+            // e.preventDefault();
+            var btn = $(this);
+            var form = $(this).closest('form');
+            form.validate({
+                rules: {
+                    UserName: {
+                        required: true
+                    },
+                    UserPwd: {
+                        required: true
+                    }
+                },
+                messages: {
+                    UserName: "@Html.GetTansByLan("account-login-10", "This field is required.")",
+                    UserPwd: "@Html.GetTansByLan("account-login-10", "This field is required.")"
+                }
+            });
+            if (!form.valid()) {
+                showErrorMsg(form, 'danger', '@Html.GetTansByLan("account-login-09","Incorrect username or password. Please try again.")');
+            }else{
+                btn.addClass('m-loader m-loader--right m-loader--light');
+            }
+        });
+    }
+    return {
+        init: function() {
+            handleSignInFormSubmit();
+            if (error != '') {
+                var form = $('#m_login_submit').closest('form')
+                showErrorMsg(form, 'danger', error);
+            }
+        }
+    };
+} ();
++function(t){"use strict";function r(r){return this.each(function(){var e=t(this),n=e.data("bs.alert");n||e.data("bs.alert",n=new a(this)),"string"==typeof r&&n[r].call(e)})}var e='[data-dismiss="alert"]',a=function(r){t(r).on("click",e,this.close)};a.VERSION="3.3.7",a.TRANSITION_DURATION=150,a.prototype.close=function(r){function e(){o.detach().trigger("closed.bs.alert").remove()}var n=t(this),s=n.attr("data-target");s||(s=n.attr("href"),s=s&&s.replace(/.*(?=#[^\s]*$)/,""));var o=t("#"===s?[]:s);r&&r.preventDefault(),o.length||(o=n.closest(".alert")),o.trigger(r=t.Event("close.bs.alert")),r.isDefaultPrevented()||(o.removeClass("in"),t.support.transition&&o.hasClass("fade")?o.one("bsTransitionEnd",e).emulateTransitionEnd(a.TRANSITION_DURATION):e())};var n=t.fn.alert;t(document).on("click.bs.alert.data-api",e,a.prototype.close)}(jQuery);
+jQuery(document).ready(function() {
+    SnippetLogin.init();
+});
+</script>
+<script type="text/javascript">
+    function verifyCallback() {
+        $("#m_login_submit").prop("disabled", false);
+    }
+    $("#chinesesLanguage").click(function () {
+        setLang('cn');
+        window.location.href = window.location.href;
+    });
+    $("#englishLanguage").click(function () {
+        setLang('en');        
+        window.location.href = window.location.href;
+    });
+    function setLang(lan)
+    {
+            var exp = new Date();
+            exp.setTime(new Date().getTime() + 365 * 24 * 60 * 60 * 1000);
+            document.cookie = "lang=" + escape(lan) + ";expires=" + exp.toGMTString() + ";path=/;domain=silkchain.io";
+            //document.cookie = "lang=" + escape(lan) + ";expires=" + exp.toGMTString() + ";path=/";
+    }
+</script>
+
+

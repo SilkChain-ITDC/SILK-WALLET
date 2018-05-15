@@ -1,0 +1,148 @@
+﻿@using SKC.Entity.Models;
+@model GetPacketModel
+@{
+
+}
+
+<style>
+    @@media (min-width: 576px) {
+        .modal .modal-dialog.modal-draw { width: 360px; }
+    }
+    .modal .modal-draw .modal-content { background-color: #c83c32; border-radius: 10px; }
+    .modal .modal-draw .modal-content .modal-header { position: absolute; top: 0; right: 0; z-index: 9; border-bottom: none; padding: 25px 25px 0 0; }
+    .modal .modal-draw .modal-content .modal-header .close { color: #f0c88c; opacity: 1; height: 18px; cursor: pointer; }
+    .modal .modal-draw .modal-content .svg-wrap { position: absolute; top: 0; bottom: 0; left: 0; right: 0; border-radius: 10px; overflow: hidden; }
+    .modal .modal-draw .modal-content .svg-wrap .pathfillellipse { width: 100%; }
+    .modal .modal-draw .modal-content .red-packet { position: relative; padding: 30px 0; text-align: center; color: #f0c88c; }
+    .modal .modal-draw .modal-content .avatar { display: flex; align-items: center; justify-content: center; width: 4rem; height: 4rem; margin: 0 auto; border-radius: 0.4285714rem; border: 1px solid #ff6400; background-color: #fff; }
+    .modal .modal-draw .modal-content .avatar > img { max-width: 100%; max-height: 100%; }
+    .modal .modal-draw .modal-content .sendname { font-size: 1.25rem; margin: 1rem 0 0.3rem 0; }
+    .modal .modal-draw .modal-content .sendopt { font-size: 1rem; }
+    .modal .modal-draw .modal-content .leavemessage { display: table; width: 100%; height: 90px; font-size: 1.5rem; line-height: 1.2; }
+    .modal .modal-draw .modal-content .message-cell { display: table-cell; vertical-align: middle; padding: 10px 0; }
+    .modal .modal-draw .modal-content .draw-silk { display: inline-block; width: 100px; height: 100px; margin-top: 20px; background-color: #f0c88c; background-image: url(/images/ba-active/red-packet-open.png); background-repeat: no-repeat; background-position: center center; background-size: contain; cursor: pointer; border: none; outline: 0; border-radius: 50%; }
+    .modal .modal-draw .modal-content .btnspace { display: inline-block; width: 100px; height: 100px; margin-top: 20px; }
+    .modal .modal-draw .modal-content .viewdetail { position: absolute; width: 100%; bottom: 10px; text-align: center; line-height: 1; }
+    .modal .modal-draw .modal-content .viewdelnk { font-size: 1rem; color: #f0c88c; text-decoration: none; }
+
+    .modal .modal-draw-detail .modal-content { background-color: #f0f0f0; }
+    .modal .modal-draw-detail .modal-content .modal-body { padding: 25px 0 0 0; }
+    .m-stack.m-stack--flex-general .draw-packet { position: relative; background-color: #fff; flex: 1 0 auto; border-radius: 0 0 10px 10px; overflow: hidden; }
+    .modal .modal-draw-detail .modal-content .red-packet { padding-bottom: 10px; text-align: center; color: #333; }
+    .modal .modal-draw-detail .modal-content .sendname { font-size: 1.15rem; margin: 1rem 0 0.3rem 0; }
+    .modal .modal-draw-detail .modal-content .sendname i { display: inline-block; vertical-align: text-bottom; width: 1.428571rem; height: 1.428571rem; background-color: #ff9600; color: #fff; text-align: center; line-height: 1.428571rem; font-size: 1rem; font-style: normal; margin-left: 0.5rem; border-radius: 4px; }
+    .modal .modal-draw-detail .modal-content .sendopt { font-size: 1rem; }
+    .modal .modal-draw-detail .modal-content .price { margin-top: 10px; margin-bottom: 4px; line-height: 1; }
+    .modal .modal-draw-detail .modal-content .price > strong { font-size: 3rem; font-family: arial; }
+    .modal .modal-draw-detail .modal-content .price > em { font-size: 1.15rem; font-style: normal; }
+    .modal .modal-draw-detail .modal-content .draw-packet-inner { width: 100%; height: 100%; }
+    .modal .modal-draw-detail .modal-content .draw-packet-tle { padding: 10px 15px; border-bottom: 1px solid #ddd; font-size: 1rem; color: #888; }
+    .modal .modal-draw-detail .modal-content .rowitem { border-bottom: 1px solid #ddd; padding: 10px 0; position: relative; display: -webkit-box; display: -webkit-flex; display: flex; -webkit-align-items: flex-star; align-items: flex-star; }
+    .modal .modal-draw-detail .modal-content .rowmd { -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; }
+    .modal .modal-draw-detail .modal-content .rowitem-ul { padding: 0 15px; }
+    .modal .modal-draw-detail .modal-content .headpic { float: left; width: 2.5rem; height: 2.5rem; border-radius: 4px; overflow: hidden; text-align: center; margin-right: 1rem; }
+    .modal .modal-draw-detail .modal-content .headpic img { float: left; max-width: 100%; }
+    .modal .modal-draw-detail .modal-content .nametxt { font-size: 1.15rem; line-height: 1; margin-bottom: 0.4rem; }
+    .modal .modal-draw-detail .modal-content .datenub { font-size: 1em; color: #bbb; line-height: 1; }
+    .modal .modal-draw-detail .modal-content .distrib { text-align: right; line-height: 1; }
+    .modal .modal-draw-detail .modal-content .linefeed { margin-top: 0.5rem; }
+    .modal .modal-draw-detail .text-orange { color: #ff9600; }
+
+    .m-grid.m-grid--ver-desktop.m-grid--desktop { display: flex; flex-direction: row; }
+
+    .m-grid.m-grid--ver-desktop.m-grid--desktop > .m-grid__item.m-grid__item--fluid { flex: 1 0 auto; }
+
+    .m-content,
+    .m-packet__container { height: 100%; }
+
+    .m-packet__wrapper { padding-top: 20px; width: 430px; margin: 0 auto; }
+
+    .m-stack.m-stack--flex-general .m-packet__wrapper { flex: 1 0 auto; }
+
+    .m-packet_backwrap { padding-top: 20px; text-align: center; }
+
+    .m-packet_backwrap .m-packet_rich-icon { width: 8.571428rem; height: 11.428571rem; margin: 0 auto; background: url(/images/ba-active/red-packet-result.png) no-repeat center center; background-size: cover; padding: 6.3rem 2rem 0; }
+
+    .m-packet_backwrap .m-packet_rich-cover { font-size: 1rem; line-height: 1.5; color: #f0c88c; height: 3em; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+
+    .m-packet_backwrap .m-txt-1 { color: #333; font-size: 1.28rem; margin-top: 15px; font-weight: 500; }
+
+    .m-packet_backwrap .m-txt-2 { color: #333; font-size: 1rem; }
+
+    .m-packet_copybtn { margin-left: 50px; margin-right: 50px; margin-top: 40px; }
+
+    .m-packet_copybtn .btn-lg { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+
+    .btn-outline-weixin { color: #333; background-color: #fff; background-image: none; border-color: #3cb035; }
+
+    .btn-outline-weixin:hover { border-color: #3cb035; }
+
+    .btn-outline-weixin:focus, .btn-outline-weixin.focus { box-shadow: 0 0 0 3px rgba(60, 176, 53, 0.5); }
+
+    .btn-outline-weixin.disabled, .btn-outline-weixin:disabled { color: #727272; background-color: transparent; }
+
+    .m-packet_copybtn .m-packet_copy-input { background: none; border: none; padding: 0 5px; flex: 1 0 auto; background-color: #eee; cursor: not-allowed; padding: 0.5rem 0.8rem; }
+
+    .m-packet_copybtn .btn-secondary { border: none; }
+
+    .m-packet_copybtn .btn-secondary:hover { background-color: transparent; }
+
+    .m-packet_copybtn .m-packet_copy-input { border-right: 1px solid #ddd; }
+
+    .m-packet_copybtn .input-group-btn { border-left: 1px solid #ddd; }
+
+    .m-packet_copybtn .m-pill-round { margin-bottom: 0.5rem; background-color: #fff; border-radius: 60px; border: 1px solid #e13c23; overflow: hidden; }
+
+    .m-packet_copybtn .btn-outline-weixin {border:0; padding:1px 0; margin:0; background:none;}
+
+    .m-packet_copybtn .btn-outline-weixin i { display: inline-block; width: 3rem; height: 3rem; vertical-align: text-bottom; background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MzM1QUY5RkU0NkRCMTFFODlCRTVDQzJENzE0NEVGMTgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MzM1QUY5RkY0NkRCMTFFODlCRTVDQzJENzE0NEVGMTgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDozMzVBRjlGQzQ2REIxMUU4OUJFNUNDMkQ3MTQ0RUYxOCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDozMzVBRjlGRDQ2REIxMUU4OUJFNUNDMkQ3MTQ0RUYxOCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PkgRIbMAAAvfSURBVHja7FwHVFNp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) no-repeat; background-size: cover;}
+    .m-packet_copybtn .wx-fx-box {margin-left:10px;}
+
+    .m-packet_wxtips { position: fixed; left: 0; top: 0; z-index: 999; width: 100%; height: 100%; background: rgba(0,0,0,.8) url(/images/ba-active/weixin-share.png) no-repeat center top; background-size: 95% auto; }
+
+    @@media (max-width: 767.98px) {
+        .m-packet__wrapper { width: 100%; padding-top: 0; }
+        .m-packet_copybtn { margin-left: 10px; margin-right: 10px; }
+    }
+</style>
+
+<div class="m-packet__container m-stack m-stack--flex-general m-packet_popup" style="background-color:#f2f3f8;">
+    <div class="m-packet__wrapper">
+        <div class="m-packet_backwrap">
+            <div class="m-packet_rich-icon"><div class="m-packet_rich-cover">恭喜发财大吉大利</div></div>
+            <div class="m-txt-2 mt-3">Anyone open the red packet by your sharing link,<br />you will get extra 10 Silk as bonus,<br />let's share before it's too late.</div>
+        </div>
+        <div class="m-packet_copybtn d-flex">
+            <div class="input-group m-pill-round">
+                <input class="m-packet_copy-input" type="text" id="send_money_address" readonly value="@ViewBag.Url" />
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" onclick="return copyValToClipboard('#send_money_address')"><i class="io-copy"></i></button>
+                </span>
+            </div>
+            <div class="wx-fx-box" id="wxShareButton" hidden="true">
+                <button class="btn-outline-weixin"><i></i></button>
+            </div>
+        </div>
+        <div class="m-packet_wxtips" id="wxTips" style="display:none;"></div>
+    </div>
+</div>
+@section script{
+<script type="text/javascript">
+$(function () {
+    // weixin share
+    is_weixn();
+    function is_weixn() {
+        var ua = navigator.userAgent.toLowerCase();
+        if (/micromessenger/i.test(ua)) {
+            $("#wxShareButton").show();
+            $("#wxShareButton").removeAttr('hidden');
+        } else {
+            $("#wxShareButton").hide();
+        }
+        $("#wxShareButton button").on('click', function(){
+            $("#wxTips").show();
+        });
+    }
+});
+</script>
+}

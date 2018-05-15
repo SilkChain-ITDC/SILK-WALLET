@@ -1,0 +1,616 @@
+﻿@model SkcRedPacket
+@using SKC.Entity.DBModels
+@using SKC.Entity.Models
+@{
+    decimal accountBalance = ViewBag.AccountBalance;
+    bool isSpecifiedRole = ViewBag.IsSpecifiedRole;
+    int hasBeenSend_Total = ViewBag.HasBeenSend_Total;
+    int hasBeenRece_Total = ViewBag.HasBeenRece_Total;
+    ViewBag.Title = "SilkChain - Lucky Money";
+
+    int user_status = (int)ViewBag.UserStatus;
+}
+<style>
+    .m-grid.m-grid--ver-desktop.m-grid--desktop {
+        display: flex;
+        flex-direction: row;
+    }
+
+        .m-grid.m-grid--ver-desktop.m-grid--desktop > .m-grid__item.m-grid__item--fluid {
+            flex: 1 0 0;
+        }
+
+.text-danger {color:#e13c23 !important;}
+.btn-danger{color:#fff;background-color:#e13c23;border-color:#e13c23;}
+.btn-danger:hover{color:#fff;background-color:#f22d4e;border-color:#f12143;}
+.btn-danger:focus, .btn-danger.focus{box-shadow:0 0 0 3px rgba(244, 81, 108, 0.5);}
+.btn-danger.disabled, .btn-danger:disabled{background-color:#e13c23;border-color:#e13c23;}
+.btn-danger:active, .btn-danger.active,
+.show > .btn-danger.dropdown-toggle{background-color:#f22d4e;background-image:none;border-color:#f12143;}
+
+    .m-content,
+    .m-packet__container {
+        height: 100%;
+    }
+
+    .m-packet__wrapper {
+        padding-top: 20px;
+        width: 430px;
+        margin: 0 auto;
+    }
+
+    .m-packet__title {
+        margin-bottom: 15px;
+        line-height: 1;
+        font-size: 18px;
+    }
+
+    .m-stack.m-stack--flex-general .m-packet__wrapper {
+        flex: 1 0 auto;
+    }
+
+    .m-content {
+        position: relative;
+    }
+
+        .m-content .m-packet_popup {
+            position: absolute;
+            z-index: 12;
+            left: 0;
+            top: 0;
+            -webkit-transition-property: -webkit-transform;
+            transition-property: transform;
+            -webkit-transform: translate3d(0,100%,0);
+            transform: translate3d(0,100%,0);
+        }
+
+            .m-content .m-packet_popup.modal-in {
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+                -webkit-transition-duration: 400ms;
+                transition-duration: 400ms;
+            }
+
+    .popup-overlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 11;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.4);
+        visibility: hidden;
+        opacity: 0;
+        -webkit-transition-duration: 400ms;
+        transition-duration: 400ms;
+    }
+
+        .popup-overlay.modal-overlay-visible {
+            visibility: visible;
+            opacity: 1;
+        }
+
+    .m-packet_rowitem {
+        padding: 10px 15px;
+        position: relative;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+
+    .m-packet_rowmd {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+    }
+
+    .m-packet_fielditem {
+        background-color: #fff;
+        border-radius: 8px;
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+        .m-packet_fielditem .m-packet-rowlab {
+            margin: 0;
+        }
+
+            .m-packet_fielditem .m-packet-rowlab .inline-plaintt {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .m-packet_fielditem .m-packet-rowlab i {
+                width: 20px;
+                height: 20px;
+                background-color: #ff9600;
+                color: #fff;
+                text-align: center;
+                line-height: 20px;
+                font-size: 14px;
+                font-style: normal;
+                margin-right: 10px;
+                border-radius: 4px;
+            }
+
+        .m-packet_fielditem .form-control {
+            border: none;
+            text-align: right;
+            outline: none;
+            padding-right: 0.65rem;
+        }
+
+        .m-packet_fielditem textarea.form-control {
+            text-align: left;
+            outline: none;
+            resize: none;
+            padding: 0.65rem 0;
+        }
+
+    .m-packet_usetype-item {
+        padding: 0 15px;
+        font-size: 12px;
+        margin-bottom: 15px;
+        margin-top: -10px;
+    }
+
+    .m-packet_send {
+        padding-top: 15px;
+    }
+
+        .m-packet_send .display-4 {
+            font-size: 2rem;
+            color: #000;
+            margin-bottom: 30px;
+        }
+
+        .m-packet_send .dis-send-btn {
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+
+        .m-packet_send .btn-lg {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+    .m-packet__btm .text-muted {
+        font-size: 14px;
+    }
+
+    .m-packet__btm > p.text-muted {
+        margin-bottom: 6px;
+    }
+
+    .m-packet_toshare {
+        padding-top: 0;
+        margin-bottom: 15px;
+        margin-top: -5px;
+    }
+
+        .m-packet_toshare input {
+            vertical-align: middle;
+        }
+
+        .m-packet_toshare label {
+            font-size: 14px;
+            margin-bottom: 0;
+            vertical-align: middle;
+        }
+
+        .m-packet_toshare.nolast {
+            margin-bottom: 0;
+            padding-bottom: 10px;
+        }
+
+    .m-packet_backwrap {
+        padding-top: 20px;
+        text-align: center;
+    }
+
+        .m-packet_backwrap .m-packet_rich-icon {
+            width: 8.571428rem;
+            height: 11.428571rem;
+            margin: 0 auto;
+            background: url(/images/ba-active/red-packet-result.png) no-repeat center center;
+            background-size: cover;
+            padding: 6.3rem 2rem 0;
+        }
+
+        .m-packet_backwrap .m-packet_rich-cover {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #f0c88c;
+            height: 3em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .m-packet_backwrap .m-txt-1 {
+            color: #333;
+            font-size: 1.28rem;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        .m-packet_backwrap .m-txt-2 {
+            color: #333;
+            font-size: 1rem;
+        }
+
+    .m-packet_copybtn {
+        margin-left: 50px;
+        margin-right: 50px;
+        margin-top: 40px;
+    }
+
+        .m-packet_copybtn .btn-lg {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+    .btn-outline-weixin {
+        color: #333;
+        background-color: #fff;
+        background-image: none;
+        border-color: #3cb035;
+    }
+
+        .btn-outline-weixin:hover {
+            border-color: #3cb035;
+        }
+
+        .btn-outline-weixin:focus, .btn-outline-weixin.focus {
+            box-shadow: 0 0 0 3px rgba(60, 176, 53, 0.5);
+        }
+
+        .btn-outline-weixin.disabled, .btn-outline-weixin:disabled {
+            color: #727272;
+            background-color: transparent;
+        }
+
+    .m-packet_copybtn .m-packet_copy-input {
+        background: none;
+        border: none;
+        padding: 0 5px;
+        flex: 1 0 auto;
+        background-color: #eee;
+        cursor: not-allowed;
+        padding: 0.5rem 0.8rem;
+    }
+
+    .m-packet_copybtn .btn-secondary {
+        border: none;
+    }
+
+        .m-packet_copybtn .btn-secondary:hover {
+            background-color: transparent;
+        }
+
+    .m-packet_copybtn .m-packet_copy-input {
+        border-right: 1px solid #ddd;
+    }
+
+    .m-packet_copybtn .input-group-btn {
+        border-left: 1px solid #ddd;
+    }
+
+    .m-packet_copybtn .m-pill-round {
+        margin-bottom: 0.5rem;
+        background-color: #fff;
+        border-radius: 60px;
+        border: 1px solid #e13c23;
+        overflow: hidden;
+    }
+
+    .m-packet_copybtn .btn-outline-weixin i {
+        display: inline-block;
+        width: 1.5rem;
+        height: 1.5rem;
+        vertical-align: text-bottom;
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OTQ0MjQ1MDkzRUZDMTFFODhCMDI4NjJDNTkyRjM1OTAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OTQ0MjQ1MEEzRUZDMTFFODhCMDI4NjJDNTkyRjM1OTAiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5NDQyNDUwNzNFRkMxMUU4OEIwMjg2MkM1OTJGMzU5MCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5NDQyNDUwODNFRkMxMUU4OEIwMjg2MkM1OTJGMzU5MCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PljMW7EAAAbpSURBVHjazFp7UFRl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) no-repeat;
+        background-size: cover;
+        margin-right: 10px;
+    }
+
+    @@media (max-width: 767.98px) {
+        .m-packet__wrapper {
+            width: 100%;
+            padding-top: 0;
+        }
+
+        .m-packet__title {
+            font-size: 16px;
+        }
+
+        .m-packet_fielditem,
+        .m-packet_fielditem .m-packet-rowlab,
+        .m-packet_fielditem .form-control {
+            font-size: 16px;
+        }
+
+            .m-packet_fielditem .m-packet-rowlab i {
+                width: 18px;
+                height: 18px;
+                line-height: 18px;
+                font-size: 12px;
+            }
+
+        .m-packet__btm .text-muted {
+            font-size: 12px;
+        }
+
+        .m-packet_copybtn {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+    }
+    @@media (min-width: 768px) {
+        .m-stack.m-packet__container {width:500px;margin:0 auto;background-color:rgba(128,128,128,0.1);border-radius:8px;}
+        .m-stack.m-packet__container>.m-packet__wrapper ~ .text-center {margin-bottom:20px;}
+    }
+    .text-center .alert-notify-card:before {
+        left: 50%;
+        right: auto;
+    }
+    .alert-notify-card {
+        display: inline-block;
+        position: relative;
+        margin-top: -6px;
+        margin-bottom: 0;
+    }
+
+        .alert-notify-card .close {
+            float: right;
+            position: absolute;
+            right: 10px;
+            top: 0px;
+        }
+
+        .alert-notify-card .alert-cont {
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+
+        .alert-notify-card:before {
+            position: absolute;
+            right: 30px;
+            top: -9px;
+            content: "";
+            margin-left: -8px;
+            display: block;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid #c6c8ca;
+        }
+
+    .text-center .alert-notify-card:before {
+        left: 50%;
+        right: auto;
+    }
+    .text-center {
+        margin-top:20px;
+    }
+    input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+        -webkit-appearance: none !important;
+    }
+
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+</style>
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+    <div class="m-content" id="J_popupContainer">
+
+        <div class="m-packet__container m-stack m-stack--flex-general">
+            <div class="m-packet__wrapper">
+                @using (Html.BeginForm("SendluckyMoney", "Packet", FormMethod.Post, new { id = "form1" }))
+                {
+                    @Html.HiddenFor(m => m.CoinTypeNvarchar)
+                    @Html.HiddenFor(m => m.UseTypeInt)
+                    @Html.HiddenFor(m => m.UserIdNvarchar)
+                    @if (Model.UseTypeInt == 0)
+                    {
+                        <div class="m-packet__title">
+                            <div class="m-packet_text">@Html.GetTansByLan("packet-send-01", "Available balance：")<span class="text-danger text-nowrap"><span class="wallet-balance">@accountBalance.ToString("0.00")</span> SILK</span></div>
+                        </div>
+                        <div class="m-packet_rowitem m-packet_fielditem">
+                            <div class="m-packet_rowlf">
+                                <label class="m-packet-rowlab"><i class="inline-plaintt" data-vtext="word1">@Html.GetTansByLan("packet-send-03", "R")</i><span class="inline-plaintt" data-vtext="word2">@Html.GetTansByLan("packet-send-02", "Total amount")</span></label>
+                            </div>
+                            <div class="m-packet_rowmd">
+                                <input class="form-control m-input" placeholder="0.00" value="" type="text" id="AmountDecimal" name="AmountDecimal" oninput="var ary = this.value.match(/(\d+(\.\d{0,2})?)/);this.value=ary==null?'':ary[0];">
+                            </div>
+                            <div class="m-packet_rowft">SILK</div>
+                        </div>
+                        <div class="m-packet_usetype-item">
+                            <span><span data-vtext="word4">@Html.GetTansByLan("packet-send-04", "Random Amount")</span>，</span><a href="javascript:;" onclick="ChangeType()" data-vtext="word3">@Html.GetTansByLan("packet-send-05", "Change to Identical Amount")</a>
+                        </div>
+                        <div class="m-packet_rowitem m-packet_fielditem">
+                            <div class="m-packet_rowlf">
+                                <label class="m-packet-rowlab" for="CountInt">@Html.GetTansByLan("packet-send-16", "Quantity")</label>
+                            </div>
+                            <div class="m-packet_rowmd">
+                                <input class="form-control m-input" placeholder="@Html.GetTansByLan("packet-send-07", "Enter number")" type="text" id="CountInt" name="CountInt" onkeyup="this.value=this.value.replace(/\D|^0/g,'')" onafterpaste="this.value=this.value.replace(/\D|^0/g,'')">
+                            </div>
+                            <div class="m-packet_rowft">@Html.GetTansByLan("packet-send-06", "Quantity")</div>
+                        </div>
+                        <div class="m-packet_rowitem m-packet_fielditem">
+                            <div class="m-packet_rowmd">
+                                <textarea class="form-control m-input" placeholder="@Html.GetTansByLan("packet-send-08", "Best wishes")" maxlength="100" value="@Model.MessageNvarchar" name="MessageNvarchar" id="MessageNvarchar"></textarea>
+                            </div>
+                        </div>
+                        @if (isSpecifiedRole == true)
+                        {
+                            <div class="m-packet_rowitem m-packet_toshare nolast">
+                                <div class="m-packet_rowmd">
+                                    <label class="m-checkbox  m-checkbox--focus"><input type="checkbox" value=1 id="IsShareInt" name="IsShareInt" />@Html.GetTansByLan("packet-send-09", "Allow red packets to be Shared")<span></span></label>
+                                </div>
+                            </div>
+                            <div class="m-packet_rowitem m-packet_toshare">
+                                <div class="m-packet_rowmd">
+                                    <label class="m-checkbox  m-checkbox--focus"><input type="checkbox" value=1 id="AlwaysValid" name="AlwaysValid" />@Html.GetTansByLan("packet-send-10", "Never expired")<span></span></label>
+                                </div>
+                            </div>
+                        }
+                    }
+                    <div class="m-packet_send text-center">
+                        <div class="display-4"><span id="AmountSend">0.00</span> SILK</div>
+                        <div class="dis-send-btn">
+                            <button class="btn btn-block btn-danger m-btn--pill btn-lg" disabled="disabled" id="ReadySendMoney">@Html.GetTansByLan("packet-send-32", "Prepare Red Packet")</button>
+                        </div>
+                        @if (user_status != 1)
+                        {
+                            <div class="text-center">
+                                <div class="alert-notify-card alert alert-dark fade show" role="alert">
+                                    <div class="alert-cont">@Html.GetTansByLan("candy-index-12", "Please complete the ")<a href="/account/index?mode=1">@Html.GetTansByLan("candy-index-10", "KYC certification")</a></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+            <div class="m-packet__btm text-center">
+                <p class="text-muted"><a href="/Packet/GetPacketDetail?type=rece" data-total="@hasBeenRece_Total">@Html.GetTansByLan("packet-send-12", "Received Packets")</a> &nbsp; | &nbsp; <a href="/Packet/GetPacketDetail?type=send" data-total="@hasBeenSend_Total">@Html.GetTansByLan("packet-send-14", "Sent Packets")</a></p>
+                <div class="text-muted">@Html.GetTansByLan("packet-send-13", "Unclaimed red packet will be returned to your wallet 24 hours later")</div>
+            </div>
+        </div>
+    </div>
+</div>
+<form action="/Packet/GetPacketIndex/" method="POST" id="J_modal_add_purchase">
+    <input type="hidden" id="OnlyCode" name="OnlyCode" value="" />
+</form>
+@section script{
+    <script src="~/js/sweetalert.min.js"></script>
+    <script>
+        function ChangeType() {
+            var useType = $("#UseTypeInt").val();
+            var wd = {
+                'type0': { word1: '@Html.GetTansByLan("packet-send-03", "R")', word2: '@Html.GetTansByLan("packet-send-02", "Total amount")', word3: '@Html.GetTansByLan("packet-send-15", "Change to Identical Amount")', word4: '@Html.GetTansByLan("packet-send-04", "Random Amount")' },
+                'type1': { word1: '@Html.GetTansByLan("packet-send-17", "I")', word2: '@Html.GetTansByLan("packet-send-18", "Amount Each")', word3: '@Html.GetTansByLan("packet-send-19", "Change to Random Amount")', word4: '@Html.GetTansByLan("packet-send-30", "Identical Amount")' }
+            };
+            var usewd;
+            if (useType == 0) {
+                $("#UseTypeInt").val(1);
+                usewd = wd.type1;
+            } else {
+                $("#UseTypeInt").val(0);
+                usewd = wd.type0;
+            }
+            $('#form1 [data-vtext]').each(function () {
+                var $this = $(this);
+                var attrName = $this.attr('data-vtext');
+                $this.html(attrName && usewd[attrName]);
+            });
+            $("#CountInt").val('');
+            $("#AmountDecimal").val('');
+            $("#AmountSend").text('0.00');
+        }
+        $("#AmountDecimal").on("input change", function () {
+            ValidationData();
+        });
+        $("#CountInt").on("input change", function () {
+            ValidationData('int');
+        });
+        function ValidationData(ipt) {
+            var balance = Number($(".wallet-balance").text());
+            var amount = Number($("#AmountDecimal").val());
+            var count = Number($("#CountInt").val());
+            var useType = $("#UseTypeInt").val();
+            if (@user_status != 1) { 
+                $("#ReadySendMoney").attr("disabled", "disabled");
+                return;
+            }
+            if (useType == 0) {
+                if (balance < amount) {
+                    $("#ReadySendMoney").attr("disabled", "disabled");
+                    $("#ReadySendMoney").text('@Html.Raw(Html.GetTansByLan("packet-send-31", "Insufficient balance"))');
+                } else if (amount <= 0 || (ipt == 'int' && count <= 0)) {
+                    $("#ReadySendMoney").text('@Html.Raw(Html.GetTansByLan("packet-send-32", "Prepare Red Packet"))');
+                    $("#ReadySendMoney").attr("disabled", "disabled");
+                } else if (count > 0) {
+                    if (count <= 999) {
+                        $("#ReadySendMoney").removeAttr("disabled");
+                        $("#ReadySendMoney").text('@Html.Raw(Html.GetTansByLan("packet-send-32", "Prepare Red Packet"))');
+                    } else {
+                        $("#ReadySendMoney").attr("disabled", "disabled");
+                        $("#ReadySendMoney").text('@Html.Raw(Html.GetTansByLan("packet-send-33", "Up to 999 for quantity"))');
+                    }
+                }
+                $("#AmountSend").text(amount.toFixed(2));
+            } else if (useType == 1 && amount && count) {
+
+                if (balance < amount * count) {
+                    $("#ReadySendMoney").attr("disabled", "disabled");
+                    $("#ReadySendMoney").text('@Html.Raw(Html.GetTansByLan("packet-send-31", "Insufficient balance"))');
+
+                } else if (amount <= 0 || count <= 0) {
+                    $("#ReadySendMoney").attr("disabled", "disabled");
+                    $("#ReadySendMoney").text('@Html.Raw(Html.GetTansByLan("packet-send-32", "Prepare Red Packet"))');
+                } else if (count > 0) {
+                    if (count <= 999) {
+                        $("#ReadySendMoney").removeAttr("disabled");
+                        $("#ReadySendMoney").text('@Html.Raw(Html.GetTansByLan("packet-send-32", "Prepare Red Packet"))');
+                    } else {
+                        $("#ReadySendMoney").attr("disabled", "disabled");
+                        $("#ReadySendMoney").text('@Html.Raw(Html.GetTansByLan("packet-send-33", "Up to 999 for quantity"))');
+                    }
+                }
+                $("#AmountSend").text(amount * count);
+            }
+        }
+        $("#ReadySendMoney").on("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var amount = $("#AmountDecimal").val();
+            var count = $("#CountInt").val();
+            if (amount <= 0 || count <= 0) {
+                $("#ReadySendMoney").attr("disabled", "disabled");
+                return;
+            } else {
+                $("#form1").ajaxSubmit(function (data) {
+                    $("#ReadySendMoney").attr("disabled", "disabled");
+                    if (data.statusCode == "1") {
+                        $("#OnlyCode").val(data.OnlyCode);
+                        $("#J_modal_add_purchase").attr("action", "/Packet/" + data.OnlyCode)
+                        $("#J_modal_add_purchase").submit();
+                    } else {
+                        swal({
+                            text: "发送失败：" + data.statusCode,
+                            type: "error",
+                        }).then(function (value) {
+                            location.reload();
+                        });
+                    }
+                })
+            }
+        })
+
+        function openModal(modal, cb) {
+            modal = $(modal);
+            var isPopup = modal.hasClass('m-packet_popup');
+
+            var overlay;
+            if ($('.popup-overlay').length === 0 && isPopup) {
+                $('#J_popupContainer').append('<div class="popup-overlay"></div>');
+            }
+            overlay = $('.popup-overlay');
+
+            overlay.addClass('modal-overlay-visible');
+            modal.show().addClass('modal-in');
+            // excute callback
+            if (typeof cb === 'function') {
+                cb.call(this);
+            }
+        };
+    </script>
+}

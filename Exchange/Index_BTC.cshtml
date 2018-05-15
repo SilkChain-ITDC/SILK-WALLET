@@ -1,0 +1,935 @@
+﻿@using SKC.Entity.DBModels
+@model SKC.Entity.Models.ExchangeDateInfoModel
+@{
+    ViewData["Title"] = "Index_BTC";
+    SkcUser user = ViewBag.Account as SkcUser;
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<!-- begin::Head -->
+<head>
+    <meta charset="utf-8" />
+    <title>SilkChain - Exchange @SKC.Common.GlobalConfig.Coin_ShortName/BTC</title>
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <environment include="Development">
+        <link href="~/css/vendors.stripped.min.css" rel="stylesheet" />
+        <link href="~/css/style.bundle.min.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/css/vendors.stripped.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/style.bundle.min.css" rel="stylesheet" asp-append-version="true" />
+        <link rel="shortcut icon" href="~/favicon.ico" />
+    </environment>
+    <style type="text/css">
+        html, body { font-family: "Open Sans"; color: #676c7b; font-weight: 400; }
+        .m-portlet__head-desc, .btn { font-family: "Open Sans" !important; }
+        .sub-title, .m-portlet__head-desc, table th, .sub-title-18 { color: #575962 !important; }
+        .sub-title { font-size: 16px !important; }
+        .sub-title-18 { font-size: 18px !important; }
+        .display-table { display: table; width: 100%; }
+        .display-table > div { display: table-cell; vertical-align: middle; }
+        .desc-info { color: #999999; font-size: 12px; }
+        .des-deposit span { display: block; }
+        .m--font-pending { color: #aaaaaa; }
+        .m--font-fail { color: #f4516c; }
+        .bold, .sub-title, .table thead th, .m-tabs-line a.m-tabs__link.active, .sub-title-18, .m-tabs-line a.m-tabs__link:HOVER { font-weight: 700; line-height: 24px; }
+        .m-tabs-line a.m-tabs__link { font-size: 16px; }
+        .m-tabs-line a.m-tabs__link { text-transform: uppercase; }
+        .p-content { font-weight: 400; }
+        .btc-color { color: #ffb119; }
+        .eth-color { color: #6f7cba; }
+        .ezt-color { color: #333333; }
+        .m-portlet .m-portlet__body { color: #676c7b; }
+        .m-portlet .m-portlet__head .m-portlet__head-caption .m-portlet__head-title .m-portlet__head-text { font-size: 18px; font-weight: 500; font-family: "Open Sans"; color: #575962; font-weight: 700; }
+        .table th, .table td { border-top: 1px solid #cccccc; }
+        .m-portlet .m-portlet__head { border-bottom: 1px solid #cccccc; }
+        .eztImg { background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RDlGNTJBRkUxREI5MTFFODk4MTRFMkZCREMzRDkwOTciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RDlGNTJBRkYxREI5MTFFODk4MTRFMkZCREMzRDkwOTciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpEOUY1MkFGQzFEQjkxMUU4OTgxNEUyRkJEQzNEOTA5NyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpEOUY1MkFGRDFEQjkxMUU4OTgxNEUyRkJEQzNEOTA5NyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pn8JDqIAAALJSURBVHjahJVrSBRRFMdnZsdMDALNIuhltVCkspAVWFFYH7IgoigoDAlTsHf2/BAUUVRoRUSBUmEPgooIv1Rfan3QhzDoQwjSag/bAmuFIMNy3bn9D/wnLsOdOvDbuTv33nPvPXPO/9rzm15ZIRYDu8F04ILffD8WpEECXARvTZNdw7t80AKKwUNwAnwKjImCevAMtIPt4Jc+wAlMWAq+giSYAQ6ACDgIOsFzsAv8BHVgKsgGKVAU5ngZ6ACbOGk1GATvQQMYpZPL4DNPsRhsBEfAGzAvGIoJ4DHYyuNPBI/AGPY/4IIWj18OpoBWPq+AcdyY+FL+jiWmd8Ed/q/XnHbRaYyxXQHead9jB9vnGK5bfijKuEoNHSgezbdjfL7mRLGTWv95zpFQrgNzPGXNcnj8pxx01pAlL8BstifxyG2GcfIdrIxSXblZTq04LgTXmRGFhgmTwUe2f4AhZkzQFsgGHMu+mfZUVBxn8QvPDSmUQyyIRvCd72pDxkZt23oJx/kuc1KsGVSDhYHB4qSfCwwwnsrgVLLqiaSkjc261v/NA6fAF+5a0muvYZwKFkgu2zWG3YpdADZ1QapuH/M3aGtAhWgKVkg7jJ+UZk/Ijm/wOZ5V9zcDDNYLp4uwi0Fx/IGx7WQ7aP1aullMt6RhnBRSIuOpqrwcNyGOb4NV7DxqmCB60Mv2ANNtuWHcYfmJOHbp0Eim2WEBfAPXwD3G84w24TSfJVxE7LjWv59zpGha0egZHvX6fK3YBraASv6/BEbYLgX3qV59FCG/kET9mtgWGVgCqiJIZj/dUpTJOBimwq2noORRGuMUpjLOkThv5vidlIMiP+30PG6jkMRZLHVUr5lgA1jL62kPJTWpSWoFQ9UddoN0UGimURobmY4N1JJyplwOuMqMkf4Chuqfd16KyR5jhbXwevIv02zeJhLvlWGX6R8BBgB+9rPf+IsnXQAAAABJRU5ErkJggg==) no-repeat center center; }
+        .btcImg { background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAADAklEQVQ4jX3UTWhcVRgG4Gdu7kx+JylpCpkmbcFqxJ9uStUSEgV1IypixHahCLoRFVyoK1FRF7pUUMGVbvwpItW6klCTLhIsgmigUkSDIGpIInHS/E8yuS7Ozcxk8vPCXdz3nO/9vvN+53yZ5ELBPngMD+I2HEq5RfyEb/EJ/tstMLOH8BN4BTfslxVFvIkPUNpPOMZ3uDOsxmwssFyktYvlf4nQdoTNjdq4P3E3JreIqGaxBaMVUYJocw83PUc2T9/THDvL2gKSWuGjGMOJ3YQvYYBMVXShSMsRTr5P3MqpD7nltcAnicregG78WC/8qNCgUEmySdxOc46okWSdOE+pyPo1GrA8nepuE88Kflc8nkUXKM2F498/SXmV8hK5zuBplA3h81e4+ha/f07H4bT6bbguwtmKKDQ0U17h6ttBKHcwVBVlKS2FPR23cvozuk+Hhu7EqxEe30bFbSQbjL7Mb++l7pQZGeDLAuMPs5nerL7nKZXUNRIGI5zcRiVlMg3k1RwxYXacqQX++DpYBOsLdRZXcCBG565LGVVPMw3c/hE3z9B7D9n2wP99PhSbiUNBVbTE9spZn6VwX7AgylXp488wfYnycrg9NYiEt78HUiuSMsOn+OIYnxaYeCnwPQ9RuJeVufrAUoQrO6qLYpZQmq/SG4usC1+pWOWbD1NWj/kYX+GuKrfJ2jWOD9DzQJorov8cS3/R2EnvULp1lX+GaWqpF57IJBcKzViuUOXV0O2hWeIDuxoEVqcYG2LmMvne+uYNRljBCxUqytF4kPEzjAzy84tsrvPDU8Ga4gTD/VzsZ/Yy+Z560W8wFqc/7+B1tMs0kMkwfZH5dNBEWWZGyHWw2sTk93TlaOsNc2U7niTM3y3cgVGSbklCUzfxYmja1vP+5Q3WZjmUJ9daXymcwRw7B/2NwlwNsyPKhmm2VKSti6V00OePBnu24xGcrzhat/grrse7CMENzbQXQpJ8gdZCveg59NWK7lZxLU7g2dSiAlpTvoQp4f5/jOHdgv8HCjP8rQKU8X8AAAAASUVORK5CYII=) no-repeat center center; }
+        .ethImg { background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAADIElEQVQ4jX2VW2hUVxSGv733nMycMTNjgmIuEy8NQhq1VpSxOFVR0bYgoka84gVE7JuIL31QCKIUC0Jt8UZ9EqQPpYVAHiQgim3QMlhDq+IVLzWXiUk0M8dxxnjO6cOkw8yZPVkvB/611rfX3uz9H3HgcBcTRBxYD3wGTAUUMAL8BVwGOio1+irom4B9wJoK+RjwNfAPcAY45y2QmqZLwC/FUCHAcVxsx0WIktp5wNnxHdRMBO4CtutGfJf9gGW9x7bL4AALgATQrAN3AKu9HUpJXvSmWPn5THZtnkd/0sJ1dUvTDHR7wV8A67yVQgiGRjJE68Ns29DKivgM4rEofQMWUpaPDUwDvi0Gn9FVOY5LKp1j345PC9ruLZ9gGJJMZkx3JADfAA0S2Ah85M0qJfm3d5R4rIm5H08t6DWRAFvWt9I7kEZUIAPtEtjtVYWA16NZGupC7N+5oKxr3ZrZxGNR+pMWUg9fLoGFZbILo6ks29vmEqqu0o60bcMcAMZsR5eulUCtVx1+845F8+tZsqhRCwWYEY2waW0LycG3urQpgbK9mAGDN6ksnV2PSKVzWvCV359x9+EQkbBflxYSKFvSpwRVhqJv0OJQ+xV+7bxfyN281cveg53cfzxM0DQqXbucD7gDLC9WlZK8eJmibW0LX65o5tRPCR48GUYpSd+AxZ6t85k9q4ajJ/9AKS14VJL3hZJQSmCaPk78eINQdRUn21cxs2ky/irFqWOrWbq4iROnb5KycgT8Wh/7Wxw43BUgb4VmCVwKXo1kCJoG5777qqTr+Pfd9NxNMr0xgq2/FTEJZMm/lpKwHZcptUFeDWW4cKmnoF/tfk7idj+NdaFK0A4g8f+T/gF46a1wHJdoQ5iOyw9J9PTRn7Q4f/E29dOqJ3p1O6HU6JcB14DpxVVSChrrQ/z82z2kElRPMjBNH45TZnE20AakodQ2nwKLx7+FcF2XSUGDTHaMVDpHJOzXQR1gJUW/Kq/RDwCtwDHAKoxiuwT8PoKmgW2XQc8CLcD1YlF3V7LAEfLnvp+8V9cB4fFB0sAg8CdwHrinYfAfhyjzYwYT1iQAAAAASUVORK5CYII=) no-repeat center center; }
+        .ethImg, .btcImg, .eztImg, .io-copy { display: table-cell; width: 22px; height: 22px; }
+        .io-copy { background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAWCAYAAADNX8xBAAAA8ElEQVQ4je3UIUuDURSH8Z/zBZUVET+FzCqYDILBomAQ0TQQ25qIwaJNxj6A1aoi2vwIdoNNMBkWBBnDKRre9+LLZY47k2FPu3/Oebj3wD1jm1t1JbZxiK7fmUIPy2iHMIuKDrCAzgDRPK5wg1W8QqVP4SBJ4B4t3KIablTDLiYxkyAJXBY911jLcC5/UhtLCYIvzBU9MI2LDOO4K8L3BNEjToo+OEUzHnYKPfmwyxz1G/afGIlGon8lir/ICzbwNIRjFh+xqI4GVhIE6/IV0sFOLHrGfuJNFrEXDhVM+FkJqVTxWQ4ynOEBb0OKjsvBN4ivJqgh4BhAAAAAAElFTkSuQmCC) no-repeat center center; width: 18px; }
+        .m-nav > .m-nav__item > .m-nav__link .m-nav__link-text { color: #676c7b; font-weight: 300; font-size: 14px; }
+        .m-topbar .m-topbar__nav.m-nav { float: right; }
+        .m-dropdown--open #plusMenu img { -ms-transform: rotate(45deg); -webkit-transform: rotate(45deg); transform: rotate(45deg); -moz-transition: all 0.5s ease; -webkit-transition: all 0.5s ease; -o-transition: all 0.5s ease; transition: all 0.5s ease; }
+        .m-dropdown #plusMenu img, .m-dropdown .m-topbar__userpic img { -moz-transition: all 0.5s ease; -webkit-transition: all 0.5s ease; -o-transition: all 0.5s ease; transition: all 0.5s ease; }
+        .m-topbar .m-topbar__nav.m-nav > .m-nav__item > .m-nav__link .m-topbar__username { font-size: 16px; color: #676c7b; text-transform: none; }
+        .m-dropdown--open .m-topbar__userpic img { -ms-transform: rotate(180deg); -webkit-transform: rotate(180deg); transform: rotate(180deg); -moz-transition: all 0.5s ease; -webkit-transition: all 0.5s ease; -o-transition: all 0.5s ease; transition: all 0.5s ease; }
+        .m-topbar .m-topbar__nav.m-nav > .m-nav__item > .m-nav__link .m-nav__link-icon > i::before { background: #000; background-clip: border-box; background-clip: text; text-fill-color: transparent; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .m-nav > .m-nav__item > .m-nav__link, #m_header_topbar_item_dropdown a.m-btn--link i { color: #000; }
+        #m_header_topbar { width: 100%; }
+        #m_header_topbar_item { display: table-cell; vertical-align: middle; text-align: right; }
+        @@media (max-width:992px) {
+            .m-header--fixed-mobile .m-topbar { margin-top: 0; top: -60px; }
+        }
+        @@media (max-width:768px) {
+            #m_header_topbar_item_dropdown { margin-left: 4px; }
+            #m_header_topbar_item { text-align: left; }
+            #m_header_topbar_item { width: 100px; }
+            .lblUserName { display: none !important; }
+        }
+    </style>
+</head>
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+    <div class="m-grid m-grid--hor m-grid--root m-page">
+        <link rel="stylesheet" type="text/css" href="/css/exchange.css">
+        <header class="m-grid__item m-header " id="marketStatusQueue" data-minimize-offset="200" data-minimize-mobile-offset="200" style="position: relative;">
+            <div style="display: table;width: 100%">
+                <div style="display: table-cell;width: 200px" id="logoMenu">
+                    <div class="m-stack__item m-brand" style="padding: 0px 0px 0px 20px;">
+                        <div class="m-stack m-stack--ver m-stack--general">
+                            <div class="m-stack__item m-stack__item--middle m-brand__logo" style="width: 30px">
+                                <a href="/home" class="m-brand__logo-wrapper">
+                                    <img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QUM3MEJDQ0YxREI5MTFFOEJEMUVDNjEyMjkzQkM5NjAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QUM3MEJDRDAxREI5MTFFOEJEMUVDNjEyMjkzQkM5NjAiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpBQzcwQkNDRDFEQjkxMUU4QkQxRUM2MTIyOTNCQzk2MCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpBQzcwQkNDRTFEQjkxMUU4QkQxRUM2MTIyOTNCQzk2MCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqsT/joAAAQYSURBVHjapJdpbE1BFMfvva1SpWJtq7YoHxBFagm1tETaxi5E7EuVtrYPqCJCibWWkFhjqz3EkqBC0dqDIq2m1hBFilZprVV913/if2VM3nu34iS/zJ15M3NmOXPOeXrI1kytAlIdjAUDQRDrXsAEP0AJeAAOg0NscyuGze+VQSonXg++gXVgCOgEOoMRYAuoClJAKdj9P4oXgO+gJYgCHqAf2AAyuMNckAaSQU+gg9FgME9jvKvJPV20X+BEMWC71N4NhIHmoAuP9AZ4xDF3wD6SBHaCHmBcRRTnAX/gCz6xLZa7qib1EzuuBCZIbW9BPDgGFoKD7NeIG3F51OmgDvCRlJ4AmxWlt3gFrcArqd0PHAVbWX8IAkC4cnJ/KV7MY2wIyqT21sri7tGoNB51CHit9Gkjfb8BbUE0GKkqrkdjmgjeS4MSQVOp/gFEAAcXKSz7HRikKO4kK4Fk8ap2qYr3gOtgBy1zH49wuTLhClAAGvNazvI93wYblb7WHFZ7AsgHq00qDuQulrHDLK420InhXWO5iGUNMI3faU76B9LYhrIudh1v6LpuUEkhOM0fZ7p52wUsg6S2Fizfuxk3V/v9sDeVO0yvOt6ew4TiSB6ZkD60TFfizzJHMTbNZlw7YYS4Q4eHoWcVffsZZdB4Mtihq42n6y55NSHlYBu/I23GdmR5/afDDDZ4T9lsvGgzeD5owmNtTjc6AzTji3AlYoFXLR+g65q/QX9cJBnIATcTVKHzEE7mKQimpT+xWfAqcJ/fL8V4Z0HCtJmkLiexyg4VGOM0Oold1GK9t/LwVflIH34evOA1CePqZaMnQfKAwjMWCsXFPDJNdeROZA19uDAub+n40lVfrIiHZLgdTVPLF4qfM3QJuWKj+DLLOdLqp/L7jM3YWyxD8aTuG3Qc1lNIpVN3JdZvrZQ3qtFnuxIRp+/AEDzKTTPYz6dSqsGYKay0LzuttTEsTbHiXJa13YxbSbON89T10u/ljsMGQ5rwXPMkf3qIQV2VUJZJLIuZClmGqcpbxuYjooL3myDcZuGXMtN6TmMYY6NZH073OFeZKJG7zmNwj2DsFk9qitJ3FOeIld6yqM/GHf8Ji++YCGyXjtMKg8+kek1wjimTcLM3mWEcd2JI+xU7mC0nf7IDWcjJXii5WI4yaVsmeBpjcaaTEJqtBJa73NR+VzlXOIN1GXcnZACvoETq154G9hjUl9qFvfRndmqlTfm0oRi7vDqIwUL478ls20kvFcaT2ctM5St/S2T0aQBOcswS7jzFWeTS3fyFEVa+lEc/iXdbERnBrNSX+XTKvyT0GlOhZP4fOstAcAmcYo5VwF0HMLnvR+vW+Jcmzt3qPG1WX8YM0lq9uO/pzLvlP22fmbiPp0MqtTuWXwIMACm6AwBo6suuAAAAAElFTkSuQmCC" />
+                                </a>
+                            </div>
+                            <div class="m-stack__item m-stack__item--middle ">
+                                <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="click" aria-expanded="true" style="position: relative;width: 100%;border-right: 1px solid #cccccc;">
+                                    <a href="#" id="logoLink" class="m-portlet__nav-link m-dropdown__toggle btn m-btn m-btn--link text-left" style="width: 100%">
+                                        <span style="font-size: 16;font-weight: bold;color: #575962">@SKC.Common.GlobalConfig.Coin_ShortName/BTC</span>
+                                        <br />
+                                        <span class="market_sub" style="color: #575962;font-weight: lighter;">
+                                            Select market
+                                        </span>
+                                        <span class="m-topbar__userpic" style="position: absolute;right: 15px;bottom: 17px;">
+                                            <img alt="arr_down" src="../images/ba-header/ic_down.png">
+                                        </span>
+                                    </a>
+                                    <div id="dropdownMenu" class="m-dropdown__wrapper" style="width: 250px">
+                                        <span class="m-dropdown__arrow m-dropdown__arrow--right" style="right: 22px"></span>
+                                        <div class="m-dropdown__inner">
+                                            <div class="m-dropdown__body">
+                                                <div class="m-dropdown__content">
+                                                    <ul class="m-nav">
+                                                        <li class="m-nav__item">
+                                                            <a href="../exchange/ezt-btc" class="m-nav__link">
+                                                                <i class="btcImg"></i>
+                                                                <span class="m-nav__link-text" style="padding-left: 10px">@SKC.Common.GlobalConfig.Coin_ShortName/BTC</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="m-nav__item">
+                                                            <a href="../exchange/ezt-eth" class="m-nav__link">
+                                                                <i class="ethImg"></i>
+                                                                <span class="m-nav__link-text" style="padding-left: 10px">@SKC.Common.GlobalConfig.Coin_ShortName/ETH</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: table-cell;vertical-align: middle;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td class="text-center">
+                                <div class="table-cell-middle buy-color">
+                                    <span class="market_title" id="ezt_price">0</span>
+                                    <br />
+                                    <span class="market_sub">@SKC.Common.GlobalConfig.Coin_ShortName price</span>
+                                </div>
+                            </td>
+                            <td class="text-center m--hidden-lg">
+                                <div class="table-cell-middle buy-color">
+                                    <span class="market_title" id="24_ezt">0</span>
+                                    <br />
+                                    <span class="market_sub">24 hour price</span>
+                                </div>
+                            </td>
+                            <td class="text-center m--hidden-lg">
+                                <div class="table-cell-middle buy-color">
+                                    <span class="market_title" id="last_trade_btc">0</span>
+                                    <br />
+                                    <span class="market_sub">Last trade price (BTC)</span>
+                                </div>
+                            </td>
+                            <td class="text-center m--hidden-lg">
+                                <div class="table-cell-middle buy-color">
+                                    <span class="market_title" id="last_trade_eth">0</span>
+                                    <br />
+                                    <span class="market_sub">Last trade price (ETH)</span>
+                                </div>
+                            </td>
+                            <td class="text-center m--hidden-lg">
+                                <div class="table-cell-middle buy-color">
+                                    <span class="market_title" id="24_volume">0</span>
+                                    <br />
+                                    <span class="market_sub">24H volume</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="display: table-cell;width: 57px;vertical-align: middle;padding-right: 20px">
+                    <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light text-right" data-dropdown-toggle="click" style="list-style: none;">
+                        <a href="#" class="m-nav__link m-dropdown__toggle">
+                            <span class="m-topbar__username">
+                                <img alt="user_logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACUAAAAkCAYAAAAOwvOmAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+nhxg7wAABJ5JREFUWIWt2HvMlnMYB/DP+6IjlcZUWm9NW+XQohHyKlkOObVoQ2EdZFNjCyPJwhC2ZMv8wWKMjVapFCpGZToIJYflWCopU5HE6s0f132vt6f7ue/nfefanj3Pnt/1u+7vff2uw/f6Vd02bqJGyKkYiFp0w8logwPYjY34CkvxDn5uiPGjG6DbBDfhdpyFf7Aay7EJu3BUAq4LzsQNqMIHeAbzcfD/AjUEU9EJC/Co8MDegn1tcQ1uxVx8irFYkbepusBoK7yOWeI4euIqzK4AEPyOF3E++guvfYQpchySB6pGvNFlGIZBWF8BkHLyIc7BRNyFt3FclmI5tB2xDHU4F1+X0avBAHTGSfgTn2Ee9mTo7xde+kR4fxEuVuL1LFCtsSQx0E925gzApGT9IH7FNhyPu7FDxOAqEeR1JfuXiOxdhDniFA6ki1nHNwPtcEkZQFMSoy0xGu3RQWRkl+SzEpPxnojF3hl2VmGo8NSk+guloK4XmTYG32UYugP34gH0SV5ge4nOTyIZWiQ6fwiPtM+wtxiPiTjrlf5ZVa94Nse3WCPSuFRaYrOoNTdnrJeTtvgez+H+jPUmWCtCoD+He2qkOLZ7yhjvJwrj9AYAIsrCPFxeZv1f4f1+WaDGifqzoczmGhGMaxoIisjI7jnr80XsjasP6uxk04ycja1Fmh/I0Skn29FMFOMsOSiK7JVok4K6VATkkhzDexNgxzQCVFoSqnJ0ZqMp+qegakVj3Z+zaWPy3a4RoFom33/l6PwgGnttCqoHPi8wnMZat0aAOlFQmryXJtpY9xRUR8WcJ3V9TSNApTWqdYHeRnSqThSrREzlyQhsFayhofI0jsW1BXq70KraoWzKC0KiCP4iu9EWySZxdC0K9KpQV508ZL9i136B02S3iyK5QGRWEfVpg11pTG0V9CNPXhNHvC4BV6lcgXcFN1taoNsZW1JQawWrzJPtOF14dUQDQI0VFX2AIylMqfTEuhTUavQVLs6THYJBDqoQUDNxdAvwd4Fud0GBVqagForsGFjBg2aKunZhBbojE7uzKtAdLIAvTkGtEQ1xdAWb5wg6O7VArxUewsv4pkC3GqMEm9hbnyVME+SsR4GBOsE+e8svpLU4QZC4IhmCrgmGw6jLK6KiTqvAyM7kO29uTBv3zhwdIu6eFOx0RSmofRgvuPktBYa6iqK7LUdnSz3dPHlEtLk70z9KOfqbeAPP4owyRqpFSVghv+uvFdk6KkdnsJgBH1Qv7rKmmTGCRizEKSVrzfC8GCon5zyMoLkPiwy8z5FtrBavinH+ifoLWaB2i6l4n5jZeon6NUq0muHJ7zxCmMr05IGP42MxkFSLhFooxqxhSi49yo3tW3GR6NrLhOdeEONTH7xUAaBUJghm21yExwZRVpYL+nvEnUTeXcJmnCdIfQdRx8YrJoNZskjEzm9iWH0qAZQZk0W3LntwowjIpiJ438J1imkIQXdGiaRYjB/Fi06QM4BUej81V9ySDBeXZjNFIK/Cl7IvzXqJBluF93F18kL/26WZBMSM5NND1LO+4u5pqEPXi7sSkOtFaVmkgdeL/wHhRQ+ZfXaS2gAAAABJRU5ErkJggg==">
+                            </span>
+
+                        </a>
+                        <div class="m-dropdown__wrapper" id="dropdownLogout">
+                            <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--right-color" style="right: 0px"></span>
+                            <div class="m-dropdown__inner">
+                                <div class="m-dropdown__header m--align-center" style="background: url(https://wallet.silkchain.io/theme/metronic5/assets/app/media/img/misc/user_profile_bg.jpg); background-size: cover;">
+                                    <div class="m-card-user m-card-user--skin-dark">
+                                        <div class="m-card-user__pic">
+
+                                        </div>
+                                        <div class="m-card-user__details">
+                                            <span class="m-card-user__name m--font-weight-500">
+                                                @user.UserNameNvarchar
+                                            </span>
+                                            <a href="" class="m-card-user__email m--font-weight-300 m-link">
+                                                @user.EmailNvarchar
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-dropdown__body">
+                                    <div class="m-dropdown__content">
+                                        <ul class="m-nav m-nav--skin-light">
+
+                                            <li class="m-nav__separator m-nav__separator--fit"></li>
+                                            <li class="m-nav__item">
+                                                <a href="/Account/logout" class="btn     btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">
+                                                    Logout
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </div>
+            </div>
+
+            <div class="m-container m-container--fluid m-container--full-height" style="display: none;">
+                <div class="m-stack m-stack--ver m-stack--desktop">
+                    <!-- BEGIN: Brand -->
+                    <!-- END: Brand -->
+                    <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav" style="position: relative;box-shadow: none; ">
+                        <div class="m-loader m-loader--brand" style="width: 30px;display: none;left: 0px"></div>
+                        <!-- BEGIN: Horizontal Menu -->
+                        <button class="m-aside-header-menu-mobile-close  m-aside-header-menu-mobile-close--skin-dark " id="m_aside_header_menu_mobile_close_btn">
+                            <i class="la la-close"></i>
+                        </button>
+                        <div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-light m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-dark m-aside-header-menu-mobile--submenu-skin-dark " style="vertical-align: middle;display: none;">
+                        </div>
+                        <!-- END: Horizontal Menu -->               <!-- BEGIN: Topbar -->
+                        <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
+                            <div class="m-stack__item m-topbar__nav-wrapper m-stack__item--middle text-center">
+                            </div>
+                            <div class="m-stack__item m-topbar__nav-wrapper" style="width: 185px;text-align: right;display:none">
+                                <ul class="m-topbar__nav m-nav m-nav--inline" style="width: 100%">
+                                    <li class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light m-list-search m-list-search--skin-light" data-dropdown-toggle="click" data-dropdown-persistent="true" id="m_quicksearch" data-search-type="dropdown" aria-expanded="true">
+                                        <div class="m-dropdown__wrapper">
+                                            <span class="m-dropdown__arrow m-dropdown__arrow--right"></span>
+                                            <div class="m-dropdown__inner ">
+                                                <div class="m-dropdown__header">
+                                                    <form class="m-list-search__form">
+                                                        <div class="m-list-search__form-wrapper">
+                                                            <span class="m-list-search__form-input-wrapper">
+                                                                <input id="m_quicksearch_input" autocomplete="off" name="q" class="m-list-search__form-input" value="" placeholder="Search..." type="text">
+                                                            </span>
+                                                            <span class="m-list-search__form-icon-close" id="m_quicksearch_close">
+                                                                <i class="la la-remove"></i>
+                                                            </span>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="m-dropdown__body">
+                                                    <div class="m-dropdown__scrollable m-scrollable mCustomScrollbar _mCS_3 mCS-autoHide mCS_no_scrollbar" data-scrollable="true" data-max-height="300" data-mobile-max-height="200" style="max-height: 300px; height: 300px; position: relative; overflow: visible;">
+                                                        <div id="mCSB_3" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" style="max-height: 300px;" tabindex="0">
+                                                            <div id="mCSB_3_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;" dir="ltr">
+                                                                <div class="m-dropdown__content">
+                                                                </div>
+                                                            </div>
+                                                        </div><div id="mCSB_3_scrollbar_vertical" class="mCSB_scrollTools mCSB_3_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_3_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light text-right" data-dropdown-toggle="click">
+                                        <a href="#" class="m-nav__link m-dropdown__toggle">
+                                            <span class="m-topbar__username">
+                                                <img alt="user_logo" src="data:image/png;base64,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"><span class="lblUserName" style="margin: 0 10px;text-overflow: ellipsis;overflow: hidden; width: 60px;display: inline-block;white-space: nowrap;vertical-align: middle;"> wugege </span>
+                                            </span>
+                                            <span class="m-topbar__userpic">
+                                                <img alt="arr_down" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAKCAYAAABrGwT5AAAAp0lEQVQokY2OUQ3DMAxEX8JgFEKhFFYIk4KgYZBVARBtYRAGkQohGEphFEZhP+7UVt2a+/Od39kqptIBr+Dtm0bFVC6A0UAGqhitYAWyBhxgxGhRlX2ng7cz0AMmppJPrmYB++DtrFZBJ61T8Nb9AG8LCKCXUAwHDPsPZB4At4AbWAomYFwXrMBR8q8UB4qp3IEHMMmrY/D2ud87hHcFh+CpYirXf/kHQPNE/FYrH2sAAAAASUVORK5CYII=">
+                                            </span>
+                                        </a>
+                                        <div class="m-dropdown__wrapper">
+                                            <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--right-color" style="right: 0px"></span>
+                                            <div class="m-dropdown__inner">
+                                                <div class="m-dropdown__header m--align-center" style="background: url(../metronic5/assets/app/media/img/misc/user_profile_bg.jpg); background-size: cover;">
+                                                    <div class="m-card-user m-card-user--skin-dark">
+                                                        <div class="m-card-user__pic">
+
+                                                        </div>
+                                                        <div class="m-card-user__details">
+                                                            <span class="m-card-user__name m--font-weight-500">
+                                                                wugege
+                                                            </span>
+                                                            <a href="" class="m-card-user__email m--font-weight-300 m-link">
+                                                                huidodo@126.com
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="m-dropdown__body">
+                                                    <div class="m-dropdown__content">
+                                                        <ul class="m-nav m-nav--skin-light">
+
+                                                            <li class="m-nav__separator m-nav__separator--fit"></li>
+                                                            <li class="m-nav__item">
+                                                                <a href="/Account/logout" class="btn     btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">
+                                                                    Logout
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- END: Topbar -->
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="m-grid__item m-grid__item--fluid m-wrapper" style="background-color: #272836;margin-bottom: 0px">
+            <div class="m-content">
+                <div class="row" style="padding: 0px; margin: 0px">
+                    <div class="col-lg-3"
+                         style="padding-bottom: 20px; padding-right: 0px; padding-left: 0px; background-color: #2C2E3E">
+                        <div class="box_exchange">
+                            <div class="header">
+                                <div class="panel">
+                                    <span> SELLING ORDERS </span>
+                                    <p style="margin: 1px 5px 0px" class="fs12" id="totalSOrder">
+                                        (0)
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="body" id="sellOrderBook" style="min-height: 200px">
+                                <div class="m-loader m-loader--brand"
+                                     style="width: 30px; display: none;"></div>
+                                <table id="orderSell">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 33%">Market size</th>
+                                            <th style="width: 33%">Price (BTC)</th>
+                                            <th style="width: 34%">My size</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="box_exchange">
+                            <div class="header">
+                                <div class="panel">
+                                    <span> BUYING ORDERS </span>
+                                    <p style="margin: 1px 5px 0px" class="fs12" id="totalBOrder">
+                                        (0)
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="body" id="buyOrderBook" style="min-height: 200px">
+                                <div class="m-loader m-loader--brand"
+                                     style="width: 30px; display: none;"></div>
+                                <table id="orderBuy">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 33%">Market size</th>
+                                            <th style="width: 33%">Price (BTC)</th>
+                                            <th style="width: 34%">My size</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" style="padding: 0px;background-color: #2C2E3E;border-left: 2px solid #272836;border-right: 2px solid #272836;">
+                        <div class="row" style="margin: 0px">
+                            <div class="col-lg-12" style="padding-right: 0px; padding-left: 0px;">
+                                <div class="box_exchange">
+                                    <div class="header">
+                                        <div class="panel">
+                                            <span> Price chart </span>
+                                        </div>
+                                    </div>
+                                    <div class="body" id="chartOrder" style="padding: 0;background-color: #292b3a">
+                                        <div style="overflow-x:auto;border-top: 1px solid #363a54;background-color: #303244">
+                                            <div class="chartDetails">
+                                                <div style="min-width: 100px"><span id="s_time">00:00</span> - <span id="e_time">00:00</span> <i class="la la-arrow-right" style="font-size: 12px"></i></div>
+                                                <div>O: <span id="open">0.0000</span> </div>
+                                                <div>H: <span id="high">0.0000</span></div>
+                                                <div>L: <span id="low">0.0000</span></div>
+                                                <div>C: <span id="close">0.0000</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="m-loader m-loader--brand"
+                                             style="width: 30px; display: none;"></div>
+                                        <div id="marketChart" style="width: 100%; min-height: 215px"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin: 0px;border-top: 2px solid #272836;">
+                            <div class="col-lg-6"
+                                 style="padding-right: 0px; padding-left: 0px;border-right: 1px solid #272836;">
+                                <div class="box_nm">
+                                    <div class="header">
+                                        <div class="left">
+                                            <span class="col-form-label">Balance: </span><span class="btc-color balance_btc_output fs16">0</span><span class="btc-color fs16">BTC</span>
+                                        </div>
+                                        <div class="right text-right">
+                                            <button class="btn-sm btn btn-default m-btn--pill btn-exchange"
+                                                    onclick="onDepositBtc();">
+                                                Deposit BTC
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="body">
+                                        <form id="formBuy" method="post" action="/Exchange/SaveExchange">
+                                            <div class="m-loader m-loader--brand"
+                                                 style="width: 30px; display: none; z-index: 100000"></div>
+                                            <input type="hidden" name="OrderType" value="1">
+                                            <input type="hidden" name="OrderCoinType" value="@SKC.Common.GlobalConfig.Coin_ShortName">
+                                            <div class="form-group m-form__group">
+                                                <label class="col-form-label">Amount</label>
+                                                <div class="m-input-icon m-input-icon--right">
+                                                    <input class="form-control form-control-sm ipt-exchange"
+                                                           id="amount" name="OrderCount" type="text"> <span class="m-input-icon__icon m-input-icon__icon--right"
+                                                                                                        style="padding-top: 4px">
+                                                        <img alt="" width="20px"
+                                                             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUJCQjhFNTIyMTE1MTFFODgzMzZEMkM3MDg2RDhGMUIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUJCQjhFNTMyMTE1MTFFODgzMzZEMkM3MDg2RDhGMUIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QkJCOEU1MDIxMTUxMUU4ODMzNkQyQzcwODZEOEYxQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QkJCOEU1MTIxMTUxMUU4ODMzNkQyQzcwODZEOEYxQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PjFrR2UAAAXYSURBVHjarFgLbBVF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">
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group m-form__group">
+                                                <label for="example-text-input" class="col-form-label">Price</label>
+                                            </div>
+                                            <div class="form-group m-form__group">
+                                                <table style="width: 100%">
+                                                    <tr>
+                                                        <td>
+                                                            <div class="m-input-icon m-input-icon--right">
+                                                                <input class="form-control form-control-sm ipt-exchange"
+                                                                       id="bid_price" name="OrderPrice" type="text"> <span class="m-input-icon__icon m-input-icon__icon--right"
+                                                                                                                          style="padding-top: 4px">
+                                                                    <img alt="" width="18px"
+                                                                         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQyIDc5LjE2MDkyNCwgMjAxNy8wNy8xMy0wMTowNjozOSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpCQTQ3MEIwOUU2RkQxMUU3QTNGMEE4OEE2RkQ5RUIzNCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpCQTQ3MEIwQUU2RkQxMUU3QTNGMEE4OEE2RkQ5RUIzNCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkJBNDcwQjA3RTZGRDExRTdBM0YwQTg4QTZGRDlFQjM0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkJBNDcwQjA4RTZGRDExRTdBM0YwQTg4QTZGRDlFQjM0Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+z6BiPwAAAhNQTFRF/7EZ/////6YA/7Ul/7EY/7Ea/6gA/8JL/6UA/6cA/7Ic//79/7AW/7gu/7o0/9iL/9yW//bl/8tn/58A/9N+/5wA/6QA/7Id///+//rx/7Qi/+Cj/7Ib//36/9Bz//z1/6EA/92a/+e6/+7M//LX/85v/8lg/8pi/8hc/6kC/7Uk/707/7kx/8da/6oE/6sH/7Um/7Mf/8VT/7Qh/9B0/9SA/+e3/7w5/8xo/6sK//Te/8VU/6oG/74//8NO/64S/7Md/6wJ/8BF/7Me/9+g/9WC/+3M/9eI/68T/6gK/6kB/8RQ/7AX/8JK/64P/7o1/708/6MA/60M/6AA/9+h//DT/7Mm/8ZW/7oz/6oD/7EX/+vG/+Wy/6oF//Pc/74+/6oI/6sI/9iK/+/Q/+7L/+7N/9N9/7gs//jr/7Qg/5sA/60N/6oH/7cq/+e4/6sJ/+Su/96e/81r/60O/6wL/96f/8NQ/8RT/6IA//jq/6cB//bj/8dd/79C//fn/+Cl//v0//v1/9mP/7Yo/64Q/8ZY/+a0/89z/9J7/7Ia/+Sw//rv/7AV/8JM/7s4//bk//z4/68U/7cr/9aG/9R//7AY/7gr//z2/8NP/7Qk/8tl/70+/7cs/75A/6gB///9/7Eb//Pd/8FI/8tm/8NN/+Sv/+Wx/8BH/6wK/9WD/+i8/68S/7Yn/9F5//fo/68V////ERoDmwAAALF0Uk5T//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8A1/RcZAAAAktJREFUeNqMlYdT2zAUxiUldmyHpJlOM4CwCYSGXWZboBRKWS1d0L333pNu6N4DOqB7t/kTaxFbku30zu9yuU/6fnfPkt97Bmk2woWBKrdNiaGbgcKwzgKMLspzASZceUVZwc1lwBRlLWbQ0wWyRI3HADp94D/hc7JgrkPdDi0WhJwlvLApREhHLgNqHFjlii6tW14fXddspyQFS8mmWAvh+pVeuBHl0OylGlhA9/hFECaFZXA1z4CgIANeyKxi/aN9CX8lhFJwA/T4twGOkt45sDyzGAMP2iurmyBcsXYN/PykCx2QCFiOwWJ18e7rfAiVn/r38NqRNkoWK2CJqtErqI8fWwdJ9pI0yLep+id3caee7JYJaMsHhzUtPY4ndmG/p2nCdwuLP38HSe5GEKBni539jv2xoByX72C1cAHxGkAtBe2oR7Wl+ABWbxPEawVDLDgP24fkjtHgbkU4X6SI5wYRE/ih/9fU8ZeKGD9PX08EVJjAK+G7j+ZOXT8SI15FFpDE1U6Ro6A59fTwfceWSaeidhzspandJnCfXxRR8DeW7X30MK0suF27vZiQxPIMotfTQMHb8jPs1o3wPNrfjeVpkV54I+EkMf4Fux+HPw10Pp3BF7knRV8hKQru25tThvqJoue0KEiZ3Thx2cC9723maJmRwj0ZOccWLtx7bJaX2MLVWgHcS14irXC0+vV11BbStULaqz4jl+KZ5hI77JyhuSy3q/UBYH2kWB9SlsceHqQ1lgapEi0WR7P1Ya/7fLirjJ+PfwIMALFYHCuXcma9AAAAAElFTkSuQmCC">
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="font-size: 16px">~</td>
+                                                        <td>
+                                                            <input class="form-control form-control-sm ipt-exchange default-color text-right"
+                                                                   style="font-weight: normal;" disabled="disabled"
+                                                                   id="bid_usd" name="bid_usd" type="text">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <hr />
+                                            <div class="form-group m-form__group row" style="margin: 0px">
+                                                <label class="col-form-label col-2 f12" style="padding-left: 0px;padding-right: 0px">Fee</label>
+                                                <div class="col-10 text-right f12 default-color" style="padding-left: 0px;padding-right: 0px">
+                                                    <label class="col-form-label f12" id="bid_total_fee">0</label>
+                                                    BTC ($<label class="col-form-label f12"
+                                                                 id="bid_total_fee_usd">0</label>)
+                                                </div>
+                                            </div>
+                                            <div class="form-group m-form__group row" style="margin: 0px">
+                                                <label class="col-form-label col-2" style="padding-left: 0px;padding-right: 0px">Total</label>
+                                                <div style="padding-top: 5px;padding-left: 0px;padding-right: 0px" class="col-10 text-right">
+                                                    <label class="text-right" id="bid_total_lbl">0</label><span>
+                                                        BTC ($<span id="bid_total_usd_lbl">0</span>)
+                                                    </span>
+                                                </div>
+                                                <input class="form-control form-control-sm ipt-exchange text-right"
+                                                       id="bid_total" name="bid_total" type="hidden">
+                                            </div>
+                                            <hr>
+                                            <div class="text-right" style="padding: 15px 0px">
+                                                <div class="m-form__actions">
+                                                    <button type="submit" class="btn btn-info m-btn--pill"
+                                                            style="width: 100%; font-weight: bold;">
+                                                        BUY
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6" style="padding-left: 1px; padding-right: 0px">
+                                <div class="box_nm">
+                                    <div class="header">
+                                        <div class="left">
+                                            <span class="col-form-label">Balance: </span><span class="ezt-color balance_ezt_output fs16">0</span><span class="ezt-color fs16">@SKC.Common.GlobalConfig.Coin_ShortName</span>
+                                        </div>
+                                        <div class="right text-right">
+                                            <button onclick="onDepositEzt();" class="btn-sm btn btn-default m-btn--pill btn-exchange">Deposit @SKC.Common.GlobalConfig.Coin_ShortName</button>
+                                        </div>
+                                    </div>
+                                    <div class="body">
+                                        <form id="formSell" method="post" action="/Exchange/SaveExchange">
+                                            <div class="m-loader m-loader--brand"
+                                                 style="width: 30px; display: none; z-index: 100000"></div>
+                                            <input type="hidden" name="OrderType" value="0">
+                                            <input type="hidden" name="OrderCoinType" value="@SKC.Common.GlobalConfig.Coin_ShortName">
+                                            <div class="form-group m-form__group">
+                                                <label class="col-form-label">Amount</label>
+                                                <div class="m-input-icon m-input-icon--right">
+                                                    <input class="form-control form-control-sm ipt-exchange"
+                                                           id="amount" name="OrderCount" type="text"> <span class="m-input-icon__icon m-input-icon__icon--right"
+                                                                                                        style="padding-top: 4px">
+                                                        <img alt="" width="20px"
+                                                             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUJCQjhFNTIyMTE1MTFFODgzMzZEMkM3MDg2RDhGMUIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUJCQjhFNTMyMTE1MTFFODgzMzZEMkM3MDg2RDhGMUIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QkJCOEU1MDIxMTUxMUU4ODMzNkQyQzcwODZEOEYxQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QkJCOEU1MTIxMTUxMUU4ODMzNkQyQzcwODZEOEYxQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PjFrR2UAAAXYSURBVHjarFgLbBVFFN19bYG2og1gCSIo/holahEQMGqoIggaBb9gARH/ihUsgjQQqVIEtFWitlRQAUHwTzBYkFoN9QciYDQNCfijrTaxKpa20MLjeS6eJdfJ7Hv7Wm5y8ubNzsyevXN/M27/0u1OG+Ui4A4gC7gY6Gg8PwB8C2wG1gI/teUliXGOPwdYCNyk+v4CKoC9wJ+AC3QHMoBLgaFAAce+BDzJOSeUYBLwGjCe/78BCoF3gKMx5iYDk4BpwBRiATAryItDAcY8DLSS3DwggZp5KwA5kYNACXAe0AVYATwBRICR7dXgm8A4YAcwAqg3np8MDAEuAXoAvYEw8CtQC2wFtvEDRf6mNp+jWXwE5ANz4yXYgdsojpADvGg8v539lwXQ4GGgnCbxCft+ANKBYtpkBhUReIu3kNwNBjnx1l30Shu5IZYXJXErheQGOpAnDwGPAWOBN4Jq8H1gEDAKKFP9ZwA76aU2Ea1+TZxNezVlFLUnazWz73muWchIkB+NoHzNGDpGmcXeopF7W/0voBMUWMaeBKQogiJF/Ki5tNuNti3uza/YTNswZaIPufsUuU4qYM+ndkyRMaN9okUNFZNkI/isQUTCSWd+rbxsumVRiYNL1f+PgWXGjuy2zFtK++vEd3gyQc37H8ErgNuAXKCOfVcDDUBTlKD6gmov4DoSLycb/TZ5mTGynl4s8hmwhnM6a4K5/H3VsKNo8g/wPdun66822ltirCMhLU/9n+f+Z8C5za3hYwQlFd0IfMCXeu4/IMbCNSwIRIZpu4H0VfPrmKOjyUTumEhVOBL5McF1pmd0SzlG8HI+WK4mZAcIwNqjbSkvSBp0LPYn2luFn9SQ6/YRgreyf72Kd0EyhHh9GtsblPa9YmKHGtc1wHrXcTedRNddFwbLqj+asjwNVqmBWQG/WOJZP7ZlC59Rz/LasF43IJMa3CXbk9oh4UoheD4TuieNcWzLTNVeyHpP5Fz+SoiaHcd6LaotShvoZRJd7b4LLAEeCLDgCGprPv8/QtsrZqaQ7NAzILmpyiw8TsMTVcjQsiwgQS8cHVRZ41E60PI4NNdgGV8tISjknBgpIjFPchiI45FItHIrzei/N46F7wKeZlbJUf1T4tCiFCL3WKJEq7fFfdQDSXn3B1x4oyKRCizm9i5WJK8JaIeFzDrbFae9IXrLIDUwJQ7tLVLtPSo/38J2k09dGO1w5skFEl2E4BcMNZ5U+NmD5dy7U8WwRT7hpyIguXpW67IFmUKg+XC4MsSSyWF5L7IP+DLAguJl+1WlrMumASqIVwfIxSIfMho4RyPOaLGTM9OSPxWClRwwSQ1eHWDBozHONglxevEqr3EkEpnQMTHU1D016WdZ+BCwjqW+580lzKfRpJfSWrk6WnqnNs/YewTIxSuUKfQNuc5ZUkDva2g5/uWF/J3sk09tcgpwoSq9ioy46KhiONZO6NpzdiIYwv4K6w60Hif4OW8KhOhpyri7koifJ05T7VmcI2HndbX1ftX4g4x/p6oIIDXh2EjEmZHguo3JSSHHVbdbvegg5YxdpkgxMMPSLzHzFcPuwupIOdUy527e9ZhSSwVJuDliGnc1NTKMAdYUP8cp5cHbI+aRm+ND7hA91pQlJHetR87mfRJk3+NtwkhLQveTNTwbO4rcUz5jmxnAteRyJ2TeplhXH5IFvuLFjj6//gL0V95pyloWv+OjkFvPKxV9aH+cl0krbbbuV82I533Hg5QuAKReG8iP2GqZV2m5Y4lQK0N5OKtVz0qYgeQW7U7rwSfGFfBqXvMKseuB343nXUi4HwuCnrTBGtr0NqZDc0szSTqd1x35bb0fzGaFIQb8G88decb17ybTbmKUVcXq1DicVy3tumEt5RXFSsa0CG10HA9OsSSdMW83K/dsHhHcWOTiuaNuoY3MYa0nzjOYz/aTsO0SfbB3lFTXHTMtW95ugo6qdMaoy8ybuU1XWcJSI6uiMnrvnracJf4VYABgwWeDYajhRwAAAABJRU5ErkJggg==">
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group m-form__group">
+                                                <label for="example-text-input" class="col-form-label">Price</label>
+                                            </div>
+                                            <div class="form-group m-form__group">
+                                                <table style="width: 100%">
+                                                    <tr>
+                                                        <td>
+                                                            <div class="m-input-icon m-input-icon--right">
+                                                                <input class="form-control form-control-sm ipt-exchange"
+                                                                       id="ask_price" name="OrderPrice" type="text"> <span class="m-input-icon__icon m-input-icon__icon--right"
+                                                                                                                          style="padding-top: 4px">
+                                                                    <img alt="" width="18px"
+                                                                         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQyIDc5LjE2MDkyNCwgMjAxNy8wNy8xMy0wMTowNjozOSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpCQTQ3MEIwOUU2RkQxMUU3QTNGMEE4OEE2RkQ5RUIzNCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpCQTQ3MEIwQUU2RkQxMUU3QTNGMEE4OEE2RkQ5RUIzNCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkJBNDcwQjA3RTZGRDExRTdBM0YwQTg4QTZGRDlFQjM0IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkJBNDcwQjA4RTZGRDExRTdBM0YwQTg4QTZGRDlFQjM0Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+z6BiPwAAAhNQTFRF/7EZ/////6YA/7Ul/7EY/7Ea/6gA/8JL/6UA/6cA/7Ic//79/7AW/7gu/7o0/9iL/9yW//bl/8tn/58A/9N+/5wA/6QA/7Id///+//rx/7Qi/+Cj/7Ib//36/9Bz//z1/6EA/92a/+e6/+7M//LX/85v/8lg/8pi/8hc/6kC/7Uk/707/7kx/8da/6oE/6sH/7Um/7Mf/8VT/7Qh/9B0/9SA/+e3/7w5/8xo/6sK//Te/8VU/6oG/74//8NO/64S/7Md/6wJ/8BF/7Me/9+g/9WC/+3M/9eI/68T/6gK/6kB/8RQ/7AX/8JK/64P/7o1/708/6MA/60M/6AA/9+h//DT/7Mm/8ZW/7oz/6oD/7EX/+vG/+Wy/6oF//Pc/74+/6oI/6sI/9iK/+/Q/+7L/+7N/9N9/7gs//jr/7Qg/5sA/60N/6oH/7cq/+e4/6sJ/+Su/96e/81r/60O/6wL/96f/8NQ/8RT/6IA//jq/6cB//bj/8dd/79C//fn/+Cl//v0//v1/9mP/7Yo/64Q/8ZY/+a0/89z/9J7/7Ia/+Sw//rv/7AV/8JM/7s4//bk//z4/68U/7cr/9aG/9R//7AY/7gr//z2/8NP/7Qk/8tl/70+/7cs/75A/6gB///9/7Eb//Pd/8FI/8tm/8NN/+Sv/+Wx/8BH/6wK/9WD/+i8/68S/7Yn/9F5//fo/68V////ERoDmwAAALF0Uk5T//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8A1/RcZAAAAktJREFUeNqMlYdT2zAUxiUldmyHpJlOM4CwCYSGXWZboBRKWS1d0L333pNu6N4DOqB7t/kTaxFbku30zu9yuU/6fnfPkt97Bmk2woWBKrdNiaGbgcKwzgKMLspzASZceUVZwc1lwBRlLWbQ0wWyRI3HADp94D/hc7JgrkPdDi0WhJwlvLApREhHLgNqHFjlii6tW14fXddspyQFS8mmWAvh+pVeuBHl0OylGlhA9/hFECaFZXA1z4CgIANeyKxi/aN9CX8lhFJwA/T4twGOkt45sDyzGAMP2iurmyBcsXYN/PykCx2QCFiOwWJ18e7rfAiVn/r38NqRNkoWK2CJqtErqI8fWwdJ9pI0yLep+id3caee7JYJaMsHhzUtPY4ndmG/p2nCdwuLP38HSe5GEKBni539jv2xoByX72C1cAHxGkAtBe2oR7Wl+ABWbxPEawVDLDgP24fkjtHgbkU4X6SI5wYRE/ih/9fU8ZeKGD9PX08EVJjAK+G7j+ZOXT8SI15FFpDE1U6Ro6A59fTwfceWSaeidhzspandJnCfXxRR8DeW7X30MK0suF27vZiQxPIMotfTQMHb8jPs1o3wPNrfjeVpkV54I+EkMf4Fux+HPw10Pp3BF7knRV8hKQru25tThvqJoue0KEiZ3Thx2cC9723maJmRwj0ZOccWLtx7bJaX2MLVWgHcS14irXC0+vV11BbStULaqz4jl+KZ5hI77JyhuSy3q/UBYH2kWB9SlsceHqQ1lgapEi0WR7P1Ya/7fLirjJ+PfwIMALFYHCuXcma9AAAAAElFTkSuQmCC">
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="font-size: 16px">~</td>
+                                                        <td>
+                                                            <input class="form-control form-control-sm ipt-exchange default-color text-right"
+                                                                   disabled="disabled" style="font-weight: normal;"
+                                                                   id="ask_usd" name="ask_usd" type="text">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <hr />
+                                            <div class="form-group m-form__group row" style="margin: 0px">
+                                                <label class="col-form-label col-2 f12" style="padding-left: 0px;padding-right: 0px">Fee</label>
+                                                <div class="col-10 text-right f12 default-color" style="padding-left: 0px;padding-right: 0px">
+                                                    <label class="col-form-label f12" id="ask_total_fee">0</label>
+                                                    BTC ($<label class="col-form-label f12"
+                                                                 id="ask_total_fee_usd">0</label>)
+                                                </div>
+                                            </div>
+                                            <div class="form-group m-form__group row" style="margin: 0px">
+                                                <label class="col-form-label col-2" style="padding-left: 0px;padding-right: 0px">Total</label>
+                                                <div class="col-10 text-right" style="padding-top: 5px;padding-left: 0px;padding-right: 0px">
+                                                    <label class="text-right" id="ask_total_lbl">0</label><span>
+                                                        BTC ($<span id="ask_total_usd_lbl">0</span>)
+                                                    </span>
+                                                </div>
+                                                <input class="form-control form-control-sm ipt-exchange text-right"
+                                                       id="ask_total" name="ask_total" type="hidden">
+                                            </div>
+                                            <hr>
+                                            <div class="text-right" style="padding: 15px 0px">
+                                                <div class="m-form__actions">
+                                                    <button type="submit" class="btn btn-danger m-btn--pill"
+                                                            style="width: 100%; font-weight: bold;">
+                                                        SELL
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row"
+                             style="margin: 0px; padding-bottom: 20px; background-color: #2C2E3E;border-top: 2px solid #272836;">
+                            <div class="col-lg-12" style="padding:0px !important; ">
+                                <div class="box_exchange">
+                                    <div class="header">
+                                        <div class="panel">
+                                            <ul class="nav nav-tabs  m-tabs-line" role="tablist"
+                                                id="orderTab">
+                                                <li id="myOpenOrder" class="nav-item m-tabs__item">
+                                                    <a class="nav-link m-tabs__link active" data-toggle="tab"
+                                                       href="#m_tab_myorder_tab" role="tab">My open orders</a>
+                                                </li>
+                                                <li class="nav-item m-tabs__item">
+                                                    <a class="nav-link m-tabs__link" data-toggle="tab"
+                                                       href="#m_tab_myorderhistory_tab" role="tab">MY FILLS</a>
+                                                </li>
+                                                <li id="marketOrder" class="nav-item m-tabs__item">
+                                                    <a class="nav-link m-tabs__link" data-toggle="tab"
+                                                       href="#m_tab_order_tab" role="tab">MARKET OPEN ORDERS</a>
+                                                </li>
+                                                <li id="marketHistoryOrder" class="nav-item m-tabs__item">
+                                                    <a class="nav-link m-tabs__link" data-toggle="tab"
+                                                       href="#m_tab_orderhistory_tab" role="tab">Market history</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="body" id="myOrder">
+                                        <div class="tab-content" style="min-height: 260px">
+                                            <div class="tab-pane active" id="m_tab_myorder_tab"
+                                                 role="tabpanel">
+                                                <div style="overflow-x:auto" id="myorderContent">
+                                                    <table id="myOrderTable" style="width: 100%;position: relative">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Size</th>
+                                                                <th>Filled (@SKC.Common.GlobalConfig.Coin_ShortName)</th>
+                                                                <th>Price (BTC)</th>
+                                                                <th>Fee (BTC)</th>
+                                                                <th>Time</th>
+                                                                <th>Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="m_tab_myorderhistory_tab"
+                                                 role="tabpanel">
+                                                <div style="overflow-x:auto" id="myhistoryContent">
+                                                    <table id="myOrderHistoryTable" style="width: 100%;position: relative">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Size</th>
+                                                                <th>Price (BTC)</th>
+                                                                <th>Fee (BTC)</th>
+                                                                <th>Amount (BTC)</th>
+                                                                <th>Time</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="m_tab_order_tab"
+                                                 role="tabpanel">
+                                                <div style="overflow-x:auto" id="orderContent">
+                                                    <table id="orderTable" style="width: 100%;position: relative">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Size</th>
+                                                                <th>Filled (@SKC.Common.GlobalConfig.Coin_ShortName)</th>
+                                                                <th>Price (BTC)</th>
+                                                                <th>Fee (BTC)</th>
+                                                                <th>Time</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="m_tab_orderhistory_tab"
+                                                 role="tabpanel">
+                                                <div style="overflow-x:auto" id="historyContent">
+                                                    <table id="markethistoryTable" style="width: 100%;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Size</th>
+                                                                <th>Price (BTC)</th>
+                                                                <th>Fee (BTC)</th>
+                                                                <th>Amount (BTC)</th>
+                                                                <th>Time</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3"
+                         style="padding-left: 0px; padding-right: 0px; padding-bottom: 20px; background-color: #2C2E3E">
+                        <div class="box_exchange">
+                            <div class="header">
+                                <div class="panel">
+                                    <span> TRADE HISTORY </span>
+                                </div>
+                            </div>
+                            <div class="body" id="traddingOrder">
+                                <div class="m-loader m-loader--brand"
+                                     style="width: 30px; display: none;"></div>
+                                <table id="traddingTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Trade size</th>
+                                            <th>Price (BTC)</th>
+                                            <th>Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modal_success" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="m-0 m-alert m-alert--icon m-alert--outline alert alert-primary alert-dismissible fade show" role="alert" style="border-color: #559CD3 !important;">
+                        <div class="m-alert__icon">
+                            <i class="la la-check" style="color: #559CD3 !important;"></i>
+                        </div>
+                        <div class="m-alert__text dark-color font-size-16">
+                            <strong>Success!</strong>
+                        </div>
+                        <div class="m-alert__close">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modal_errors" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show m-0" role="alert">
+                        <div class="m-alert__icon p-0" style="padding: 15px !important;">
+                            <i class="flaticon-exclamation-2"></i>
+                        </div>
+                        <div class="m-alert__text dark-color font-size-16" style="padding-right: 0;padding-left: 10px;">
+                        </div>
+                        <div class="m-alert__close" style="width: 10px !important;padding: 10px 10px 0px 0px;">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-scroll-top m-scroll-top--skin-top" data-toggle="m-scroll-top" data-scroll-offset="500" data-scroll-speed="300">
+            <i class="la la-arrow-up"></i>
+        </div>
+
+        <script src="~/js/vendors.stripped.min.js"></script>
+        <script src="~/js/scripts.core.min.js"></script>
+        <script type="text/javascript">
+            function changeMenuItem() {
+                if (document.documentElement.clientWidth < 768) {
+                    $(".m-dropdown-item").removeClass("m-dropdown--align-center");
+                    $(".m-dropdown-item").addClass("m-dropdown--align-left");
+                    $(".m-dropdown__arrow-item").removeClass("m-dropdown__arrow--center");
+                    $(".m-dropdown__arrow-item").addClass("m-dropdown__arrow--left");
+                } else {
+                    $(".m-dropdown-item").removeClass("m-dropdown--align-left");
+                    $(".m-dropdown-item").addClass("m-dropdown--align-center");
+                    $(".m-dropdown__arrow-item").removeClass("m-dropdown__arrow--left");
+                    $(".m-dropdown__arrow-item").addClass("m-dropdown__arrow--center");
+                }
+            }
+            $(function () {
+                setNavigation();
+                changeMenuItem();
+            });
+
+            function setNavigation() {
+                var path = window.location.pathname;
+                path = path.replace(/\/$/, "");
+                path = decodeURIComponent(path);
+
+                $(".m-menu__item a").each(function () {
+                    var href = $(this).attr('href');
+                    if (href.indexOf(path) != -1) {
+                        $(this).closest('li').addClass('m-menu__item--active');
+                        $(this).closest('li').closest('ul').closest('li').addClass('m-menu__item--open m-menu__item--expanded');
+                    }
+                });
+            }
+
+            $(window).resize(function () {
+                changeMenuItem();
+            });
+
+            function onDepositBtc() {
+                $.ajax({
+                    url: "https://wallet.silkchain.io/wallet/btcaddress",
+                }).done(function (data) {
+                    $("#img_qr_btc_address").attr('src', "https://wallet.silkchain.io/wallet/qr/" + data);
+                    $("#tx_btc_address").val(data);
+                    $("#m_deposit_btc").modal("show");
+                    if (typeof analytics !== "undefined") { analytics.track("Deposit", { currency: "BTC" }); }
+                });
+            }
+            function onDepositEth() {
+                $.ajax({
+                    url: "https://wallet.silkchain.io/wallet/ethaddress",
+                }).done(function (data) {
+                    $("#img_qr_eth_address").attr('src', "https://wallet.silkchain.io/wallet/qr/" + data);
+                    $("#tx_eth_address").val(data);
+                    $("#m_deposit_eth").modal("show");
+                    if (typeof analytics !== "undefined") { analytics.track("Deposit", { currency: "ETH" }); }
+                });
+            }
+            function copyValToClipboard(element) {
+                var $temp = $("<input>");
+                $(element).parent().append($temp);
+                $temp.val($(element).val()).select();
+                document.execCommand("copy");
+                $temp.remove();
+                return false;
+            }
+            $("input[type=text], textarea").on({
+                'touchstart': function () {
+                    zoomDisable();
+                }
+            });
+            $("input[type=text], textarea").on({
+                'touchend': function () {
+                    setTimeout(zoomEnable, 500);
+                }
+            });
+            function zoomDisable() {
+                $('head meta[name=viewport]').remove();
+                $('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />');
+            }
+            function zoomEnable() {
+                $('head meta[name=viewport]').remove();
+                $('head').prepend('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1" />');
+            }
+        </script>
+        <div class="modal fade" id="m_deposit_btc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            DEPOSIT BITCOIN
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
+                            <span aria-hidden="true">
+                                &times;
+                            </span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" id="form_deposit_bitcoin" style="text-align: center;">
+                            <img src="" id="img_qr_btc_address" style="height: 320px; width: 320px; margin-left: auto; margin-right: auto; display: block;">
+                            <label for="btc_address" class="form-control-label" style="text-align: center;font-size: 16px;margin: 20px">
+                                To deposit Bitcoin to your account, please send Bitcoin to the address below. You can scan the QR code in order to copy the address.
+                            </label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" style="display:inline-block;font-weight: normal;" id="tx_btc_address" readonly value="" style="text-align: center;">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-secondary" onclick="return copyValToClipboard('#tx_btc_address')" type="button"><i class="io-copy"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="m_deposit_eth" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            DEPOSIT ETHEREUM
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
+                            <span aria-hidden="true">
+                                &times;
+                            </span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" id="form_deposit_bitcoin" style="text-align: center;">
+                            <img src="" id="img_qr_eth_address" style="height: 240px; width: 240px; margin-left: auto; margin-right: auto; display: block;text-align: center;">
+                            <label for="btc_address" class="form-control-label" style="text-align: center;font-size: 14px;margin: 20px">
+                                To deposit Ethereum to your account, please send Ethereum to the address below. You can scan the QR code in order to copy the address.
+                            </label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" style="display:inline-block;font-weight: normal;" id="tx_eth_address" readonly value="" style="text-align: center;">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-secondary" onclick="return copyValToClipboard('#tx_eth_address')"><i class="io-copy"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/black.js"></script>
+<script src="~/js/sweetalert.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.12.min.js"></script>
+<script src="https://cdn.bootcss.com/socket.io/2.0.4/socket.io.slim.js"></script>
+<script src="https://cdn.bootcss.com/jquery-color/2.1.2/jquery.color.min.js"></script>
+<script src="https://cdn.bootcss.com/bignumber.js/5.0.0/bignumber.min.js"></script>
+<script src="/js/exchange.js"></script>
+<script type="text/javascript">
+    Cache.chart('{"key":"MarketDataQueueBTC","data":[["1519678699000",0.000224,0.000224,0.000224,0.000224],["1519678999000",0.000224,0.000224,0.000224,0.000224],["1519679299000",0.000224,0.000224,0.000224,0.000224],["1519679599000",0.000224,0.000224,0.000224,0.000224],["1519679899000",0.000224,0.000224,0.000224,0.000224],["1519680199000",0.000224,0.000224,0.000224,0.000224],["1519680499000",0.000224,0.000224,0.000224,0.000224],["1519680799000",0.000224,0.000224,0.000224,0.000224],["1519681099000",0.000224,0.000224,0.000224,0.000224],["1519681399000",0.000224,0.000224,0.000224,0.000224],["1519681699000",0.000224,0.000224,0.000224,0.000224],["1519681999000",0.000224,0.000224,0.000224,0.000224],["1519682299000",0.000224,0.000224,0.000224,0.000224],["1519682599000",0.000224,0.000224,0.000224,0.000224],["1519682899000",0.000224,0.000224,0.000224,0.000224],["1519683199000",0.000224,0.000224,0.000224,0.000224],["1519683499000",0.000224,0.000224,0.000224,0.000224],["1519683799000",0.000224,0.000224,0.000224,0.000224],["1519684099000",0.000224,0.000224,0.000224,0.000224],["1519684399000",0.000224,0.000224,0.000224,0.000224],["1519684699000",0.000224,0.000224,0.000224,0.000224],["1519684999000",0.000223,0.000224,0.000223,0.000224],["1519685299000",0.000222,0.000222,0.000222,0.000222],["1519685599000",0.000222,0.000222,0.000222,0.000222],["1519685899000",0.000222,0.000222,0.000222,0.000222],["1519686199000",0.000222,0.000222,0.000222,0.000222],["1519686499000",0.000222,0.000222,0.000222,0.000222],["1519686799000",0.000222,0.000222,0.000222,0.000222],["1519687099000",0.000222,0.000222,0.000222,0.000222],["1519687399000",0.000221,0.000221,0.000221,0.000221],["1519687699000",0.000221,0.000221,0.000221,0.000221],["1519687999000",0.00021,0.00022,0.00021,0.00022],["1519688299000",0.00021,0.00021,0.00021,0.00021],["1519688599000",0.00021,0.00021,0.00021,0.00021],["1519688899000",0.00021,0.00021,0.00021,0.00021],["1519689199000",0.00021,0.00021,0.00021,0.00021],["1519689499000",0.00021,0.00021,0.00021,0.00021],["1519689799000",0.00021,0.00021,0.00021,0.00021],["1519690099000",0.00021,0.00021,0.00021,0.00021],["1519690399000",0.00021,0.00021,0.00021,0.00021],["1519690699000",0.00021,0.00021,0.00021,0.00021],["1519690999000",0.00021,0.00021,0.00021,0.00021],["1519691299000",0.00021,0.00021,0.00021,0.00021],["1519691599000",0.00021,0.00021,0.00021,0.00021],["1519691899000",0.000233,0.000223,0.000223,0.000233],["1519692199000",0.000236,0.000211,0.000211,0.000236],["1519692499000",0.000236,0.000236,0.000236,0.000236],["1519692799000",0.000236,0.000236,0.000236,0.000236],["1519693099000",0.000236,0.000236,0.000236,0.000236],["1519693399000",0.000236,0.000236,0.000236,0.000236],["1519693699000",0.000214,0.000214,0.000214,0.000214],["1519693999000",0.000214,0.000214,0.000214,0.000214],["1519694299000",0.000214,0.000214,0.000214,0.000214],["1519694599000",0.000214,0.000214,0.000214,0.000214],["1519694899000",0.000214,0.000214,0.000214,0.000214],["1519695199000",0.000214,0.000214,0.000214,0.000214],["1519695499000",0.000214,0.000214,0.000214,0.000214],["1519695799000",0.000214,0.000214,0.000214,0.000214],["1519696099000",0.000214,0.000214,0.000214,0.000214],["1519696399000",0.000214,0.000214,0.000214,0.000214],["1519696699000",0.000214,0.000214,0.000214,0.000214],["1519696999000",0.000215,0.000235,0.000215,0.000235],["1519697299000",0.000215,0.000215,0.000215,0.000215],["1519697599000",0.000215,0.000215,0.000215,0.000215],["1519697899000",0.000215,0.000215,0.000215,0.000215],["1519698199000",0.000215,0.000215,0.000215,0.000215],["1519698499000",0.000215,0.000216,0.000215,0.000216],["1519698799000",0.000215,0.000215,0.000215,0.000215],["1519699099000",0.000215,0.000215,0.000215,0.000215],["1519699399000",0.000215,0.000215,0.000215,0.000215],["1519699699000",0.000215,0.000215,0.000215,0.000215],["1519699999000",0.000215,0.000215,0.000215,0.000215]]}');
+    Cache.status('{"key":"MarketStatusQueueBTC","data":["0.000215","0.000215","0.00260","0.00260","439194.93","439194.93","2.39","2.35"]}'); // logo右边的数据
+    Cache.sell('{"key":"ListSellQueueBTC","data":[@Html.Raw(Model.SellDate)]}');
+    Cache.buy('{"key":"ListBuyQueueBTC","data":[@Html.Raw(Model.BuyDate)]}');
+    Cache.tradding('{"key":"TradingQueueBTC","data":[["780.57473000","0.00021500","1519699271000","2","63983","3858","10199.92"],["108.00000000","0.00021500","1519698585000","2","128365","120395","10225.99"],["8.00000000","0.00021500","1519698585000","2","128365","3858","10199.92"],["54.00000000","0.00021600","1519698537000","2","128365","4773","10185.37"],["530.00000000","0.00021500","1519697107000","2","3858","65154","10255.36"],["62.52000000","0.00021500","1519697107000","2","3858","66885","10255.36"],["200.00000000","0.00021500","1519697107000","2","3858","4240","10190.56"],["100.00000000","0.00023500","1519697059000","1","200314","120395","10329.51"],["480.00000000","0.00021400","1519695603000","2","63983","3858","10368.07"],["5.00000000","0.00021400","1519693943000","2","133791","3858","10368.07"],["50.00000000","0.00023600","1519692301000","2","4773","63983","10387.45"],["150.00000000","0.00023600","1519692255000","1","63983","74303","10334.85"],["44.40000000","0.00021100","1519692249000","2","317","59322","10387.45"],["3000.00000000","0.00023300","1519692159000","1","63983","3858","10350.90"],["100.00000000","0.00023000","1519692141000","1","63983","762","10243.80"],["209.00000000","0.00023000","1519692141000","1","63983","5143","10330.58"],["565.00000000","0.00022900","1519692121000","1","63983","64910","10313.53"],["100.00000000","0.00022300","1519692027000","1","63983","762","10409.08"],["100.40000000","0.00021000","1519691559000","2","15901","62818","10207.21"],["200.00000000","0.00021000","1519691559000","2","15901","77832","10315.66"],["5.60000000","0.00021000","1519691559000","2","15901","41799","10232.27"],["94.00000000","0.00021000","1519691559000","2","15901","157","10338.05"],["190.00000000","0.00021000","1519689439000","2","77735","62818","10207.21"],["20.00000000","0.00021000","1519688267000","2","15901","121410","9365.93"],["300.00000000","0.00021000","1519688267000","2","15901","5400","9423.29"],["5.40000000","0.00021000","1519688267000","2","15901","59241","10188.49"],["74.60000000","0.00021000","1519688267000","2","15901","62818","10207.21"],["1.31600000","0.00021200","1519688209000","2","15901","76118","9822.22"],["51.00000000","0.00021200","1519688209000","2","15901","76118","9834.78"],["10.50000000","0.00021700","1519688199000","2","15901","201035","10368.07"],["6.00000000","0.00022000","1519688195000","2","15901","127086","10255.36"],["10.00000000","0.00022100","1519687667000","2","201035","68146","10354.11"],["5.00000000","0.00022200","1519685587000","2","65154","68146","10334.85"],["108.00000000","0.00022200","1519685587000","2","65154","120395","10223.90"],["1630.00000000","0.00022300","1519685269000","2","1699","127086","10252.20"],["5.60000000","0.00022300","1519685269000","2","1699","167742","10227.04"],["82.00000000","0.00022300","1519685269000","2","1699","144","10257.46"],["1437.44700000","0.00022400","1519685241000","2","1699","3858","10232.27"],["400.00000000","0.00022400","1519684989000","2","65154","3858","10232.27"],["500.00000000","0.00022400","1519684981000","2","1699","3858","10232.27"],["300.00000000","0.00022400","1519684969000","2","81","3858","10232.27"],["105.00000000","0.00022400","1519684923000","2","1699","168891","10221.81"],["362.55300000","0.00022400","1519684923000","2","1699","3858","10232.27"],["500.00000000","0.00022400","1519684833000","2","81","168891","10221.81"],["1000.00000000","0.00022400","1519684815000","2","1699","168891","10221.81"],["100.00000000","0.00022400","1519674079000","2","762","168891","10221.81"],["5.00000000","0.00022400","1519673973000","2","43637","168891","10221.81"],["600.00000000","0.00022400","1519673705000","2","43382","168891","10221.81"],["768.00000000","0.00022500","1519671523000","2","762","65154","10222.86"],["44.00000000","0.00022700","1519671063000","2","762","183275","10218.68"]]}');
+    Balance.init(JSON.parse('{"btcUsdExchangeRate":"10188.49000000000000000000","ethUsdExchangeRate":"860.92750688490000000000","eztUsdExchangeRate":"2.39000000000000000000","ethEztExchangeRate":360.22,"btcEztExchangeRate":4262.96,"eztEthExchangeRate":0.00277607,"eztBtcExchangeRate":0.00023457,"minEzt":50,"maxEzt":50000,"userId":210158,"ethBalance":"0","btcBalance":"0","eztBalance":"0","tradingFee":"0.0025"}')); // 钱包以及汇率相关数据初始化
+    Config.user('210158');
+    Config.init("/exchange/balance", // 钱包以及汇率相关接口exchange.js=&gt;325Line
+        "https://wallet.silkchain.io/exchange/market",
+        "ListSellQueueBTC",
+        "ListBuyQueueBTC",
+        "MarketStatusQueueBTC",
+        "MarketDataQueueBTC",
+        "TradingQueueBTC",
+        "AKIAI3QCI236KWLKEDGA",
+        "+nUdgV2HQ1Yt0/d4TEL5yfOLOnQd5N5ZbRAViI9t",
+        "REDIS",
+        "https://sqs.ap-southeast-1.amazonaws.com/587106571807/",
+        "0.0025",  // tradding_fee 交易费率
+        "https://exchange-socket.ezpos.io:3389/",
+        "exchange",
+        "50",
+        "100"
+    );
+    var token = "4byV87InJp0fKNWC3pEZhzg0CZSnMHLdImi3Lryp";
+
+    function page_exchange(type) {
+        var count = $("#formBuy #amount").val();
+        var price = $("#bid_price").val();
+        if (type == 0) {
+            count = $("#formSell #amount").val();
+            price = $("#ask_price").val();
+        }
+        $.post("/Exchange/SaveExchange", { OrderType: type, OrderCount: count, OrderPrice: price, OrderCoinType: "@SKC.Common.GlobalConfig.Coin_ShortName" }, function (data) {
+            console.log(data);
+        })
+        return false;
+    }
+</script>
+</html>

@@ -1,0 +1,96 @@
+﻿@using SKC.Entity.Models;
+@model PacketListPageModel
+@{ 
+    Layout = null;
+}
+
+<table border="1" style="width:100%; margin:10px auto 10px auto">
+    <thead>
+        <tr>
+            <th align="center" colspan="17"><span style="font-weight:bold; font-size:larger;">红包列表</span></th>
+        </tr>
+        <tr>
+            <th style="width:150px;">红包唯一码</th>
+            <th>红包ID</th>
+            <th>当前登录人是否<br />已领取过该红包</th>
+            <th>创建人</th>
+            <th>是否可分享</th>
+            <th>类型</th>
+            <th>状态</th>
+            <th>币种</th>
+            <th>红包总额</th>
+            <th>红包使用额</th>
+            <th>红包<br />个数</th>
+            <th>红包使<br />用个数</th>
+            <th>剩余红<br />包个数</th>
+            <th>是否过期</th>
+            <th style="width:150px;">有效时间</th>
+            <th style="width:150px;">创建时间</th>
+            <th style="width:150px;">最后更新时间</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.ItemList != null && Model.ItemList.Count > 0)
+        {
+            foreach (var item in Model.ItemList)
+            {
+                string useType = "随机";
+                string status = "创建";
+                string valid = "有效";
+                if (item.UseType == 1)
+                {
+                    useType = "等额";
+                }
+                if (item.Status == 1)
+                {
+                    status = "发完";
+                }
+                else if (item.Status == 2)
+                {
+                    status = "退回";
+                }
+                if (item.ValidilyTime < DateTime.Now)
+                {
+                    valid = "无效";
+                }
+
+                string bg = string.Empty;
+                if (status == "发完")
+                {
+                    bg = "background-color:green;";
+                }
+                else if (valid == "无效")
+                {
+                    bg = "background-color:red;";
+                }
+
+                string share = "否";
+                if (item.IsShare == 1)
+                {
+                    share = "是";
+                }
+
+                <tr style="@bg">
+                    <td><a href="/Packet/GetPacketIndex?OnlyCode=@item.OnlyCode">@item.OnlyCode</a></td>
+                    <td><a href="/Packet/GetPacketIndex?OnlyCode=@item.PacketID">@item.PacketID</a></td>
+                    <td></td>
+                    <td>@item.UserName</td>
+                    <td>@share</td>
+                    <td>@useType</td>
+                    <td>@status</td>
+                    <td>@item.CoinType</td>
+                    <td align="right">@item.Amount.ToString("N2")</td>
+                    <td align="right">@item.AmountUsed.ToString("N2")</td>
+                    <td align="right">@item.Count</td>
+                    <td align="right">@item.CountUsed</td>
+                    <td align="right" style="font-weight:bold;">@Html.Raw(item.Count - item.CountUsed)</td>
+                    <td>@valid</td>
+                    <td>@item.ValidilyTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td>@item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td>@item.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+

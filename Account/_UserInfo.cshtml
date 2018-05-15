@@ -1,0 +1,50 @@
+﻿@model SKC.Entity.DBModels.SkcUser
+
+@if (Model == null)
+{
+    <p>未找到用户信息</p>
+}
+else
+{
+    <p>
+        UserName： @Model.UserNameNvarchar
+    </p>
+    <p>
+        FullName： @Model.UserNameNvarchar
+    </p>
+    <p>
+        Phone： @Model.PhoneNvarchar
+    </p>
+    <p>
+        Country：  @Model.NationalityNvarchar
+    </p>
+    <input type="text" name="amount" />
+    <button type="button" onclick="addAmount('')">充值</button>
+}
+
+<script type="text/javascript">
+    function addAmount() {
+        var email = '@(Model==null?"":Model.EmailNvarchar)';
+        var amount = $("input[name='amount']").val();
+
+        if (email == '' || email == null) {
+            alert("请邮箱有误")
+            return;
+        }
+        if (amount == '' || amount == null) {
+            alert("请输入数量")
+            return;
+        }
+
+        $.post("/account/SaveAmountBalance/", { email: email, amount: amount }, function (data) {
+            if (parseInt(data) > 0) {
+                alert("操作成功");
+                $("input[name='email']").val('')
+                $("#msgshow").html('');
+            }
+            else {
+                alert("操作失败");
+            }
+        })
+    }
+</script>

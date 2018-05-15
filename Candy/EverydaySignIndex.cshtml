@@ -1,0 +1,182 @@
+﻿@using SKC.Entity.Models;
+@model GetCandyModel
+@{
+    int index = 0;
+    string coinType = string.Empty;
+    string sign = "今日打卡";
+    if (Model != null && Model.IsSign == true)
+    {
+        sign = "今日已打卡";
+    }
+}
+<link rel="stylesheet"  href="~/lib/calendar/sign2.css"/>
+<style>
+    .container {
+        width: 100%;
+    }
+
+    .outer-box > div > div {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    .outer-box2 {
+        margin-bottom: 2rem;
+    }
+    @@media (max-width:576px) {
+        .outer-box2 {
+            margin-top: 2rem;
+        }
+        .outer-box2>.border {
+            height:551px !important;
+        }
+        .m-portlet .m-portlet__body {
+            padding: 0;
+        }
+    }
+
+    .table thead th {
+        vertical-align: middle;
+        background-color: #f4f3fb;
+    }
+
+    .page-header h4 {
+        font-weight: 800;
+    }
+
+    ul, ol, li {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    #demo {
+        width: 300px;
+        margin: 150px auto;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    .lock-info {
+        margin-top:2rem;
+        padding-top:1rem;
+        padding-bottom:1rem
+    }
+    .today-check {
+        display:block;
+        margin: 0 auto;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        margin-top: 2rem;
+    }
+</style>
+
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+    <div class="m-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <!--begin::Portlet-->
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+                        <ul class="nav nav-tabs  m-tabs-line" role="tablist" id="wallet_tabs">
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link active" data-toggle="tab" href="javascript:void(0)">每日打卡</a>
+                            </li>
+                        </ul>
+                        <div class="container">
+                            <div class="row outer-box">
+                                <div class="col-md-5 col-12 outer-box1">
+                                    <div class=" col-md-12 col-12">
+                                        <div class="date-box">
+                                            <div style="" id="calendar"></div>
+                                        </div>
+                                        <div class="lock-info border">
+                                            <h3 class="text-center">已打卡</h3>
+                                            <h3 class="text-center"><span>@Model.ItemList.Count</span>天</h3>
+                                        </div>
+                                        <a href="#" class="btn btn-info btn-lg today-check" onclick="GetCandy('@if (!Model.IsSign) { @Model.OnlyCode; }');">@sign</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-7 col-12 outer-box2">
+                                    <div class=" col-md-12 col-12">
+                                        <div class="page-header">
+                                            <h4>打卡明细</h4>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table id="silkTable" class="table" width="100%" cellspacing="0">
+                                                <thead class="m-datatable__head">
+                                                    <tr class="m-datatable__row" style="height: 56px;">
+                                                        <th>#</th>
+                                                        <th>TRANSATION ID</th>
+                                                        <th>DATE</th>
+                                                        <th class="text-right">TYPE</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model != null && Model.ItemList != null && Model.ItemList.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.ItemList)
+                                                        {
+                                                            index++;
+                                                            <tr>
+                                                                <td>@index</td>
+                                                                <td>@item.ID</td>
+                                                                <td align="center">@item.CreateTime.ToString("yyyy-MM-dd")</td>
+                                                                <td>@item.ActivityName</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td align="center" colspan="4">No data available in table</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section script{
+    <script src="~/lib/calendar/calendar.js"></script>
+    <script type="text/javascript">
+        //日历
+        $(function () {
+            var signDateArr = [];
+            var signList = '@Model.SignList';
+            if (signList != "") {
+                var signArray = new Array();
+                signArray = signList.split('|');
+                if (signArray.length > 0) {
+                    for (var i = 0; i < signArray.length; i++)
+                    {
+                        signDateArr.push({ "signDay": signArray[i] });
+                    }
+                }
+            }
+            calUtil.init(signDateArr);
+        });
+
+        // 打卡
+        function GetCandy(onlycode) {
+            if (onlycode != "") {
+                $.post('/Candy/GetDaliyMarkCandy', {}, function (data) {
+                    if (data == "1") {
+                        location.reload();
+                    } else {
+                        alert(data);
+                    }
+                });
+            }
+        }
+    </script>
+}

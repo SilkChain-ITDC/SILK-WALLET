@@ -1,0 +1,609 @@
+﻿@using SKC.Entity.DBModels;
+@using SKC.Entity.Models;
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+    string visit_code = ViewBag.Code as string;
+    SkcCandyActivity candy = ViewBag.Candy as SkcCandyActivity;
+    var countrys = ViewBag.Lang as List<CountryModel>;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<!-- begin::Head -->
+<head>
+    <meta charset="utf-8" />
+    <title>@Html.GetTansByLan("account-register-title","SilkChain - Register")</title>
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <environment include="Development">
+        <link href="~/css/vendors.stripped.min.css" rel="stylesheet" />
+        <link href="~/css/style.bundle.min.css" rel="stylesheet" />
+        <link href="~/css/main.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/css/vendors.stripped.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/style.bundle.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/main.css" rel="stylesheet" asp-append-version="true" />
+        <link rel="shortcut icon" href="~/favicon.ico" />
+    </environment>
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-5Q7VH5Q');</script>
+    <!-- End Google Tag Manager -->
+<style type="text/css">
+    .text-xs-center {
+        text-align: center;
+        padding: 21px;
+    }
+
+    .g-recaptcha {
+        display: inline-block;
+    }
+
+    .m-login.m-login--2 .m-login__wrapper .m-login__container .m-login__form .m-form__group .form-control {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .m-form .m-form__group label.error {
+        color: #f4516c;
+    }
+    .m-topbar {width:100%;box-shadow:0px 1px 10px 1px rgba(113, 106, 202, 0.2);}
+</style>
+</head>
+
+<body class="m--skin- m-header--static m-header--static-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+    <div class="m-grid m-grid--hor m-grid--root m-page">
+        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor m-login m-login--singin m-login--2 m-login-2--skin-2" id="m_login">
+            <header class="m-grid__item m-header">
+                <div class="m-topbar m-stack m-stack--ver m-stack--general" style="margin-top:0;">
+                    <div class="m-stack__item m-topbar__lang-wrapper">
+                        <a href="#" class="m-nav__link">
+                        @if (Html.GetLang() == "en")
+                        {<span id="chinesesLanguage"><img src="/images/chinese-language.png" /> <span style="vertical-align:middle;">中文</span></span>}
+                        else
+                        {<span id="englishLanguage"><img src="/images/english-language.png" /> <span style="vertical-align:middle;">English</span></span>}
+                        </a>
+                    </div>
+                </div>
+            </header>
+            <div class="m-grid__item m-grid__item--fluid m-login__wrapper" style="padding-top:4rem;">
+                <div class="m-login__container">
+                    <div class="m-login__logo">
+                        <a href="#">
+                            <img src="/images/silkchain_s65.png">
+                        </a>
+                    </div>
+                    <div class="m-login__signup">
+                        <div class="m-login__head">
+                            <h3 class="m-login__title">
+                                @Html.GetTansByLan("account-register-1", "Sign Up")
+                            </h3>
+                            @*<div class="m-login__desc">
+                                @Html.GetTansByLan("account-register-2", "Enter your details to create your account"):
+                            </div>*@
+                        </div>
+
+                
+                    @if (candy != null && candy.StatusInt != 0)
+                    {<div class="m-alert m-alert--outline alert alert-danger alert-dismissible">
+                    <div>
+                        @Html.GetTansByLan("account-register_bar-1", "This registration link is expired, Please join our telegram to get the latest activity link")
+                                            @if (Html.GetLang() != "en")
+                                            {
+                                                <a href="https://t.me/silkchainchinese">https://t.me/silkchainchinese</a>
+                                            }
+                                            else
+                                            {
+                                                 <a href="https://t.me/silkchain">https://t.me/silkchain</a>
+                                            }
+                      </div>
+                     </div>
+                    }
+               
+                <div class="m-register-content">
+                    <div style = "margin-top:0.5rem;margin-bottom:-1.5rem;height:70px;border-bottom:1px solid #ebedf2;" >
+                        <ul class="nav nav-tabs m-tabs m-tabs-line   m-tabs-line--left" role="tablist">
+                            <li class="nav-item m-tabs__item" role="presentation"><a class="nav-link m-tabs__link active" href="#phone" aria-controls="home" role="tab" data-toggle="tab">@Html.GetTansByLan("account-register-3", "Sign up with phone")</a></li>
+                            <li class="nav-item m-tabs__item" role="presentation"><a class="nav-link m-tabs__link" href="#mail" aria-controls="profile" role="tab" data-toggle="tab">@Html.GetTansByLan("account-register-4", "Sign up with email")</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div role = "tabpanel" class="tab-pane active" id="phone">
+                            <form class="m-login__form m-form register-form" id="form_phone">
+                                <input type = "hidden" name="_token" value="Tz5iJktAYKDt8l4LDmmgoZ7dn3E522Hrwtxu9Zbf">
+                                <input type = "hidden" name="Code" value="@ViewBag.Code" />
+                                <input type = "hidden" name="OnlyCode" value="@ViewBag.OnlyCode"/>
+                                <div class="form-group m-form__group">
+                                    <input class="form-control " type="text" placeholder="@Html.GetTansByLan("account-register-5","UserName")" data-opt="CheckUserName" name="User.UserNameNvarchar">
+                                </div>
+                                <div>
+
+
+        </div>
+                                        <div class="form-group m-form__group">
+                                            <div class="row">
+                                                <div class="col-5" style="padding-right:5px;">
+                                                    <select class="form-control" id="sub_phone" name="User.PhoneSysbomNvarchar" style="padding-right:0;padding-top:0;padding-bottom:0;height:3.571428rem;">
+                                                        @if (countrys != null && countrys.Count > 0)
+                                                        {
+                                                            foreach (var item in countrys)
+                                                            {
+                                                                <option data-label="+@(item.AreaCode)" data-code="@item.Code" value="+@(item.AreaCode)"> @(item.Name) +@(item.AreaCode)</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="col-7" style="padding-left:5px;">
+                                                    <input class="form-control m-input" name="User.PhoneNvarchar" id="phone" data-opt="CheckPhone" type="text" placeholder="@Html.GetTansByLan("account-register-6","Phone Number")" style="display:inline-block;padding-right: 5px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group m-form__group">
+                                            <div class="row">
+                                                <div class="col-9" style="padding-right:5px;">
+                                                    <input class="form-control" type="text" name="ValidCode" placeholder="@Html.GetTansByLan("account-register-7","Verification Code")">
+                                                </div>
+                                                <div class="col-3" style="padding-left:5px;">
+                                                    <button class="btn btn-outline-focus" type="button" id="but_phone_code" style="margin-top:1.5rem;padding-left:0;padding-right:0;text-align:center;width:100%;height:3.571428rem;">@Html.GetTansByLan("account-register-8", "Send")</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group m-form__group">
+                                            <input class="form-control m-input" type="password" id="register_phone_password" placeholder="@Html.GetTansByLan("account-register-9", "Password")" name="User.UserPwdNvarchar">
+                                        </div>
+                                        <div class="form-group m-form__group">
+                                            <input class="form-control m-input m-login__form-input--last" type="password" placeholder="@Html.GetTansByLan("account-register-10", "Confirm Password")" name="RepeatPwd">
+                                        </div>
+                                        <div class="form-group m-form__group">
+                                            <input class="form-control m-input m-login__form-input--last" type="text" value="@(visit_code)" placeholder="@Html.GetTansByLan("account-register-11", "Invitation code (optional)")" name="Invitation">
+                                        </div>
+                                        <div class="form-group text-xs-center">
+                                        </div>
+                                        <div class="m-login__form-action">
+                                            <input type = "hidden" id="client_ip" name="client_ip">
+                                            <input type = "hidden" id="referrer_code" name="referrer_code">
+                                            <input value = "@Html.GetTansByLan("account-register-1", "Sign Up")" type="button" id="m_login_phone_signup" class="btn btn-focus m-btn  m-btn--custom m-btn--air  m-login__btn" />
+                                            &nbsp;&nbsp;
+                                            <a href="/Account/login" class="btn btn-outline-focus m-btn m-btn--custom  m-login__btn"> @Html.GetTansByLan("account-register-12", "Cancel")</a>
+                                        </div>
+                                        <div class="form-group m-form__group text-center" style="margin-top: 20px">
+                                            @Html.GetTansByLan("account-register-13", "By clicking \"Sign Up\" I agree to SilkChain's")  
+                                            <a href="https://www.silkchain.io/paper/SilkChainChinese.pdf" target="_blank" style="color: #2485c9;">@Html.GetTansByLan("account-register-14", "Terms and Conditions")</a>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div role = "tabpanel" class="tab-pane" id="mail">
+                                    <form class="m-login__form m-form register-form" id="form_mail">
+                                        <input type = "hidden" name="_token" value="Tz5iJktAYKDt8l4LDmmgoZ7dn3E522Hrwtxu9Zbf">
+                                        <input type = "hidden" name="Code" value="@ViewBag.Code" />
+                                        <input type = "hidden" name="OnlyCode" value="@ViewBag.OnlyCode" />
+                                        <div class="form-group m-form__group">
+                                            <input class="form-control " type="text" placeholder="@Html.GetTansByLan("account-register-5","UserName")" data-opt="CheckUserName" name="User.UserNameNvarchar">
+                                        </div>
+                                        <div>
+
+
+
+        </div>
+                                        <div class="form-group m-form__group">
+                                            <input class="form-control m-input" type="text" placeholder="@Html.GetTansByLan("account-register-15","Email")" data-opt="CheckEmail" name="User.EmailNvarchar" autocomplete="off">
+                                        </div>
+                                        <div class="form-group m-form__group">
+                                            <div class="row">
+                                                <div class="col-9" style="padding-right:5px;">
+                                                    <input class="form-control" type="text" name="ValidCode" placeholder="@Html.GetTansByLan("account-register-7","Verification Code")">
+                                                </div>
+                                                <div class="col-3" style="padding-left:5px;">
+                                                    <button class="btn btn-outline-focus" id="but_email_code" style="margin-top:1.5rem;padding-left:0;padding-right:0;text-align:center;width:100%;height:3.571428rem;">@Html.GetTansByLan("account-register-8", "Send")</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group m-form__group">
+                                            <input class="form-control m-input" type="password" id="register_email_password" placeholder="@Html.GetTansByLan("account-register-9", "Password")" name="User.UserPwdNvarchar">
+                                        </div>
+                                        <div class="form-group m-form__group">
+                                            <input class="form-control m-input m-login__form-input--last" type="password" placeholder="@Html.GetTansByLan("account-register-10", "Confirm Password")" name="RepeatPwd">
+                                        </div>
+                                        <div class="form-group m-form__group">
+                                            <input class="form-control m-input m-login__form-input--last" type="text" value="@(visit_code)" placeholder="@Html.GetTansByLan("account-register-11", "Invitation code (optional)")" name="Invitation">
+                                        </div>
+                                        <div class="form-group text-xs-center">
+                                        </div>
+                                        <div class="m-login__form-action">
+                                            <input type = "hidden" id="client_ip_2" name="client_ip">
+                                            <input type = "hidden" id="referrer_code_2" name="referrer_code">
+                                            <input value = "@Html.GetTansByLan("account-register-1", "Sign Up")" type="button" id="m_login_email_signup" class="btn btn-focus m-btn  m-btn--custom m-btn--air  m-login__btn" />
+                                            &nbsp;&nbsp;
+                                            <a href="/Account/login" class="btn btn-outline-focus m-btn m-btn--custom  m-login__btn">
+                                                @Html.GetTansByLan("account-register-12", "Cancel")
+                                            </a>
+                                        </div>
+                                        <div class="form-group m-form__group text-center" style="margin-top: 20px">
+                                            @Html.GetTansByLan("account-register-13", "By clicking \"Sign Up\" I agree to SilkChain's")  
+                                            <a href="https://www.silkchain.io/paper/SilkChainChinese.pdf" target="_blank" style="color: #2485c9;">
+                                                @Html.GetTansByLan("account-register-14", "Terms and Conditions")
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="~/js/vendors.stripped.min.js" type="text/javascript"></script>
+<script type = "text/javascript" >
+        var error = '@ViewBag.ErrorMsg';
+        //== Class Definition
+        var SnippetRegister = function() {
+            var register = $('#m_login');
+            var showErrorMsg = function(form, type, msg) {
+                var alert = $('<div class="m-alert m-alert--outline alert alert-' + type + ' alert-dismissible" role="alert">\
+                    <button type = "button" class="close" data-dismiss="alert" aria-label="Close"></button>\
+                    <span></span>\
+                </div>');
+
+                form.find('.alert').remove();
+        alert.prependTo(form);
+                alert.find('span').html(msg);
+    }
+    var displaySignUpForm = function() {
+                register.removeClass('m-login--forget-password');
+                register.removeClass('m-login--signin');
+                register.addClass('m-login--signup');
+            }
+
+var handleSignInForm = function(cb){
+                var form = $("#loginForm");
+                form.validate({
+                    rules: {
+                        'User.UserNameNvarchar': {
+                            required: true
+                        },
+                        'User.EmailNvarchar': {
+                            required: true,
+                            email: true
+                        },
+                        'User.UserPwdNvarchar': {
+                            required: true
+                        },
+                        'RepeatPwd': {
+                            equalTo: 'input[name="User.UserPwdNvarchar"]'
+                        }
+                    },
+                    messages: {
+                        'UserNameNvarchar': { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-01", "required"))" },
+                        'User.EmailNvarchar': {
+                            required: "@Html.Raw(Html.GetTansByLan("account-register-verify-01", "required"))",
+                            email: "@Html.Raw(Html.GetTansByLan("account-register-verify-03", "true"))"
+                        },
+                        'User.UserPwdNvarchar': {
+                            required: "@Html.Raw(Html.GetTansByLan("account-register-verify-01", "required"))"
+                        },
+                         'RepeatPwd': {
+                            equalTo: "@Html.Raw(Html.GetTansByLan("account-register-verify-05", "The two passwords must be the same"))"
+                        }
+                    }
+                });
+                if (!form.valid()) {
+                    showErrorMsg(form, 'danger', '@Html.Raw(Html.GetTansByLan("account-register-verify-07", "Incorrect fieldes. Please try again."))');
+                }else{
+                    form.submit();
+                }
+            }
+            return {
+                init: function()
+{
+    displaySignUpForm();
+    if (error != '')
+    {
+        var form = $("#loginForm");
+        showErrorMsg(form, 'danger', error);
+    }
+},
+                verify: function(cb)
+{
+    handleSignInForm(cb);
+
+}
+            };
+        }();
+
+        function setIP()
+{
+            $("#client_ip").val(myip);
+            $("#client_ip_2").val(myip);
+}
+function verifyCallback()
+{
+            $("#m_login_signup_submit").prop("disabled", false);
+}
+
+var getUrlParameter = function getUrlParameter(sParam)
+{
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++)
+    {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam)
+        {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+var user = {
+            inItControl: function () {
+                $("#m_login_signup_submit").click(function () {
+                    SnippetRegister.verify(verifyCallback);
+                });
+            }
+        };
+
+        $(document ).ready(function() {
+    SnippetRegister.init();
+    user.inItControl();
+    var referral_code = getUrlParameter('r');
+    if (referral_code)
+    {
+                $("#referrer_code").val(referral_code);
+                $("#referrer_code_2").val(referral_code);
+    }
+});
+</script>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/sweetalert.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script type="text/javascript">
+    $("#chinesesLanguage").click(function () {
+        setLang('cn');
+        window.location.href = window.location.href;
+    });
+    $("#englishLanguage").click(function () {
+        setLang('en');
+        window.location.href = window.location.href;
+    });
+    function setLang(lan) {
+        var exp = new Date();
+        exp.setTime(new Date().getTime() + 365 * 24 * 60 * 60 * 1000);
+        document.cookie = "lang=" + escape(lan) + ";expires=" + exp.toGMTString() + ";path=/;domain=silkchain.io";
+        //document.cookie = "lang=" + escape(lan) + ";expires=" + exp.toGMTString() + ";path=/";
+    }
+</script>
+<script type="text/javascript">
+    var register = {
+        params: { url: '/Account/CheckUserParams', adopt_email: false, email: '', adopt_phone: false, phone: '' },
+        inItControl: function () {
+            $("#m_login_phone_signup").click(function () { $("#form_phone").submit(); });
+            $("#m_login_email_signup").click(function () { $("#form_mail").submit(); });
+            $("#but_phone_code").click(function () {
+                var form_tag = $("#form_phone");
+                var phone_tag = $(this);
+                var area_code = form_tag.find('select[name="User.PhoneSysbomNvarchar"]').val();
+                var phone_no_tag = form_tag.find("input[name='User.PhoneNvarchar']");
+                var country_info = form_tag.find('select[name="User.PhoneSysbomNvarchar"]').find('option:selected').text().split('+');
+                if (phone_no_tag.valid()) {
+                    swal({
+                        text: '@Html.Raw(Html.GetTansByLan("account_register_chk_phone", "Please confirm your phone number for verification code")):' + area_code + '(' + country_info[0] + ')' + '-' + phone_no_tag.val(),
+                        buttons: ["@Html.Raw(Html.GetTansByLan("account-register-12", "Cancel"))", "@Html.Raw(Html.GetTansByLan("account-register-sure1", "OK"))"]
+                    }).then(function(value){
+                        if (value) {
+                            phone_tag.attr("disabled", true);
+                            var data = { Option: 'SendPhoneCode', AreaCode: area_code, UserParmas: register.params.phone };
+                            register.request_data(register.params.url, data, { value: 'SendPhoneCode' });
+                        }
+                    });
+                }
+            });
+
+            $("#but_email_code").click(function () {
+                var form_tag = $("#form_mail");
+                var email_tag = $(this);
+                if (form_tag.find("input[name='User.EmailNvarchar']").valid()) {
+                    swal({
+                        text: '@Html.Raw(Html.GetTansByLan("account_register_chk_email", "Please confirm your email address for verification code")):' + form_tag.find("input[name='User.EmailNvarchar']").val(),
+                        buttons: ["@Html.Raw(Html.GetTansByLan("account-register-12", "Cancel"))", "@Html.Raw(Html.GetTansByLan("account-register-sure1", "OK"))"]
+                    }).then(function(value){
+                        if (value) {
+                            email_tag.attr("disabled", true);
+                            var data = { Option: 'SendEmailCode', UserParmas: register.params.email };
+                            register.request_data(register.params.url, data, { value: 'SendEmailCode' });
+                        }
+                    });
+                }
+            });
+
+            jQuery.validator.addMethod("chk_username", function (value, element, params) {  //扩展方法示例:　　　　　　　　　　　
+                var user_regx = /^[a-zA-Z0-9_]+$/; //params rules的value传入的正则表达式
+                return user_regx.test(value);       //value  被验证的input传入的值
+            }, "@Html.Raw(Html.GetTansByLan("account-register-verify-06", "The username can only consist of alphabetical, number, and underscore"))");
+
+            jQuery.validator.addMethod("has_username", function (value, element) {
+                return register.chk_user_params(element);
+            }, "@Html.Raw(Html.GetTansByLan("account-register-verify-08", "The username has already existed"))");
+
+            jQuery.validator.addMethod("has_useremail", function (value, element) {
+                return register.chk_user_params(element);
+            }, "@Html.Raw(Html.GetTansByLan("account-register-verify-09", "The email has already existed"))");
+
+            jQuery.validator.addMethod("has_phone", function (value, element) {
+                return register.chk_user_params(element);
+            }, '@Html.Raw(Html.GetTansByLan("account-register-verify-10", "The phone has already existed"))');
+
+            $("#form_phone").validate({
+                rules: {
+                    "User.UserNameNvarchar": { required: true, chk_username: true, rangelength: [4, 20], has_username: true },
+                    // "User.NationalityNvarchar": { required: true },
+                    "User.PhoneSysbomNvarchar": { required: true },
+                    "User.PhoneNvarchar": { required: true, digits: true, rangelength: [6, 15], has_phone: true },
+                    "ValidCode": { required: true },
+                    "User.UserPwdNvarchar": { required: true, rangelength: [6, 20] },
+                    "RepeatPwd": { required: true, equalTo: "#register_phone_password" }
+                },
+                messages: {
+                    "User.UserNameNvarchar": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", rangelength: "@Html.Raw(Html.GetTansByLan("account-register-verify-12", "The length is 4 to 20"))" },
+                    // "User.NationalityNvarchar": { required: "required" },
+                    "User.PhoneSysbomNvarchar": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))" },
+                    "User.PhoneNvarchar": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", digits: "@Html.Raw(Html.GetTansByLan("account-register-verify-15", "Integer"))", rangelength: "@Html.Raw(Html.GetTansByLan("account-register-verify-16", "The length is 6 to 15"))" },
+                    "ValidCode": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))" },
+                    "User.UserPwdNvarchar": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", rangelength: "@Html.Raw(Html.GetTansByLan("account-register-verify-19", "The length is 6 to 20"))" },
+                    "RepeatPwd": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", equalTo: "@Html.Raw(Html.GetTansByLan("account-register-verify-21", "The two passwords must be the same"))" }
+                },
+                onkeyup: false,
+                onfocusout: function (element) { $(element).valid(); },
+                submitHandler: function () {
+                    var data = $("#form_phone").serializeArray();
+                    var opt = { name: 'Option', value: 'RegisterPhone' }
+                    data.push({ name: 'UserParmas', value: Math.random() })
+                    data.push({ name: "User.NationalityCodeNvarchar", value: $("#sub_phone").find('option:selected').attr('data-code') });
+                    data.push(opt);
+                    register.request_data(register.params.url, data, opt);
+                }
+            });
+
+            $("#form_mail").validate({
+                rules: {
+                    "User.UserNameNvarchar": { required: true, chk_username: true, rangelength: [4, 20], has_username: true },
+                    // "User.NationalityNvarchar": { required: true },
+                    "User.EmailNvarchar": { required: true, email: true, rangelength: [6, 30], has_useremail: true },
+                    "ValidCode": { required: true },
+                    "User.UserPwdNvarchar": { required: true, rangelength: [6, 20] },
+                    "RepeatPwd": { required: true, equalTo: "#register_email_password" }
+                },
+                messages: {
+                    "User.UserNameNvarchar": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", rangelength: "@Html.Raw(Html.GetTansByLan("account-register-verify-22", "The length is 4 to 20"))" },
+                    // "User.NationalityNvarchar": { required: "required" },
+                    "User.EmailNvarchar": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", email:"@Html.Raw(Html.GetTansByLan("account-register-verify-23", "Mailbox format is wrong"))", rangelength: "@Html.Raw(Html.GetTansByLan("account-register-verify-24", "The length is 6 to 30"))" },
+                    "ValidCode": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))" },
+                    "User.UserPwdNvarchar": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", rangelength: "@Html.Raw(Html.GetTansByLan("account-register-verify-25", "The length is 6 to 20"))" },
+                    "RepeatPwd": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", equalTo: "@Html.Raw(Html.GetTansByLan("account-register-verify-26", "The two passwords must be the same"))" }
+                },
+                onkeyup: false,
+                onfocusout: function (element) { $(element).valid(); },
+                submitHandler: function () {
+                    var data = $("#form_mail").serializeArray();
+                    var opt = { name: 'Option', value: 'RegisterEmail' }
+                    data.push({ name: 'UserParmas', value: Math.random() })
+                    data.push(opt);
+                    register.request_data(register.params.url, data, opt);
+                }
+            });
+        },
+        request_data: function (url, params, opt) {
+            $.ajax({
+                type: 'post',
+                url: url,
+                data: params,
+                beforeSend: function () {
+                    $("#m_login_phone_signup").attr("disabled", true);
+                    $("#m_login_email_signup").attr("disabled", true);
+                },
+                complete: function () {
+                    $("#m_login_phone_signup").attr("disabled", false);
+                    $("#m_login_email_signup").attr("disabled", false);
+                },
+                success: function (data) {
+                    switch (opt.value) {
+                        case "SendPhoneCode":
+                            var obj = $("#but_phone_code");
+                            if (data.result) {
+                                register.show_wait(obj);
+                            } else {
+                                obj.attr("disabled", false);
+                                swal(data.message);
+                            }
+                            break;
+                        case "SendEmailCode":
+                            var obj = $("#but_email_code");
+                            if (data.result) {
+                                register.show_wait(obj);
+                            } else {
+                                obj.attr("disabled", false);
+                                swal(data.message);
+                            }
+                            break;
+                        case "RegisterPhone":
+                            if (data.result) {
+                                location.href = "/home/index";
+                            } else {
+                                swal(data.message);
+                            }
+                            break;
+                        case "RegisterEmail":
+                            if (data.result) {
+                                location.href = "/home/index";
+                            } else {
+                                swal(data.message);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }, error: function () {
+                    alert('System error');
+                }
+            });
+        },
+        chk_user_params: function (obj) {
+            var opt = $(obj).attr("data-opt");
+            var val = $(obj).val();
+            var params = { Option: opt, UserParmas: val };
+            var deferred = $.Deferred();
+            $.ajax({
+                type: 'post',
+                url: '/Account/CheckUserParams',
+                async: false,
+                data: params,
+                success: function (data) {
+                    var item = data.data;
+                    if (item.Option == "CheckEmail") {
+                        register.params.adopt_email = data.result;
+                        register.params.email = data.result ? item.UserParmas : "";
+                    } else if (item.Option == "CheckPhone") {
+                        register.params.adopt_phone = data.result;
+                        register.params.phone = data.result ? item.UserParmas : "";
+                    }
+                    if (data.result) {
+                        deferred.resolve();
+                    } else {
+                        deferred.reject();
+                    }
+                }
+            });
+            return deferred.state() == "resolved" ? true : false;
+        },
+        show_wait: function (obj) {
+            var num = 120;
+            var unit = '@Html.Raw(Html.GetTansByLan("account-findpwd-unit-01", " Seconds"))';
+            $(obj).attr("disabled", true);
+            var wait = setInterval(function () {
+                num--;
+                $(obj).html(num + unit);
+                if (num == 0) { $(obj).attr("disabled", false).html("Send"); clearInterval(wait); }
+            }, 1000);
+        }
+    };
+    $(function () {
+        register.inItControl();
+    });
+</script>

@@ -1,0 +1,208 @@
+﻿@using SKC.Entity.Enums;
+@using SKC.Entity.Models;
+@{
+    ViewBag.Title = "SilkChain - Summary";
+    var item_model = ViewBag.WalletInfo as List<WalletModel> ?? new List<WalletModel>();
+    var SKCModel = item_model.FirstOrDefault(c => c.WalletInfo.CoinTypeNvarchar == @SKC.Common.GlobalConfig.Coin_ShortName);
+    var Count = ViewBag.Count as SummaryModel;
+}
+<style>
+.table td {white-space:nowrap;}
+.table td:last-child {white-space:nowrap;}
+.btn-alert {background-color:#b4dcf0 !important;border-color:#b4dcf0 !important;color:#333 !important;}
+.btn-alert:hover {background-color:#c3e3f3 !important;}
+.portlet-card {position:relative;border:1px solid #ddd;border-radius:3px;height:100%;display:flex;flex-flow:column nowrap;}
+.portlet-card .portlet-card-hd {padding:0 1.42857rem;font-size:1.14rem;line-height:2.875rem;color:#fff;background-color:#f5f5f5;}
+.portlet-card .portlet-card-bd {padding:0 1.42857rem;font-size:1rem;flex:1;}
+.portlet-card .show-list {padding:0;margin:0;list-style:none;}
+.portlet-card .show-list>li{padding:10px 0;border-bottom:1px dotted #bbb;}
+.portlet-card .show-list>li.no-btm {border-bottom:none;}
+.portlet-card .tle-label {margin-right:5px;color:#666;}
+.portlet-card .numb-cnt {color:#333;}
+.portlet-card .numb-cnt strong {color:#2485c9;font-size:1.2857rem;}
+.portlet-card .portlet-card-bd.has-operate {padding-bottom:60px;}
+.portlet-card .ft-opts {position:absolute;left:0;bottom:0;width:100%;padding:0 1.42875rem 1.42875rem;}
+.portlet-card .ft-opts .btn {margin-right:5px;min-width:80px;}
+.portlet-color-row .col-lg-4:nth-child(1) .portlet-card .portlet-card-hd {background-color:#fab41e;}
+.portlet-color-row .col-lg-4:nth-child(2) .portlet-card .portlet-card-hd {background-color:#ff9650;}
+.portlet-color-row .col-lg-4:nth-child(3) .portlet-card .portlet-card-hd {background-color:#f06e6e;}
+@@media (max-width: 767.98px) {
+    .p-md-l-30 {padding-left:30px !important;}
+}
+@@media (max-width:991.98px) {
+    .row .col-lg-4 {margin-bottom:1.42857rem;}
+    .row .col-lg-4:last-child {margin-bottom:0;}
+}
+</style>
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+    <div class="m-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="m-portlet m-portlet--mobile m-portlet--skin-dark">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title"><h3 class="m-portlet__head-text"><span class="font-weight-bold">@Html.GetTansByLan("recharge-summary-11", "Summary")</span></h3></div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div class="row portlet-color-row">
+                            <div class="col-lg-4">
+                                <div class="portlet-card">
+                                    <div class="portlet-card-hd">
+                                        <span>@Html.GetTansByLan("recharge-summary-title-12", "Wallet Balance")</span>
+                                    </div>
+                                    <div class="portlet-card-bd has-operate">
+                                        <ul class="show-list">
+                                            <li>
+                                                <span class="tle-label">@Html.GetTansByLan("recharge-summary-t1", "Available Balance"):</span>
+                                                <div class="numb-cnt"><strong>@((Count.AvailableBalance).ToString("0.###"))</strong> SILK ≈ $@((Count.AvailableBalance/Count.USDT_Rate).ToString("0.###"))</div>
+                                            </li>
+                                            <li>
+                                                <span class="tle-label">@Html.GetTansByLan("recharge-summary-t2", "Blocked Balance"):</span>
+                                                <div class="numb-cnt">@((Count.BlockedBalance).ToString("0.###")) SILK</div>
+                                            </li>
+                                        </ul>
+                                        <div class="ft-opts">
+                                            <a class="btn btn-alert m-btn--pill btn-sm" href="@Url.Action("PurchaseRecord","Recharge")">@Html.GetTansByLan("recharge-summary-a1", "Buy")</a>
+                                            <a class="btn btn-primary m-btn--pill btn-sm" href="/wallet/index">@Html.GetTansByLan("recharge-summary-a2", "Withdraw")</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="portlet-card">
+                                    <div class="portlet-card-hd">
+                                        <span>@Html.GetTansByLan("recharge-summary-title-13", "Purchase Details")</span>
+                                    </div>
+                                    <div class="portlet-card-bd">
+                                        <ul class="show-list">
+                                            <li>
+                                                <span class="tle-label">@Html.GetTansByLan("recharge-summary-sp1", "Accumulated Purchase"):</span>
+                                                <div class="numb-cnt"><strong>@((Count.AccumulatedPurchase).ToString("0.###"))</strong> SILK</div>
+                                            </li>
+                                            <li>
+                                                <span class="tle-label">@Html.GetTansByLan("recharge-summary-sp2", "Recent 7-days purchase"):</span>
+                                                <div class="numb-cnt"><strong>@((Count.Recent7DaysPurchase).ToString("0.###"))</strong> SILK</div>
+                                            </li>
+                                            <li class="no-btm">
+                                                <span class="tle-label">@Html.GetTansByLan("recharge-summary-sp3", "Recent 30-days purchase"):</span>
+                                                <div class="numb-cnt"><strong>@((Count.Recent30DaysPurchase).ToString("0.###"))</strong> SILK</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="portlet-card">
+                                    <div class="portlet-card-hd">
+                                        <span>@Html.GetTansByLan("recharge-summary-title-15", "Candy Details")</span>
+                                    </div>
+                                    <div class="portlet-card-bd has-operate">
+                                        <ul class="show-list">
+                                            <li>
+                                                <span class="tle-label">@Html.GetTansByLan("recharge-summary-16", "Total Candy Received")</span>
+                                                <div class="numb-cnt"><strong>@((Count.AccumulatedCandy).ToString("0.###"))</strong> SILK≈ $@((Count.AccumulatedCandy / Count.USDT_Rate).ToString("0.###"))</div>
+                                            </li>
+                                            <li>
+                                                <span class="tle-label">@Html.GetTansByLan("recharge-summary-17", "Total Candy Sent") / @Html.GetTansByLan("recharge-summary-18", "Packet Received")</span>
+                                                <div class="numb-cnt"><strong>@((Count.EmitRedEnvelopes).ToString("0.###")) / @((Count.ReceiveRedEnvelopes).ToString("0.###"))</strong> SILK</div>
+                                            </li>
+                                        </ul>
+                                        <div class="ft-opts">
+                                            <a class="btn btn-alert m-btn--pill btn-sm" href="@Url.Action("CandyIndex","Candy")">@Html.GetTansByLan("recharge-summary-a3", "Check Items")</a>
+                                            <a class="btn btn-primary m-btn--pill btn-sm" href="@Url.Action("SendluckyMoney","Packet")">@Html.GetTansByLan("recharge-summary-a4", "LuckyMoney")</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="m-portlet m-portlet--mobile m-portlet--skin-dark mb-0">
+                    <div class="m-portlet__body m-portlet__body--no-padding">
+
+                        <div class="ptlet-pedal">
+                            <div class="ptlet-pedal-hd">@Html.GetTansByLan("recharge-summary-41", "The wallet record")</div>
+                            <div style="padding:0px 0px 15px 0px">
+                                <div class="table-responsive">
+                                    <table class="table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="d-none d-md-table-cell">@Html.GetTansByLan("recharge-summary-07", "NO.")</th>
+                                                <th class="p-md-l-30">@Html.GetTansByLan("recharge-summary-08", "Date")</th>
+                                                <th class="text-left">@Html.GetTansByLan("recharge-summary-09", "Type")</th>
+                                                <th class="text-right">@Html.GetTansByLan("recharge-summary-10", "Amount")</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (SKCModel != null && SKCModel.InOutRecord != null && SKCModel.InOutRecord.Count > 0)
+                                            {
+                                                int tempIndex = 1;
+                                                List<TypeModel> recoredType = new List<TypeModel>();
+                                                foreach (var item in SKCModel.InOutRecord)
+                                                {
+                                                    foreach (EnumInOutRecordTypeEn type in Enum.GetValues(typeof(EnumInOutRecordTypeEn)))
+                                                    {
+                                                        string temp_str = string.Format("recharge-summary-type-{0}", (int)type);
+                                                        recoredType.Add(new TypeModel { Key = (int)type, Params = temp_str, Text = type.ToString() });
+                                                    }
+                                                    var temp_item = recoredType.FirstOrDefault(p => p.Key == item.TypeInt);
+                                                    <tr>
+                                                        <td class="d-none d-md-table-cell">@(tempIndex.ToString("d2"))</td>
+                                                        <td class="p-md-l-30">@item.CreateTimeDatetime.ToString("HH:mm MM/dd")</td>
+                                                        <td>@(temp_item!=null? Html.GetTansByLan(temp_item.Params,temp_item.Text): Html.GetTansByLan("recharge-summary-type-default", item.TypeNameNvarchar))</td>
+                                                        @*<td>complete</td>*@
+                                                        @*<td>@item.CoinAddressNvarchar</td>*@
+                                                        <td class="text-right">
+                                                    @{
+                                                    var add_type = new List<int>() {
+                                                                                        (int)EnumInOutRecordType.买入,
+                                                                                        (int)EnumInOutRecordType.充值,
+                                                                                        (int)EnumInOutRecordType.领红包,
+                                                                                        (int)EnumInOutRecordType.领糖果,
+                                                                                        (int)EnumInOutRecordType.红包退款,
+                                                                                        (int)EnumInOutRecordType.发币
+                                                                                    };
+                                                    var cut_type = new List<int>() {
+                                                                                    (int)EnumInOutRecordType.卖出,
+                                                                                    (int)EnumInOutRecordType.提现,
+                                                                                    (int)EnumInOutRecordType.发红包
+                                                                                };
+                                                    }
+                                                    @if (add_type.Contains(item.TypeInt))
+                                                    {
+                                                        <span class="m--font-success">+ @item.AmountDecimal</span>
+                                                    }
+                                                    else if (cut_type.Contains(item.TypeInt))
+                                                    {
+                                                        <span>- @item.AmountDecimal</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>@item.AmountDecimal</span>
+                                                    }
+                                                        </td>
+                                                    </tr>
+                                                    tempIndex++;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="4">@Html.GetTansByLan("recharge-summary-nodata", "No data available")</td></tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

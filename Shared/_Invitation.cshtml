@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=1280">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title data-locale="index-home-0">SilkChain 丝链邀请</title>
+    <link rel="shortcut icon" href="//www.silkchain.io/favicon.ico" />
+    <link href="~/css/vendors.stripped.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/style.bundle.min.css" rel="stylesheet" asp-append-version="true"/>
+    <link href="~/css/main.css" rel="stylesheet"asp-append-version="true" />
+    <link href="~/invitation/css/common.css" rel="stylesheet" />
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-5Q7VH5Q');
+    </script>
+</head>
+<body>
+    <div class="nav" style="display:block;">
+        <div class="container" style="max-width:unset;padding-left:0;padding-right:0;">
+            <div class="nav__logo"><img style="opacity:0;clip:rect(0,0,0,0);filter:alpha(opacity=0);" src="~/invitation/images/common/silkchain.png" /></div>
+            <ul class="nav__language">
+                <li id="chinesesLanguage"><img src="~/invitation/images/index/chinese-language.png" /> <span>中文</span></li>
+                <li id="englishLanguage"><img src="~/invitation/images/index/english-language.png" /> <span>English</span></li>
+            </ul>
+            <div class="nav__links">
+                <a href="https://www.silkchain.io/pc/index.html" class="active" data-locale="index-home-1">首页</a>
+                <a href="https://www.silkchain.io/pc/about/design.html" data-locale="index-home-2">关于丝链</a>
+                <a href="https://www.silkchain.io/pc/applications/dapps.html" data-locale="index-home-3">生态应用</a>
+                <a href="https://www.silkchain.io/pc/technology/overview.html" data-locale="index-home-4">丝链技术栈</a>
+                <a href="https://www.silkchain.io/pc/token/overview.html" data-locale="index-home-5">丝链通证</a>
+                <a href="https://www.silkchain.io/pc/teams/manager.html" data-locale="index-home-6">我们的团队</a>
+                <a href="http://news.silkchain.io/" data-locale="index-home-99">丝链资讯</a>
+                <a href="javascript:void(0);" class="contacts__link" data-locale="index-home-7">联系我们</a>
+                <a href="https://wallet.silkchain.io" data-locale="index-home-98">登录</a>
+            </div>
+        </div>
+    </div>
+    @RenderBody()
+    <div class="footer">
+        <div class="container" style="max-width:unset;padding-left:0;padding-right:0;">
+            <div class="footer__title" data-locale="index-home-94">联系我们</div>
+            <div class="social__icons">
+                <a href="https://www.facebook.com/SilkChain.IO" target="_blank" class="fb"></a>
+                <a href="https://twitter.com/SilkChain_IO" target="_blank" class="twitter"></a>
+                <a href="https://github.com/silkchain" target="_blank" class="github"></a>
+                <a href="https://silkchain.slack.com" target="_blank" class="wechat"></a>
+                <a href="https://www.reddit.com" target="_blank" class="reddit"></a>
+                <a href="https://medium.com" target="_blank" class="skype"></a>
+                <a href="https://t.me/silkchainchannel" target="_blank" class="telegram"></a>
+            </div>
+            <div class="footer__line"></div>
+            <div class="copyright" data-locale="index-home-95">Copyright itdc.org 2017-2018 All Rights Reserved. 国际贸易数字化基金会</div>
+        </div>
+    </div>
+    <script src="~/js/common.js"></script>
+    <script>
+        function getCookie(cookie_name) {
+            var allcookies = document.cookie;
+            var cookie_pos = allcookies.indexOf(cookie_name);   //索引的长度
+
+            // 如果找到了索引，就代表cookie存在，
+            // 反之，就说明不存在。
+            if (cookie_pos != -1) {
+                // 把cookie_pos放在值的开始，只要给值加1即可。
+                cookie_pos += cookie_name.length + 1;      //这里容易出问题，所以请大家参考的时候自己好好研究一下
+                var cookie_end = allcookies.indexOf(";", cookie_pos);
+
+                if (cookie_end == -1) {
+                    cookie_end = allcookies.length;
+                }
+
+                var value = unescape(allcookies.substring(cookie_pos, cookie_end));         //这里就可以得到你想要的cookie的值了。。。
+            }
+            return value;
+        }
+
+        $(function () {
+            LoadLang(getCookie("lang"))
+        });
+        function LoadLang(tempLang) {
+            //var index = $("#js_zx-carousel").find(".carousel-item").filter(".active").index();
+            //$('#js_zx-carousel').carousel(index);
+            if (tempLang == "en") {
+                $("a[data-locale='index-home-1']").html("Index");
+                $("a[data-locale='index-home-2']").html("About SilkChain");
+                $("a[data-locale='index-home-3']").html("Economic System");
+                $("a[data-locale='index-home-4']").html("SilkChain Technology Stack");
+                $("a[data-locale='index-home-5']").html("SilkChain Token");
+                $("a[data-locale='index-home-6']").html("The Team");
+                $("a[data-locale='index-home-7']").html("Contact us");
+                $("a[data-locale='index-home-99']").html("News");
+                $("a[data-locale='index-home-98']").html("Sign in");
+                $("a[data-locale='index-home-91']").html("Welcome to read the SilkChain white paper");
+                $("p[data-locale='index-home-92']").html("You can not only understand our project but also feel our vision and values");
+                $("p[data-locale='index-home-93']").html("Angel Round: Trust and invest in our institutions");
+                $("div[data-locale='index-home-94']").html("Contact us");
+                $("div[data-locale='index-home-95']").html("Copyright itdc.org 2017-2018 All Rights Reserved. International Trade Digitalization Foundation");
+                
+                $("#txt_chk_user").attr("placeholder", "Invitation Code");
+                $(".msg-contontent").hide().eq(1).show();
+                $("#but_chk_user").val('BUY');
+                $(".sp_one").html(" Invitation Code");
+                $(".sp_two").html("Buy Silk");
+                $(".sp_three").html("Payment");
+                
+            } else {
+                $("a[data-locale='index-home-1']").html("首页");
+                $("a[data-locale='index-home-2']").html("关于丝链");
+                $("a[data-locale='index-home-3']").html("生态应用");
+                $("a[data-locale='index-home-4']").html("丝链技术栈");
+                $("a[data-locale='index-home-5']").html("丝链通证");
+                $("a[data-locale='index-home-6']").html("我们的团队");
+                $("a[data-locale='index-home-7']").html("联系我们");
+                $("a[data-locale='index-home-99']").html("丝链资讯");
+                $("a[data-locale='index-home-98']").html("登录");
+                $("a[data-locale='index-home-91']").html("欢迎阅览丝链白皮书");
+                $("p[data-locale='index-home-92']").html("您不仅仅能够了解我们的项目也能感受到我们的愿景和价值观");
+                $("p[data-locale='index-home-93']").html("天使轮信任并已投资我们的机构");
+                $("div[data-locale='index-home-94']").html("联系我们");
+                $("div[data-locale='index-home-95']").html("Copyright itdc.org 2017-2018 All Rights Reserved. 国际贸易数字化基金会");
+
+                $("#txt_chk_user").attr("placeholder", "请在此输入邀请码");
+                $(".msg-contontent").hide().eq(0).show();
+                $("#but_chk_user").val('进入购买');
+                $(".sp_one").html("第一步  输入邀请码");
+                $(".sp_two").html("第二步 购买信息");
+                $(".sp_three").html("第三步 进行付款");
+            }
+        }
+        $("#chinesesLanguage").click(function () {
+            Marketplace.Common.SetLan('cn')
+            // document.cookie="lang=zh";
+            LoadLang("cn");
+        });
+        $("#englishLanguage").click(function () {
+            Marketplace.Common.SetLan('en')
+            //document.cookie = "lang=en";
+            LoadLang("en");
+        });
+    </script>
+</body>
+</html>

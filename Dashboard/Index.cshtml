@@ -1,0 +1,713 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<style>h4,.h4,h6,.h6 {margin:30px 0px 18px 0px;} h2 {margin-bottom:20px;font-size:48px;font-weight:400;} .cursor-progress * {cursor:progress !important;} .chart-date span {font-size:16px;display:inline-block;line-height:70px;cursor:pointer;color:rgb(125,149,182);margin:0px 2px;padding:0 5px;} .chart-date span:hover {font-weight:600;} .chart-date span.active {color:#0667D0;border-bottom:1px solid #0667D0;} .m-widget24 .m-widget24__item {width:100%;padding-left:5px;padding-right:5px;overflow:hidden;} .m-widget24__item p,.m-widget24__item h2 {text-align:center;margin-bottom:10px;} .m-widget24__item p {} .pagination {display:inline-block;} .pagination li {display:inline-block;margin:0px 5px;} .m-widget24 .m-widget24_price {font-size:30px;} .table tr:first-child > td {border-top:0px solid #f4f5f8;} .table tr > td:last-child {padding-right:30px;} .table th,.table td {height:69px;font-size:16px;} .dataTables_processing {top:0px;left:8px;} .table th,.table td {border-bottom:1px solid #CCCCCC;border-top:none;} .light-color {color:#A9A9A9;} .no-bd-btm {border-bottom:none !important;} .btc-color {color:#ffb119 !important;} .eth-color {color:#6f7cba !important;} .font-s14 {font-size:14px !Important;line-height:22px !important;} .mb-break-line {display:block;} @@media (max-width:1200px) { .mb-p-12 {padding:12px;} .mb-pt-12 {padding:12px;} } @@media (min-width:1131px) { .custom-td {width:150px;overflow:hidden;white-space:nowrap;} .pc-pr-0 {padding-right:0 !important;} } @@media (max-width:1130px) { .custom-col {flex:0 0 100%;max-width:100%;} } @@media (max-width:992px) { .mb-table-scroll-x {overflow-x:scroll;} .mb-break-line {display:block;} } .rowDetails {cursor:pointer;} #activityTable tr td {padding:10px 10px 10px 0px;} #activityTable tr td:FIRST-CHILD {width:40px !important;} #portfolioTable tr td:FIRST-CHILD {width:34px !important;padding:10px 0px;margin:0px;} #activityTable tr td:LAST-CHILD {padding-right:0px;} #detailsTable tr td {padding:15px 0px;}</style>
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+    <div class="m-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="m-portlet ">
+                    <div class="m-portlet__body  m-portlet__body--no-padding">
+                        <div class="row m-row--no-padding m-row--col-separator-xl" style="padding-top: 20px;padding-bottom: 20px;">
+                            <div class="col-md-12 col-lg-12 col-xl-4">
+                                <div class="m-widget24">
+                                    <div class="m-widget24__item">
+                                        <h4 class="text-center sub-title" style="color: #575962;margin-top: 0;text-transform:uppercase;">@SKC.Common.GlobalConfig.Coin_FullName</h4>
+                                        <h2 class="ezt-color">$0.019</h2>
+                                        <div class="p-content">
+                                            <p class="light-color font-s14">1 Silk = 0.000025 ETH</p>
+                                            <p class="light-color font-s14">1 Silk = 0.000001898 BTC</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-xl-4 mb-p-12">
+                                <div class="m-widget24">
+                                    <div class="m-widget24__item">
+                                        <h4 class="text-center sub-title" style="color: #575962;margin-top: 0;">ETHEREUM</h4>
+                                        <h2 class="eth-color">$756.98</h2>
+                                        <p class="p-content light-color font-s14"><span class="">1 ETH</span> = <span class="">40000 Silk</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-xl-4 mb-pt-12">
+                                <div class="m-widget24">
+                                    <div class="m-widget24__item">
+                                        <h4 class="text-center sub-title" style="color: #575962;margin-top: 0;">BITCOIN</h4>
+                                        <h2 class="btc-color">$9,964.13</h2>
+                                        <p class="p-content light-color font-s14"><span class="">1 BTC</span> = <span class="">526,870.389884 Silk</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="chart-div">
+            <div class="col-lg-12">
+                <div class="m-portlet m-portlet--mobile m-portlet--tabs">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title" style="width:100%">
+                                <h3 class="m-portlet__head-text">@SKC.Common.GlobalConfig.Coin_FullName - $2.33</h3>
+                                <div class="m-portlet__head-text text-right chart-date">
+                                    <a href="?date=12h" data-date="12h">
+                                        <span>12H</span></a>
+                                    <a href="?date=1d" data-date="1d">
+                                        <span>1D</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <canvas id="price-chart" style="height:300px;width:100%;cursor: crosshair;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 custom-col pc-pr-0" style='overflow: hidden;'>
+                <div class="m-portlet m-portlet--mobile">
+                    <div class="m-portlet__head" style="border-bottom:1px solid #CCCCCC;">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title" style="width: 100%">
+                                <h3 class="m-portlet__head-text" style="font-weight:700;font-size:16px !important;">PORTFOLIO</h3></div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body mb-table-scroll-x" style="padding:0px 0px 0px 25px">
+                        <table class="table" id="portfolioTable" style='margin-bottom: 0;'>
+                            <tbody>
+                                <tr>
+                                    <td scope="row" class="custom-td">
+                                        <img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QUM3MEJDQ0YxREI5MTFFOEJEMUVDNjEyMjkzQkM5NjAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QUM3MEJDRDAxREI5MTFFOEJEMUVDNjEyMjkzQkM5NjAiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpBQzcwQkNDRDFEQjkxMUU4QkQxRUM2MTIyOTNCQzk2MCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpBQzcwQkNDRTFEQjkxMUU4QkQxRUM2MTIyOTNCQzk2MCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqsT/joAAAQYSURBVHjapJdpbE1BFMfvva1SpWJtq7YoHxBFagm1tETaxi5E7EuVtrYPqCJCibWWkFhjqz3EkqBC0dqDIq2m1hBFilZprVV913/if2VM3nu34iS/zJ15M3NmOXPOeXrI1kytAlIdjAUDQRDrXsAEP0AJeAAOg0NscyuGze+VQSonXg++gXVgCOgEOoMRYAuoClJAKdj9P4oXgO+gJYgCHqAf2AAyuMNckAaSQU+gg9FgME9jvKvJPV20X+BEMWC71N4NhIHmoAuP9AZ4xDF3wD6SBHaCHmBcRRTnAX/gCz6xLZa7qib1EzuuBCZIbW9BPDgGFoKD7NeIG3F51OmgDvCRlJ4AmxWlt3gFrcArqd0PHAVbWX8IAkC4cnJ/KV7MY2wIyqT21sri7tGoNB51CHit9Gkjfb8BbUE0GKkqrkdjmgjeS4MSQVOp/gFEAAcXKSz7HRikKO4kK4Fk8ap2qYr3gOtgBy1zH49wuTLhClAAGvNazvI93wYblb7WHFZ7AsgHq00qDuQulrHDLK420InhXWO5iGUNMI3faU76B9LYhrIudh1v6LpuUEkhOM0fZ7p52wUsg6S2Fizfuxk3V/v9sDeVO0yvOt6ew4TiSB6ZkD60TFfizzJHMTbNZlw7YYS4Q4eHoWcVffsZZdB4Mtihq42n6y55NSHlYBu/I23GdmR5/afDDDZ4T9lsvGgzeD5owmNtTjc6AzTji3AlYoFXLR+g65q/QX9cJBnIATcTVKHzEE7mKQimpT+xWfAqcJ/fL8V4Z0HCtJmkLiexyg4VGOM0Oold1GK9t/LwVflIH34evOA1CePqZaMnQfKAwjMWCsXFPDJNdeROZA19uDAub+n40lVfrIiHZLgdTVPLF4qfM3QJuWKj+DLLOdLqp/L7jM3YWyxD8aTuG3Qc1lNIpVN3JdZvrZQ3qtFnuxIRp+/AEDzKTTPYz6dSqsGYKay0LzuttTEsTbHiXJa13YxbSbON89T10u/ljsMGQ5rwXPMkf3qIQV2VUJZJLIuZClmGqcpbxuYjooL3myDcZuGXMtN6TmMYY6NZH073OFeZKJG7zmNwj2DsFk9qitJ3FOeIld6yqM/GHf8Ji++YCGyXjtMKg8+kek1wjimTcLM3mWEcd2JI+xU7mC0nf7IDWcjJXii5WI4yaVsmeBpjcaaTEJqtBJa73NR+VzlXOIN1GXcnZACvoETq154G9hjUl9qFvfRndmqlTfm0oRi7vDqIwUL478ls20kvFcaT2ctM5St/S2T0aQBOcswS7jzFWeTS3fyFEVa+lEc/iXdbERnBrNSX+XTKvyT0GlOhZP4fOstAcAmcYo5VwF0HMLnvR+vW+Jcmzt3qPG1WX8YM0lq9uO/pzLvlP22fmbiPp0MqtTuWXwIMACm6AwBo6suuAAAAAElFTkSuQmCC" style="margin-right: 5px;vertical-align:sub;width:22px">@SKC.Common.GlobalConfig.Coin_FullName</td>
+                                    <td class="text-right">0 SILK</td>
+                                    <td class="text-right">$0.00</td></tr>
+                                <tr>
+                                    <td scope="row" class="custom-td">
+                                        <img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAADIElEQVQ4jX2VW2hUVxSGv733nMycMTNjgmIuEy8NQhq1VpSxOFVR0bYgoka84gVE7JuIL31QCKIUC0Jt8UZ9EqQPpYVAHiQgim3QMlhDq+IVLzWXiUk0M8dxxnjO6cOkw8yZPVkvB/611rfX3uz9H3HgcBcTRBxYD3wGTAUUMAL8BVwGOio1+irom4B9wJoK+RjwNfAPcAY45y2QmqZLwC/FUCHAcVxsx0WIktp5wNnxHdRMBO4CtutGfJf9gGW9x7bL4AALgATQrAN3AKu9HUpJXvSmWPn5THZtnkd/0sJ1dUvTDHR7wV8A67yVQgiGRjJE68Ns29DKivgM4rEofQMWUpaPDUwDvi0Gn9FVOY5LKp1j345PC9ruLZ9gGJJMZkx3JADfAA0S2Ah85M0qJfm3d5R4rIm5H08t6DWRAFvWt9I7kEZUIAPtEtjtVYWA16NZGupC7N+5oKxr3ZrZxGNR+pMWUg9fLoGFZbILo6ks29vmEqqu0o60bcMcAMZsR5eulUCtVx1+845F8+tZsqhRCwWYEY2waW0LycG3urQpgbK9mAGDN6ksnV2PSKVzWvCV359x9+EQkbBflxYSKFvSpwRVhqJv0OJQ+xV+7bxfyN281cveg53cfzxM0DQqXbucD7gDLC9WlZK8eJmibW0LX65o5tRPCR48GUYpSd+AxZ6t85k9q4ajJ/9AKS14VJL3hZJQSmCaPk78eINQdRUn21cxs2ky/irFqWOrWbq4iROnb5KycgT8Wh/7Wxw43BUgb4VmCVwKXo1kCJoG5777qqTr+Pfd9NxNMr0xgq2/FTEJZMm/lpKwHZcptUFeDWW4cKmnoF/tfk7idj+NdaFK0A4g8f+T/gF46a1wHJdoQ5iOyw9J9PTRn7Q4f/E29dOqJ3p1O6HU6JcB14DpxVVSChrrQ/z82z2kElRPMjBNH45TZnE20AakodQ2nwKLx7+FcF2XSUGDTHaMVDpHJOzXQR1gJUW/Kq/RDwCtwDHAKoxiuwT8PoKmgW2XQc8CLcD1YlF3V7LAEfLnvp+8V9cB4fFB0sAg8CdwHrinYfAfhyjzYwYT1iQAAAAASUVORK5CYII=" style="margin-right: 5px;vertical-align:sub;">Ethereum</td>
+                                    <td class="text-right eth-color">0 ETH</td>
+                                    <td class="text-right">$0.00</td></tr>
+                                <tr>
+                                    <td scope="row" class="no-bd-btm custom-td">
+                                        <img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAADAklEQVQ4jX3UTWhcVRgG4Gdu7kx+JylpCpkmbcFqxJ9uStUSEgV1IypixHahCLoRFVyoK1FRF7pUUMGVbvwpItW6klCTLhIsgmigUkSDIGpIInHS/E8yuS7Ozcxk8vPCXdz3nO/9vvN+53yZ5ELBPngMD+I2HEq5RfyEb/EJ/tstMLOH8BN4BTfslxVFvIkPUNpPOMZ3uDOsxmwssFyktYvlf4nQdoTNjdq4P3E3JreIqGaxBaMVUYJocw83PUc2T9/THDvL2gKSWuGjGMOJ3YQvYYBMVXShSMsRTr5P3MqpD7nltcAnicregG78WC/8qNCgUEmySdxOc46okWSdOE+pyPo1GrA8nepuE88Kflc8nkUXKM2F498/SXmV8hK5zuBplA3h81e4+ha/f07H4bT6bbguwtmKKDQ0U17h6ttBKHcwVBVlKS2FPR23cvozuk+Hhu7EqxEe30bFbSQbjL7Mb++l7pQZGeDLAuMPs5nerL7nKZXUNRIGI5zcRiVlMg3k1RwxYXacqQX++DpYBOsLdRZXcCBG565LGVVPMw3c/hE3z9B7D9n2wP99PhSbiUNBVbTE9spZn6VwX7AgylXp488wfYnycrg9NYiEt78HUiuSMsOn+OIYnxaYeCnwPQ9RuJeVufrAUoQrO6qLYpZQmq/SG4usC1+pWOWbD1NWj/kYX+GuKrfJ2jWOD9DzQJorov8cS3/R2EnvULp1lX+GaWqpF57IJBcKzViuUOXV0O2hWeIDuxoEVqcYG2LmMvne+uYNRljBCxUqytF4kPEzjAzy84tsrvPDU8Ga4gTD/VzsZ/Yy+Z560W8wFqc/7+B1tMs0kMkwfZH5dNBEWWZGyHWw2sTk93TlaOsNc2U7niTM3y3cgVGSbklCUzfxYmja1vP+5Q3WZjmUJ9daXymcwRw7B/2NwlwNsyPKhmm2VKSti6V00OePBnu24xGcrzhat/grrse7CMENzbQXQpJ8gdZCveg59NWK7lZxLU7g2dSiAlpTvoQp4f5/jOHdgv8HCjP8rQKU8X8AAAAASUVORK5CYII=" style="margin-right: 5px;vertical-align:sub;">Bitcoin</td>
+                                    <td class="text-right no-bd-btm btc-color">0 BTC</td>
+                                    <td class="text-right no-bd-btm">$0.00</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="m-portlet__foot" style="border-top: 1px solid #CCCCCC;padding-bottom: 24px;">
+                        <h3 class="m-portlet__head-text text-right	sub-title-18" style="padding-right: 0px;padding-top: 22px;font-size: 18px;">$0.00</h3></div>
+                </div>
+            </div>
+            <div class="col-lg-6 custom-col">
+                <div class="m-portlet m-portlet--mobile">
+                    <div class="m-portlet__head" style="border-bottom:1px solid #CCCCCC;">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text" style="font-weight:700;font-size:16px !important;">RECENT ACTIVITY</h3></div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body" style="padding:0px 25px 25px 0px">
+                        <div class="m-scrollable mCustomScrollbar _mCS_3 mCS-autoHide" data-scrollable="true" data-max-height="275" data-scrollbar-shown="true" style="max-height: 275px;height: 275px; position: relative; overflow: visible;">
+                            <div id="mCSB_3" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" style="max-height: none;" tabindex="0">
+                                <div id="mCSB_3_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
+                                    <div style="padding:0px 0px 25px 25px">
+                                        <table class="table" id="activityTable" style="width: 100%">
+                                            <thead style="display: none;">
+                                                <tr>
+                                                    <th width="40px"></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="4">No data available in table</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="mCSB_3_scrollbar_vertical" class="mCSB_scrollTools mCSB_3_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: block;">
+                                <div class="mCSB_draggerContainer">
+                                    <div id="mCSB_3_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; display: block; height: 82px; max-height: 234px; top: 0px;">
+                                        <div class="mCSB_dragger_bar" style="line-height: 50px;"></div>
+                                    </div>
+                                    <div class="mCSB_draggerRail"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalDetails" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" style="text-transform: uppercase;" id="lblTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
+                    <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" style="padding:50px 25px">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <img alt="" src="" id="lblImg" /></div>
+                    <div class="col-lg-12 text-center" style="margin: 15px 0px">
+                        <span style="font-weight: 700;font-size: 36px;" id="lblAmount"></span>
+                    </div>
+                    <div class="col-lg-12 text-center">
+                        <span style="font-size: 24px" id="lblUsd"></span>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div style="padding:0px 30px">
+                <table class="table noBoderFrist" id="detailsTable">
+                    <tr>
+                        <td style="min-width: 130px">Transaction id</td>
+                        <td class="text-right">
+                            <span id="lblTnx" class="txId" style="display: inline-block;width: 50%;overflow: hidden;white-space: nowrap;"></span>
+                            <button class="btn btn-secondary btnNoneBorder" onclick="return copyToClipboardPopup('#detailsTable #lblTnx' ,'#detailsTable' )">
+                                <i class="io-copy"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="withdrawDetailRow">
+                        <td>To</td>
+                        <td class="text-right" id="lblTo"></td>
+                    </tr>
+                    <tr>
+                        <td>Date</td>
+                        <td class="text-right" id="lblDate"></td>
+                    </tr>
+                    <tr class="withdrawDetailRow">
+                        <td>Fee</td>
+                        <td class="text-right" id="lblFee"></td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td class="text-right" id="lblStatus"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="width:0;height:0;display:none;clip:rect(0,0,0,0);">
+<textarea id="J_chart12h">
+<canvas id="price-chart" style="height:300px;width:100%;cursor: crosshair;"></canvas>
+<script>
+	var ctx = document.getElementById("price-chart").getContext('2d');
+	Chart.defaults.LineWithLine = Chart.defaults.line;
+	Chart.controllers.LineWithLine = Chart.controllers.line.extend({
+	   draw: function(ease) {
+		  Chart.controllers.line.prototype.draw.call(this, ease);
+
+		  if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
+			 var activePoint = this.chart.tooltip._active[0],
+				 ctx = this.chart.ctx,
+				 x = activePoint.tooltipPosition().x,
+				 topY = this.chart.scales['y-axis-0'].top,
+				 bottomY = this.chart.scales['y-axis-0'].bottom;
+
+			 // draw line
+			 ctx.save();
+			 ctx.beginPath();
+			 ctx.moveTo(x, topY);
+			 ctx.lineTo(x, bottomY);
+			 ctx.lineWidth = 1;
+			 ctx.strokeStyle = '#7D95B6';
+			 ctx.stroke();
+			 ctx.restore();
+		  }
+	   }
+	});	
+	var fullDate = [ "03/02/2018 03:11" ,  "03/02/2018 03:16" ,  "03/02/2018 03:21" ,  "03/02/2018 03:26" ,  "03/02/2018 03:31" ,  "03/02/2018 03:36" ,  "03/02/2018 03:41" ,  "03/02/2018 03:46" ,  "03/02/2018 03:51" ,  "03/02/2018 03:56" ,  "03/02/2018 04:01" ,  "03/02/2018 04:06" ,  "03/02/2018 04:11" ,  "03/02/2018 04:16" ,  "03/02/2018 04:21" ,  "03/02/2018 04:26" ,  "03/02/2018 04:31" ,  "03/02/2018 04:36" ,  "03/02/2018 04:41" ,  "03/02/2018 04:46" ,  "03/02/2018 04:51" ,  "03/02/2018 04:56" ,  "03/02/2018 05:01" ,  "03/02/2018 05:06" ,  "03/02/2018 05:11" ,  "03/02/2018 05:16" ,  "03/02/2018 05:21" ,  "03/02/2018 05:26" ,  "03/02/2018 05:31" ,  "03/02/2018 05:36" ,  "03/02/2018 05:41" ,  "03/02/2018 05:46" ,  "03/02/2018 05:51" ,  "03/02/2018 05:56" ,  "03/02/2018 06:01" ,  "03/02/2018 06:06" ,  "03/02/2018 06:11" ,  "03/02/2018 06:16" ,  "03/02/2018 06:21" ,  "03/02/2018 06:26" ,  "03/02/2018 06:31" ,  "03/02/2018 06:36" ,  "03/02/2018 06:41" ,  "03/02/2018 06:46" ,  "03/02/2018 06:51" ,  "03/02/2018 06:56" ,  "03/02/2018 07:01" ,  "03/02/2018 07:06" ,  "03/02/2018 07:11" ,  "03/02/2018 07:16" ,  "03/02/2018 07:21" ,  "03/02/2018 07:26" ,  "03/02/2018 07:31" ,  "03/02/2018 07:36" ,  "03/02/2018 07:41" ,  "03/02/2018 07:46" ,  "03/02/2018 07:51" ,  "03/02/2018 07:56" ,  "03/02/2018 08:01" ,  "03/02/2018 08:06" ,  "03/02/2018 08:11" ,  "03/02/2018 08:16" ,  "03/02/2018 08:21" ,  "03/02/2018 08:26" ,  "03/02/2018 08:31" ,  "03/02/2018 08:36" ,  "03/02/2018 08:41" ,  "03/02/2018 08:46" ,  "03/02/2018 08:51" ,  "03/02/2018 08:56" ,  "03/02/2018 09:01" ,  "03/02/2018 09:06" , ];
+	var myChart = new Chart(ctx, {
+		type: 'LineWithLine',
+		scaleShowGridLines: true,
+		data: {
+			labels: [ "03:11" ,  "03:16" ,  "03:21" ,  "03:26" ,  "03:31" ,  "03:36" ,  "03:41" ,  "03:46" ,  "03:51" ,  "03:56" ,  "04:01" ,  "04:06" ,  "04:11" ,  "04:16" ,  "04:21" ,  "04:26" ,  "04:31" ,  "04:36" ,  "04:41" ,  "04:46" ,  "04:51" ,  "04:56" ,  "05:01" ,  "05:06" ,  "05:11" ,  "05:16" ,  "05:21" ,  "05:26" ,  "05:31" ,  "05:36" ,  "05:41" ,  "05:46" ,  "05:51" ,  "05:56" ,  "06:01" ,  "06:06" ,  "06:11" ,  "06:16" ,  "06:21" ,  "06:26" ,  "06:31" ,  "06:36" ,  "06:41" ,  "06:46" ,  "06:51" ,  "06:56" ,  "07:01" ,  "07:06" ,  "07:11" ,  "07:16" ,  "07:21" ,  "07:26" ,  "07:31" ,  "07:36" ,  "07:41" ,  "07:46" ,  "07:51" ,  "07:56" ,  "08:01" ,  "08:06" ,  "08:11" ,  "08:16" ,  "08:21" ,  "08:26" ,  "08:31" ,  "08:36" ,  "08:41" ,  "08:46" ,  "08:51" ,  "08:56" ,  "09:01" ,  "09:06" , ],
+			datasets: [{
+				label: 'EZT Price',
+				data: [ 1.60000000000000000000 ,  1.61000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.61000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.59000000000000000000 ,  1.60000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.60000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.60000000000000000000 ,  1.59000000000000000000 ,  1.60000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.60000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.58000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.60000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.58000000000000000000 ,  1.59000000000000000000 ,  1.58000000000000000000 ,  1.58000000000000000000 ,  1.58000000000000000000 ,  1.58000000000000000000 ,  1.58000000000000000000 , ],
+				backgroundColor: [
+					'rgba(248, 232, 233, 1)',
+				],
+				borderWidth: 2,
+				borderColor: '#D7202B',
+				lineTension: 0
+			}]
+		},
+		options: {
+			responsive: false,
+			legend: {
+				display: false
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			scales: {
+				yAxes: [{
+					position: "left",
+					"id": "y-axis-0",
+					ticks: {
+						beginAtZero:true,
+						maxTicksLimit: 2,
+						min: 1.61000000000000000000,
+						max: 1.58000000000000000000,
+						callback: function(tick, index, ticksArray) {
+							return "$ "+tick.toLocaleString();
+						}
+					},
+					gridLines: {
+						drawBorder: false
+					}
+				},{
+					position: "right",
+					"id": "y-axis-1",
+					ticks: {
+						beginAtZero:true,
+						maxTicksLimit: 2,
+						min: 1.61000000000000000000,
+						max: 1.58000000000000000000,
+						callback: function(tick, index, ticksArray) {
+							return "$ "+tick.toLocaleString();
+						}
+
+					},
+					gridLines: {
+						drawBorder: false
+					}
+
+				}],
+				xAxes: [{				
+					ticks: {
+						autoSkip: true,
+						maxTicksLimit: 6,
+						maxRotation: 0,
+						minRotation: 0,
+					},
+
+					gridLines: {
+						drawOnChartArea: false,
+						display:false
+					}
+				}]
+
+			},
+			elements: {
+				point:{
+					radius: 0
+				}
+			},
+			tooltips: {
+				callbacks: {
+				   label: function(tooltipItem) {
+					   tooltipItem.yLabel = '$'+tooltipItem.yLabel.toLocaleString();
+					   return tooltipItem.yLabel;
+				   },
+				   title: function(tooltipItem) {
+					   tooltipItem[0].xLabel = fullDate[tooltipItem[0].index];
+					   return tooltipItem[0].xLabel;
+				   }
+				},
+				displayColors : false,
+				mode: 'x-axis'
+			}
+		}
+	});
+</script>
+</textarea>
+<textarea id="J_chart1d">
+<canvas id="price-chart" style="height:300px;width:100%;cursor: crosshair;"></canvas>
+<script>
+    var temp_data = @Html.Raw(ViewBag.TempData);
+	var ctx = document.getElementById("price-chart").getContext('2d');
+	Chart.defaults.LineWithLine = Chart.defaults.line;
+	Chart.controllers.LineWithLine = Chart.controllers.line.extend({
+	   draw: function(ease) {
+		  Chart.controllers.line.prototype.draw.call(this, ease);
+
+		  if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
+			 var activePoint = this.chart.tooltip._active[0],
+				 ctx = this.chart.ctx,
+				 x = activePoint.tooltipPosition().x,
+				 topY = this.chart.scales['y-axis-0'].top,
+				 bottomY = this.chart.scales['y-axis-0'].bottom;
+
+			 // draw line
+			 ctx.save();
+			 ctx.beginPath();
+			 ctx.moveTo(x, topY);
+			 ctx.lineTo(x, bottomY);
+			 ctx.lineWidth = 1;
+			 ctx.strokeStyle = '#7D95B6';
+			 ctx.stroke();
+			 ctx.restore();
+		  }
+	   }
+	});	
+	var fullDate = [ "03/01/2018 21:14" ,  "03/01/2018 21:19" ,  "03/01/2018 21:24" ,  "03/01/2018 21:29" ,  "03/01/2018 21:34" ,  "03/01/2018 21:39" ,  "03/01/2018 21:44" ,  "03/01/2018 21:49" ,  "03/01/2018 21:54" ,  "03/01/2018 21:59" ,  "03/01/2018 22:04" ,  "03/01/2018 22:09" ,  "03/01/2018 22:14" ,  "03/01/2018 22:19" ,  "03/01/2018 22:24" ,  "03/01/2018 22:29" ,  "03/01/2018 22:34" ,  "03/01/2018 22:39" ,  "03/01/2018 22:44" ,  "03/01/2018 22:49" ,  "03/01/2018 22:54" ,  "03/01/2018 22:59" ,  "03/01/2018 23:04" ,  "03/01/2018 23:09" ,  "03/01/2018 23:14" ,  "03/01/2018 23:19" ,  "03/01/2018 23:24" ,  "03/01/2018 23:29" ,  "03/01/2018 23:34" ,  "03/01/2018 23:39" ,  "03/01/2018 23:44" ,  "03/01/2018 23:49" ,  "03/01/2018 23:54" ,  "03/01/2018 23:59" ,  "03/02/2018 00:04" ,  "03/02/2018 00:09" ,  "03/02/2018 00:14" ,  "03/02/2018 00:19" ,  "03/02/2018 00:24" ,  "03/02/2018 00:29" ,  "03/02/2018 00:34" ,  "03/02/2018 00:39" ,  "03/02/2018 00:44" ,  "03/02/2018 00:49" ,  "03/02/2018 00:54" ,  "03/02/2018 00:59" ,  "03/02/2018 01:04" ,  "03/02/2018 01:09" ,  "03/02/2018 01:14" ,  "03/02/2018 01:19" ,  "03/02/2018 01:24" ,  "03/02/2018 01:29" ,  "03/02/2018 01:34" ,  "03/02/2018 01:39" ,  "03/02/2018 01:44" ,  "03/02/2018 01:49" ,  "03/02/2018 01:54" ,  "03/02/2018 01:59" ,  "03/02/2018 02:04" ,  "03/02/2018 02:09" ,  "03/02/2018 02:14" ,  "03/02/2018 02:19" ,  "03/02/2018 02:24" ,  "03/02/2018 02:29" ,  "03/02/2018 02:34" ,  "03/02/2018 02:39" ,  "03/02/2018 02:44" ,  "03/02/2018 02:49" ,  "03/02/2018 02:54" ,  "03/02/2018 02:59" ,  "03/02/2018 03:01" ,  "03/02/2018 03:06" ,  "03/02/2018 03:11" ,  "03/02/2018 03:16" ,  "03/02/2018 03:21" ,  "03/02/2018 03:26" ,  "03/02/2018 03:31" ,  "03/02/2018 03:36" ,  "03/02/2018 03:41" ,  "03/02/2018 03:46" ,  "03/02/2018 03:51" ,  "03/02/2018 03:56" ,  "03/02/2018 04:01" ,  "03/02/2018 04:06" ,  "03/02/2018 04:11" ,  "03/02/2018 04:16" ,  "03/02/2018 04:21" ,  "03/02/2018 04:26" ,  "03/02/2018 04:31" ,  "03/02/2018 04:36" ,  "03/02/2018 04:41" ,  "03/02/2018 04:46" ,  "03/02/2018 04:51" ,  "03/02/2018 04:56" ,  "03/02/2018 05:01" ,  "03/02/2018 05:06" ,  "03/02/2018 05:11" ,  "03/02/2018 05:16" ,  "03/02/2018 05:21" ,  "03/02/2018 05:26" ,  "03/02/2018 05:31" ,  "03/02/2018 05:36" ,  "03/02/2018 05:41" ,  "03/02/2018 05:46" ,  "03/02/2018 05:51" ,  "03/02/2018 05:56" ,  "03/02/2018 06:01" ,  "03/02/2018 06:06" ,  "03/02/2018 06:11" ,  "03/02/2018 06:16" ,  "03/02/2018 06:21" ,  "03/02/2018 06:26" ,  "03/02/2018 06:31" ,  "03/02/2018 06:36" ,  "03/02/2018 06:41" ,  "03/02/2018 06:46" ,  "03/02/2018 06:51" ,  "03/02/2018 06:56" ,  "03/02/2018 07:01" ,  "03/02/2018 07:06" ,  "03/02/2018 07:11" ,  "03/02/2018 07:16" ,  "03/02/2018 07:21" ,  "03/02/2018 07:26" ,  "03/02/2018 07:31" ,  "03/02/2018 07:36" ,  "03/02/2018 07:41" ,  "03/02/2018 07:46" ,  "03/02/2018 07:51" ,  "03/02/2018 07:56" ,  "03/02/2018 08:01" ,  "03/02/2018 08:06" ,  "03/02/2018 08:11" ,  "03/02/2018 08:16" ,  "03/02/2018 08:21" ,  "03/02/2018 08:26" ,  "03/02/2018 08:31" ,  "03/02/2018 08:36" ,  "03/02/2018 08:41" ,  "03/02/2018 08:46" ,  "03/02/2018 08:51" ,  "03/02/2018 08:56" ,  "03/02/2018 09:01" ,  "03/02/2018 09:06" ,  "03/02/2018 09:11" , ];
+	var myChart = new Chart(ctx, {
+		type: 'LineWithLine',
+		scaleShowGridLines: true,
+		data: {
+			labels: [ "21:14" ,  "21:19" ,  "21:24" ,  "21:29" ,  "21:34" ,  "21:39" ,  "21:44" ,  "21:49" ,  "21:54" ,  "21:59" ,  "22:04" ,  "22:09" ,  "22:14" ,  "22:19" ,  "22:24" ,  "22:29" ,  "22:34" ,  "22:39" ,  "22:44" ,  "22:49" ,  "22:54" ,  "22:59" ,  "23:04" ,  "23:09" ,  "23:14" ,  "23:19" ,  "23:24" ,  "23:29" ,  "23:34" ,  "23:39" ,  "23:44" ,  "23:49" ,  "23:54" ,  "23:59" ,  "00:04" ,  "00:09" ,  "00:14" ,  "00:19" ,  "00:24" ,  "00:29" ,  "00:34" ,  "00:39" ,  "00:44" ,  "00:49" ,  "00:54" ,  "00:59" ,  "01:04" ,  "01:09" ,  "01:14" ,  "01:19" ,  "01:24" ,  "01:29" ,  "01:34" ,  "01:39" ,  "01:44" ,  "01:49" ,  "01:54" ,  "01:59" ,  "02:04" ,  "02:09" ,  "02:14" ,  "02:19" ,  "02:24" ,  "02:29" ,  "02:34" ,  "02:39" ,  "02:44" ,  "02:49" ,  "02:54" ,  "02:59" ,  "03:01" ,  "03:06" ,  "03:11" ,  "03:16" ,  "03:21" ,  "03:26" ,  "03:31" ,  "03:36" ,  "03:41" ,  "03:46" ,  "03:51" ,  "03:56" ,  "04:01" ,  "04:06" ,  "04:11" ,  "04:16" ,  "04:21" ,  "04:26" ,  "04:31" ,  "04:36" ,  "04:41" ,  "04:46" ,  "04:51" ,  "04:56" ,  "05:01" ,  "05:06" ,  "05:11" ,  "05:16" ,  "05:21" ,  "05:26" ,  "05:31" ,  "05:36" ,  "05:41" ,  "05:46" ,  "05:51" ,  "05:56" ,  "06:01" ,  "06:06" ,  "06:11" ,  "06:16" ,  "06:21" ,  "06:26" ,  "06:31" ,  "06:36" ,  "06:41" ,  "06:46" ,  "06:51" ,  "06:56" ,  "07:01" ,  "07:06" ,  "07:11" ,  "07:16" ,  "07:21" ,  "07:26" ,  "07:31" ,  "07:36" ,  "07:41" ,  "07:46" ,  "07:51" ,  "07:56" ,  "08:01" ,  "08:06" ,  "08:11" ,  "08:16" ,  "08:21" ,  "08:26" ,  "08:31" ,  "08:36" ,  "08:41" ,  "08:46" ,  "08:51" ,  "08:56" ,  "09:01" ,  "09:06" ,  "09:11" , ],
+			datasets: [{
+				label: 'EZT Price',
+				data: [ 1.99000000000000000000 ,  1.99000000000000000000 ,  1.99000000000000000000 ,  1.99000000000000000000 ,  2.00000000000000000000 ,  1.99000000000000000000 ,  1.99000000000000000000 ,  1.98000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.96000000000000000000 ,  1.97000000000000000000 ,  1.96000000000000000000 ,  1.96000000000000000000 ,  1.96000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.98000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.98000000000000000000 ,  1.98000000000000000000 ,  1.98000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.96000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.96000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.98000000000000000000 ,  1.98000000000000000000 ,  1.98000000000000000000 ,  1.97000000000000000000 ,  1.96000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.96000000000000000000 ,  1.96000000000000000000 ,  1.96000000000000000000 ,  1.97000000000000000000 ,  1.98000000000000000000 ,  1.98000000000000000000 ,  1.98000000000000000000 ,  1.97000000000000000000 ,  1.98000000000000000000 ,  1.98000000000000000000 ,  1.98000000000000000000 ,  1.98000000000000000000 ,  1.98000000000000000000 ,  1.98000000000000000000 ,  1.98000000000000000000 ,  1.98000000000000000000 ,  1.98000000000000000000 ,  1.99000000000000000000 ,  1.97000000000000000000 ,  1.98000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.97000000000000000000 ,  1.61000000000000000000 ,  1.61000000000000000000 ,  1.60000000000000000000 ,  1.61000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.61000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.60000000000000000000 ,  1.59000000000000000000 ,  1.60000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.60000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.60000000000000000000 ,  1.59000000000000000000 ,  1.60000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.60000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.58000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.60000000000000000000 ,  1.59000000000000000000 ,  1.59000000000000000000 ,  1.58000000000000000000 ,  1.59000000000000000000 ,  1.58000000000000000000 ,  1.58000000000000000000 ,  1.58000000000000000000 ,  1.58000000000000000000 ,  1.58000000000000000000 ,  1.59000000000000000000 , ],
+				backgroundColor: [
+					'rgba(248, 232, 233, 1)',
+				],
+				borderWidth: 2,
+				borderColor: '#D7202B',
+				lineTension: 0
+			}]
+		},
+		options: {
+			responsive: false,
+			legend: {
+				display: false
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			scales: {
+				yAxes: [{
+					position: "left",
+					"id": "y-axis-0",
+					ticks: {
+						beginAtZero:true,
+						maxTicksLimit: 2,
+						min: 2.00000000000000000000,
+						max: 1.58000000000000000000,
+						callback: function(tick, index, ticksArray) {
+							return "$ "+tick.toLocaleString();
+						}
+					},
+					gridLines: {
+						drawBorder: false
+					}
+				},{
+					position: "right",
+					"id": "y-axis-1",
+					ticks: {
+						beginAtZero:true,
+						maxTicksLimit: 2,
+						min: 2.00000000000000000000,
+						max: 1.58000000000000000000,
+						callback: function(tick, index, ticksArray) {
+							return "$ "+tick.toLocaleString();
+						}
+
+					},
+					gridLines: {
+						drawBorder: false
+					}
+
+				}],
+				xAxes: [{				
+					ticks: {
+						autoSkip: true,
+						maxTicksLimit: 6,
+						maxRotation: 0,
+						minRotation: 0,
+					},
+
+					gridLines: {
+						drawOnChartArea: false,
+						display:false
+					}
+				}]
+
+			},
+			elements: {
+				point:{
+					radius: 0
+				}
+			},
+			tooltips: {
+				callbacks: {
+				   label: function(tooltipItem) {
+					   tooltipItem.yLabel = '$'+tooltipItem.yLabel.toLocaleString();
+					   return tooltipItem.yLabel;
+				   },
+				   title: function(tooltipItem) {
+					   tooltipItem[0].xLabel = fullDate[tooltipItem[0].index];
+					   return tooltipItem[0].xLabel;
+				   }
+				},
+				displayColors : false,
+				mode: 'x-axis'
+			}
+		}
+	});
+	
+</script>
+</textarea>
+</div>
+<script src="~/js/vendors.stripped.min.js" type="text/javascript"></script>
+<!--<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>-->
+<script src="https://cdn.bootcss.com/bignumber.js/6.0.0/bignumber.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+<script>
+var onAir = false;
+$('.chart-date a').click(function(e){
+    if(onAir == true){
+        return false;
+    }
+    onAir = true;
+    e.preventDefault();
+    $('body').addClass('cursor-progress');
+    $('.chart-date a span').removeClass('active');
+    $(this).find('span').addClass('active');
+    var date_type = $(this).data('date');
+    $.ajax({
+        type: "GET",
+        url: "/dashboard/?chart"+"&date="+date_type,
+        // dataType: "jsonp",
+        success: function(data) {
+            data = $('#J_chart'+date_type).val();
+            $('#chart-div .m-portlet__body').html(data);
+        },
+        error: function(data) {
+        },
+    }).done(function(){
+        $('body').removeClass('cursor-progress');
+        onAir = false;
+    })
+});
+
+/*
+$.fn.dataTable.ext.errMode = 'throw';
+function copyToClipboardPopup(element , popup) {
+	var $temp = $("<input>");
+	$(popup).append($temp);
+	$temp.val($(element).text()).select();
+	document.execCommand("copy");
+	$temp.remove();
+	return false;
+}
+
+function showModal(seft , prefixAmount) {
+	$("#modalDetails #lblTitle").text($(seft).data("title"));
+	var imgHtml = $("td",seft).eq(0).clone().html();
+	$("#modalDetails #lblImg").html(imgHtml.replace("width:30px", "width:91px"));
+	$("#modalDetails #lblAmount").html($("td",seft).eq(2).html());
+	// $("#modalDetails #lblAmount span").text($("#modalDetails #lblAmount span").text() + prefixAmount);
+	$("#modalDetails #lblUsd").text($(seft).data("usd"));
+	$("#modalDetails #lblTnx").text($(seft).data("tnx"));
+	$("#modalDetails #lblDate").text($(seft).data("date"));
+	var htmlStatus;
+	if($(seft).data("status") == 'Success'){
+		htmlStatus = '<span class="m--font-success1"> Success </span>'
+	}else if($(seft).data("status") == 'Processing'){
+		htmlStatus = '<span class="m--font-warning"> Processing </span>'
+	}else if($(seft).data("status") == 'Pending'){
+		htmlStatus = '<span class="m--font-pending"> Pending </span>'
+	}else if($(seft).data("status") == 'Fail'){
+		htmlStatus = '<span class="m--font-fail"> Fail </span>'
+	}
+	$("#modalDetails #lblStatus").html(htmlStatus);
+	 if('WITHDRAW' == $(seft).data("title").toUpperCase()){
+		 $("#modalDetails #lblTo").text($(seft).data("to"));
+		 $("#modalDetails #lblFee").text($(seft).data("fee"));
+		 showWithDrawDetailsRow(true);
+	 }else{
+		 showWithDrawDetailsRow(false);
+	 }
+	$("#modalDetails").modal("show");
+}
+function showWithDrawDetailsRow(b) {
+	if(b){
+		$("#detailsTable .withdrawDetailRow").removeClass("m--hide");
+	}else{
+		$("#detailsTable .withdrawDetailRow").addClass("m--hide");
+	}
+}
+$('#activityTable').DataTable({
+	pageLength: 20,
+	drawCallback: function (settings) {
+		if (settings['aoData'].length == 0) {
+			$("#activityTable_paginate").css("display", "none");
+		} else {
+			$("#activityTable_paginate").css("display", "none");
+		}
+	},
+	createdRow: function ( row, data, index ) {
+		
+		var status;
+		$(row).attr("data-usd","$"+data['usd_amount']);
+		if(data['currency'] =='EZT'){
+			 if (data['confirmations'].toUpperCase() == 'SUCCESS') {
+				 status ="Success";
+			 } else if (data['confirmations'].toUpperCase() == 'PROCESSING') {
+				status ="Processing";
+			 } else if (data['confirmations'].toUpperCase() == 'PENDING') {
+				status ="Pending";
+			 }else if (data['confirmations'].toUpperCase() == 'PARTIAL FILLING') {
+				status ="Pending";
+			 } else {
+				status ="Fail";
+			 }
+			 status ="Success";
+			 var usd = data['usd_amount'];
+			 $(row).attr("data-usd","$"+usd);
+		}else if(data['currency'] =='BTC'){
+			 if ((data['transaction_type'].toUpperCase() == 'ICO') || (data['transaction_type'].toUpperCase() == 'WITHDRAW' && data['confirmations'].toUpperCase() == 'SUCCESS') || (data['transaction_type'].toUpperCase() == 'DEPOSIT' && data['confirmations'].toUpperCase() > 0)) {
+			 	status ="Success";
+			} else if (data['transaction_type'].toUpperCase() == 'WITHDRAW' && data['confirmations'].toUpperCase() == 'PROCESSING') {
+				status ="Processing";
+			} else if ((data['transaction_type'].toUpperCase() == 'WITHDRAW' && data['confirmations'].toUpperCase() == 'PENDING') || (data['transaction_type'].toUpperCase() == 'DEPOSIT' && data['confirmations'].toUpperCase() == 'PENDING')) {
+				status ="Pending";
+			} else if ((data['transaction_type'].toUpperCase() == 'DEPOSIT'  && data['confirmations'].toUpperCase() == 'SUCCESS' ) || (data['transaction_type'].toUpperCase() == 'WITHDRAW' && data['confirmations'].toUpperCase() == 'SUCCESS')) {
+				status ="Success";
+			}else {
+				status ="Fail";
+			}
+			var usd = data['usd_amount'];
+			$(row).attr("data-usd","$"+usd);
+		}else if(data['currency'] =='ETH'){
+			if ((data['transaction_type'].toUpperCase() == 'ICO') ||(data['transaction_type'].toUpperCase() == 'DEPOSIT' && data['confirmations'].toUpperCase() == '2') || (data['transaction_type'].toUpperCase() == 'WITHDRAW' && data['confirmations'].toUpperCase() == 'SUCCESS')) {
+				 status ="Success";
+			} else if (data['transaction_type'].toUpperCase() == 'WITHDRAW' && data['confirmations'].toUpperCase() == 'PROCESSING') {
+				status ="Processing";
+			} else if ((data['transaction_type'].toUpperCase() == 'DEPOSIT' && data['confirmations'].toUpperCase() == 1) || (data['transaction_type'].toUpperCase() == 'WITHDRAW' && data['confirmations'].toUpperCase() == 'PENDING')) {
+				status ="Pending";
+			} else if ((data['transaction_type'].toUpperCase() == 'DEPOSIT' && data['confirmations'].toUpperCase() == 1 && data['confirmations'].toUpperCase() == 'SUCCESS' ) || (data['transaction_type'].toUpperCase() == 'WITHDRAW' && data['confirmations'].toUpperCase() == 'SUCCESS')) {
+				status ="Success";
+			} else {
+				status ="Fail";
+			}
+			var usd = data['usd_amount'];
+			$(row).attr("data-usd","$"+usd);
+		}
+		 $(row).addClass("rowDetails"); 
+		 $(row).attr("data-color",data['currency'].toLowerCase()+'-color');
+		 $(row).attr("data-amount",data['amount']+" "+data['currency']);
+		 $(row).attr("data-tnx",data['tx_id']);
+		 $(row).attr("data-title",data['transaction_type']);
+		 $(row).attr("data-date",data['time_received']);
+		 $(row).attr("data-status",status);
+		 $(row).attr("data-to",data['withdraw_address']);
+		 $(row).attr("data-fee",data['fee']);
+		 $(row).click(function () {
+			  showModal(row ," "+data['currency']);	  
+		 });
+    },
+	info: false,
+	lengthChange: false,
+	searching: false,
+	ordering: false,
+	processing: true,
+	serverSide: true,
+	ajax: '/dashboard/table-activity',
+	columns: [{
+		render: function (data, type, row, meta) {
+			var imgUrl = "/ic_";
+			if(row['currency'] =='EZT'){
+				if('WITHDRAW' == row['transaction_type'].toUpperCase()){
+					 imgUrl+="withdraw_";
+				 }else if('DEPOSIT' == row['transaction_type'].toUpperCase()){
+					 imgUrl+="deposit_";
+				 }
+				 if (row['confirmations'].toUpperCase() == 'SELL') {
+				    imgUrl+="deposit_fail";					 
+				 }else if (row['confirmations'].toUpperCase() == 'BUY'){  
+					imgUrl+="deposit_success";
+				 }else{
+					 imgUrl+="deposit_fail";	
+				 }
+				
+			}else if(row['currency'] =='BTC'){
+				if('DEPOSIT' == row['transaction_type'].toUpperCase()){
+					 imgUrl+="deposit_";
+				 }else{
+					 imgUrl+="withdraw_";
+				 }
+				 if ((row['transaction_type'].toUpperCase() == 'ICO') || (row['transaction_type'].toUpperCase() == 'WITHDRAW' && row['confirmations'].toUpperCase() == 'SUCCESS') || (row['transaction_type'].toUpperCase() == 'DEPOSIT' && row['confirmations'].toUpperCase() > 0)) {
+				 	imgUrl+="success";
+				} else if (row['transaction_type'].toUpperCase() == 'WITHDRAW' && row['confirmations'].toUpperCase() == 'PROCESSING') {
+					imgUrl+="pending";
+				} else if ((row['transaction_type'].toUpperCase() == 'WITHDRAW' && row['confirmations'].toUpperCase() == 'PENDING') || (row['transaction_type'].toUpperCase() == 'DEPOSIT' && row['confirmations'].toUpperCase() == '0')) {
+					imgUrl+="pending";
+				} else {
+					imgUrl+="fail";
+				}
+			}else if(row['currency'] =='ETH'){
+				 if('DEPOSIT' == row['transaction_type'].toUpperCase()){
+					 imgUrl+="deposit_";
+				 }else{
+					 imgUrl+="withdraw_";
+				 }
+				 if ((row['transaction_type'].toUpperCase() == 'ICO') ||(row['transaction_type'].toUpperCase() == 'DEPOSIT' && row['confirmations'].toUpperCase() == '2') || (row['transaction_type'].toUpperCase() == 'WITHDRAW' && row['confirmations'].toUpperCase() == 'SUCCESS')) {
+					 imgUrl+="success";
+				} else if (row['transaction_type'].toUpperCase() == 'WITHDRAW' && row['confirmations'].toUpperCase() == 'PROCESSING') {
+					imgUrl+="pending";
+				} else if ((row['transaction_type'].toUpperCase() == 'DEPOSIT' && row['confirmations'].toUpperCase() == 1) || (row['transaction_type'].toUpperCase() == 'WITHDRAW' && row['confirmations'].toUpperCase() == 'PENDING')) {
+					imgUrl+="pending";
+				} else {
+					imgUrl+="fail";
+				}
+			}
+			imgUrl += ".png";
+			return '<img alt="" src="/images/ba-common'+imgUrl+'" style="width:30px">';
+		}			
+	},{
+		className:"pd0",
+		render: function (data, type, row, meta) {
+			var html =row["transaction_type"];
+			if(row['currency'] == 'ETH'){
+				html +=" Ethereum";
+			}else if(row['currency'] == 'BTC'){
+				html +=" Bitcoin";
+			}else{
+				html +=" SilkChain";
+			}
+			return ' <span style="margin: 5px 0px 0px">'+html+'</span><br /> <span class="desc-info light-color">'+row["time_received"]+' </span> ';
+		}
+	},{
+		data: 'amount',
+		className: 'text-right',
+		render: function (data, type, row, meta) {
+			if(row["transaction_type"].toUpperCase()  == 'WITHDRAW'){
+				return '<span class="m--font-danger">- '+data+'</span>';
+			}else if(row["confirmations"].toUpperCase()  == 'SELL'){
+				return '<span class="m--font-danger">- '+data+'</span>';
+			}else if(row["confirmations"].toUpperCase()  == 'BUY'){
+				return '<span class="m--font-success">+ '+data+'</span>';
+			}else {
+				color ="m--font-success";
+				return '<span class="m--font-success">+ '+data+'</span>';
+			}
+		}
+	},{
+		data: 'usd_amount',
+		className: 'text-right',
+		render: function(data, type, row, meta){
+			var usd = row['usd_amount']
+			if(row['currency'] =='BTC'){
+				 usd = new BigNumber(String((new BigNumber(row['amount'].replace(" BTC" ,"")) * 11033.87000000000000000000))).round(2).toFormat();
+			}else if(row['currency'] =='ETH'){
+				 usd = new BigNumber(String((new BigNumber(row['amount'].replace(" ETH" ,"")) * 869.34537665600000000000))).round(2).toFormat();
+			}
+			return "$"+usd;
+		}
+	}
+	],
+}); 
+*/
+
+$(document).ready(function() {
+    $('.chart-date a').get(0).click();
+});
+</script>
