@@ -1,0 +1,21 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>动态口令教程-</title> 
+</head>
+<body>
+    @if (Html.GetLang() == "en")
+    { 
+        <span>英文教程</span>
+    }
+    else
+    {
+        <span>中文教程</span>
+    }
+</body>
+</html>

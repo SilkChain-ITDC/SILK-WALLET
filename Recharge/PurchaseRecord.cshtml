@@ -10,7 +10,7 @@
     int user_status = (int)ViewBag.Status;
     string allow_buy = ViewBag.AllowBuy as string;
     List<CoinPriceRange> coin_price_range = ViewBag.CoinPriceRange as List<CoinPriceRange>;
-
+    List<SkcVoucherListModel> voucherList = ViewBag.VoucherList;
     List<RealRatePriceModel> now_rare = ViewBag.NowRate as List<RealRatePriceModel>;
 }
 <style>
@@ -36,6 +36,33 @@
             background-color: #c3e3f3 !important;
         }
 
+    .btn-warning {
+        color: #f3102b;
+        background-color: #fff2dd;
+        border-color: #fff2dd;
+    }
+
+        .btn-warning:hover {
+            color: #da0707;
+            background-color: #fff0ce;
+            border-color: #fff0ce;
+        }
+
+        .btn-warning:focus, .btn-warning.focus {
+            box-shadow: 0 0 0 3px rgba(255,184,34,0.5);
+        }
+
+        .btn-warning.disabled, .btn-warning:disabled {
+            background-color: #fff2dd;
+            border-color: #fff2dd;
+        }
+
+        .btn-warning:active, .btn-warning.active {
+            background-color: #fff0ce;
+            background-image: none;
+            border-color: #fff0ce;
+        }
+
     .btn[disabled],
     .btn.disabled {
         color: #fff;
@@ -44,13 +71,33 @@
         cursor: not-allowed;
     }
 
-    .table td {white-space:nowrap;}
-    .form-control[readonly], .form-control {border-color:#ccc;}
-    .form-control[disabled] {border-color:#ccc;}
-    .input-group .input-group-addon {border-color:#ccc;background-color:#fff;}
+    .table td {
+        white-space: nowrap;
+    }
 
-    .has-danger .form-control-feedback {color:#ff7800;}
-    .has-danger label:not(.m-checkbox):not(.m-radio) {color:#ff7800;font-size:16px;margin-bottom:0;}
+    .form-control[readonly], .form-control {
+        border-color: #ccc;
+    }
+
+        .form-control[disabled] {
+            border-color: #ccc;
+        }
+
+    .input-group .input-group-addon {
+        border-color: #ccc;
+        background-color: #fff;
+    }
+
+    .has-danger .form-control-feedback {
+        color: #ff7800;
+    }
+
+    .has-danger label:not(.m-checkbox):not(.m-radio) {
+        color: #ff7800;
+        font-size: 16px;
+        margin-bottom: 0;
+    }
+
     .display-table {
         display: table;
         width: 100%;
@@ -296,10 +343,21 @@
                 color: #716aca;
             }
 
-        .modal .tds-pretty-usdt .form-pretty-radio-input:checked + .radio-payment-token {border-color:#3f9a73;}
-        .modal .tds-pretty-usdt .form-pretty-radio-input:checked + .radio-payment-token .pretty-radio .fa-check-circle {color:#3f9a73;}
-        .modal .tds-pretty-btc .form-pretty-radio-input:checked + .radio-payment-token {border-color:#f4a62b;}
-        .modal .tds-pretty-btc .form-pretty-radio-input:checked + .radio-payment-token .pretty-radio .fa-check-circle {color:#f4a62b;}
+    .modal .tds-pretty-usdt .form-pretty-radio-input:checked + .radio-payment-token {
+        border-color: #3f9a73;
+    }
+
+        .modal .tds-pretty-usdt .form-pretty-radio-input:checked + .radio-payment-token .pretty-radio .fa-check-circle {
+            color: #3f9a73;
+        }
+
+    .modal .tds-pretty-btc .form-pretty-radio-input:checked + .radio-payment-token {
+        border-color: #f4a62b;
+    }
+
+        .modal .tds-pretty-btc .form-pretty-radio-input:checked + .radio-payment-token .pretty-radio .fa-check-circle {
+            color: #f4a62b;
+        }
 
     @@media (max-width: 1599px) {
         .ptlet-amount-box .ptlet-amount {
@@ -379,10 +437,20 @@
     }
 
     @@media (min-width: 1200px) {
-        .display-table.width-xl-auto {width:auto;}
-        .modal .radio-payment-token .rate-deposit {min-width:150px;white-space:nowrap;}
-        .modal .radio-payment-token .val-pay-tds {padding:15px 10px;}
+        .display-table.width-xl-auto {
+            width: auto;
+        }
+
+        .modal .radio-payment-token .rate-deposit {
+            min-width: 150px;
+            white-space: nowrap;
+        }
+
+        .modal .radio-payment-token .val-pay-tds {
+            padding: 15px 10px;
+        }
     }
+
     @@media (min-width: 1600px) {
         .ptlet-amount-box .ptlet-amount {
             padding: 60px 30px;
@@ -425,6 +493,246 @@
 
         .display-table.width-auto > div:nth-child(2) {
             padding-bottom: 15px;
+        }
+    }
+
+    .red-card {
+        background-color: #ea1b33;
+        border-radius: 40px 20px 20px 40px/50% 20px 20px 50%;
+        padding: 5px 100px 5px 10px;
+    }
+
+        .red-card .letter-box {
+            position: relative;
+            background-color: #fffff0;
+            border-radius: 6px;
+            padding: 4px;
+            min-height: 110px;
+        }
+
+            .red-card .letter-box:before {
+                position: absolute;
+                left: 4px;
+                top: 4px;
+                content: "";
+                display: block;
+                width: calc(100% - 8px);
+                height: calc(100% - 8px);
+                border: 1px solid #ffd2c8;
+                border-radius: 6px;
+            }
+
+        .red-card .arc {
+            position: absolute;
+            top: 0;
+            right: -1px;
+            content: "";
+            display: block;
+            width: 24px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .red-card .card-ul {
+            position: relative;
+            list-style: none;
+            margin: 0;
+            padding: 10px 15px;
+        }
+
+            .red-card .card-ul > li {
+                font-size: 12px;
+                color: #333;
+            }
+
+                .red-card .card-ul > li:before {
+                    content: "";
+                    display: inline-block;
+                    vertical-align: middle;
+                    width: 5px;
+                    height: 5px;
+                    overflow: hidden;
+                    background: #ea1b33;
+                    border-radius: 50%;
+                    margin-right: 6px;
+                }
+
+                .red-card .card-ul > li em {
+                    font-style: normal;
+                    color: #2485c9;
+                }
+
+            .red-card .card-ul .card-hd {
+                font-size: 18px;
+                font-weight: bold;
+                color: #ea1b33;
+                margin-bottom: 5px;
+                white-space: nowrap;
+            }
+
+            .red-card .card-ul li.card-hd:before {
+                display: none;
+            }
+
+            .red-card .card-ul .ico-coin {
+                float: left;
+                width: 20px;
+                height: 20px;
+                margin-top: 3px;
+                margin-right: 10px;
+                background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RURCMUI3RUU1RTgxMTFFODgyNjFDQTAwRUYxNkYyNjIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RURCMUI3RUY1RTgxMTFFODgyNjFDQTAwRUYxNkYyNjIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpFREIxQjdFQzVFODExMUU4ODI2MUNBMDBFRjE2RjI2MiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpFREIxQjdFRDVFODExMUU4ODI2MUNBMDBFRjE2RjI2MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PnVRMLMAAAGsSURBVHjarJRNKERRFMffe15RZOlzbCTKSqEsKHtGUlKEoiykRsrHzrNDGl8LCeWjLCWSssBkQyg72dj53EiGUmr8j/6vXtd784bmX7/mvnPPOfeec+8d/Tm/XPPRKLA4lt+xeM6GYxwEDyCmYDl8LJf5R8b+SrgEOoH+R3rAslvCbHCgVNAIIuCDRGhzagdk2R9mnHaMgxbQD45AKqgG06AKjPj1UFP6KcmGwQ3YBKvgmjaZa3AL9NrhAOgF++AJtLFfxyAHvIFBlpvQDivAPccrDC4Ei7TJbaj0KjkTrCv2GHck+gRboEmpKKbEyMJpkvAStIOoY/KcpYn6wC2YAt205dLHlsR2gUNZsYirvTgcwmABDIEafotqQTOY5EK2JDYdlNo9lPIKwBxIAXtgDUyAYp5qByihbYM+4jvL2J8W6XjLai92QSvLqAchHpLogouKTwavU9AR++qWUHTFZHcetyCPOyxT7F9e10YcT10C7LkzjznTiPP0AuCEO7VVR1vAK8j0+S+UPm3zPYtmeBDafxNqTDCvJSiD7zJZihos5z0JySRH6FuAAQAdYF7dj9yZ0QAAAABJRU5ErkJggg==) no-repeat;
+            }
+
+            .red-card .card-ul li.price-digg:before {
+                display: none;
+            }
+
+            .red-card .card-ul .pri-lab {
+                font-size: 1rem;
+                color: #333;
+                padding-left: 5px;
+            }
+
+            .red-card .card-ul .price {
+                white-space: nowrap;
+            }
+
+                .red-card .card-ul .price strong {
+                    font-size: 3rem;
+                    font-weight: bold;
+                    color: #ea1b33;
+                    line-height: 1;
+                }
+
+                .red-card .card-ul .price .unit {
+                    font-size: 1.2rem;
+                    color: #333;
+                    margin-left: 0.3rem;
+                    line-height: 1;
+                }
+
+        .red-card .opts-box {
+            position: absolute;
+            top: 0;
+            right: -100px;
+            width: 100px;
+            height: 100%;
+            padding: 5px 12px 5px 5px;
+            display: flex;
+            justify-content: center;
+            flex-flow: column wrap;
+        }
+
+            .red-card .opts-box .btn-sm {
+                padding: 0.25rem 0.35rem;
+            }
+
+        .red-card .expire-date {
+            position: absolute;
+            bottom: 0;
+            right: -100px;
+            width: 100px;
+            padding: 0 12px 4px 5px;
+            color: #fff;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .red-card.expire {
+            background-color: #ddd;
+        }
+
+            .red-card.expire .letter-box {
+                background-color: #f5f5f5;
+            }
+
+                .red-card.expire .letter-box:before {
+                    border-color: #ddd;
+                }
+
+            .red-card.expire .card-ul .card-hd {
+                color: #666;
+            }
+
+            .red-card.expire .card-ul > li:before {
+                background: #666;
+            }
+
+            .red-card.expire .card-ul .ico-coin {
+                filter: grayscale(100%);
+            }
+
+            .red-card.expire .card-ul .price strong {
+                color: #333;
+            }
+
+        .red-card + .red-card {
+            margin-top: 15px;
+        }
+
+    .row-gutter-p20 .col,
+    .row-gutter-p20 [class*="col-"] {
+        padding: 0 20px;
+    }
+
+    .row-gutter-p20 > .col-md-7 {
+        margin-top: 30px;
+    }
+
+    .red-card-rules {
+        margin: 0;
+    }
+
+        .red-card-rules dt {
+            font-size: 1rem;
+            color: #ea1b33;
+            margin-bottom: 6px;
+        }
+
+        .red-card-rules dd {
+            color: #333;
+            font-size: 0.875rem;
+            margin-top: 0.2rem;
+            margin-bottom: 0;
+        }
+
+            .red-card-rules dd i {
+                font-weight: bold;
+                color: #999;
+                margin-right: 0.25em;
+            }
+
+    @@media(max-width:757.98px) {
+        .red-card .card-ul .card-hd {
+            font-size: 14px;
+        }
+
+        .red-card .card-ul .ico-coin {
+            width: 14px;
+            height: 14px;
+            background-size: cover;
+            margin-right: 4px;
+            margin-top: 4px;
+        }
+
+        .red-card .card-ul .pri-lab {
+            font-size: 0.923rem;
+            padding-left: 0px;
+        }
+
+        .red-card .card-ul .price strong {
+            font-size: 2rem;
+        }
+
+        .red-card .card-ul .price .unit {
+            font-size: 0.875rem;
+        }
+    }
+
+    @@media(min-width:768px) {
+        .row-gutter-p20 > .col-md-7 {
+            margin-top: 0;
+            border-left: 1px solid #ddd;
         }
     }
 </style>
@@ -549,6 +857,98 @@
             </div>
         </div>
         <div class="row">
+            @if (voucherList != null && voucherList.Count > 0)
+            {
+                <div class="col-lg-12">
+                    <div class="m-portlet m-portlet--mobile m-portlet--skin-dark">
+                        <div class="m-portlet__body m-portlet__body--no-padding">
+                            <div class="ptlet-pedal">
+                                <div class="ptlet-pedal-hd">@Html.GetTansByLan("inviting-newuser-packet-01", "新用户邀请红包")</div>
+                                <div class="row row-gutter-p20" style="margin:0;padding:0px 0px 15px 0px">
+                                    <div class="col-md-5">
+                                        @foreach (var item in voucherList)
+                                        {
+                                            @if (item.Data.ValidityTimeDatetime < DateTime.Now)
+                                            {
+                                                <div class="red-card expire">
+                                                    <div class="letter-box">
+                                                        <div class="arc"><svg class="path-curve" width="100%" height="100%" viewBox="0 0 20 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 0 L20 0 L20 120 L0 120 Q28 60 0 0 Z" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#ddd" fill="#ddd" /></svg></div>
+                                                        <ul class="card-ul">
+                                                            <li class="card-hd"><i class="ico-coin"></i>@Html.GetTansByLan("inviting-newuser-packet-02", "免费新用户邀请红包")</li>
+                                                            <li class="price-digg">
+                                                                <div class="pri-lab">@Html.GetTansByLan("inviting-newuser-packet-23", "已获得")</div>
+                                                                <div class="price"><strong> @item.Amount.ToString("N2")</strong><span class="unit">@Html.GetTansByLan("packet-silk-alias-01", "SILK")</span></div>
+                                                            </li>
+                                                            <li class="price-digg">
+                                                                <div class="pri-lab">@Html.GetTansByLan("inviting-newuser-packet-07", "已过期")</div>
+                                                            </li>
+                                                        </ul>
+                                                        @if (item.IsExist)
+                                                        {
+                                                            <div class="opts-box">
+                                                                <button class="btn btn-block btn-alert m-btn--pill btn-sm" onclick="GetInviteRedPacket('@item.Data.VoucherIdNvarchar',1)">@Html.GetTansByLan("inviting-newuser-packet-08", "查看详情")</button>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="red-card">
+                                                    <div class="letter-box">
+                                                        <div class="arc"><svg class="path-curve" width="100%" height="100%" viewBox="0 0 20 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 0 L20 0 L20 120 L0 120 Q28 60 0 0 Z" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#ea1b33" fill="#ea1b33" /></svg></div>
+                                                        <ul class="card-ul">
+                                                            <li class="card-hd"><i class="ico-coin"></i>@Html.GetTansByLan("inviting-newuser-packet-02", "免费新用户邀请红包")</li>
+                                                            @if (!item.IsExist)
+                                                            {
+                                                                @*<li>@Html.GetTansByLan("inviting-newuser-packet-03", "免费转发邀请好友，再得 ")<em>@Html.GetTansByLan("inviting-newuser-packet-04", "200Silk")</em>@Html.GetTansByLan("inviting-newuser-packet-05", " 积分！")</li>*@
+                                                                <li>@Html.GetTansByLan("inviting-newuser-packet-06", "好友完成 KYC 注册，你将获赠等额 Silk 积分奖励，无限量！")</li>
+                                                            }
+                                                            else
+                                                            {
+                                                                <li class="price-digg">
+                                                                    <div class="pri-lab">@Html.GetTansByLan("inviting-newuser-packet-23", "已获得")</div>
+                                                                    <div class="price"><strong> @item.Amount.ToString("N2")</strong><span class="unit">@Html.GetTansByLan("packet-silk-alias-01", "SILK")</span></div>
+                                                                </li>
+                                                            }
+                                                            <li class="price-digg">
+                                                                 <div class="pri-lab">@item.Countdown @Html.GetTansByLan("inviting-newuser-packet-09", "天后过期")</div>
+                                                            </li>
+                                                        </ul>
+                                                        @if (item.IsExist)
+                                                        {
+                                                            <div class="opts-box">
+                                                                <button class="btn btn-block btn-warning m-btn--pill btn-sm" onclick="GetInviteRedPacket('@item.Data.VoucherIdNvarchar',0)">@Html.GetTansByLan("inviting-newuser-packet-10", "分享红包")</button>
+                                                                <button class="btn btn-block btn-alert m-btn--pill btn-sm" onclick="GetInviteRedPacket('@item.Data.VoucherIdNvarchar',1)">@Html.GetTansByLan("inviting-newuser-packet-08", "查看详情")</button>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="opts-box">
+                                                                <button class="btn btn-block btn-warning m-btn--pill btn-sm" onclick="GetInviteRedPacket('@item.Data.VoucherIdNvarchar',0)">@Html.GetTansByLan("inviting-newuser-packet-11", "去使用")</button>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="col-md-7">
+                                        <dl class="red-card-rules">
+                                            <dt>@Html.GetTansByLan("inviting-newuser-packet-12", "活动规则")</dt>
+                                            <dd><i>@Html.GetTansByLan("inviting-newuser-packet-13", "1.")</i>@Html.GetTansByLan("inviting-newuser-packet-14", "每个小伙伴领取红包并完成KYC后，分享人即可获赠等额Silk积分奖励；")</dd>
+                                            <dd><i>@Html.GetTansByLan("inviting-newuser-packet-15", "2.")</i>@Html.GetTansByLan("inviting-newuser-packet-16", "每个链接仅限新用户注册领取，不限个数；")</dd>
+                                            <dd><i>@Html.GetTansByLan("inviting-newuser-packet-17", "3.")</i>@Html.GetTansByLan("inviting-newuser-packet-18", "每个链接会按领取顺序随机发放一个大额红包；")</dd>
+                                            <dd><i>@Html.GetTansByLan("inviting-newuser-packet-19", "4.")</i>@Html.GetTansByLan("inviting-newuser-packet-20", "红包领取人手机号/邮箱地址、提取Silk时输入的手机号/邮箱地址需为同一号码；")</dd>
+                                            <dd><i>@Html.GetTansByLan("inviting-newuser-packet-21", "5.")</i>@Html.GetTansByLan("inviting-newuser-packet-22", "其他未尽事宜，请详询客服；")</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
             <div class="col-lg-12">
                 <div class="m-portlet m-portlet--mobile m-portlet--skin-dark">
                     <div class="m-portlet__body">
@@ -585,11 +985,11 @@
                                                         <td class="text-center">
                                                             @if (item.StatusInt == (int)SKCPublishStatus.确认收款 || item.StatusInt == (int)SKCPublishStatus.已发币)
                                                             {
-                                                            <span class="text-nowrap eth-color">@Html.GetTansByLan("recharge-purchase-12", "Finish")</span>
+                                                                <span class="text-nowrap eth-color">@Html.GetTansByLan("recharge-purchase-12", "Finish")</span>
                                                             }
                                                             else if (item.StatusInt < (int)SKCPublishStatus.确认收款)
                                                             {
-                                                            <span class="text-nowrap eth-color">@Html.GetTansByLan("recharge-purchase-13", "Pending")</span>
+                                                                <span class="text-nowrap eth-color">@Html.GetTansByLan("recharge-purchase-13", "Pending")</span>
                                                             }
                                                             else
                                                             {
@@ -612,12 +1012,12 @@
                                                             @if (!string.IsNullOrEmpty(item.FinanceAddressNvarchar) && item.StatusInt != (int)SKCPublishStatus.过期)
                                                             {
                                                                 var address = JsonConvert.DeserializeObject<ReceiptAdressJsonModel>(item.FinanceAddressNvarchar);
-                                                            <a class="btn btn-alert m-btn--pill btn-sm" href="javascript:void(0)" data-address="@address.Adress" data-cointype="@item.CoinTypeNvarchar" data-dealamount="@item.DealAmountDecimal" onclick="buy_silk.show_pay_address(this)">@Html.GetTansByLan("recharge-purchase-17", "Payment Address")</a>
+                                                                <a class="btn btn-alert m-btn--pill btn-sm" href="javascript:void(0)" data-address="@address.Adress" data-cointype="@item.CoinTypeNvarchar" data-dealamount="@item.DealAmountDecimal" onclick="buy_silk.show_pay_address(this)">@Html.GetTansByLan("recharge-purchase-17", "Payment Address")</a>
                                                             }
 
                                                             @if (item.StatusInt < (int)SKCPublishStatus.确认收款 || item.StatusInt == (int)SKCPublishStatus.过期)
                                                             {
-                                                            <a class="btn btn-alert m-btn--pill btn-sm" href="javascript:void(0)" data-id="@item.PublishIdNvarchar" onclick="buy_silk.cancel_order(this)">@Html.GetTansByLan("recharge-purchase-18", "Cancel Order")</a>
+                                                                <a class="btn btn-alert m-btn--pill btn-sm" href="javascript:void(0)" data-id="@item.PublishIdNvarchar" onclick="buy_silk.cancel_order(this)">@Html.GetTansByLan("recharge-purchase-18", "Cancel Order")</a>
                                                             }
                                                         </td>
                                                     </tr>
@@ -638,188 +1038,188 @@
             </div>
         </div>
         @*
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="m-portlet m-portlet--mobile">
-                    <div class="m-portlet__body">
-                        <div class="ptlet-date"><strong>@Html.GetTansByLan("recharge-purchase-31", "My Purchase Record")</strong></div>
-                        <div class="ptlet-amount-box">
-                            <div class="ptlet-amount">
-                                <img class="ptlet-silkico" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG0AAABtCAYAAACr+O9WAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OEI3ODA0NUQyNkE2MTFFODg0QTM5RUJCMEJFNzRFNTciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OEI3ODA0NUUyNkE2MTFFODg0QTM5RUJCMEJFNzRFNTciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Qjc4MDQ1QjI2QTYxMUU4ODRBMzlFQkIwQkU3NEU1NyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Qjc4MDQ1QzI2QTYxMUU4ODRBMzlFQkIwQkU3NEU1NyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PuiqUBwAABIfSURBVHja7F0JlBXF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" />
-                                <div class="display-table width-auto">
-                                    <div class="tds-cell">
-                                        <label class="ptlet-itdc">ITDC SilkChain</label>
-                                        <div class="ptlet-total"><strong>@list.Where(m => m.StatusInt == 4).Sum(m => m.AmountDecimal).ToString("N3")</strong><em>SILK</em></div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="m-portlet m-portlet--mobile">
+                        <div class="m-portlet__body">
+                            <div class="ptlet-date"><strong>@Html.GetTansByLan("recharge-purchase-31", "My Purchase Record")</strong></div>
+                            <div class="ptlet-amount-box">
+                                <div class="ptlet-amount">
+                                    <img class="ptlet-silkico" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG0AAABtCAYAAACr+O9WAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OEI3ODA0NUQyNkE2MTFFODg0QTM5RUJCMEJFNzRFNTciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OEI3ODA0NUUyNkE2MTFFODg0QTM5RUJCMEJFNzRFNTciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Qjc4MDQ1QjI2QTYxMUU4ODRBMzlFQkIwQkU3NEU1NyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Qjc4MDQ1QzI2QTYxMUU4ODRBMzlFQkIwQkU3NEU1NyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PuiqUBwAABIfSURBVHja7F0JlBXF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" />
+                                    <div class="display-table width-auto">
+                                        <div class="tds-cell">
+                                            <label class="ptlet-itdc">ITDC SilkChain</label>
+                                            <div class="ptlet-total"><strong>@list.Where(m => m.StatusInt == 4).Sum(m => m.AmountDecimal).ToString("N3")</strong><em>SILK</em></div>
+                                        </div>
+                                        <div class="tds-cell" style="position:relative;">
+                                            <button class="btn btn-primary m-btn--pill"  id="but_buy_silk">@Html.GetTansByLan("recharge-purchase-32", "Buy SILK")</button>
+                                        </div>
                                     </div>
-                                    <div class="tds-cell" style="position:relative;">
-                                        <button class="btn btn-primary m-btn--pill"  id="but_buy_silk">@Html.GetTansByLan("recharge-purchase-32", "Buy SILK")</button>
-                                    </div>
+                                    <div class="ptlet-process">@Html.GetTansByLan("recharge-purchase-01", "Accumulated Purchase Amount")</div>
                                 </div>
-                                <div class="ptlet-process">@Html.GetTansByLan("recharge-purchase-01", "Accumulated Purchase Amount")</div>
+                                <div class="ptlet-notepaper"><div class="notepaper-cont">@Html.GetTansByLan("recharge-purchase-02", "Full Name"): @accountModel.FullNameNvarchar</div></div>
+                                <div class="ptlet-notepaper"><div class="notepaper-cont">@Html.GetTansByLan("recharge-purchase-03", "User Name"): @accountModel.UserNameNvarchar</div></div>
+                                <div class="ptlet-notepaper"><div class="notepaper-cont">@Html.GetTansByLan("recharge-purchase-04", "Email"): @accountModel.EmailNvarchar</div></div>
+                                <i class="mulit-solid"></i>
                             </div>
-                            <div class="ptlet-notepaper"><div class="notepaper-cont">@Html.GetTansByLan("recharge-purchase-02", "Full Name"): @accountModel.FullNameNvarchar</div></div>
-                            <div class="ptlet-notepaper"><div class="notepaper-cont">@Html.GetTansByLan("recharge-purchase-03", "User Name"): @accountModel.UserNameNvarchar</div></div>
-                            <div class="ptlet-notepaper"><div class="notepaper-cont">@Html.GetTansByLan("recharge-purchase-04", "Email"): @accountModel.EmailNvarchar</div></div>
-                            <i class="mulit-solid"></i>
-                        </div>
-                        <div class="ptlet-locked-hint">@Html.GetTansByLan("recharge-purchase-05", "Your Silk Token is still in lockup period. According to the contract, you cannot withdraw it till unlock period.")</div>
-                        <div class="ptlet-pedal">
-                            <div class="ptlet-pedal-hd">@Html.GetTansByLan("recharge-purchase-21", "SilkChain")</div>
-                            <div class="ptlet-pedal-bd">
-                                <p>
-                                    @Html.GetTansByLan("recharge-purchase-30", "The first blockchain based platform")
-                                    &nbsp; <a class="btn btn-alert m-btn--pill btn-sm" style="margin-bottom:10px;" href="@Url.Action("AddPublishInfo","Recharge")">@Html.GetTansByLan("recharge-purchase-22", "Offline Purchase")</a>
-                                    &nbsp; <a class="btn btn-alert m-btn--pill btn-sm" style="margin-bottom:10px;" href="@Url.Action("index","wallet")">@Html.GetTansByLan("recharge-purchase-23", "View Wallet")</a>
-                                    &nbsp; <a class="btn btn-alert m-btn--pill btn-sm" style="margin-bottom:10px;" href="@Url.Action("CandyIndex","Candy")">@Html.GetTansByLan("recharge-purchase-24", "Candy")</a>
-                                    &nbsp; <a class="btn btn-alert m-btn--pill btn-sm" style="margin-bottom:10px;" href="@Url.Action("SendLuckyMoney","Packet")">@Html.GetTansByLan("recharge-purchase-25", "Lucky Money")</a>
-                                    &nbsp; <a class="btn btn-alert m-btn--pill btn-sm" style="margin-bottom:10px;" href="@Url.Action("index","account")">@Html.GetTansByLan("recharge-purchase-26", "Edit Profile")</a>
+                            <div class="ptlet-locked-hint">@Html.GetTansByLan("recharge-purchase-05", "Your Silk Token is still in lockup period. According to the contract, you cannot withdraw it till unlock period.")</div>
+                            <div class="ptlet-pedal">
+                                <div class="ptlet-pedal-hd">@Html.GetTansByLan("recharge-purchase-21", "SilkChain")</div>
+                                <div class="ptlet-pedal-bd">
+                                    <p>
+                                        @Html.GetTansByLan("recharge-purchase-30", "The first blockchain based platform")
+                                        &nbsp; <a class="btn btn-alert m-btn--pill btn-sm" style="margin-bottom:10px;" href="@Url.Action("AddPublishInfo","Recharge")">@Html.GetTansByLan("recharge-purchase-22", "Offline Purchase")</a>
+                                        &nbsp; <a class="btn btn-alert m-btn--pill btn-sm" style="margin-bottom:10px;" href="@Url.Action("index","wallet")">@Html.GetTansByLan("recharge-purchase-23", "View Wallet")</a>
+                                        &nbsp; <a class="btn btn-alert m-btn--pill btn-sm" style="margin-bottom:10px;" href="@Url.Action("CandyIndex","Candy")">@Html.GetTansByLan("recharge-purchase-24", "Candy")</a>
+                                        &nbsp; <a class="btn btn-alert m-btn--pill btn-sm" style="margin-bottom:10px;" href="@Url.Action("SendLuckyMoney","Packet")">@Html.GetTansByLan("recharge-purchase-25", "Lucky Money")</a>
+                                        &nbsp; <a class="btn btn-alert m-btn--pill btn-sm" style="margin-bottom:10px;" href="@Url.Action("index","account")">@Html.GetTansByLan("recharge-purchase-26", "Edit Profile")</a>
 
-                                </p>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         *@
     </div>
 </div>
 @*
-<div class="modal fade" id="m_deposit_silk_useeth" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">@Html.GetTansByLan("recharge-purchase-27", "BUY SILK")</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
-                    <span aria-hidden="true">
-                        &times;
-                    </span>
-                </button>
-            </div>
-            <form method="POST" id="form_buy_silk" autocomplete="off">
-                <div class="modal-body" style="padding:25px 25px 0px">
-                    <input type="hidden" name="_token" value="4byV87InJp0fKNWC3pEZhzg0CZSnMHLdImi3Lryp">
-                    <div style="border-bottom: 1px solid #e9ecef;padding:15px 25px;margin:0 -25px 25px -25px;">
+    <div class="modal fade" id="m_deposit_silk_useeth" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@Html.GetTansByLan("recharge-purchase-27", "BUY SILK")</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <form method="POST" id="form_buy_silk" autocomplete="off">
+                    <div class="modal-body" style="padding:25px 25px 0px">
+                        <input type="hidden" name="_token" value="4byV87InJp0fKNWC3pEZhzg0CZSnMHLdImi3Lryp">
+                        <div style="border-bottom: 1px solid #e9ecef;padding:15px 25px;margin:0 -25px 25px -25px;">
+                            <div class="form-group">
+                                <label for="ezt_password" class="form-control-label">@Html.GetTansByLan("recharge-purchase-28", "Payment Method")</label>
+                                <div class="display-table display-sm-block">
+                                    <div>
+                                        <input class="form-pretty-radio-input" type="radio" checked="checked" value="ETH" name="CoinType" id="payment_use_eth" />
+                                        <div class="radio-payment-token display-table">
+                                            <div class="pretty-radio">
+                                                <i class="fa fa-check-circle"></i>
+                                                <label for="payment_use_eth"></label>
+                                            </div>
+                                            <div class="val-pay-tds text-center" style="vertical-align:middle;">
+                                                <div>
+                                                    <img alt="" style="position: absolute;" class="mr-2" src="/images/ba-common/ic_ethereum.png">
+                                                    <span style="margin-left: 30px" class="font-size-18">ETH</span>
+                                                </div>
+                                                <div class="rate-deposit">
+                                                    <span class="font-size-18 eth-color">1 ETH</span>
+                                                    <span class="val-desc-info font-s14">= <span class="sp_ethtosilk" style="display:inline;"></span>SILK</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="width:20px;" class="text-center"></div>
+                                    <div>
+                                        <input class="form-pretty-radio-input" type="radio" name="CoinType" value="USDT" id="payment_use_usdt" />
+                                        <div class="radio-payment-token display-table">
+                                            <div class="pretty-radio">
+                                                <i class="fa fa-check-circle"></i>
+                                                <label for="payment_use_usdt"></label>
+                                            </div>
+                                            <div class="val-pay-tds text-center" style="vertical-align:middle;">
+                                                <div>
+                                                    <img alt="" style="position: absolute;" class="mr-2" src="/images/ba-common/ic_usdtcon.png">
+                                                    <span style="margin-left: 30px" class="font-size-18">USDT</span>
+                                                </div>
+                                                <div class="rate-deposit">
+                                                    <span class="font-size-18 usdt-color">1 USDT</span>
+                                                    <span class="val-desc-info font-s14">= <span class="sp_usdttosilk" style="display:inline;"></span>SILK</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="width:20px;" class="text-center"></div>
+                                    <div>
+                                        <input class="form-pretty-radio-input" type="radio" name="CoinType" value="BTC" id="payment_use_btc" />
+                                        <div class="radio-payment-token display-table">
+                                            <div class="pretty-radio">
+                                                <i class="fa fa-check-circle"></i>
+                                                <label for="payment_use_btc"></label>
+                                            </div>
+                                            <div class="val-pay-tds text-center" style="vertical-align:middle;">
+                                                <div>
+                                                    <img alt="" style="position: absolute;" class="mr-2" src="/images/ba-common/ic_bitcon.png">
+                                                    <span style="margin-left: 30px" class="font-size-18">BTC</span>
+                                                </div>
+                                                <div class="rate-deposit">
+                                                    <span class="font-size-18 btc-color">1 BTC</span>
+                                                    <span class="val-desc-info font-s14">= <span class="sp_btctosilk" style="display:inline;"></span>SILK</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
-                            <label for="ezt_password" class="form-control-label">@Html.GetTansByLan("recharge-purchase-28", "Payment Method")</label>
-                            <div class="display-table display-sm-block">
+                            <div class="alert m-alert m-alert--default text-center" style="padding:15px">
+                                <div style="vertical-align: middle;">
+                                    <img alt="" style="position: absolute;" class="mr-2" src="/images/ba-common/ic_silk.png">
+                                    <span style="margin-left: 30px" class="font-size-18">SILK TOKEN</span>
+                                </div>
+                                <div class="des-deposit">
+                                    <span class="font-size-32 eth-color">1 <span id="sp_now_cointype">ETH</span></span>
+                                    <span class="desc-info font-size-32 ezt-color">= <span id="sp_nowsilk"></span> SILK</span>
+                                </div>
+                                <div class="timely-rate">
+                                    <div class="light-color font-s14">@(DateTime.Now.ToString("yyyy-MM-dd HH:mm"))</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0px">
+                            <label for="ezt_amount" class="form-control-label">@Html.GetTansByLan("recharge-purchase-29", "Amount of Silk")</label>
+                            <div class="display-table">
                                 <div>
-                                    <input class="form-pretty-radio-input" type="radio" checked="checked" value="ETH" name="CoinType" id="payment_use_eth" />
-                                    <div class="radio-payment-token display-table">
-                                        <div class="pretty-radio">
-                                            <i class="fa fa-check-circle"></i>
-                                            <label for="payment_use_eth"></label>
-                                        </div>
-                                        <div class="val-pay-tds text-center" style="vertical-align:middle;">
-                                            <div>
-                                                <img alt="" style="position: absolute;" class="mr-2" src="/images/ba-common/ic_ethereum.png">
-                                                <span style="margin-left: 30px" class="font-size-18">ETH</span>
-                                            </div>
-                                            <div class="rate-deposit">
-                                                <span class="font-size-18 eth-color">1 ETH</span>
-                                                <span class="val-desc-info font-s14">= <span class="sp_ethtosilk" style="display:inline;"></span>SILK</span>
-                                            </div>
-                                        </div>
+                                    <div class="input-group m-input-group m-input-icon m-input-icon--right">
+                                        <input type="text" class="form-control form-control-lg" id="ezt_amount" name="DealAmount">
+                                        <span class="input-group-addon font-size-18" id="sp_choose_cointype">ETH</span>
                                     </div>
                                 </div>
-                                <div style="width:20px;" class="text-center"></div>
+                                <div style="width: 15px;" class="text-center">=</div>
                                 <div>
-                                    <input class="form-pretty-radio-input" type="radio" name="CoinType" value="USDT" id="payment_use_usdt" />
-                                    <div class="radio-payment-token display-table">
-                                        <div class="pretty-radio">
-                                            <i class="fa fa-check-circle"></i>
-                                            <label for="payment_use_usdt"></label>
-                                        </div>
-                                        <div class="val-pay-tds text-center" style="vertical-align:middle;">
-                                            <div>
-                                                <img alt="" style="position: absolute;" class="mr-2" src="/images/ba-common/ic_usdtcon.png">
-                                                <span style="margin-left: 30px" class="font-size-18">USDT</span>
-                                            </div>
-                                            <div class="rate-deposit">
-                                                <span class="font-size-18 usdt-color">1 USDT</span>
-                                                <span class="val-desc-info font-s14">= <span class="sp_usdttosilk" style="display:inline;"></span>SILK</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="width:20px;" class="text-center"></div>
-                                <div>
-                                    <input class="form-pretty-radio-input" type="radio" name="CoinType" value="BTC" id="payment_use_btc" />
-                                    <div class="radio-payment-token display-table">
-                                        <div class="pretty-radio">
-                                            <i class="fa fa-check-circle"></i>
-                                            <label for="payment_use_btc"></label>
-                                        </div>
-                                        <div class="val-pay-tds text-center" style="vertical-align:middle;">
-                                            <div>
-                                                <img alt="" style="position: absolute;" class="mr-2" src="/images/ba-common/ic_bitcon.png">
-                                                <span style="margin-left: 30px" class="font-size-18">BTC</span>
-                                            </div>
-                                            <div class="rate-deposit">
-                                                <span class="font-size-18 btc-color">1 BTC</span>
-                                                <span class="val-desc-info font-s14">= <span class="sp_btctosilk" style="display:inline;"></span>SILK</span>
-                                            </div>
-                                        </div>
+                                    <div class="input-group m-input-group">
+                                        <input type="hidden" name="SilkNum" id="hd_silk_num" />
+                                        <input type="text" class="form-control text-right form-control-lg" disabled="disabled" id="lblEztRemaining" />
+                                        <span class="input-group-addon font-size-18" id="basic-addon1">@SKC.Common.GlobalConfig.Coin_ShortName</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="alert m-alert m-alert--default text-center" style="padding:15px">
-                            <div style="vertical-align: middle;">
-                                <img alt="" style="position: absolute;" class="mr-2" src="/images/ba-common/ic_silk.png">
-                                <span style="margin-left: 30px" class="font-size-18">SILK TOKEN</span>
-                            </div>
-                            <div class="des-deposit">
-                                <span class="font-size-32 eth-color">1 <span id="sp_now_cointype">ETH</span></span>
-                                <span class="desc-info font-size-32 ezt-color">= <span id="sp_nowsilk"></span> SILK</span>
-                            </div>
-                            <div class="timely-rate">
-                                <div class="light-color font-s14">@(DateTime.Now.ToString("yyyy-MM-dd HH:mm"))</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" style="margin-bottom: 0px">
-                        <label for="ezt_amount" class="form-control-label">@Html.GetTansByLan("recharge-purchase-29", "Amount of Silk")</label>
-                        <div class="display-table">
-                            <div>
-                                <div class="input-group m-input-group m-input-icon m-input-icon--right">
-                                    <input type="text" class="form-control form-control-lg" id="ezt_amount" name="DealAmount">
-                                    <span class="input-group-addon font-size-18" id="sp_choose_cointype">ETH</span>
-                                </div>
-                            </div>
-                            <div style="width: 15px;" class="text-center">=</div>
-                            <div>
-                                <div class="input-group m-input-group">
-                                    <input type="hidden" name="SilkNum" id="hd_silk_num" />
-                                    <input type="text" class="form-control text-right form-control-lg" disabled="disabled" id="lblEztRemaining" />
-                                    <span class="input-group-addon font-size-18" id="basic-addon1">@SKC.Common.GlobalConfig.Coin_ShortName</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="form-group has-danger">
-                        <div id="ezt_withdraw_error" class="form-control-feedback" style="display:none;">Required Number <label class="lb_coin_type"></label> Range From <label class="lb_min_price"></label> to <label class="lb_max_price"></label></div>
-                    </div>
-                </div>
-                <div style="padding:15px 25px 25px">
-                    <div class="row">
-                        <div class="col-lg-12 text-right">
-                            <button id="btnResetEzt" type="button" data-dismiss="modal" aria-label="Close" class="btn btn-default m-btn--pill">
-                                CANCEL
-                            </button>
-                            <button type="button" class="btn btn-primary m-btn--pill" id='btn_ezt_withdraw'>
-                                NEXT STEP
-                            </button>
+                        <div class="form-group has-danger">
+                            <div id="ezt_withdraw_error" class="form-control-feedback" style="display:none;">Required Number <label class="lb_coin_type"></label> Range From <label class="lb_min_price"></label> to <label class="lb_max_price"></label></div>
                         </div>
                     </div>
-                </div>
-            </form>
+                    <div style="padding:15px 25px 25px">
+                        <div class="row">
+                            <div class="col-lg-12 text-right">
+                                <button id="btnResetEzt" type="button" data-dismiss="modal" aria-label="Close" class="btn btn-default m-btn--pill">
+                                    CANCEL
+                                </button>
+                                <button type="button" class="btn btn-primary m-btn--pill" id='btn_ezt_withdraw'>
+                                    NEXT STEP
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 *@
 <div class="modal fade" id="m_eth_address" tabindex="-1" data-backdrop="static" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -867,6 +1267,10 @@
         </div>
     </div>
 </div>
+
+<form action="/Packet/GetPacketIndex/" method="POST" id="J_modal_add_purchase">
+    <input type="hidden" id="OnlyCode" name="OnlyCode" value="" />
+</form>
 @section script{
     <script src="~/js/sweetalert.min.js"></script>
     <script src="~/js/bignumber.js"></script>
@@ -943,7 +1347,7 @@
                                 $("#deposit_silk_address").val(data.data.Address);
                                 $("#img_qr_silk_address").empty().qrcode({ width: 240, height: 240, text: data.data.Address });
                                 $("#m_eth_address").modal('show');
-                               
+
                                 $("#m_eth_address").on('hide.bs.modal', function () {
                                     window.location.reload();
                                 });
@@ -1052,5 +1456,21 @@
         $(function () {
             buy_silk.inItControl();
         });
+        function GetInviteRedPacket(id,type) {
+            $.post('/Packet/GetInviteRedPacket', { VoucherId: id }, function (data) {
+                if (data.statusCode > 0) {
+                    if (type == 0) {
+                        $("#OnlyCode").val(data.errorMsg);
+                        $("#J_modal_add_purchase").attr("action", "/Packet/" + data.errorMsg)
+                        $("#J_modal_add_purchase").submit();
+                    } else {
+                        window.location.href = "/Packet/NewUserInvitingDetails/" + data.errorMsg;
+                    }
+                }
+                else {
+                    alert(data.errorMsg);
+                }
+            }, 'json')
+        }
     </script>
 }

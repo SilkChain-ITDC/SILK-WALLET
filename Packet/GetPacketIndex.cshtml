@@ -1,6 +1,9 @@
 ﻿@using SKC.Entity.Models;
+@using SKC.Entity.Enums;
 @model GetPacketModel
 @{
+    string picUrl = ViewBag.DefaultPic;
+    string picUrl_En = ViewBag.DefaultPic_EN;
     decimal getAmount = 0;
     string packetResult = string.Empty;
     string viewmodel = "1";
@@ -8,7 +11,7 @@
     ViewBag.Description = Model.Message;
     if (Model != null && Model.ItemList != null && Model.ItemList.Count > 0)
     {
-        
+
         var item = Model.ItemList.Where(o => o.GetUserID == Model.GetUserID).ToList();
         if (item != null && item.Count > 0)
         {
@@ -25,14 +28,39 @@
         }
     }
 
-    if (Model.Status == 1 || (Model.IsOverTime != 1 && getAmount > 0))
+    if (Model.UseType == (int)EnumPacketType.新用户邀请)
     {
-        viewmodel = "2";    // 领取过红包
+        if (Model.CreateUserID == Model.GetUserID)
+        {
+            viewmodel = "6";    // 领取人和创建人一致情况
+        }
+        else
+        {
+            viewmodel = "7";    // 领取人已注册
+        }
     }
-    else if (Model.IsOverTime == 1)
+    else
     {
-        viewmodel = "3";    // 红包超时
+        if (string.IsNullOrEmpty(ViewBag.RedPacketSession))
+        {
+            viewmodel = "5";    // 带广告
+        }
+
+        if (Model.Status == 1 || (Model.IsOverTime != 1 && getAmount > 0))
+        {
+            viewmodel = "2";    // 领取过红包
+        }
+        else if (Model.IsOverTime == 1)
+        {
+            viewmodel = "3";    // 红包超时
+        }
+
+        if (Model.Count == Model.CountUsed && getAmount == 0)
+        {
+            viewmodel = "4";    // 红包已被领完，且该红包当前人未领取过
+        }
     }
+
 }
 <head>
     <title>@Model.CreateUserName</title>
@@ -54,7 +82,7 @@
     .modal .modal-draw .modal-content .sendopt { font-size: 1rem; }
     .modal .modal-draw .modal-content .leavemessage { display: table; width: 100%; height: 90px; font-size: 1.5rem; line-height: 1.2; }
     .modal .modal-draw .modal-content .message-cell { display: table-cell; vertical-align: middle; padding: 10px 0; }
-    .modal .modal-draw .modal-content .draw-silk { display: inline-block; width: 100px; height: 100px; margin-top: 20px; background-color: #f0c88c; background-image: url(/images/ba-active/red-packet-open.png); background-repeat: no-repeat; background-position: center center; background-size: contain; cursor: pointer; border: none; outline: 0; border-radius: 50%; }
+    .modal .modal-draw .modal-content .draw-silk { display: inline-block; width: 100px; height: 100px; margin-top: 20px; background-color: #f0c88c; background-image: url(/images/ba-active/red-packet-open@(Html.GetLang()=="en"? "-en" : "").png); background-repeat: no-repeat; background-position: center center; background-size: contain; cursor: pointer; border: none; outline: 0; border-radius: 50%; }
     .modal .modal-draw .modal-content .btnspace { display: inline-block; width: 100px; height: 100px; margin-top: 20px; }
     .modal .modal-draw .modal-content .viewdetail { position: absolute; width: 100%; bottom: 10px; text-align: center; line-height: 1; }
     .modal .modal-draw .modal-content .viewdelnk { font-size: 1rem; color: #f0c88c; text-decoration: none; }
@@ -69,6 +97,7 @@
     .modal .modal-draw-detail .modal-content .price { margin-top: 10px; margin-bottom: 4px; line-height: 1; }
     .modal .modal-draw-detail .modal-content .price > strong { font-size: 3rem; font-family: arial; }
     .modal .modal-draw-detail .modal-content .price > em { font-size: 1.15rem; font-style: normal; }
+    .modal .modal-draw-detail .modal-content .draw-packet {background-color:#f0f0f0;}
     .modal .modal-draw-detail .modal-content .draw-packet-inner { width: 100%; height: 100%; }
     .modal .modal-draw-detail .modal-content .draw-packet-tle { padding: 10px 15px; border-bottom: 1px solid #ddd; font-size: 1rem; color: #888; }
     .modal .modal-draw-detail .modal-content .rowitem { border-bottom: 1px solid #ddd; padding: 10px 0; position: relative; display: -webkit-box; display: -webkit-flex; display: flex; -webkit-align-items: flex-star; align-items: flex-star; }
@@ -76,6 +105,7 @@
     .modal .modal-draw-detail .modal-content .rowitem-ul { padding: 0 15px; }
     .modal .modal-draw-detail .modal-content .headpic { float: left; width: 2.5rem; height: 2.5rem; border-radius: 4px; overflow: hidden; text-align: center; margin-right: 1rem; }
     .modal .modal-draw-detail .modal-content .headpic img { float: left; max-width: 100%; }
+    .modal .modal-draw-detail .modal-content .headpic .default-img {display:block;width: 2.5rem; height: 2.5rem;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAABCCAYAAADjVADoAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NThERUNCNTExREJCMTFFOEE2NjhGNUIwQUU1NDU1NUMiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NThERUNCNTIxREJCMTFFOEE2NjhGNUIwQUU1NDU1NUMiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1OERFQ0I0RjFEQkIxMUU4QTY2OEY1QjBBRTU0NTU1QyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1OERFQ0I1MDFEQkIxMUU4QTY2OEY1QjBBRTU0NTU1QyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PnOyT70AAAplSURBVHja7FwLlFVV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) no-repeat;background-size:cover;}
     .modal .modal-draw-detail .modal-content .nametxt { font-size: 1.15rem; line-height: 1; margin-bottom: 0.4rem; }
     .modal .modal-draw-detail .modal-content .datenub { font-size: 1em; color: #bbb; line-height: 1; }
     .modal .modal-draw-detail .modal-content .distrib { text-align: right; line-height: 1; }
@@ -88,6 +118,46 @@
     .modal .modal-draw-detail .btn-outline-share:hover {background-color:#f2f2f2;}
     .modal .modal-draw-detail .btn-outline-share.disabled,
     .modal .modal-draw-detail .btn-outline-share:disabled {background-color:#f5f5f5;color:#a0a0a0;cursor:not-allowed;}
+
+    .btn-danger{color:#fff;background-color:#e13c23;border-color:#e13c23;}
+    .btn-danger:hover{color:#fff;background-color:#f22d4e;border-color:#f12143;}
+    .btn-danger:focus, .btn-danger.focus{box-shadow:0 0 0 3px rgba(244, 81, 108, 0.5);}
+    .btn-danger.disabled, .btn-danger:disabled{background-color:#e13c23;border-color:#e13c23;}
+    .btn-danger:active, .btn-danger.active {background-color:#f22d4e;background-image:none;border-color:#f12143;}
+    .btn-lg, .btn-group-lg > .btn {padding:0.65rem 1.75rem;}
+    .rounded-0 {border-radius:0 !important;}
+    .modal .modal-draw-detail .red-box-wrapper {position:relative;padding:1.5rem 2rem;background-color:#fff;border-radius:0 0 10px 10px;}
+    .modal .modal-draw-detail .wish-word {word-wrap:break-word;}
+    .modal .modal-draw-detail .m-img-square {position:relative;width:100%;}
+    .modal .modal-draw-detail .m-bg-img {width:100%;height:100%;background-position:50%;background-repeat:no-repeat;background-size:cover;}
+    .modal .modal-draw-detail .m-bg-img img {width:100%;vertical-align:middle;border-radius:8px;box-shadow:0px 1px 10px 1px rgba(40, 50, 60, 0.2);}
+    .modal .modal-draw-detail .row.row-gutter-size {margin-left:-2rem;margin-right:-2rem;margin-bottom:-1.5rem;padding:1rem 1rem 0.2rem;}
+    .modal .modal-draw-detail .row.row-gutter-size > [class*="col-"] {padding-left:0;padding-right:0;padding-bottom:0.8rem;}
+    .modal .modal-draw-detail .row.row-gutter-size.bg-none .m-bg-img img {box-shadow:none;}
+    .modal .modal-draw-detail .ft-act-cell {position:relative;z-index:9;padding:1rem 3.4rem;background-color:#f0f0f0;border-radius:0 0 10px 10px;}
+
+    @@media (min-width: 768px) {
+        .modal .modal-dialog.modal-shareby {width: 360px;}
+        .modal .modal-dialog.modal-shareby .modal-content {border-radius:10px;}
+    }
+    .modal .modal-shareby .modal-content {height:inherit;min-height:100%;background:url(/images/ba-active/red-packet-qr-bg.jpg) no-repeat center center;background-size:cover;}
+    .modal .modal-shareby .modal-content .modal-header { position: absolute; top: 0; right: 0; z-index: 9; border-bottom: none; padding: 20px 18px 0 0; }
+    .modal .modal-shareby .modal-content .modal-header .close { color: #666; opacity: 1; height: 18px; cursor: pointer; }
+    .modal .modal-shareby .modal-content .modal-body {padding:0;}
+    .modal .modal-shareby .modal-content .celeb-packet {position:relative;padding-top:160.8%;background:url(/images/ba-active/red-packet-qr@(Html.GetLang()=="en"? "-en" : "").png) no-repeat center top;background-size:contain;}
+    .modal .modal-shareby .modal-content .leavemessage {position:absolute;left:9%;top:20%;display:table;width:82%;height:90px;font-size:1rem;line-height: 1.2;}
+    .modal .modal-shareby .modal-content .message-cell {display: table-cell; vertical-align: top; padding: 10px; }
+    .modal .modal-shareby .modal-content .sendname {position:absolute;left:0;width:100%;top:14%;padding:0 25px;font-size: 1.15rem;text-align:center;color:#333;}
+    .modal .modal-shareby .modal-content .sendname i { display: inline-block; vertical-align: text-bottom; width: 1.428571rem; height: 1.428571rem; background-color: #ff9600; color: #fff; text-align: center; line-height: 1.428571rem; font-size: 1rem; font-style: normal; margin-left: 0.5rem; border-radius: 4px; }
+    .modal .modal-shareby .modal-content .qrcode-box {position:absolute;left:34%;top:57%;width:32%;padding:5px;background-color:#fff;}
+    .modal .modal-shareby .modal-content .qrcode-box canvas {vertical-align:middle;}
+    @@media (max-width: 767.98px) {
+        .modal .modal-dialog.modal-shareby {margin:0;min-height:100%;height:100%;}
+        .modal .modal-dialog.modal-shareby .modal-content {border-radius:0px;}
+    }
+    @@media screen and (orientation:landscape){
+        .modal .modal-dialog.modal-shareby {height:inherit;}
+    }
 
     .m-grid.m-grid--ver-desktop.m-grid--desktop { display: flex; flex-direction: row; }
 
@@ -110,7 +180,7 @@
 
     .m-packet_backwrap .m-txt-2 { color: #333; font-size: 1rem; }
 
-    .m-packet_copybtn { margin-left: 50px; margin-right: 50px; margin-top: 40px; }
+    .m-packet_copybtn {padding-top:10px;}
 
     .m-packet_copybtn .btn-lg { padding-top: 0.5rem; padding-bottom: 0.5rem; }
 
@@ -142,9 +212,57 @@
 
     .m-packet_wxtips { position: fixed; left: 0; top: 0; z-index: 999; width: 100%; height: 100%; background: rgba(0,0,0,.8) url(/images/ba-active/weixin-share.png) no-repeat center top; background-size: 95% auto; }
 
+    .m-packet_copybtn .share-item {margin-left:30px;margin-right:30px;margin-top:20px;border:1px dashed #ccc;padding:10px;background-color:#fff;border-radius:5px;}
+    .m-packet_copybtn .share-item .share-tle {font-size:1.3rem;}
+    .m-packet_copybtn .share-item .share-sub {font-size:1rem;margin-bottom:10px;line-height:1.2;}
+    .m-packet_copybtn .share-item .share-tle,
+    .m-packet_copybtn .share-item .share-sub {padding-left:8px;}
+    .btn-outline-primary{color:#e13c23;background-color:transparent;background-image:none;border-color:#e13c23;}
+    .btn-outline-primary:hover{color:#fff;background-color:#e13c23;border-color:#e13c23;}
+    .btn-outline-primary.disabled, .btn-outline-primary:disabled{color:#e6624e;background-color:transparent;}
+    .btn-outline-primary:active, .btn-outline-primary.active {color:#fff;background-color:#e13c23;border-color:#e13c23;}
+    @* 新用户分享红包新增样式 *@
+    .m-footer--push.m-aside-left--enabled:not(.m-footer--fixed) .m-footer {z-index:-1;}
+    .m-packet__wrapper.newshare {padding-top:20.5rem;background:url(/images/ba-active/red-packet-newshare@(Html.GetLang()=="en"? "-en" : "").jpg) no-repeat center top;background-size:contain;}
+    .m-packet__wrapper.newshare .m-packet_copybtn .share-item {background-color:rgba(255,255,255,0.8);border-color:rgba(220,137,42,0.8);}
+    .m-packet__wrapper.newshare .m-packet_copybtn .m-pill-round {border-color:#ddd;}
+    .m-packet__wrapper.newshare .m-packet_copybtn .m-packet_copy-input {background-color:#fff;}
+    .m-packet__wrapper.newshare .input-group .input-group-btn > .btn.btn-secondary {background-color:#f5f5f5;border-color:#f5f5f5;}
+    .m-packet__wrapper.newshare .m-packet_copybtn .btn-outline-primary {background:#e13c23;color:#fff;}
+    @@media (min-width: 768px) {
+        .modal .modal-dialog.modal-newby {width: 380px;}
+        .modal .modal-dialog.modal-newby .modal-content {border-radius:10px;}
+    .modal .modal-newby .modal-content .celeb-packet {border-radius:10px 10px 0 0;}
+    }
+    .modal .modal-newby .modal-content {height:inherit;min-height:100%;background-color:#ffb43c;}
+    .modal .modal-newby .modal-content .modal-header { position: absolute; top: 0; right: 0; z-index: 9; border-bottom: none; padding: 20px 18px 0 0; }
+    .modal .modal-newby .modal-content .modal-header .close { color: #666; opacity: 1; height: 18px; cursor: pointer; }
+    .modal .modal-newby .modal-content .modal-body {padding:0;}
+    .modal .modal-newby .modal-content .celeb-packet {position:relative;padding-top:182%;background:url(/images/ba-active/red-packet-newby@(Html.GetLang()=="en"? "-en" : "").jpg) no-repeat center top;background-size:contain;}
+    .modal .modal-newby .modal-content .qrcode-box {position:absolute;left:32%;top:46%;z-index:9;width:36%;padding:5px;background-color:#fff;}
+    .modal .modal-newby .modal-content .qrcode-box canvas {vertical-align:middle;}
+    .modal .modal-newby .modal-content .scan-tips {position:absolute;left:-50%;bottom:-38px;width:200%;text-align:center;color:#fff;font-size:1rem;}
+    .modal .modal-newby .modal-content .awardmax {position:absolute;left:0;top:25%;width:100%;text-align:center;font-size:32px;font-weight:bold;color:#ffeeac;}
+    .modal .modal-newby .modal-content .slogan-mark {position:absolute;left:20%;top:71%;width:60%;background-color:rgba(208,173,117,0.3);border:1px dashed #febf64;border-radius:4px;padding:5px 10px;font-size:0.875rem;font-weight:bold;color:#fff;line-height:1.8;text-align:center;}
     @@media (max-width: 767.98px) {
-        .m-packet__wrapper { width: 100%; padding-top: 0; }
-        .m-packet_copybtn { margin-left: 10px; margin-right: 10px; }
+        .modal .modal-dialog.modal-newby {margin:0;min-height:100%;height:100%;}
+        .modal .modal-dialog.modal-newby .modal-content {border-radius:0px;}
+    }
+    @@media screen and (orientation:landscape){
+        .modal .modal-dialog.modal-newby {height:inherit;}
+    }
+    .btn-alert {color:#da0707;background-color:#fee893;border-color:#fee893;}
+    .btn-alert:hover {color:#da0707;background-color:#fdd389;border-color:#fdd389;}
+    .modal .modal-alert .modal-content {position:relative;height:inherit;background:url(/images/ba-active/red-packet-alert.png) no-repeat 50% 0;background-size:contain;border-radius:0;height:0;padding-bottom:94.5326%;}
+    .modal .modal-alert .modal-content .modal-body {position:absolute;width:100%;height:100%;text-align:center;padding-top:42%;padding-left:12%;padding-right:12%;}
+    .modal .modal-alert .modal-content .gala {color:#ffeeac;font-size:1.15rem;}
+    .modal .modal-alert .modal-content .regis-btn {position:absolute;left:15%;top:80%;width:70%;padding:0 1rem;}
+    @@media (min-width:576px) {
+    .modal-dialog.modal-alert {max-width:360px;width:360px;}
+    }
+    @@media (max-width: 767.98px) {
+        .m-packet__wrapper { width: 100%; padding-top: 0;}
+        .m-packet_copybtn .share-item { margin-left: 10px; margin-right: 10px; margin-top:10px; margin-bottom:10px;}
     }
 </style>
 
@@ -172,48 +290,165 @@
                 <div class="m-packet_wxtips" id="wxTips" style="display:none;"></div>
             </div>
         </div>
+
+        @section script{
+        <script type="text/javascript">
+                $(function () {
+                    is_weixn();
+                    function is_weixn() {
+                        var ua = navigator.userAgent.toLowerCase();
+                        if (/micromessenger/i.test(ua)) {
+                            $("#wxShareButton").show();
+                            $("#wxShareButton").removeAttr('hidden');
+                        } else {
+                            $("#wxShareButton").hide();
+                        }
+                        $("#wxShareButton").on('click', function () {
+                            $("#wxTips").show();
+                        });
+                    }
+                });
+        </script>
+        }
     }
     else
     {
-        <div class="m-packet__container m-stack m-stack--flex-general m-packet_popup" style="background-color:#f2f3f8;">
-            <div class="m-packet__wrapper">
-                <div class="m-packet_backwrap">
-                    <div class="m-packet_rich-icon"><div class="m-packet_rich-cover">@Html.GetTansByLan("packet-packetIndex-09", "Best wishes")</div></div>
-                    <div class="m-txt-1">@Html.GetTansByLan("packet-packetIndex-10", "Lucky Silk Packet")</div>
-                    <div class="m-txt-2">@Html.GetTansByLan("packet-packetIndex-11", "Copy lucky silk packet url and send to friends")</div>
-                </div>
-                <div class="m-packet_copybtn">
-                    <div class="input-group m-pill-round">
-                        <input class="m-packet_copy-input" type="text" id="send_money_address" readonly value="@ViewBag.Url" />
-                        <span class="input-group-btn" id="send_money_trigger" data-clipboard-target="#send_money_address">
-                            <button class="btn btn-secondary" onclick="return copyValToClipboard('#send_money_trigger')"><i class="io-copy"></i></button>
-                        </span>
+        if (Model.UseType == 3)
+        { //新用户分享红包
+            <div class="m-packet__container m-stack m-stack--flex-general m-packet_popup" style="height:inherit;background-color:#ffb43c;">
+                <div class="m-packet__wrapper newshare">
+                    <div class="m-packet_copybtn">
+                        <div class="share-item">
+                            <div class="share-tle">@Html.GetTansByLan("packet-packetIndex-36", "Packets share via link")</div>
+                            <div class="share-sub">@Html.GetTansByLan("packet-packetIndex-37", "Copy link and send to others")</div>
+                            <div class="input-group m-pill-round">
+                                <input class="m-packet_copy-input" type="text" id="send_money_address" readonly value="@ViewBag.Url" />
+                                <span class="input-group-btn" id="send_money_trigger" data-clipboard-target="#send_money_address">
+                                    <button class="btn btn-secondary" onclick="return copyValToClipboard('#send_money_trigger')"><i class="io-copy"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="share-item">
+                            <div class="share-tle">@Html.GetTansByLan("packet-packetIndex-38", "Packets share via QR code")</div>
+                            <div class="share-sub">@Html.GetTansByLan("packet-packetIndex-39", "Click to get QR code,screeshot to share")</div>
+                            <button class="btn btn-block btn-outline-primary m-btn--pill btn-lg" id="qrShareButton" data-toggle="modal" data-target="#modalShareByQrcode">@Html.GetTansByLan("packet-packetIndex-28", "生成二维码分享图")</button>
+                        </div>
+                        <div class="share-item" hidden="true">
+                            <div class="share-tle">@Html.GetTansByLan("packet-packetIndex-40", "Packets share via Wechat")</div>
+                            <div class="share-sub">@Html.GetTansByLan("packet-packetIndex-41", "Click Wechat logo and share the link in Wechat")</div>
+                            <button class="btn btn-block btn-outline-weixin m-btn--pill btn-lg" id="wxShareButton"><i></i>@Html.GetTansByLan("packet-packetIndex-12", "分享到微信")</button>
+                        </div>
                     </div>
-                    <button class="btn btn-block btn-outline-weixin m-btn--pill btn-lg" id="wxShareButton" hidden="true"><i></i>@Html.GetTansByLan("packet-packetIndex-12", "分享到微信")</button>
+                    <div class="m-packet_wxtips" id="wxTips" style="display:none;"></div>
                 </div>
-                <div class="m-packet_wxtips" id="wxTips" style="display:none;"></div>
             </div>
-        </div>
-    }
-    @section script{
-        <script type="text/javascript">
-            $(function () {
-                // weixin share
-                is_weixn();
-                function is_weixn() {
-                    var ua = navigator.userAgent.toLowerCase();
-                    if (/micromessenger/i.test(ua)) {
-                        $("#wxShareButton").show();
-                        $("#wxShareButton").removeAttr('hidden');
-                    } else {
-                        $("#wxShareButton").hide();
+
+            <div class="modal fade" id="modalShareByQrcode" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-newby" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="celeb-packet">
+                                <div class="awardmax">@Html.GetTansByLan("packet-packetIndex-64", "最多") @Model.NewUserPacketMaxAmount.ToString("N0") @Html.GetTansByLan("packet-silk-alias-01", "Silk积分")</div>
+                                <div class="qrcode-box"><div id="J_qrcode-hook"></div><p class="scan-tips">@Html.GetTansByLan("packet-packetIndex-65", "扫我领红包")</p></div>
+                                <div class="slogan-mark">@Html.GetTansByLan("packet-packetIndex-66", "Silk-全球自由贸易行业加密数字通证链接世界工厂与全球中小企业买产品，买服务，足不出户做全球生意")</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <div class="m-packet__container m-stack m-stack--flex-general m-packet_popup" style="background-color:#f2f3f8;">
+                <div class="m-packet__wrapper">
+                    <div class="m-packet_backwrap">
+                        <div class="m-packet_rich-icon"><div class="m-packet_rich-cover">@Html.GetTansByLan("packet-packetIndex-09", "Best wishes")</div></div>
+                        <div class="m-txt-1">@Html.GetTansByLan("packet-packetIndex-10", "Lucky Silk Packet")</div>
+                        <div class="m-txt-2">@Html.GetTansByLan("packet-packetIndex-11", "Copy lucky silk packet url and send to friends")</div>
+                    </div>
+                    <div class="m-packet_copybtn">
+                        <div class="share-item">
+                            <div class="share-tle">@Html.GetTansByLan("packet-packetIndex-36", "Packets share via link")</div>
+                            <div class="share-sub">@Html.GetTansByLan("packet-packetIndex-37", "Copy link and send to others")</div>
+                            <div class="input-group m-pill-round">
+                                <input class="m-packet_copy-input" type="text" id="send_money_address" readonly value="@ViewBag.Url" />
+                                <span class="input-group-btn" id="send_money_trigger" data-clipboard-target="#send_money_address">
+                                    <button class="btn btn-secondary" onclick="return copyValToClipboard('#send_money_trigger')"><i class="io-copy"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="share-item">
+                            <div class="share-tle">@Html.GetTansByLan("packet-packetIndex-38", "Packets share via QR code")</div>
+                            <div class="share-sub">@Html.GetTansByLan("packet-packetIndex-39", "Click to get QR code,screeshot to share")</div>
+                            <button class="btn btn-block btn-outline-primary m-btn--pill btn-lg" id="qrShareButton" data-toggle="modal" data-target="#modalShareByQrcode">@Html.GetTansByLan("packet-packetIndex-28", "生成二维码分享图")</button>
+                        </div>
+                        <div class="share-item" hidden="true">
+                            <div class="share-tle">@Html.GetTansByLan("packet-packetIndex-40", "Packets share via Wechat")</div>
+                            <div class="share-sub">@Html.GetTansByLan("packet-packetIndex-41", "Click Wechat logo and share the link in Wechat")</div>
+                            <button class="btn btn-block btn-outline-weixin m-btn--pill btn-lg" id="wxShareButton"><i></i>@Html.GetTansByLan("packet-packetIndex-12", "分享到微信")</button>
+                        </div>
+                    </div>
+                    <div class="m-packet_wxtips" id="wxTips" style="display:none;"></div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modalShareByQrcode" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-shareby" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="celeb-packet">
+                                <div class="sendname">
+                                    <strong>@Model.CreateUserName</strong>@Html.GetTansByLan("packet-packetIndex-43", "‘s Lucky Packet")
+                                    <i>
+                                        @if (Model.UseType == 1)
+                                        {
+                                            @Html.Raw(Html.GetTansByLan("packet-packetIndex-27", "I"))
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw(Html.GetTansByLan("packet-packetIndex-26", "R"))
+                                        }
+                                    </i>
+                                </div>
+                                <div class="leavemessage"><div class="message-cell">@(string.IsNullOrEmpty(Model.Message) ? Html.GetTansByLan("packet-packetIndex-42", "Best wishes") : Model.Message)</div></div>
+                                <div class="qrcode-box" id="J_qrcode-hook"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @section script{
+            <script type="text/javascript">
+                $(function () {
+                    is_weixn();
+                    function is_weixn() {
+                        var ua = navigator.userAgent.toLowerCase();
+                        if (/micromessenger/i.test(ua)) {
+                            $("#wxShareButton").parent().show();
+                            $("#wxShareButton").parent().removeAttr('hidden');
+                        } else {
+                            $("#wxShareButton").parent().hide();
+                        }
+                        $("#wxShareButton").on('click', function () {
+                            $("#wxTips").show();
+                        });
                     }
-                    $("#wxShareButton").on('click', function () {
-                        $("#wxTips").show();
+                    $('#modalShareByQrcode').one('shown.bs.modal', function () {
+                        var wd = $('#J_qrcode-hook').width();
+                        $("#J_qrcode-hook").empty().qrcode({ width: wd, height: wd, text: $('#send_money_address').val() });
                     });
-                }
-            });
-        </script>
+                });
+            </script>
+        }
     }
 }
 else
@@ -226,7 +461,7 @@ else
                 </div>
                 <div class="modal-body">
                     <div class="svg-wrap">
-                        <svg class="pathfillellipse" width="360" height="360" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="pathfillellipse" width="100%" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 0 L360 0 L360 300 Q180 385 0 300 L0 0 Z" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#d2463c" fill="#d2463c" />
                         </svg>
                     </div>
@@ -241,6 +476,7 @@ else
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="modalOverdueMoney" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-draw" role="document">
             <div class="modal-content">
@@ -249,7 +485,7 @@ else
                 </div>
                 <div class="modal-body">
                     <div class="svg-wrap">
-                        <svg class="pathfillellipse" width="360" height="360" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="pathfillellipse" width="100%" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 0 L360 0 L360 300 Q180 385 0 300 L0 0 Z" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#d2463c" fill="#d2463c" />
                         </svg>
                     </div>
@@ -260,7 +496,7 @@ else
                         <div class="leavemessage"><div class="message-cell">@Html.GetTansByLan("packet-packetIndex-14", "Red packet has exceeded 24 hours. If you have already opened it, you can check from 'my red packet'")</div></div>
                         <div class="btnspace"></div>
                         <div class="viewdetail">
-                            <a class="viewdelnk" href="#" onclick="ViewDetail();">
+                            <a class="viewdelnk" href="#" onclick="ViewDetail('1');">
                                 @Html.GetTansByLan("packet-packetIndex-61", " View details")&gt;
                             </a>
                         </div>
@@ -269,6 +505,7 @@ else
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="modalLuckyMoneyDetail" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-draw modal-draw-detail" role="document">
 
@@ -284,7 +521,7 @@ else
                 </div>
                 <div class="modal-body">
                     <div class="svg-wrap">
-                        <svg class="pathfillellipse" width="360" height="360" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="pathfillellipse" width="100%" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 0 L360 0 L360 50 Q180 125 0 50 L0 0 Z" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#e13c23" fill="#e13c23" />
                         </svg>
                     </div>
@@ -294,27 +531,78 @@ else
                             <div class="sendname">
                                 <strong>@Model.CreateUserName</strong>
                                 <i>
-                                    @if (Model.UseType == 0)
-                                    {@Html.Raw(Html.GetTansByLan("packet-packetIndex-26", "R")) }
-                                else
-                                { @Html.Raw(Html.GetTansByLan("packet-packetIndex-27", "I"))}
+                                    @if (Model.UseType == 1)
+                                    {
+                                        @Html.Raw(Html.GetTansByLan("packet-packetIndex-27", "I"))
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw(Html.GetTansByLan("packet-packetIndex-26", "R"))
+                                    }
                                 </i>
                             </div>
-                            <div class="sendopt">@Model.Message</div>
-                            <div class="price"><strong>@getAmount.ToString("N2")</strong><em>SILK</em></div>
+                            <div class="price">
+                                @if (viewmodel == "4")
+                                {
+                                    <span>@Html.GetTansByLan("packet-packetIndex-62", "The hand is slow and the red packet is finished")</span>
+                                }
+                                else
+                                {
+                                    <strong>@getAmount.ToString("N2")</strong><em>@Html.GetTansByLan("packet-silk-alias-01", "SILK")</em>
+                                }
+                            </div>
                             @if (Model.IsShare == 1)
                             {
                                 string btnView = string.Empty;
-                                if (Model.Status == 1 || Model.IsOverTime == 1 )
+                                if (Model.Status == 1 || Model.IsOverTime == 1)
                                 {
                                     btnView = "disabled='disabled'";
                                 }
-                            <div class="text-center share-out">
-                                <button class="btn btn-outline-share m-btn--pill" onclick="ShareList('@Model.PacketID');">@Model.TotalShareAmount.ToString("0.00")@Html.GetTansByLan("packet-packetIndex-16", " Silk by")<br />@Html.GetTansByLan("packet-packetIndex-17", "packet sharing")</button>
-                                <button class="btn btn-outline-share m-btn--pill" onclick="SharePacket();" @btnView><i class="fa fa-wechat"></i>@Html.GetTansByLan("packet-packetIndex-15", " Share Packet")</button>
-                            </div>
+                                <div class="text-center share-out">
+                                    <button class="btn btn-outline-share m-btn--pill" onclick="ShareList('@Model.PacketID');">@Model.TotalShareAmount.ToString("0.00")@Html.GetTansByLan("packet-packetIndex-16", " Silk by")<br />@Html.GetTansByLan("packet-packetIndex-17", "packet sharing")</button>
+                                    <button class="btn btn-outline-share m-btn--pill" onclick="SharePacket();" @btnView><i class="fa fa-wechat"></i>@Html.GetTansByLan("packet-packetIndex-15", " Share Packet")</button>
+                                </div>
                             }
-                            <div class="drawtips"><a href="/Recharge/Summary">@Html.GetTansByLan("packet-packetIndex-22", "Red Packet transferred to Wallet")</a></div>
+                            @if (viewmodel != "4")
+                            {
+                                <div class="drawtips"><a href="/Recharge/Summary">@Html.GetTansByLan("packet-packetIndex-22", "Red Packet transferred to Wallet")</a></div>
+                            }
+                        </div>
+                        <div class="red-box-wrapper rounded-0">
+                            <article>
+                                <div class="wish-word">@Html.Raw(Model.Message ?? Html.GetTansByLan("packet-send-08", "Best wishes"))</div>
+
+                                <div class="row row-gutter-size mt-3 @((Model.FileList != null && Model.FileList.Count > 0)?"":"bg-none")">
+                                    @if (Model.FileList != null && Model.FileList.Count > 0)
+                                    {
+                                        foreach (var item in Model.FileList)
+                                        {
+                                            string imgUrl = "https://kycimg1.silkchain.io" + item.FileUrl;
+                                            <div class="col-12">
+                                                <div class="m-img-square">
+                                                    <div class="m-bg-img"><img src="@imgUrl" /></div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="col-12">
+                                            <div class="m-img-square">
+                                                @if (Html.GetLang() == "en")
+                                                {
+                                                    <div class="m-bg-img"><img src="@picUrl_En" /></div>
+
+                                                }
+                                                else
+                                                {
+                                                    <div class="m-bg-img"><img src="@picUrl" /></div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </article>
                         </div>
                         <div class="draw-packet">
                             <div class="draw-packet-inner">
@@ -337,8 +625,21 @@ else
 
                                             <div class="rowitem">
                                                 <div class="rowmd">
-                                                    <div class="headpic"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAABCCAYAAADjVADoAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NThERUNCNTExREJCMTFFOEE2NjhGNUIwQUU1NDU1NUMiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NThERUNCNTIxREJCMTFFOEE2NjhGNUIwQUU1NDU1NUMiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1OERFQ0I0RjFEQkIxMUU4QTY2OEY1QjBBRTU0NTU1QyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1OERFQ0I1MDFEQkIxMUU4QTY2OEY1QjBBRTU0NTU1QyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PnOyT70AAAplSURBVHja7FwLlFVV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" /></div>
-                                                    <div class="nametxt">@item.GetUserName</div>
+                                                    <div class="headpic"><span class="default-img"></span></div>
+                                                    <div class="nametxt">
+                                                        @if (item.GetUserName.Length == 1)
+                                                        {
+                                                            <span>@(item.GetUserName + "*****")</span>
+                                                        }
+                                                        else if (item.GetUserName.Length == 2)
+                                                        {
+                                                            <span>@(item.GetUserName + "****")</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@(item.GetUserName.Substring(0, 2) + "***" + item.GetUserName.Substring(item.GetUserName.Length - 1, 1))</span>
+                                                        }
+                                                    </div>
                                                     <div class="datenub">@item.GetTime.ToString("MM-dd HH:mm")</div>
                                                 </div>
                                                 <div class="rowft">
@@ -356,94 +657,259 @@ else
         </div>
     </div>
 
+    <div class="modal fade" id="modalFinishedMoney" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-draw" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="Reback();"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="svg-wrap">
+                        <svg class="pathfillellipse" width="100%" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 0 L360 0 L360 300 Q180 385 0 300 L0 0 Z" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#d2463c" fill="#d2463c" />
+                        </svg>
+                    </div>
+                    <div class="red-packet">
+                        <div class="avatar"><img width="90%" src="/images/ba-active/red-packet-logo.png" /></div>
+                        <div class="sendname">@Model.CreateUserName</div>
+                        <div class="leavemessage"><div class="message-cell">@Html.GetTansByLan("packet-packetIndex-62", "The hand is slow and the red packet is finished")</div></div>
+                        <div class="btnspace"></div>
+                        <div class="viewdetail">
+                            <a class="viewdelnk" href="#" onclick="ViewDetail('2');">
+                                @Html.GetTansByLan("packet-packetIndex-61", " View details")&gt;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalLuckyMoneydInfo" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-draw modal-draw-detail" role="document">
+
+            <form action="/Packet/@Model.PacketID/@Model.GetUserID" method="post" id="form1">
+                <input type="hidden" id="FromShare" name="FromShare" value="1" />
+                <input type="hidden" id="ShareUserID" name="ShareUserID" value="@Model.GetUserID" />
+                <input type="hidden" id="OnlyCode" name="OnlyCode" value="@Model.PacketID" />
+            </form>
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="Reback();"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="svg-wrap">
+                        <svg class="pathfillellipse" width="100%" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 0 L360 0 L360 50 Q180 125 0 50 L0 0 Z" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#e13c23" fill="#e13c23" />
+                        </svg>
+                    </div>
+                    <div class="draw-detail-container m-stack m-stack--flex-general">
+                        <div class="red-packet">
+                            <div class="avatar"><img width="90%" src="/images/ba-active/red-packet-logo.png" /></div>
+                            <div class="sendname">
+                                <strong>@Model.CreateUserName</strong>
+                                <i>
+                                    @if (Model.UseType == 1)
+                                    {
+                                        @Html.Raw(Html.GetTansByLan("packet-packetIndex-27", "I"))
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw(Html.GetTansByLan("packet-packetIndex-26", "R"))
+                                    }
+                                </i>
+                            </div>
+                        </div>
+                        <div class="red-box-wrapper rounded-0">
+                            <article>
+                                <div class="wish-word">@Html.Raw(Model.Message ?? Html.GetTansByLan("packet-send-08", "Best wishes"))</div>
+
+                                <div class="row row-gutter-size mt-3 @((Model.FileList != null && Model.FileList.Count > 0)?"":"bg-none")">
+                                    @if (Model.FileList != null && Model.FileList.Count > 0)
+                                    {   
+                                        foreach (var item in Model.FileList)
+                                        {
+                                            string imgUrl = "https://kycimg1.silkchain.io" + item.FileUrl;
+                                            <div class="col-12">
+                                                <div class="m-img-square">
+                                                    <div class="m-bg-img"><img src="@imgUrl" /></div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="col-12">
+                                            <div class="m-img-square">
+                                                <div class="m-bg-img">
+                                                    @if (Html.GetLang() == "en")
+                                                    {
+                                                        <img src="@picUrl_En" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="@picUrl" />
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </article>
+                        </div>
+                        <div class="text-center">
+                            <div class="ft-act-wrap">
+                                <div class="ft-act-cell">
+                                    <button class="btn btn-block btn-danger m-btn--pill btn-lg" onclick="GetPacket('@Model.PacketID','@Model.ShareUserID');">@Html.Raw(Html.GetTansByLan("packet-getpacket-ad-open", "Open"))</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalMsgAlert" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-alert" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="gala" id="J_modalAlertCont">
+                        @Html.GetTansByLan("packet-getpacket-aderror-08", "You have already registered")
+                    </div>
+                    <div class="regis-btn">
+                        <button class="btn btn-block btn-alert m-btn--pill btn-lg" data-dismiss="modal" aria-label="Close">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @section script{
-        <script type="text/javascript">
-var v = "1";
+    <script type="text/javascript">
+            var v = "1";
 
             function GetPacket(onlycode, shareuserid) {
                 $.post('/Packet/GetPacket', { OnlyCode: onlycode, ShareUserID: shareuserid }, function (data) {
-        if (data == "1") {
-            if (isWeiXin) {
-                window.location.href=updateUrl(window.location.href);
-            }else{
-                window.location.reload();
+                    if (data.code == "1") {
+                        if (isWeiXin()) {
+                            window.location.href = updateUrl(window.location.href);
+                        } else {
+                            window.location.reload();
+                        }
+                    } else {
+                        if (isWeiXin()) {
+                            window.location.href = updateUrl(window.location.href);
+                        } else {
+                            window.location.reload();
+                        }
+                    }
+
+                });
             }
-        }
-    });
-}
 
-$(function () {
-    v = "1";
-    switch ('@viewmodel') {
-        case "1":
-            $('#modalLuckyMoney').modal('show');
-            break;
-        case "2":
-            $('#modalLuckyMoneyDetail').modal('show');
-            break;
-        case "3":
-            $('#modalOverdueMoney').modal('show');
-            break;
-    }
-});
+            $(function () {
+                var host = window.location.host;
+                if (isWeiXin() && host != "wallet.silkb2b.io") {
+                    window.location.href = window.location.href.replace('wallet.silkchain.io', '@ViewBag.Host_Wx');
+                }
 
-function ViewDetail() {
-    v = "0";
-    $('#modalOverdueMoney').modal('hide');
-    $('#modalLuckyMoneyDetail').modal('show');
-    v = "1";
-    $('#modalLuckyMoneyDetail').one('bsTransitionEnd', function(){
-        $(document.body).addClass('modal-open');
-    });
-}
+                v = "1";
+                switch ('@viewmodel') {
+                    case "1":
+                        $('#modalLuckyMoney').modal('show');
+                        break;
+                    case "2":
+                        $('#modalLuckyMoneyDetail').modal('show');
+                        break;
+                    case "3":
+                        $('#modalOverdueMoney').modal('show');
+                        break;
+                    case "4":
+                        $('#modalFinishedMoney').modal('show');
+                        break;
+                    case "5":
+                        $('#modalLuckyMoneydInfo').modal('show');
+                        break;
+                    case "6":
+                        location.href = "/Packet/NewUserInvitingDetails?id=" + '@Model.PacketID';
+                        break;
+                    case "7":
+                        $('#modalMsgAlert').modal('show');
+                        break;
+                }
 
-function Reback(from) {
-    if (from == 1) {
-        location.href = "/Packet/GetPacketDetail?Type=send";
-    } else if (from == 2) {
-        location.href = "/Packet/GetPacketDetail?Type=rece";
-    } else {
-        location.href = "/Wallet/Index";
-    }
-}
+                    $('img').on('error', function () {
 
-$('#modalLuckyMoney,#modalOverdueMoney,#modalLuckyMoneyDetail').on('hide.bs.modal', function () {
-    if (v == "1") {
-        Reback('@Model.From');
-    }
-});
+                       // alert($(this).attr('src'));
+                        var newsrc = $(this).attr('src').replace('kycimg1.silkchain.io', 'kycimg2.silkchain.io');
+                        $(this).attr('src', newsrc);
+                    });
+            });
 
-function isWeiXin(){
-    var ua = window.navigator.userAgent.toLowerCase();
-    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
-        return true;
-    }else{
-        return false;
-    }
-}
-function updateUrl(url,key){
-    var key= (key || 't') +'=';  //默认key是"t",可以传入key自定义
-    var reg=new RegExp(key+'\\d+');
-    var timestamp=+new Date();
-    if(url.indexOf(key)>-1){
-        return url.replace(reg,key+timestamp);
-    }else{
-        if(url.indexOf('\?')>-1){
-            var urlArr=url.split('\?');
-            if(urlArr[1]){
-                return urlArr[0]+'?'+key+timestamp+'&'+urlArr[1];
-            }else{
-                return urlArr[0]+'?'+key+timestamp;
+            function ViewDetail(type) {
+                v = "0";
+                if (type == 1) {
+                    $('#modalOverdueMoney').modal('hide');
+                } else {
+                    $('#modalFinishedMoney').modal('hide');
+                }
+                $('#modalLuckyMoneyDetail').modal('show');
+                v = "1";
+                $('#modalLuckyMoneyDetail').one('bsTransitionEnd', function(){
+                    $(document.body).addClass('modal-open');
+                });
             }
-        }else{
-            if(url.indexOf('#')>-1){
-                return url.split('#')[0]+'?'+key+timestamp+location.hash;
-            }else{
-                return url+'?'+key+timestamp;
+
+            function Reback(from) {
+                if (from == 1) {
+                    location.href = "/Packet/GetPacketDetail?Type=send";
+                } else if (from == 2) {
+                    location.href = "/Packet/GetPacketDetail?Type=rece";
+                } else {
+                    location.href = "/Recharge/Summary";
+                }
             }
-        }
-    }
-}
+
+            $('#modalLuckyMoney,#modalOverdueMoney,#modalLuckyMoneyDetail,#modalFinishedMoney,#modalMsgAlert').on('hide.bs.modal', function () {
+                if (v == "1") {
+                    Reback('@Model.From');
+                }
+            });
+
+            function isWeiXin(){
+                var ua = window.navigator.userAgent.toLowerCase();
+                if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+
+            function updateUrl(url,key){
+                var key= (key || 't') +'=';  //默认key是"t",可以传入key自定义
+                var reg=new RegExp(key+'\\d+');
+                var timestamp=+new Date();
+                if(url.indexOf(key)>-1){
+                    return url.replace(reg,key+timestamp);
+                }else{
+                    if(url.indexOf('\?')>-1){
+                        var urlArr=url.split('\?');
+                        if(urlArr[1]){
+                            return urlArr[0]+'?'+key+timestamp+'&'+urlArr[1];
+                        }else{
+                            return urlArr[0]+'?'+key+timestamp;
+                        }
+                    }else{
+                        if(url.indexOf('#')>-1){
+                            return url.split('#')[0]+'?'+key+timestamp+location.hash;
+                        }else{
+                            return url+'?'+key+timestamp;
+                        }
+                    }
+                }
+            }
 
             function ShareList(id) {
                 location.href = "/Packet/ShareRewardList?PacketId=" + id;
@@ -454,6 +920,6 @@ function updateUrl(url,key){
             }
 
 
-        </script>
+    </script>
     }
 }

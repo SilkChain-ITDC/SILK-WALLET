@@ -206,6 +206,22 @@
             padding-bottom: 10px;
         }
 
+.tag-img {position:absolute;display:flex;align-items:center;justify-content:center;}
+.img-s100 {width:100%;height:100%;overflow:hidden;background-color:rgba(0,0,0,0.1);}
+.img-s100 img {max-width:100%;max-height:100%;}
+.pic-edit {position:relative;height:0;padding-bottom:100%;}
+.pic-edit .edit-layer {position:absolute;top:0;right:0;text-align:center;background:rgba(0,0,0,0.5);}
+.pic-edit .edit-layer a {display:block;line-height:1;color:#fff;padding:2px 5px;text-decoration:none;cursor:pointer;}
+.pic-edit .edit-layer a:hover {color:#fff;}
+.upload-btn {position:relative;display:block;width:100%;margin:0;padding-bottom:calc(100% - 2px);border:1px dashed #bbb;cursor:pointer;}
+.upload-btn:before,
+.upload-btn:after {position:absolute;content:"";left:50%;top:50%;display:block;overflow:hidden;}
+.upload-btn:before {width:32%;margin-left:-16%;border-top:1px solid #bbb;}
+.upload-btn:after {height:32%;margin-top:-16%;border-left:1px solid #bbb;}
+.upload-btn input {position:absolute;opacity:0;display:none;}
+.row.row-gutter-size {margin-left:-0.3rem;margin-right:-0.3rem;}
+.row.row-gutter-size>[class*="col-"] {padding-left:0.3rem;padding-right:0.3rem;padding-top:0.6rem;}
+
     .m-packet_backwrap {
         padding-top: 20px;
         text-align: center;
@@ -413,7 +429,7 @@
 
         <div class="m-packet__container m-stack m-stack--flex-general">
             <div class="m-packet__wrapper">
-                @using (Html.BeginForm("SendluckyMoney", "Packet", FormMethod.Post, new { id = "form1" }))
+                @using (Html.BeginForm("SendluckyMoney", "Packet", FormMethod.Post, new { id = "form1", enctype= "multipart/form-data" }))
                 {
                     @Html.HiddenFor(m => m.CoinTypeNvarchar)
                     @Html.HiddenFor(m => m.UseTypeInt)
@@ -421,7 +437,7 @@
                     @if (Model.UseTypeInt == 0)
                     {
                         <div class="m-packet__title">
-                            <div class="m-packet_text">@Html.GetTansByLan("packet-send-01", "Available balance：")<span class="text-danger text-nowrap"><span class="wallet-balance">@accountBalance.ToString("0.00")</span> SILK</span></div>
+                            <div class="m-packet_text">@Html.GetTansByLan("packet-send-01", "Available balance：")<span class="text-danger text-nowrap"><span class="wallet-balance">@accountBalance.ToString("0.00")</span>@Html.GetTansByLan("packet-silk-alias-01", "SILK")</span></div>
                         </div>
                         <div class="m-packet_rowitem m-packet_fielditem">
                             <div class="m-packet_rowlf">
@@ -430,7 +446,7 @@
                             <div class="m-packet_rowmd">
                                 <input class="form-control m-input" placeholder="0.00" value="" type="text" id="AmountDecimal" name="AmountDecimal" oninput="var ary = this.value.match(/(\d+(\.\d{0,2})?)/);this.value=ary==null?'':ary[0];">
                             </div>
-                            <div class="m-packet_rowft">SILK</div>
+                            <div class="m-packet_rowft">@Html.GetTansByLan("packet-silk-alias-01", "SILK")</div>
                         </div>
                         <div class="m-packet_usetype-item">
                             <span><span data-vtext="word4">@Html.GetTansByLan("packet-send-04", "Random Amount")</span>，</span><a href="javascript:;" onclick="ChangeType()" data-vtext="word3">@Html.GetTansByLan("packet-send-05", "Change to Identical Amount")</a>
@@ -446,7 +462,12 @@
                         </div>
                         <div class="m-packet_rowitem m-packet_fielditem">
                             <div class="m-packet_rowmd">
-                                <textarea class="form-control m-input" placeholder="@Html.GetTansByLan("packet-send-08", "Best wishes")" maxlength="100" value="@Model.MessageNvarchar" name="MessageNvarchar" id="MessageNvarchar"></textarea>
+                                <textarea class="form-control m-input" placeholder="@Html.GetTansByLan("packet-send-08", "Best wishes")" maxlength="100" value="@Model.MessageNvarchar" name="MessageNvarchar" id="MessageNvarchar" onkeyup="this.value=this.value.replace(/\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/g,'')" onafterpaste="this.value=this.value.replace(/\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/g,'')"></textarea>
+                                <div class="row row-gutter-size">
+                                    <div class="col-3">
+                                        <label class="upload-btn" for="uploadMultiFiles"><input type="file" id="uploadMultiFiles" name="uploadMultiFiles" accept="image/jpeg,image/png,image/gif" /></label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         @if (isSpecifiedRole == true)
@@ -464,7 +485,7 @@
                         }
                     }
                     <div class="m-packet_send text-center">
-                        <div class="display-4"><span id="AmountSend">0.00</span> SILK</div>
+                        <div class="display-4"><span id="AmountSend">0.00</span> @Html.GetTansByLan("packet-silk-alias-01", "SILK")</div>
                         <div class="dis-send-btn">
                             <button class="btn btn-block btn-danger m-btn--pill btn-lg" disabled="disabled" id="ReadySendMoney">@Html.GetTansByLan("packet-send-32", "Prepare Red Packet")</button>
                         </div>
@@ -472,7 +493,7 @@
                         {
                             <div class="text-center">
                                 <div class="alert-notify-card alert alert-dark fade show" role="alert">
-                                    <div class="alert-cont">@Html.GetTansByLan("candy-index-12", "Please complete the ")<a href="/account/index?mode=1">@Html.GetTansByLan("candy-index-10", "KYC certification")</a></div>
+                                    <div class="alert-cont">@Html.GetTansByLan("candy-index-12", "Please complete the ")<a href="/Account/KYC">@Html.GetTansByLan("candy-index-10", "KYC certification")</a></div>
                                 </div>
                             </div>
                         }
@@ -491,6 +512,7 @@
 </form>
 @section script{
     <script src="~/js/sweetalert.min.js"></script>
+    <script src="~/js/loading.js"></script>
     <script>
         function ChangeType() {
             var useType = $("#UseTypeInt").val();
@@ -577,8 +599,9 @@
                 $("#ReadySendMoney").attr("disabled", "disabled");
                 return;
             } else {
+                $("#ReadySendMoney").attr("disabled", "disabled");
+                $.showLoading('@Html.Raw(Html.GetTansByLan("packet-send-34", "Waiting"))');
                 $("#form1").ajaxSubmit(function (data) {
-                    $("#ReadySendMoney").attr("disabled", "disabled");
                     if (data.statusCode == "1") {
                         $("#OnlyCode").val(data.OnlyCode);
                         $("#J_modal_add_purchase").attr("action", "/Packet/" + data.OnlyCode)
@@ -612,5 +635,26 @@
                 cb.call(this);
             }
         };
+        $('.row-gutter-size').on('click', '.edit-layer a', function () {
+            $(this).parent().parent().parent().remove();
+            $('.upload-btn').parent().show();
+            $('#uploadMultiFiles').get(0).value = '';
+        });
+        $('#uploadMultiFiles').on('change', function (e) {
+            if (!this.value) {return false;}
+            if ($(this)[0].files[0].size > 5242880) {
+                swal("@Html.Raw(Html.GetTansByLan("account-kyc-error-imagesize", "image great than 5mb"))");
+                this.value = '';
+                return false;
+            }
+            var $imgInsert = $('<div class="col-3"><div class="pic-edit"><div class="tag-img img-s100"><img src="" /></div><div class="edit-layer"><a>&times;</a></div></div></div>');
+            $imgInsert.insertBefore($(this).parent().parent());
+            $imgInsert.find("img").attr('src', window.URL.createObjectURL($(this)[0].files[0]));
+            $('.upload-btn').parent().hide();
+        });
+        $("#MessageNvarchar").on('change', function () {
+            console.log($("#MessageNvarchar").val());
+            console.log($("#MessageNvarchar").val().match(/\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/g));
+        });
     </script>
 }

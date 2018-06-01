@@ -1,0 +1,118 @@
+﻿@{
+    Layout = null;
+}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>SilkChain</title>
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="~/css/vendors.stripped.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/style.bundle.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/main.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {w[l] = w[l] || []; w[l].push({'gtm.start':new Date().getTime(), event: 'gtm.js'}); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);})(window, document, 'script', 'dataLayer', 'GTM-5Q7VH5Q');</script>
+</head>
+<style>
+.btn-danger{color:#fff;background-color:#e13c23;border-color:#e13c23;}
+.btn-danger:hover{color:#fff;background-color:#f22d4e;border-color:#f12143;}
+.btn-danger:focus, .btn-danger.focus{box-shadow:0 0 0 3px rgba(244, 81, 108, 0.5);}
+.btn-danger.disabled, .btn-danger:disabled{background-color:#e13c23;border-color:#e13c23;}
+.btn-danger:active, .btn-danger.active {background-color:#f22d4e;background-image:none;border-color:#f12143;}
+.btn-lg, .btn-group-lg > .btn {padding:0.65rem 1.75rem;}
+.m-grid.m-grid--ver-desktop.m-grid--desktop { display: flex; flex-direction: row; }
+.m-grid.m-grid--ver-desktop.m-grid--desktop > .m-grid__item.m-grid__item--fluid { flex: 1 0 auto; }
+.m-packet__wrapper {width: 430px; margin: 0 auto; }
+.m-stack.m-stack--flex-general .m-packet__wrapper { flex: 1 0 auto; }
+.m-packet__wrapper.invitebox {position:relative;padding-top:180%;background:url(/images/ba-active/red-packet-invite@(Html.GetLang()=="en"? "-en" : "").jpg) no-repeat center top;background-size:contain;}
+.invite-wrap {position:absolute;left:5%;top:0;width:90%;margin-top:80%;padding:0 1.5rem 1.5rem;}
+.invite-wrap .qrcode-box {margin:0 24%;}
+.invite-wrap .qrcode-bx1 {width:100%;height:100%;padding:12px;}
+.invite-wrap .qrcode-bx1:before,
+.invite-wrap .qrcode-bx1:after,
+.invite-wrap .qrcode-bx2:before,
+.invite-wrap .qrcode-bx2:after {position:absolute;content:"";display:block;width:15px;height:15px;}
+.invite-wrap .qrcode-bx1:before {top:0;left:0;border-left:1px solid #fff;border-top:1px solid #fff;}
+.invite-wrap .qrcode-bx1:after {top:0;right:0;border-right:1px solid #fff;border-top:1px solid #fff;}
+.invite-wrap .qrcode-bx2:before {bottom:0;left:0;border-left:1px solid #fff;border-bottom:1px solid #fff;}
+.invite-wrap .qrcode-bx2:after {bottom:0;right:0;border-right:1px solid #fff;border-bottom:1px solid #fff;}
+.invite-wrap .qrcode-bx2 {padding:4px;background-color:#fff;}
+.invite-wrap .qrcode-bx3 canvas {vertical-align:middle;}
+.invite-wrap .scan-tips {position:absolute;left:0;bottom:-10px;width:100%;white-space:nowrap;text-align:center;color:#fff;font-size:0.875rem;}
+.invite-wrap .inth-rules strong {color:#fdd772;font-weight:bold;}
+.invite-wrap .inth-rules {margin-top:40px;color:#fff4c7;}
+.invite-wrap .inth-rules dt {font-size:16px;margin-bottom:6px;}
+.invite-wrap .inth-rules dt:before {content:"";float:left;margin-top:2px;margin-right:6px;width:20px;height:20px;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAADImlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMTEgNjYuMTQ1NjYxLCAyMDEyLzAyLzA2LTE0OjU2OjI3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpCQjQ4QUVDNTYwMDkxMUU4OUM1QkJBM0VCQUEzQTlFRiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpCQjQ4QUVDNjYwMDkxMUU4OUM1QkJBM0VCQUEzQTlFRiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkJCNDhBRUMzNjAwOTExRTg5QzVCQkEzRUJBQTNBOUVGIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkJCNDhBRUM0NjAwOTExRTg5QzVCQkEzRUJBQTNBOUVGIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+KQJz5AAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAFNUExURTkAAFUFBWMB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) no-repeat;background-size:cover;}
+.invite-wrap .inth-rules dd {font-size:0.875rem;line-height:1.2;margin-bottom:4px;}
+.m-packet__wrapper .intouchtext {position:absolute;left:0;top:0;width:100%;margin-top:38%;padding:0 10%;font-size:1rem;color:#fff1bb;text-align:center;}
+.m-packet__wrapper .resolved {position:absolute;width:100%;top:0;margin-top:168%;padding:10px;font-size:1rem;color:#fff;text-align:center;}
+.m-packet__wrapper.invitebox .lang-switch {position:absolute;left:0;top:0;z-index:19;width:100%;padding:5px 10px;color:#fff;text-align:right;}
+.m-packet__wrapper.invitebox .lang-switch > span {cursor:pointer;}
+@@media (max-width:576px) {
+    .m-packet__wrapper {width:100%;}
+}
+</style>
+<body class="m--skin- m-header--static m-header--static-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+    <div class="m-grid m-grid--hor m-grid--root m-page">
+        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop" style="height:inherit;background-color:#152659;">
+            <div class="m-packet__wrapper invitebox">
+                <div class="lang-switch">
+                    @if (Html.GetLang() == "en")
+                    {
+                        <span class="ft12" id="chinesesLanguage"><img src="/images/chinese-language.png" /> <span style="vertical-align:middle;">中文</span></span>
+                    }
+                    else
+                    {
+                        <span class="ft12" id="englishLanguage"><img src="/images/english-language.png" /> <span style="vertical-align:middle;">English</span></span>
+                    }
+                </div>
+                <div class="intouchtext">Silk-全球自由贸易行业加密数字货币<br />链接世界工厂与全球中小企业<br />买产品，买服务，足不出户做全球生意</div>
+                <div class="invite-wrap">
+                    <div class="qrcode-box">
+                        <div class="embed-responsive embed-responsive-1by1" style="overflow:visible;">
+                            <div class="embed-responsive-item qrcode-bx1">
+                                <div class="qrcode-bx2">
+                                    <div class="qrcode-bx3" id="J_qrcode-hook"></div>
+                                </div>
+                                <div class="scan-tips">扫我领红包</div>
+                            </div>
+                        </div>
+                    </div>
+                    <dl class="inth-rules">
+                        <dt><strong>活动说明</strong></dt>
+                        <dd><strong>活动时间：</strong> 8月23日-8月30日</dd>
+                        <dd><strong>活动方式：</strong> 扫描二维码，登录Silk账户即可领取红包券。</dd>
+                        <dd><strong>活动规则：</strong> 每个注册帐号只能领取一次免费新用户邀请红包，转发分享此红包邀请新用户注册，您将获得Silk积分奖励，转发注册多少就得多少。</dd>
+                    </dl>
+                </div>
+                <div class="resolved">本活动最终解释权归Silk运营团队所有</div>
+            </div>
+        </div>
+    </div>
+
+<script src="/js/vendors.stripped.min.js" type="text/javascript"></script>
+<script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+$(function(){
+    var wd = $('#J_qrcode-hook').width();
+    $("#J_qrcode-hook").empty().qrcode({ width: wd, height: wd, text: 'SilkChain' });
+});
+$("#chinesesLanguage").click(function () {
+    setLang('cn');
+    window.location.href = window.location.href;
+});
+$("#englishLanguage").click(function () {
+    setLang('en');        
+    window.location.href = window.location.href;
+});
+function setLang(lan)
+{
+    var exp = new Date();
+    exp.setTime(new Date().getTime() + 365 * 24 * 60 * 60 * 1000);
+    document.cookie = "lang=" + escape(lan) + ";expires=" + exp.toGMTString() + ";path=/;domain=silkchain.io";
+}
+</script>
+</body>
+</html>

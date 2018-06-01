@@ -6,6 +6,8 @@
     string visit_code = ViewBag.Code as string;
     SkcCandyActivity candy = ViewBag.Candy as SkcCandyActivity;
     var countrys = ViewBag.Lang as List<CountryModel>;
+    string OpenKey = ViewBag.OpenKey;
+    bool IsEmail = OpenKey.Contains("@");
 }
 
 <!DOCTYPE html>
@@ -66,13 +68,11 @@
         <div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor m-login m-login--singin m-login--2 m-login-2--skin-2" id="m_login">
             <header class="m-grid__item m-header">
                 <div class="m-topbar m-stack m-stack--ver m-stack--general" style="margin-top:0;">
-                    <div class="m-stack__item m-topbar__lang-wrapper">
-                        <a href="#" class="m-nav__link">
-                        @if (Html.GetLang() == "en")
-                        {<span id="chinesesLanguage"><img src="/images/chinese-language.png" /> <span style="vertical-align:middle;">中文</span></span>}
-                        else
-                        {<span id="englishLanguage"><img src="/images/english-language.png" /> <span style="vertical-align:middle;">English</span></span>}
-                        </a>
+                    <div class="m-stack__item m-topbar__lang-wrapper" style="cursor:pointer">                        
+                            @if (Html.GetLang() == "en")
+        {<span id="chinesesLanguage"><img src="/images/chinese-language.png" /> <span style="vertical-align:middle;">中文</span></span>}
+else
+{<span id="englishLanguage"><img src="/images/english-language.png" /> <span style="vertical-align:middle;">English</span></span>}                                            
                     </div>
                 </div>
             </header>
@@ -113,12 +113,12 @@
                 <div class="m-register-content">
                     <div style = "margin-top:0.5rem;margin-bottom:-1.5rem;height:70px;border-bottom:1px solid #ebedf2;" >
                         <ul class="nav nav-tabs m-tabs m-tabs-line   m-tabs-line--left" role="tablist">
-                            <li class="nav-item m-tabs__item" role="presentation"><a class="nav-link m-tabs__link active" href="#phone" aria-controls="home" role="tab" data-toggle="tab">@Html.GetTansByLan("account-register-3", "Sign up with phone")</a></li>
-                            <li class="nav-item m-tabs__item" role="presentation"><a class="nav-link m-tabs__link" href="#mail" aria-controls="profile" role="tab" data-toggle="tab">@Html.GetTansByLan("account-register-4", "Sign up with email")</a></li>
+                            <li class="nav-item m-tabs__item" role="presentation"><a class="nav-link m-tabs__link @Html.Raw(IsEmail?"":"active")" href="#phone" aria-controls="home" role="tab" data-toggle="tab">@Html.GetTansByLan("account-register-3", "Sign up with phone")</a></li>
+                            <li class="nav-item m-tabs__item" role="presentation"><a class="nav-link m-tabs__link @Html.Raw(IsEmail?"active":"")" href="#mail" aria-controls="profile" role="tab" data-toggle="tab">@Html.GetTansByLan("account-register-4", "Sign up with email")</a></li>
                         </ul>
                     </div>
                     <div class="tab-content">
-                        <div role = "tabpanel" class="tab-pane active" id="phone">
+                        <div role = "tabpanel" class="tab-pane @Html.Raw(IsEmail?"":"active")" id="phone">
                             <form class="m-login__form m-form register-form" id="form_phone">
                                 <input type = "hidden" name="_token" value="Tz5iJktAYKDt8l4LDmmgoZ7dn3E522Hrwtxu9Zbf">
                                 <input type = "hidden" name="Code" value="@ViewBag.Code" />
@@ -144,7 +144,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-7" style="padding-left:5px;">
-                                                    <input class="form-control m-input" name="User.PhoneNvarchar" id="phone" data-opt="CheckPhone" type="text" placeholder="@Html.GetTansByLan("account-register-6","Phone Number")" style="display:inline-block;padding-right: 5px;">
+                                                    <input class="form-control m-input" name="User.PhoneNvarchar" id="phone" data-opt="CheckPhone" type="text" value="@(IsEmail?"":OpenKey)" placeholder="@Html.GetTansByLan("account-register-6","Phone Number")" style="display:inline-block;padding-right: 5px;">
                                                 </div>
                                             </div>
                                         </div>
@@ -182,7 +182,7 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div role = "tabpanel" class="tab-pane" id="mail">
+                        <div role = "tabpanel" class="tab-pane @Html.Raw(IsEmail?"active":"")" id="mail">
                                     <form class="m-login__form m-form register-form" id="form_mail">
                                         <input type = "hidden" name="_token" value="Tz5iJktAYKDt8l4LDmmgoZ7dn3E522Hrwtxu9Zbf">
                                         <input type = "hidden" name="Code" value="@ViewBag.Code" />
@@ -196,7 +196,7 @@
 
         </div>
                                         <div class="form-group m-form__group">
-                                            <input class="form-control m-input" type="text" placeholder="@Html.GetTansByLan("account-register-15","Email")" data-opt="CheckEmail" name="User.EmailNvarchar" autocomplete="off">
+                                            <input class="form-control m-input" type="text" placeholder="@Html.GetTansByLan("account-register-15","Email")" data-opt="CheckEmail" name="User.EmailNvarchar" autocomplete="off" value="@(IsEmail?OpenKey:"")">
                                         </div>
                                         <div class="form-group m-form__group">
                                             <div class="row">
@@ -394,6 +394,9 @@ var user = {
     var register = {
         params: { url: '/Account/CheckUserParams', adopt_email: false, email: '', adopt_phone: false, phone: '' },
         inItControl: function () {
+            if ('@Html.GetLang()' == "cn") { 
+                $("#sub_phone").val("+86");
+            }
             $("#m_login_phone_signup").click(function () { $("#form_phone").submit(); });
             $("#m_login_email_signup").click(function () { $("#form_mail").submit(); });
             $("#but_phone_code").click(function () {
@@ -407,8 +410,10 @@ var user = {
                         text: '@Html.Raw(Html.GetTansByLan("account_register_chk_phone", "Please confirm your phone number for verification code")):' + area_code + '(' + country_info[0] + ')' + '-' + phone_no_tag.val(),
                         buttons: ["@Html.Raw(Html.GetTansByLan("account-register-12", "Cancel"))", "@Html.Raw(Html.GetTansByLan("account-register-sure1", "OK"))"]
                     }).then(function(value){
-                        if (value) {
+                        if (value) {                       
                             phone_tag.attr("disabled", true);
+                            var obj = $("#but_phone_code");
+                            $(obj).html("Sending");
                             var data = { Option: 'SendPhoneCode', AreaCode: area_code, UserParmas: register.params.phone };
                             register.request_data(register.params.url, data, { value: 'SendPhoneCode' });
                         }
@@ -530,6 +535,8 @@ var user = {
                                 register.show_wait(obj);
                             } else {
                                 obj.attr("disabled", false);
+                                var obj = $("#but_phone_code");
+                           $(obj).html("@Html.GetTansByLan("account-register-8", "Send")");
                                 swal(data.message);
                             }
                             break;
@@ -560,6 +567,10 @@ var user = {
                             break;
                     }
                 }, error: function () {
+                    var obj = $("#but_phone_code");
+                    obj.attr("disabled", false);
+                    var obj = $("#but_phone_code");
+                    $(obj).html("@Html.GetTansByLan("account-register-8", "Send")");
                     alert('System error');
                 }
             });

@@ -225,13 +225,13 @@
                                 <div class="m-topbar__verify">@Html.GetTansByLan("common-index-07", "您尚未实名认证，为保障你的资金安全，在完成实名认证之前，您将不能进行提币等操作。")<a class="btn btn-primary m-btn--pill btn-sm" href="/Account/KYC" style="position:absolute;line-height:1;margin-top:-12px;">@Html.GetTansByLan("common-index-08", "立即去认证")</a></div>
                     }
                                 </div>
-                                <div class="m-stack__item m-topbar__lang-wrapper">
-                                    <a href="#" class="m-nav__link">
+                                <div class="m-stack__item m-topbar__lang-wrapper" style="cursor:pointer">
+                                    
                                         @if (Html.GetLang() == "en")
-                                {<span id="chinesesLanguage"><img src="/images/chinese-language.png" /> <span style="vertical-align:middle;">中文</span></span>}
-                        else
-                        {<span id="englishLanguage"><img src="/images/english-language.png" /> <span style="vertical-align:middle;">English</span></span>}
-                                    </a>
+        {<span id="chinesesLanguage"><img src="/images/chinese-language.png" /> <span style="vertical-align:middle;">中文</span></span>}
+else
+{<span id="englishLanguage"><img src="/images/english-language.png" /> <span style="vertical-align:middle;">English</span></span>}
+                                  
                                 </div>
 
                             </div>

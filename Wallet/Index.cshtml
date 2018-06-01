@@ -11,6 +11,7 @@
     string target = "#m_withdraw_silk";
     ViewBag.Title = "SilkChain - Withdraw";
     var WithDraw = ViewBag.WithdrawData as List<SkcWithdraw>;
+    string isValidateCode = SKC.DAO.SystemParametersDAO.GetParamValue(SKC.Common.GlobalConfig.SysParams_WithdrawValidateCode, "1");
 }
 
 <style>
@@ -87,6 +88,10 @@
     .alert-notify-card .close { float: right; position: absolute; right: 10px; top: 0px; }
     .alert-notify-card .alert-cont {word-break: break-all; word-wrap: break-word; }
     .alert-notify-card:before { position: absolute; right:30px; top: -9px; content: ""; margin-left:-8px; display: block; width: 0; height: 0; overflow: hidden; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 8px solid #c6c8ca; }
+
+    /*@@media (max-width: 768px) {
+        .btn.btn-outline-focus { height: 42px !important; }
+    }*/
 </style>
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
 	<div class="m-content">
@@ -111,7 +116,7 @@
                                             <span style="margin-left: 30px" class="font-size-18"> @Html.GetTansByLan("wallet-index-s02", "SILK Wallet"):</span>
                                         </div>
                                         <div class="des-deposit text-right">
-                                            <span class="font-size-18"><strong>@SKCModel.WalletInfo.AmountBalanceDecimal</strong> SILK</span>
+                                            <span class="font-size-18"><strong>@SKCModel.WalletInfo.AmountBalanceDecimal.ToString("F4")</strong> SILK</span>
                                         </div>
                                     </div>
                                 </div>
@@ -154,7 +159,33 @@
                                 </div>
                                 <div class="m-loader m-loader--brand" style="width: 30px; display: none;"></div>
                             </div>
+
+                            <div class="form-group width-lg-max">
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td width="80%">
+                                            <input class="form-control form-control-lg m-input" type="text" id="ValidCode" name="ValidCode" placeholder="@Html.GetTansByLan("wallet-index-valid-01", "Click to get verification code")">
+                                        </td>
+                                        <td style="padding-left:5px;">
+                                            <button class="btn btn-outline-focus" type="button" id="but_phone_code" style="padding-left:0;padding-right:0;text-align:center;width:100%;height:3.571428rem;">@Html.GetTansByLan("account-register-8", "Send")</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br />
+
                             <div style="border-top: 1px solid #e9ecef;padding:25px 0px 5px">
+
+                                @*<div class="form-group m-form__group row mb-0">
+                                    <div class="col-9" style="padding-right:5px;">
+                                        <input class="form-control form-control-lg m-input" type="text" id="ValidCode" name="ValidCode" placeholder="@Html.GetTansByLan("wallet-index-valid-01", "Click to get verification code")">
+                                    </div>
+                                    <div class="col-3" style="padding-left:5px;">
+                                        <button class="btn btn-outline-focus" type="button" id="but_phone_code" style="padding-left:0;padding-right:0;text-align:center;width:100%;height:3.571428rem;">@Html.GetTansByLan("account-register-8", "Send")</button>
+                                    </div>
+                                </div>
+                                <br />*@
+
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <button type="submit" class="btn btn-primary m-btn--pill" id="btn_silk_withdraw">
@@ -889,7 +920,7 @@
 		<div class="modal-content ">
             <div class="modal-body">
                 @*@Html.GetTansByLan("wallet-index-20", "You have to verify your ")<a href="/account/index?mode=1">KYC</a> @Html.GetTansByLan("wallet-index-21", "to withdraw SILK")*@
-                @Html.GetTansByLan("wallet-index-20", "You have not yet completed the ")<a href="/account/index?mode=1">KYC</a> @Html.GetTansByLan("wallet-index-32", " verification, please finish it to enjoy more SILK privileged operations.")
+                @Html.GetTansByLan("wallet-index-20", "You have not yet completed the ")<a href="/Account/KYC">KYC</a> @Html.GetTansByLan("wallet-index-32", " verification, please finish it to enjoy more SILK privileged operations.")
                 <a class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
                     <i class="la la-close"></i>
                 </a>
@@ -1005,6 +1036,24 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="modal_errors" tabindex="-1" role="dialog" style="display: none;z-index: 1042;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show m-0" role="alert">
+                <div class="m-alert__icon p-0" style="padding: 15px !important;">
+                    <i class="flaticon-exclamation-2"></i>
+                </div>
+                <div class="m-alert__text dark-color font-size-16" style="padding-right: 0;padding-left: 10px;">
+                </div>
+                <div class="m-alert__close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section script{
 	<script src="~/js/sweetalert.min.js"></script>
 	<script src="https://cdn.bootcss.com/bignumber.js/5.0.0/bignumber.min.js"></script>
@@ -1239,6 +1288,13 @@ $("#btn_silk_withdraw").on('click', function(e){
         $('#silk_withdraw_error').html('@Html.Raw(Html.GetTansByLan("wallet-index-error-tip-5", "It must be more than 2000!"))');
     }
 
+    val = $.trim(form.find('input[name="ValidCode"]').val());
+    if ('@isValidateCode' == "1" && val == "") {
+        $('#modal_errors .m-alert__text').html('@Html.Raw(Html.GetTansByLan("wallet-index-error-tip-6", "Input verification code!"))');
+        $('#modal_errors').modal();
+        return;
+    }
+
     if (!hasError) {
         $("#form_withdraw_silk").trigger('submit');
     }
@@ -1258,6 +1314,8 @@ $("#form_withdraw_silk").submit(function (event) {
         }).then(function (value) {
             if (data.result) {
                 location.reload();
+            } else {
+                $("#form_withdraw_silk").find("button[type='submit']").prop("disabled", false);
             }
         });
     }).fail(function (xhr, status, error) {
@@ -1278,6 +1336,60 @@ $("#form_withdraw_silk").submit(function (event) {
             $('#silk_withdraw_error').text(xhr.responseText);
          }
     });
-});
+        });
+
+        var valid = {
+            inItControl: function () {
+                $("#but_phone_code").click(function () {
+                    valid.request_data('/Account/CheckAccountInfo', { Option: 'WithdrawValidCode' }, { value:'WithdrawValidCode'});
+                });
+            },
+            show_wait: function (obj) {
+                var num = 120;
+                var unit = '@Html.Raw(Html.GetTansByLan("account-findpwd-unit-01", " Seconds"))';
+                $(obj).attr("disabled", true);
+                var wait = setInterval(function () {
+                    num--;
+                    $(obj).html(num + unit);
+                    if (num == 0) { $(obj).attr("disabled", false).html("Send"); clearInterval(wait); }
+                }, 1000);
+            },
+            request_data: function (url, params, opt) {
+                $.ajax({
+                    type: 'post',
+                    url: url,
+                    data: params,
+                    beforeSend: function () {
+                        $("#but_phone_code").attr("disabled", true);
+                        $("#btn_silk_withdraw").attr("disabled", true);
+                    },
+                    complete: function () {
+                        $("#but_phone_code").attr("disabled", false);
+                        $("#btn_silk_withdraw").attr("disabled", false);
+                    },
+                    success: function (data) {
+                        switch (opt.value) {
+                            case "WithdrawValidCode":
+                                var obj = $("#but_phone_code");
+                                if (data.result) {
+                                    valid.show_wait(obj);
+                                } else {
+                                    obj.attr("disabled", false);
+                                    swal(data.message);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }, error: function () {
+                        $('#modal_errors .m-alert__text').text('Error! Please reload & try again.');
+                    }
+                });
+            }
+        };
+
+        $(function () {
+            valid.inItControl();
+        });
     </script>
 }

@@ -69,7 +69,7 @@
     .candy-amount .candy-amount-price strong {font-weight:600;}
     .candy-amount .candy-amount-price small {font-size:18px;}
     .m--regular-font-size-lg1 {color:#777;font-size:14px !important;}
-    .m--regular-font-size-lg1 > p {font-size:14px !important;margin-bottom:10px;text-align:justify;}
+    .m--regular-font-size-lg1 > p {font-size:14px !important;margin-bottom:10px;text-align:left;}
     .m--regular-font-size-lg1 > p .text-light {color:#ccc !important;}
     .m-portlet .m-panel__box {padding:30px;}
     @@media (max-width: 767.98px) {
@@ -88,12 +88,15 @@
                 <div class="m-portlet" style="flex:1;">
                     <div class="m-portlet__body" style="padding:0;">
                         <div class="candy-amount">
-                            <div class="candy-amount-label">@Html.GetTansByLan("candy-index-01", "Total Candy Amount")</div>
+                            <div class="candy-amount-label">@Html.Raw(Html.GetTansByLan("candy-index-01", "Total Candy Amount"))</div>
                             <div class="candy-amount-price"><strong>@Model.TotalGetAmount.ToString("N2")</strong><small>SILK</small></div>
                         </div>
                         <div class="m--regular-font-size-lg1 m-panel__box">
-                            <h5>@Html.GetTansByLan("candy-index-title-01", "Candy Rules")</h5>
-                            <p><span class="text-light">●</span>@Html.GetTansByLan("candy-index-02", " Time limit Registration Bonus:")<br />@Html.GetTansByLan("candy-index-03", " Register on website via link and finish KYC verification --- 100 Silk (≈$6)")<br />@Html.GetTansByLan("candy-index-04", "Join Telegram Group:") <a href="@contactUrl" target="_blank">@@SilkChain</a></p>
+                            <h5>@Html.Raw(Html.GetTansByLan("candy-index-title-01", "Candy Rules"))</h5>
+                            <p><span class="text-light">●</span>@Html.Raw(Html.GetTansByLan("candy-index-02", " Time limit Registration Bonus:"))
+                            <br />@Html.Raw(Html.GetTansByLan("candy-index-03", " Register on website via link and finish KYC verification --- 100 Silk (≈$6)"))
+                            <br />@Html.Raw(Html.GetTansByLan("candy-index-04", "Join Telegram Group:"))
+                            <a href="@contactUrl" target="_blank">@@SilkChain</a></p>
                             @*<span class="text-primary">@Html.GetTansByLan("candy-index-08", "Notice: For legal requirements, please note that KYC will be required before tokens are awarded.")</span>*@
                         </div>
                     </div>
@@ -103,7 +106,7 @@
                 <div class="m-portlet m-portlet--mobile m-portlet--skin-dark">
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
-                            <div class="m-portlet__head-title"><h3 class="m-portlet__head-text"><span class="font-weight-bold">@Html.GetTansByLan("candy-index-09", "Candy Record")</span></h3></div>
+                            <div class="m-portlet__head-title"><h3 class="m-portlet__head-text"><span class="font-weight-bold">@Html.Raw(Html.GetTansByLan("candy-index-09", "Candy Record"))</span></h3></div>
                         </div>
                     </div>
                     <div class="m-portlet__body">
@@ -126,11 +129,11 @@
                             }
                             <div class="row mx-0 mt-3 sign-satis">
                                 <div class="col-6 px-0 sign-block">
-                                    <div class="sign-boldest">@Html.GetTansByLan("candy-index-13", "Total Sign Amount")</div>
+                                    <div class="sign-boldest">@Html.Raw(Html.GetTansByLan("candy-index-13", "Total Sign Amount"))</div>
                                     <div class="sign-price dark-color"><strong>@Model.TotalCheckGetAmount.ToString("N2")</strong><small>SILK</small></div>
                                 </div>
                                 <div class="col-6 px-0 sign-block">
-                                    <div class="sign-boldest">@Html.GetTansByLan("candy-index-14", "Numbers Of Daily Check-in")</div>
+                                    <div class="sign-boldest">@Html.Raw(Html.GetTansByLan("candy-index-14", "Numbers Of Daily Check-in"))</div>
                                     <div class="sign-price dark-color"><strong>@Model.TotalCheckCount</strong></div>
                                 </div>
                             </div>
@@ -148,7 +151,7 @@
                 <div class="m-portlet m-portlet--mobile m-portlet--skin-dark mb-0">
                     <div class="m-portlet__body m-portlet__body--no-padding">
                         <div class="ptlet-pedal">
-                            <div class="ptlet-pedal-hd">@Html.GetTansByLan("candy-index-61", "Candy Records")</div>
+                            <div class="ptlet-pedal-hd">@Html.Raw(Html.GetTansByLan("candy-index-61", "Candy Records"))</div>
                             <div style="padding:0px 0px 15px 0px">
                                 <div class="table-responsive">
                                     <table class="table">
@@ -177,7 +180,7 @@
                                             else
                                             {
                                                 <tr>
-                                                    <td align="center" colspan="4">@Html.GetTansByLan("candy-index-20", "No data available ")</td>
+                                                    <td align="center" colspan="4">@Html.Raw(Html.GetTansByLan("candy-index-20", "No data available "))</td>
                                                 </tr>
                                             }
                                         </tbody>

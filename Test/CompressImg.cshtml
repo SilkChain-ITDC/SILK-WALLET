@@ -1,0 +1,124 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CompressImg</title>
+    <meta charset="utf-8">
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    @*<script src="~/js/megapix-image.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var fileInput = document.getElementById('input_file');
+            fileInput.onchange = function () {
+                var mpImg = new MegaPixImage(fileInput.files[0]);
+                var resImg = document.getElementById('img_demo');
+                mpImg.render(resImg, { maxWidth: 2000, maxHeight: 1200, quality: 0.7 });
+            };
+            $("#but_sub").click(function () {
+                var img_data_uri = $("#img_demo").attr("src");
+                if (img_data_uri != "") {
+                    var data = new FormData();
+                    data.append("base64str", img_data_uri);
+                    $.ajax({
+                        type: "POST",
+                        url: '/UpLoad/CompressImgBase64Upload',
+                        data: data,
+                        enctype: 'multipart/form-data',
+                        processData: false,
+                        contentType: false,
+                        cache: false,
+                        success: function (data) {
+                            $("#img_upload").attr("src", data.Path);
+                            $("#size").val(data.Size);
+                        },
+                        error: function () { }
+                    });
+                }
+
+            });
+        }
+    </script>*@
+</head>
+<body>
+    <input type="file" name="MyFile" id="input_file">
+    <img id="img_demo" style="width:100px;height:100px;" />
+    <input type="button" id="but_sub" value="上传" />
+    上传成功：<input id="size" name="size" />KB<img src="" style="width:100px;height:100px;" id="img_upload" />
+</body>
+</html>
+<!--图片压缩 新版本-->
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/imagecompress.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#input_file").change(function () {
+            var img_tag = $(this).get(0);
+            if (img_tag.files[0].size > 5242880) {
+                alert('文件小于5m');
+                return;
+            }
+            if (!(/\.(gif|jpg|jpeg|tiff|png)$/i).test(img_tag.value)) {
+                alert('文件格式：gif|jpg|jpeg|tiff|png');
+                return;
+            }
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var base64Img = e.target.result;
+                //压缩前预览
+                //$("#preview").attr("src", base64Img);
+
+                //--执行resize。
+                var _ir = ImageResizer({
+                    dataSource: base64Img
+                    , dataSourceType: "base64"
+                    , maxWidth: 1200 //允许的最大宽度
+                    , maxHeight: 600 //允许的最大高度。
+                    , success: function (resizeImgBase64, canvas) {
+                        //压缩后预览
+                        $("#img_demo").attr("src", resizeImgBase64);
+
+                    }
+                });
+
+            };
+            reader.readAsDataURL(img_tag.files[0]);
+        });
+
+
+
+        $("#but_sub").click(function () {
+            var img_data_uri = $("#img_demo").attr("src");
+            if (img_data_uri != "") {
+                var blob = $.dataURItoBlob(img_data_uri);
+                var data = new FormData();
+                data.append("imgFile", blob);
+                $.ajax({
+                    type: "POST",
+                    url: '/Test/FileUpload',
+                    data: data,
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    success: function (data) {
+                        //alert(JSON.stringify(data));
+                        $("#img_upload").attr("src", data.Path);
+                    },
+                    error: function () { }
+                });
+            }
+
+        });
+
+    });
+
+
+</script>
+
