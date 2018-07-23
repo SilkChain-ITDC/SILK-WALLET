@@ -15,95 +15,169 @@
 }
 
 <style>
-	.sub-title {
-		font-size: 16px !important;
-	}
-
-	.sub-title-18 {
-		font-size: 18px !important;
-	}
-
-    .table td {white-space:nowrap;}
-    .m--font-danger {color:#ff7800 !important;}
-    .form-control[readonly], .form-control {border-color:#ccc;font-size:16px;padding:0.72rem 1.25rem;}
-    .form-control[disabled] {border-color:#ccc;}
-    .input-group .input-group-addon {border-color:#ccc;background-color:#fff;}
-    .form-control ~ .input-group-addon:not(:first-child) {border-left:0;}
-	.display-table {
-		display: table;
-		width: 100%;
-	}
-
-		.display-table > div {
-			display: table-cell;
-			vertical-align: middle;
-		}
-
-	.desc-info {
-		color: #999999;
-		font-size: 12px;
-	}
-
-	.des-deposit span {
-		display: block;
-	}
-    .des-deposit .font-size-18 strong {font-size:18px;color:#2485c9;margin-left:4px;vertical-align:initial;}
-
-    .alert-wrap {padding:0 8px;background-color:#f7f8fa;}
-    @@media (min-width:992px){
-        .display-table.width-auto {width:auto !important;}
-        .width-lg-max {max-width:480px;}
+    .sub-title {
+        font-size: 16px !important;
     }
 
-	.m-tabs-line a.m-tabs__link {
-		font-size: 16px;
-	}
+    .sub-title-18 {
+        font-size: 18px !important;
+    }
 
-	.m-tabs-line a.m-tabs__link {
-		text-transform: uppercase;
-	}
+    .table td {
+        white-space: nowrap;
+    }
 
-	.p-content {
-		font-weight: 400;
-	}
+    .m--font-danger {
+        color: #ff7800 !important;
+    }
 
-	.txId {
-		display: inline-block;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipses;
-		width: 200px;
-		margin-right: 10px;
-	}
+    .form-control[readonly], .form-control {
+        border-color: #ccc;
+        font-size: 16px;
+        padding: 0.72rem 1.25rem;
+    }
 
-	.table-responsive {
-		position: relative;
-        min-height:250px;
-	}
+        .form-control[disabled] {
+            border-color: #ccc;
+        }
+
+    .input-group .input-group-addon {
+        border-color: #ccc;
+        background-color: #fff;
+    }
+
+    .form-control ~ .input-group-addon:not(:first-child) {
+        border-left: 0;
+    }
+
+    .display-table {
+        display: table;
+        width: 100%;
+    }
+
+        .display-table > div {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+    .desc-info {
+        color: #999999;
+        font-size: 12px;
+    }
+
+    .des-deposit span {
+        display: block;
+    }
+
+    .des-deposit .font-size-18 strong {
+        font-size: 18px;
+        color: #2485c9;
+        margin-left: 4px;
+        vertical-align: initial;
+    }
+
+    .alert-wrap {
+        padding: 0 8px;
+        background-color: #f7f8fa;
+    }
+
+    @@media (min-width:992px) {
+        .display-table.width-auto {
+            width: auto !important;
+        }
+
+        .width-lg-max {
+            max-width: 480px;
+        }
+    }
+
+    .m-tabs-line a.m-tabs__link {
+        font-size: 16px;
+    }
+
+    .m-tabs-line a.m-tabs__link {
+        text-transform: uppercase;
+    }
+
+    .p-content {
+        font-weight: 400;
+    }
+
+    .txId {
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipses;
+        width: 200px;
+        margin-right: 10px;
+    }
+
+    .table-responsive {
+        position: relative;
+        min-height: 250px;
+    }
+
     @@media (max-width: 767.98px) {
-        .alert-wrap {padding:0px;}
-        .des-deposit .font-size-18 strong {font-size:16px;margin-left:0px;font-weight:500;}
-	}
-    .alert-notify-card {position:absolute;right:15px;margin-top:6px;margin-bottom:0;}
-    .alert-notify-card .close { float: right; position: absolute; right: 10px; top: 0px; }
-    .alert-notify-card .alert-cont {word-break: break-all; word-wrap: break-word; }
-    .alert-notify-card:before { position: absolute; right:30px; top: -9px; content: ""; margin-left:-8px; display: block; width: 0; height: 0; overflow: hidden; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 8px solid #c6c8ca; }
+        .alert-wrap {
+            padding: 0px;
+        }
+
+        .des-deposit .font-size-18 strong {
+            font-size: 16px;
+            margin-left: 0px;
+            font-weight: 500;
+        }
+    }
+
+    .alert-notify-card {
+        position: absolute;
+        right: 15px;
+        margin-top: 6px;
+        margin-bottom: 0;
+    }
+
+        .alert-notify-card .close {
+            float: right;
+            position: absolute;
+            right: 10px;
+            top: 0px;
+        }
+
+        .alert-notify-card .alert-cont {
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+
+        .alert-notify-card:before {
+            position: absolute;
+            right: 30px;
+            top: -9px;
+            content: "";
+            margin-left: -8px;
+            display: block;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid #c6c8ca;
+        }
 
     /*@@media (max-width: 768px) {
         .btn.btn-outline-focus { height: 42px !important; }
     }*/
 </style>
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
-	<div class="m-content">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="m-portlet m-portlet--mobile m-portlet--skin-dark">
+    <div class="m-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="m-portlet m-portlet--mobile m-portlet--skin-dark">
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title"><h3 class="m-portlet__head-text"><span class="font-weight-bold">@Html.GetTansByLan("recharge-summary-a2", "Withdraw")</span></h3></div>
                         </div>
                     </div>
-					<div class="m-portlet__body">
+                    <div class="m-portlet__body">
 
                         <form method="POST" action="/Wallet/Withdraw" id="form_withdraw_silk" autocomplete="off">
                             <input type="hidden" id="UserID" name="UserID" value="@SKCModel.WalletInfo.UserIdNvarchar" />
@@ -116,7 +190,7 @@
                                             <span style="margin-left: 30px" class="font-size-18"> @Html.GetTansByLan("wallet-index-s02", "SILK Wallet"):</span>
                                         </div>
                                         <div class="des-deposit text-right">
-                                            <span class="font-size-18"><strong>@SKCModel.WalletInfo.AmountBalanceDecimal.ToString("F4")</strong> SILK</span>
+                                            <span class="font-size-18"><strong>@Html.AmountFormat(SKCModel.WalletInfo.AmountBalanceDecimal)</strong> SILK</span>
                                         </div>
                                     </div>
                                 </div>
@@ -155,7 +229,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group has-danger">
-                                    <div id="silk_withdraw_error" class="form-control-feedback"></div>
+                                    <div id="silk_withdraw_error" class="form-control-feedback">@Html.GetTansByLan("wallet-index-tip_01", "Mininum withdraw amount:2000SILK")</div>
                                 </div>
                                 <div class="m-loader m-loader--brand" style="width: 30px; display: none;"></div>
                             </div>
@@ -177,14 +251,14 @@
                             <div style="border-top: 1px solid #e9ecef;padding:25px 0px 5px">
 
                                 @*<div class="form-group m-form__group row mb-0">
-                                    <div class="col-9" style="padding-right:5px;">
-                                        <input class="form-control form-control-lg m-input" type="text" id="ValidCode" name="ValidCode" placeholder="@Html.GetTansByLan("wallet-index-valid-01", "Click to get verification code")">
+                                        <div class="col-9" style="padding-right:5px;">
+                                            <input class="form-control form-control-lg m-input" type="text" id="ValidCode" name="ValidCode" placeholder="@Html.GetTansByLan("wallet-index-valid-01", "Click to get verification code")">
+                                        </div>
+                                        <div class="col-3" style="padding-left:5px;">
+                                            <button class="btn btn-outline-focus" type="button" id="but_phone_code" style="padding-left:0;padding-right:0;text-align:center;width:100%;height:3.571428rem;">@Html.GetTansByLan("account-register-8", "Send")</button>
+                                        </div>
                                     </div>
-                                    <div class="col-3" style="padding-left:5px;">
-                                        <button class="btn btn-outline-focus" type="button" id="but_phone_code" style="padding-left:0;padding-right:0;text-align:center;width:100%;height:3.571428rem;">@Html.GetTansByLan("account-register-8", "Send")</button>
-                                    </div>
-                                </div>
-                                <br />*@
+                                    <br />*@
 
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -197,343 +271,343 @@
                         </form>
 
                         @*
-						<div class="tab-content">
-							<div class="tab-pane active" id="m_tab_ezt_tab" role="tabpanel">
-								<div class="pd-30 m-portlet m-portlet--bordered-semi m-portlet--full-height ">
-									<div class="m-portlet__head">
-										<div class="m-portlet__head-caption">
-											<div class="row">
-												<div class="col-6 col-lg-6">
-													<div class="m-portlet__head-title pull-left">
-														<div style="display: table-cell; vertical-align: middle;">
-															<img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OEJCRUM1RkQ0MUVDMTFFODg4OUZDN0YxQzhCN0Q0MTkiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OEJCRUM1RkU0MUVDMTFFODg4OUZDN0YxQzhCN0Q0MTkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4QkJFQzVGQjQxRUMxMUU4ODg5RkM3RjFDOEI3RDQxOSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4QkJFQzVGQzQxRUMxMUU4ODg5RkM3RjFDOEI3RDQxOSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PoLQxNkAAAVUSURBVHjarFhpbFVVEH59vloFKiCtCmrEJQEN0cQggkhB4waiIra4EKElStRoZKlLKailYjFQsGA0YgSpC4qkSAxuuEBRpMRIEGP4o6IildqiIPvqN+Y7ZjKeu7zXN8nXnnvOeefOnZkzW05iRXMiA8oBrgJuAa4A+gAnmT17gc3ABmAF8FlmL0qPwQuAR4Dxam4H0AT8BPzNuU7c2w84Te19CZgF/JBtBrsDdUAJn1cCLwNrgL8iftsFGMyPGsa5t4EJwO/ZYHAc8ArHtcDsOAeHfGg5MEmdvag9DL4KjKWk5P/PZv0soC9VKS8/m/O/As1U/dfAb+Z3PYHFQBEZHJcJg2t4QAUw06zdSoavA06OkNo+4GPgNaDBrE0BZgCreeliM7gWuBK4TR2awxs7k2s+ugFIAu8HrH/JS/aVmrsdeAtopK1GMvg6MJo/XGrsZ3uIpEqpNmu3Qbao7fgOYAmlPEZvTHpeMpqiX2rWcmMyJ7QwzK48Z4kEpwJ303S8DJ5CgxU11HgOfSDgZZMMc44WUZ0+ut8zN4Oql4uZ71Pxu4wMXZVvE1UUUqqPeg5dDwxQz8uBY7RdR0285ZaeBd4EWpS6TwXaeM5IzeCZwDbgeeAhbr6Ul6VDiKqG02k7SdZyPBF4juObGeqCSELiIGAjn1+ghHuIq3IM1lP/Ek8PcuNmxtgw9yES3g10A1rV2nGgANgJdKZPDHNH3wKXcCw87Keqy5K0Q2HuQ8Xc0AjmhLaSuYRRs3NJl3O8C/gl4qyL6aKEDgCrePH+Za6IC3OM4UfRCWp8yLN+OMRb+GiCGjteikTF8zF4UKm3kEYbdehBqvhP3ro25T72cG0P1d8c4aaEjgJn0FTyKMl5SYaYHUq9JTG/WA65nmNJs+5VayVkzkWX3JgaKVYf/wcwRBjpRXfhqDWN7GSaGosvfJLjvmp+ahrntRoXdmEKf1JMNh1JBOkNVMU48CImoM4hT+cFqQaO8Db3jsncE8Ay9Sw85ab4YJPOOkojjqrLeVOf5nMVmaxJQ3JH+E5Nu8JuV06aiWi1Uq/QU5RIu8kx2NnMPxxTegmGwAoPU9UqskRRyriZ/3hKUbznqYVRfFkc+p426DKU6bS7aqX+G2PaYRXPc3YoPB0SKW0B+quNBWmq1tE36qKMCdgTRfrdEom2iKOexwQhjxEhU0ctzrijiizdsuCo65IqpR/C/+IgP43xtVvJnIvFHdXaiUorbdwbRZ8oP+jqk4YkiyMbf+fGOPCoYSgsaz4W4zz9zsn835ikUdczbOVx4QOmW2HUk1l4whRBLt1qUoX7ORFnbQI+UunWNa5eTqryL8GiXNcZe0MO7aAyoTb11U4bOzke7Onb2IS11JPJVNqUX9LsESblP529lbuAx2Ok/A1UZ3GMlL+GlVwLkxWd8je4skEzmM8EdB0w0HOg1MOPeeYnm1zShsFZAcxN8cyv4wfnu2xIuxJJmcpYnFd4fvxiABO1RkWOygKYc3WHpUoyN1alav/zdVIHvAE8YyqzoKxZl5ilpuG0MGT/YfNczGSjnohsfTSy0rKtjwEsF4NaH0P50SsD1r9garbeMPdOOq0PR6v5g0pKVNMIquJa46CDbukqSma5R60iuc+BqzNpvznVrWV8tRFBatfLeEt7sB13nO227Wz/bmCo03QuM/BB7OHc054GZpmypzn0lRk1tvkR5SzsE9RCfTZawIXMeO/ks7TXFrCPE1XDFNBmx9NGXbNoYrZawJrOpwTuU3MtdMY/KveQz739+HHaVc3m3qw20X0kRn0TnXofT2tD/Op3vLHv8SKkTf8IMAAgQlxpBY1tjAAAAABJRU5ErkJggg==">
-														</div>
-                                                        <h3 class="m-portlet__head-text" style="padding-left: 10px">
-                                                            @Html.GetTansByLan("wallet-index-01", "WALLET") <span class="m-portlet__head-desc"> @Html.GetTansByLan("wallet-index-02", "Balance") </span>
-                                                        </h3>
-													</div>
-												</div>
-												<div class="col-6 col-lg-6" style="text-align: right;">
-                                                    @if (ViewBag.IsWithdraw == "1")
-                                                    {
-													if (user_status != 1)
-                                                    {
-                                                        target = "#m_show_msg_kyc";
-                                                    }
-                                                    else
-                                                    {
-                                                        if (SKCModel == null || (SKCModel != null && SKCModel.WalletInfo.AmountBalanceDecimal == 0))
-                                                        {
-                                                            target = "#m_show_msg_balance_zero";
-                                                        }
-                                                    }
-                                                    <button data-target="@target" data-toggle="modal" style="margin: 7px 0px 5px;" type="button" class="m-btn--pill btn btn-primary btn-sm">
-                                                        @Html.GetTansByLan("wallet-index-05", "Withdraw") @SKC.Common.GlobalConfig.Coin_ShortName
-                                                    </button>
-                                                    }
-                                                    <button onclick="SendLuckyMoney();" @(user_status == 1 ? "" : "disabled=\"disabled\"") style="margin: 7px 0px 5px;" type="button" class="m-btn--pill btn btn-primary btn-sm">
-                                                        @Html.GetTansByLan("wallet-index-04", "LuckyMoney")
-                                                    </button>
-                                                    @if (user_status != 1) { 
-                                                        <div class="alert-notify-card alert alert-dark fade show" role="alert">
-                                                            <div class="alert-cont">@Html.GetTansByLan("wallet-index-03", "Please complete the ")<a href="/account/index?mode=1">@Html.GetTansByLan("wallet-index-06", "KYC certification")</a></div>
-                                                        </div>
-                                                    }
-												</div>
-											</div>
-											<div class="m-portlet__head-tools"></div>
-										</div>
-									</div>
-									<div class="m-portlet__body">
-										<div class="m-widget25">
-                                            <div class="m-widget25__demand">
-                                                <span class="m-widget25__baltext">@Html.GetTansByLan("wallet-index-07", "available balance in your wallet")</span>
-                                                <div class="m-widget25__balance"><strong class="m-widget25__price2">@if (SKCModel != null){@SKCModel.WalletInfo.AmountBalanceDecimal.ToString("N3")}else{@Html.Raw("0.000")}</strong><em class="m-widget25__currency">@SKC.Common.GlobalConfig.Coin_ShortName</em></div>
-                                            </div>
-                                            <div class="m-widget25__froze text-gray">@Html.GetTansByLan("wallet-index-08", "Blocked Balance")&nbsp;
-												@if (SKCModel != null)
-												{
-													@SKCModel.WalletInfo.AmountforzenDecimal.ToString("N3")
-												}
-												else
-												{
-													@Html.Raw("0.000")
-												}
-												@SKC.Common.GlobalConfig.Coin_ShortName
-                                            </div>
-                                        </div>
-									</div>
-								</div>
-								<div class="table-responsive">
-									<table id="silkTable" class="table" width="100%" cellspacing="0">
-										<thead class="m-datatable__head">
-											<tr class="m-datatable__row" style="height: 56px;">
-												
-                                                <th>@Html.GetTansByLan("wallet-index-09", "DATE")</th>
-                                                <th>@Html.GetTansByLan("wallet-index-10", "TYPE")</th>
-                                                <th class="text-right">@Html.GetTansByLan("wallet-index-11", "AMOUNT")</th>
-											</tr>
-										</thead>
-										<tbody>
-											@if (SKCModel != null && SKCModel.InOutRecord != null && SKCModel.InOutRecord.Count > 0)
-											{
-												int tempIndex = 1;
-												foreach (var item in SKCModel.InOutRecord)
-												{
-													string typeName = string.Empty;
-													foreach (EnumInOutRecordTypeEn type in Enum.GetValues(typeof(EnumInOutRecordTypeEn)))
-													{
-														if (item.TypeInt == (int)type)
-														{
-															typeName = type.ToString();
-														}
-													}
-													<tr>													
-														<td>@item.CreateTimeDatetime.ToString("HH:mm MM/dd")</td>
-														<td>@typeName</td>
-														<td class="text-right">
-                                                            @{ 
-                                                                var add_type = new List<int>() {
-                                                                    (int)EnumInOutRecordType.买入,
-                                                                    (int)EnumInOutRecordType.充值,
-                                                                    (int)EnumInOutRecordType.领红包,
-                                                                    (int)EnumInOutRecordType.领糖果,
-                                                                    (int)EnumInOutRecordType.红包退款,
-                                                                    (int)EnumInOutRecordType.发币
-                                                                };
-                                                                var cut_type = new List<int>() {
-                                                                    (int)EnumInOutRecordType.卖出,
-                                                                    (int)EnumInOutRecordType.提现,
-                                                                    (int)EnumInOutRecordType.发红包
-                                                                };
-                                                            }
-                                                            @if (add_type.Contains(item.TypeInt))
-                                                            {
-                                                                <span class="m--font-success">+ @item.AmountDecimal</span>
-                                                            }
-                                                            else if (cut_type.Contains(item.TypeInt))
-                                                            { 
-                                                                <span>- @item.AmountDecimal</span>
-                                                            }else{
-                                                                <span>@item.AmountDecimal</span>
-                                                            }
-                                                        </td>
-													</tr>
-													tempIndex++;
-												}
-												//@SKC.WalletInfo.AmountBalanceMoney
-											}
-											else
-											{
-												<tr><td colspan="5">No data available</td></tr>
-											}
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<div>
-                                <div class="tab-pane" id="m_tab_btc_tab" role="tabpanel">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="m_tab_ezt_tab" role="tabpanel">
                                     <div class="pd-30 m-portlet m-portlet--bordered-semi m-portlet--full-height ">
                                         <div class="m-portlet__head">
                                             <div class="m-portlet__head-caption">
                                                 <div class="row">
-                                                    <div class="col-lg-6">
+                                                    <div class="col-6 col-lg-6">
                                                         <div class="m-portlet__head-title pull-left">
-                                                            <div style="display: table-cell;vertical-align: middle;">
-                                                                <img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAADAklEQVQ4jX3UTWhcVRgG4Gdu7kx+JylpCpkmbcFqxJ9uStUSEgV1IypixHahCLoRFVyoK1FRF7pUUMGVbvwpItW6klCTLhIsgmigUkSDIGpIInHS/E8yuS7Ozcxk8vPCXdz3nO/9vvN+53yZ5ELBPngMD+I2HEq5RfyEb/EJ/tstMLOH8BN4BTfslxVFvIkPUNpPOMZ3uDOsxmwssFyktYvlf4nQdoTNjdq4P3E3JreIqGaxBaMVUYJocw83PUc2T9/THDvL2gKSWuGjGMOJ3YQvYYBMVXShSMsRTr5P3MqpD7nltcAnicregG78WC/8qNCgUEmySdxOc46okWSdOE+pyPo1GrA8nepuE88Kflc8nkUXKM2F498/SXmV8hK5zuBplA3h81e4+ha/f07H4bT6bbguwtmKKDQ0U17h6ttBKHcwVBVlKS2FPR23cvozuk+Hhu7EqxEe30bFbSQbjL7Mb++l7pQZGeDLAuMPs5nerL7nKZXUNRIGI5zcRiVlMg3k1RwxYXacqQX++DpYBOsLdRZXcCBG565LGVVPMw3c/hE3z9B7D9n2wP99PhSbiUNBVbTE9spZn6VwX7AgylXp488wfYnycrg9NYiEt78HUiuSMsOn+OIYnxaYeCnwPQ9RuJeVufrAUoQrO6qLYpZQmq/SG4usC1+pWOWbD1NWj/kYX+GuKrfJ2jWOD9DzQJorov8cS3/R2EnvULp1lX+GaWqpF57IJBcKzViuUOXV0O2hWeIDuxoEVqcYG2LmMvne+uYNRljBCxUqytF4kPEzjAzy84tsrvPDU8Ga4gTD/VzsZ/Yy+Z560W8wFqc/7+B1tMs0kMkwfZH5dNBEWWZGyHWw2sTk93TlaOsNc2U7niTM3y3cgVGSbklCUzfxYmja1vP+5Q3WZjmUJ9daXymcwRw7B/2NwlwNsyPKhmm2VKSti6V00OePBnu24xGcrzhat/grrse7CMENzbQXQpJ8gdZCveg59NWK7lZxLU7g2dSiAlpTvoQp4f5/jOHdgv8HCjP8rQKU8X8AAAAASUVORK5CYII=">
+                                                            <div style="display: table-cell; vertical-align: middle;">
+                                                                <img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OEJCRUM1RkQ0MUVDMTFFODg4OUZDN0YxQzhCN0Q0MTkiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OEJCRUM1RkU0MUVDMTFFODg4OUZDN0YxQzhCN0Q0MTkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4QkJFQzVGQjQxRUMxMUU4ODg5RkM3RjFDOEI3RDQxOSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4QkJFQzVGQzQxRUMxMUU4ODg5RkM3RjFDOEI3RDQxOSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PoLQxNkAAAVUSURBVHjarFhpbFVVEH59vloFKiCtCmrEJQEN0cQggkhB4waiIra4EKElStRoZKlLKailYjFQsGA0YgSpC4qkSAxuuEBRpMRIEGP4o6IildqiIPvqN+Y7ZjKeu7zXN8nXnnvOeefOnZkzW05iRXMiA8oBrgJuAa4A+gAnmT17gc3ABmAF8FlmL0qPwQuAR4Dxam4H0AT8BPzNuU7c2w84Te19CZgF/JBtBrsDdUAJn1cCLwNrgL8iftsFGMyPGsa5t4EJwO/ZYHAc8ArHtcDsOAeHfGg5MEmdvag9DL4KjKWk5P/PZv0soC9VKS8/m/O/As1U/dfAb+Z3PYHFQBEZHJcJg2t4QAUw06zdSoavA06OkNo+4GPgNaDBrE0BZgCreeliM7gWuBK4TR2awxs7k2s+ugFIAu8HrH/JS/aVmrsdeAtopK1GMvg6MJo/XGrsZ3uIpEqpNmu3Qbao7fgOYAmlPEZvTHpeMpqiX2rWcmMyJ7QwzK48Z4kEpwJ303S8DJ5CgxU11HgOfSDgZZMMc44WUZ0+ut8zN4Oql4uZ71Pxu4wMXZVvE1UUUqqPeg5dDwxQz8uBY7RdR0285ZaeBd4EWpS6TwXaeM5IzeCZwDbgeeAhbr6Ul6VDiKqG02k7SdZyPBF4juObGeqCSELiIGAjn1+ghHuIq3IM1lP/Ek8PcuNmxtgw9yES3g10A1rV2nGgANgJdKZPDHNH3wKXcCw87Keqy5K0Q2HuQ8Xc0AjmhLaSuYRRs3NJl3O8C/gl4qyL6aKEDgCrePH+Za6IC3OM4UfRCWp8yLN+OMRb+GiCGjteikTF8zF4UKm3kEYbdehBqvhP3ro25T72cG0P1d8c4aaEjgJn0FTyKMl5SYaYHUq9JTG/WA65nmNJs+5VayVkzkWX3JgaKVYf/wcwRBjpRXfhqDWN7GSaGosvfJLjvmp+ahrntRoXdmEKf1JMNh1JBOkNVMU48CImoM4hT+cFqQaO8Db3jsncE8Ay9Sw85ab4YJPOOkojjqrLeVOf5nMVmaxJQ3JH+E5Nu8JuV06aiWi1Uq/QU5RIu8kx2NnMPxxTegmGwAoPU9UqskRRyriZ/3hKUbznqYVRfFkc+p426DKU6bS7aqX+G2PaYRXPc3YoPB0SKW0B+quNBWmq1tE36qKMCdgTRfrdEom2iKOexwQhjxEhU0ctzrijiizdsuCo65IqpR/C/+IgP43xtVvJnIvFHdXaiUorbdwbRZ8oP+jqk4YkiyMbf+fGOPCoYSgsaz4W4zz9zsn835ikUdczbOVx4QOmW2HUk1l4whRBLt1qUoX7ORFnbQI+UunWNa5eTqryL8GiXNcZe0MO7aAyoTb11U4bOzke7Onb2IS11JPJVNqUX9LsESblP529lbuAx2Ok/A1UZ3GMlL+GlVwLkxWd8je4skEzmM8EdB0w0HOg1MOPeeYnm1zShsFZAcxN8cyv4wfnu2xIuxJJmcpYnFd4fvxiABO1RkWOygKYc3WHpUoyN1alav/zdVIHvAE8YyqzoKxZl5ilpuG0MGT/YfNczGSjnohsfTSy0rKtjwEsF4NaH0P50SsD1r9garbeMPdOOq0PR6v5g0pKVNMIquJa46CDbukqSma5R60iuc+BqzNpvznVrWV8tRFBatfLeEt7sB13nO227Wz/bmCo03QuM/BB7OHc054GZpmypzn0lRk1tvkR5SzsE9RCfTZawIXMeO/ks7TXFrCPE1XDFNBmx9NGXbNoYrZawJrOpwTuU3MtdMY/KveQz739+HHaVc3m3qw20X0kRn0TnXofT2tD/Op3vLHv8SKkTf8IMAAgQlxpBY1tjAAAAABJRU5ErkJggg==">
                                                             </div>
-                                                            <h3 class="m-portlet__head-text " style="padding-left: 10px">
-                                                                WALLET
-                                                                <span class="m-portlet__head-desc">
-                                                                    Balance
-                                                                </span>
+                                                            <h3 class="m-portlet__head-text" style="padding-left: 10px">
+                                                                @Html.GetTansByLan("wallet-index-01", "WALLET") <span class="m-portlet__head-desc"> @Html.GetTansByLan("wallet-index-02", "Balance") </span>
                                                             </h3>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6" style="text-align: right;">
-                                                        <button id="btnDepositBtc" type="button" onclick="onDepositBtc();" class="m-btn--pill btn btn-primary" style="margin: 7px 0px 5px">
-                                                            Deposit BTC
+                                                    <div class="col-6 col-lg-6" style="text-align: right;">
+                                                        @if (ViewBag.IsWithdraw == "1")
+                                                        {
+                                                        if (user_status != 1)
+                                                        {
+                                                            target = "#m_show_msg_kyc";
+                                                        }
+                                                        else
+                                                        {
+                                                            if (SKCModel == null || (SKCModel != null && SKCModel.WalletInfo.AmountBalanceDecimal == 0))
+                                                            {
+                                                                target = "#m_show_msg_balance_zero";
+                                                            }
+                                                        }
+                                                        <button data-target="@target" data-toggle="modal" style="margin: 7px 0px 5px;" type="button" class="m-btn--pill btn btn-primary btn-sm">
+                                                            @Html.GetTansByLan("wallet-index-05", "Withdraw") @SKC.Common.GlobalConfig.Coin_ShortName
                                                         </button>
-                                                        <!-- <button   data-target="#m_aml_msg"
-                                                          data-toggle="modal" style="margin: 7px 0px 5px;" type="button" class="m-btn--pill btn btn-default">
-                                                            Withdraw BTC
-                                                        </button> -->
-                                                        <button data-target="#m_withdraw_btc" data-toggle="modal" style="margin: 7px 0px 5px;" type="button" class="m-btn--pill btn btn-default">
-                                                            Withdraw BTC
+                                                        }
+                                                        <button onclick="SendLuckyMoney();" @(user_status == 1 ? "" : "disabled=\"disabled\"") style="margin: 7px 0px 5px;" type="button" class="m-btn--pill btn btn-primary btn-sm">
+                                                            @Html.GetTansByLan("wallet-index-04", "LuckyMoney")
                                                         </button>
+                                                        @if (user_status != 1) {
+                                                            <div class="alert-notify-card alert alert-dark fade show" role="alert">
+                                                                <div class="alert-cont">@Html.GetTansByLan("wallet-index-03", "Please complete the ")<a href="/account/index?mode=1">@Html.GetTansByLan("wallet-index-06", "KYC certification")</a></div>
+                                                            </div>
+                                                        }
                                                     </div>
                                                 </div>
+                                                <div class="m-portlet__head-tools"></div>
                                             </div>
                                         </div>
                                         <div class="m-portlet__body">
                                             <div class="m-widget25">
-                                                <span class="m-widget25__price btc-color" style="font-size: 60px" id="btc-balance">
-                                                    @if (BTC != null)
+                                                <div class="m-widget25__demand">
+                                                    <span class="m-widget25__baltext">@Html.GetTansByLan("wallet-index-07", "available balance in your wallet")</span>
+                                                    <div class="m-widget25__balance"><strong class="m-widget25__price2">@if (SKCModel != null){@SKCModel.WalletInfo.AmountBalanceDecimal.ToString("N3")}else{@Html.Raw("0.000")}</strong><em class="m-widget25__currency">@SKC.Common.GlobalConfig.Coin_ShortName</em></div>
+                                                </div>
+                                                <div class="m-widget25__froze text-gray">@Html.GetTansByLan("wallet-index-08", "Blocked Balance")&nbsp;
+                                                    @if (SKCModel != null)
                                                     {
-                                                        @BTC.WalletInfo.AmountBalanceDecimal
-                                                    } BTC
-                                                </span>
-                                                <span style="font-size: 24px" id="">
-                                                    ~ $0.00
-                                                </span>
+                                                        @SKCModel.WalletInfo.AmountforzenDecimal.ToString("N3")
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.Raw("0.000")
+                                                    }
+                                                    @SKC.Common.GlobalConfig.Coin_ShortName
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="table-responsive " style="padding: 0px 0px 50px 30px">
-                                        <table id="btcTable" class="table" width="100%" cellspacing="0">
+                                    <div class="table-responsive">
+                                        <table id="silkTable" class="table" width="100%" cellspacing="0">
                                             <thead class="m-datatable__head">
                                                 <tr class="m-datatable__row" style="height: 56px;">
-                                                    <th>
-                                                        #
-                                                    </th>
-                                                    <th>
-                                                        TRANSACTION ID
-                                                    </th>
-                                                    <th>
-                                                        DATE
-                                                    </th>
-                                                    <th>
-                                                        TYPE
-                                                    </th>
-                                                    <th>
+
+                                                    <th>@Html.GetTansByLan("wallet-index-09", "DATE")</th>
+                                                    <th>@Html.GetTansByLan("wallet-index-10", "TYPE")</th>
+                                                    <th class="text-right">@Html.GetTansByLan("wallet-index-11", "AMOUNT")</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (SKCModel != null && SKCModel.InOutRecord != null && SKCModel.InOutRecord.Count > 0)
+                                                {
+                                                    int tempIndex = 1;
+                                                    foreach (var item in SKCModel.InOutRecord)
+                                                    {
+                                                        string typeName = string.Empty;
+                                                        foreach (EnumInOutRecordTypeEn type in Enum.GetValues(typeof(EnumInOutRecordTypeEn)))
+                                                        {
+                                                            if (item.TypeInt == (int)type)
+                                                            {
+                                                                typeName = type.ToString();
+                                                            }
+                                                        }
+                                                        <tr>
+                                                            <td>@item.CreateTimeDatetime.ToString("HH:mm MM/dd")</td>
+                                                            <td>@typeName</td>
+                                                            <td class="text-right">
+                                                                @{
+                                                                    var add_type = new List<int>() {
+                                                                        (int)EnumInOutRecordType.买入,
+                                                                        (int)EnumInOutRecordType.充值,
+                                                                        (int)EnumInOutRecordType.领红包,
+                                                                        (int)EnumInOutRecordType.领糖果,
+                                                                        (int)EnumInOutRecordType.红包退款,
+                                                                        (int)EnumInOutRecordType.发币
+                                                                    };
+                                                                    var cut_type = new List<int>() {
+                                                                        (int)EnumInOutRecordType.卖出,
+                                                                        (int)EnumInOutRecordType.提现,
+                                                                        (int)EnumInOutRecordType.发红包
+                                                                    };
+                                                                }
+                                                                @if (add_type.Contains(item.TypeInt))
+                                                                {
+                                                                    <span class="m--font-success">+ @item.AmountDecimal</span>
+                                                                }
+                                                                else if (cut_type.Contains(item.TypeInt))
+                                                                {
+                                                                    <span>- @item.AmountDecimal</span>
+                                                                }else{
+                                                                    <span>@item.AmountDecimal</span>
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                        tempIndex++;
+                                                    }
+                                                    //@SKC.WalletInfo.AmountBalanceMoney
+                                                }
+                                                else
+                                                {
+                                                    <tr><td colspan="5">No data available</td></tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="tab-pane" id="m_tab_btc_tab" role="tabpanel">
+                                        <div class="pd-30 m-portlet m-portlet--bordered-semi m-portlet--full-height ">
+                                            <div class="m-portlet__head">
+                                                <div class="m-portlet__head-caption">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="m-portlet__head-title pull-left">
+                                                                <div style="display: table-cell;vertical-align: middle;">
+                                                                    <img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAADAklEQVQ4jX3UTWhcVRgG4Gdu7kx+JylpCpkmbcFqxJ9uStUSEgV1IypixHahCLoRFVyoK1FRF7pUUMGVbvwpItW6klCTLhIsgmigUkSDIGpIInHS/E8yuS7Ozcxk8vPCXdz3nO/9vvN+53yZ5ELBPngMD+I2HEq5RfyEb/EJ/tstMLOH8BN4BTfslxVFvIkPUNpPOMZ3uDOsxmwssFyktYvlf4nQdoTNjdq4P3E3JreIqGaxBaMVUYJocw83PUc2T9/THDvL2gKSWuGjGMOJ3YQvYYBMVXShSMsRTr5P3MqpD7nltcAnicregG78WC/8qNCgUEmySdxOc46okWSdOE+pyPo1GrA8nepuE88Kflc8nkUXKM2F498/SXmV8hK5zuBplA3h81e4+ha/f07H4bT6bbguwtmKKDQ0U17h6ttBKHcwVBVlKS2FPR23cvozuk+Hhu7EqxEe30bFbSQbjL7Mb++l7pQZGeDLAuMPs5nerL7nKZXUNRIGI5zcRiVlMg3k1RwxYXacqQX++DpYBOsLdRZXcCBG565LGVVPMw3c/hE3z9B7D9n2wP99PhSbiUNBVbTE9spZn6VwX7AgylXp488wfYnycrg9NYiEt78HUiuSMsOn+OIYnxaYeCnwPQ9RuJeVufrAUoQrO6qLYpZQmq/SG4usC1+pWOWbD1NWj/kYX+GuKrfJ2jWOD9DzQJorov8cS3/R2EnvULp1lX+GaWqpF57IJBcKzViuUOXV0O2hWeIDuxoEVqcYG2LmMvne+uYNRljBCxUqytF4kPEzjAzy84tsrvPDU8Ga4gTD/VzsZ/Yy+Z560W8wFqc/7+B1tMs0kMkwfZH5dNBEWWZGyHWw2sTk93TlaOsNc2U7niTM3y3cgVGSbklCUzfxYmja1vP+5Q3WZjmUJ9daXymcwRw7B/2NwlwNsyPKhmm2VKSti6V00OePBnu24xGcrzhat/grrse7CMENzbQXQpJ8gdZCveg59NWK7lZxLU7g2dSiAlpTvoQp4f5/jOHdgv8HCjP8rQKU8X8AAAAASUVORK5CYII=">
+                                                                </div>
+                                                                <h3 class="m-portlet__head-text " style="padding-left: 10px">
+                                                                    WALLET
+                                                                    <span class="m-portlet__head-desc">
+                                                                        Balance
+                                                                    </span>
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6" style="text-align: right;">
+                                                            <button id="btnDepositBtc" type="button" onclick="onDepositBtc();" class="m-btn--pill btn btn-primary" style="margin: 7px 0px 5px">
+                                                                Deposit BTC
+                                                            </button>
+                                                            <!-- <button   data-target="#m_aml_msg"
+                                                              data-toggle="modal" style="margin: 7px 0px 5px;" type="button" class="m-btn--pill btn btn-default">
+                                                                Withdraw BTC
+                                                            </button> -->
+                                                            <button data-target="#m_withdraw_btc" data-toggle="modal" style="margin: 7px 0px 5px;" type="button" class="m-btn--pill btn btn-default">
+                                                                Withdraw BTC
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="m-portlet__body">
+                                                <div class="m-widget25">
+                                                    <span class="m-widget25__price btc-color" style="font-size: 60px" id="btc-balance">
+                                                        @if (BTC != null)
+                                                        {
+                                                            @BTC.WalletInfo.AmountBalanceDecimal
+                                                        } BTC
+                                                    </span>
+                                                    <span style="font-size: 24px" id="">
+                                                        ~ $0.00
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="table-responsive " style="padding: 0px 0px 50px 30px">
+                                            <table id="btcTable" class="table" width="100%" cellspacing="0">
+                                                <thead class="m-datatable__head">
+                                                    <tr class="m-datatable__row" style="height: 56px;">
+                                                        <th>
+                                                            #
+                                                        </th>
+                                                        <th>
+                                                            TRANSACTION ID
+                                                        </th>
+                                                        <th>
+                                                            DATE
+                                                        </th>
+                                                        <th>
+                                                            TYPE
+                                                        </th>
+                                                        <th>
+                                                                STATUS
+                                                            </th>
+                                                        <th class="text-right">
+                                                            AMOUNT
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (BTC != null && BTC.InOutRecord != null && BTC.InOutRecord.Count > 0)
+                                                    {
+                                                        int tempIndex = 1;
+                                                        foreach (var item in BTC.InOutRecord)
+                                                        {
+                                                            <tr>
+                                                                <td>@tempIndex</td>
+                                                                <td>@(!string.IsNullOrEmpty(item.IdNvarchar) ? item.IdNvarchar.Replace("-", "") : "")</td>
+                                                                <td>@item.CreateTimeDatetime.ToString("yyyy-MM-dd")</td>
+                                                                <td>@item.TypeNameNvarchar</td>
+                                                                <td>complete</td>
+                                                                <td>@item.AmountDecimal</td>
+                                                            </tr>
+                                                            tempIndex++;
+                                                        }
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr><td colspan="7">No data available in table</td></tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="m_tab_eth_tab" role="tabpanel">
+                                        <div class="pd-30 m-portlet m-portlet--bordered-semi m-portlet--full-height">
+                                            <div class="m-portlet__head">
+                                                <div class="m-portlet__head-caption">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="m-portlet__head-title pull-left">
+                                                                <div style="display: table-cell;vertical-align: middle;">
+                                                                    <img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAADIElEQVQ4jX2VW2hUVxSGv733nMycMTNjgmIuEy8NQhq1VpSxOFVR0bYgoka84gVE7JuIL31QCKIUC0Jt8UZ9EqQPpYVAHiQgim3QMlhDq+IVLzWXiUk0M8dxxnjO6cOkw8yZPVkvB/611rfX3uz9H3HgcBcTRBxYD3wGTAUUMAL8BVwGOio1+irom4B9wJoK+RjwNfAPcAY45y2QmqZLwC/FUCHAcVxsx0WIktp5wNnxHdRMBO4CtutGfJf9gGW9x7bL4AALgATQrAN3AKu9HUpJXvSmWPn5THZtnkd/0sJ1dUvTDHR7wV8A67yVQgiGRjJE68Ns29DKivgM4rEofQMWUpaPDUwDvi0Gn9FVOY5LKp1j345PC9ruLZ9gGJJMZkx3JADfAA0S2Ah85M0qJfm3d5R4rIm5H08t6DWRAFvWt9I7kEZUIAPtEtjtVYWA16NZGupC7N+5oKxr3ZrZxGNR+pMWUg9fLoGFZbILo6ks29vmEqqu0o60bcMcAMZsR5eulUCtVx1+845F8+tZsqhRCwWYEY2waW0LycG3urQpgbK9mAGDN6ksnV2PSKVzWvCV359x9+EQkbBflxYSKFvSpwRVhqJv0OJQ+xV+7bxfyN281cveg53cfzxM0DQqXbucD7gDLC9WlZK8eJmibW0LX65o5tRPCR48GUYpSd+AxZ6t85k9q4ajJ/9AKS14VJL3hZJQSmCaPk78eINQdRUn21cxs2ky/irFqWOrWbq4iROnb5KycgT8Wh/7Wxw43BUgb4VmCVwKXo1kCJoG5777qqTr+Pfd9NxNMr0xgq2/FTEJZMm/lpKwHZcptUFeDWW4cKmnoF/tfk7idj+NdaFK0A4g8f+T/gF46a1wHJdoQ5iOyw9J9PTRn7Q4f/E29dOqJ3p1O6HU6JcB14DpxVVSChrrQ/z82z2kElRPMjBNH45TZnE20AakodQ2nwKLx7+FcF2XSUGDTHaMVDpHJOzXQR1gJUW/Kq/RDwCtwDHAKoxiuwT8PoKmgW2XQc8CLcD1YlF3V7LAEfLnvp+8V9cB4fFB0sAg8CdwHrinYfAfhyjzYwYT1iQAAAAASUVORK5CYII=">
+                                                                </div>
+                                                                <h3 class="m-portlet__head-text " style="padding-left: 10px">
+                                                                    WALLET
+                                                                    <span class="m-portlet__head-desc">
+                                                                        Balance
+                                                                    </span>
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6" style="text-align: right;">
+                                                            <button id="btnDepositEth" type="button" class="btn m-btn--pill btn-primary" onclick="onDepositEth();" style="margin: 7px 0px 5px;">
+                                                                Deposit ETH
+                                                            </button>
+                                                            <!-- <button
+                                                              data-target="#m_aml_msg"
+                                                             type="button" style="margin: 7px 0px 5px;" class="btn m-btn--pill btn-default" data-toggle="modal" >
+                                                                Withdraw ETH
+                                                            </button> -->
+                                                            <button data-target="#m_withdraw_eth" data-toggle="modal" type="button" style="margin: 7px 0px 5px;" class="btn m-btn--pill btn-default" data-toggle="modal">
+                                                                Withdraw ETH
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="m-portlet__body">
+                                                <div class="m-widget25">
+                                                    <span class="m-widget25__price eth-color" style="font-size: 60px" id="eth-balance">
+                                                        @if (ETH != null)
+                                                        {
+                                                            @ETH.WalletInfo.AmountBalanceDecimal
+                                                        } ETH
+                                                    </span>
+                                                    <span style="font-size: 24px" id="">
+                                                        ~ $0.00
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive" style="padding: 0px 0px 50px 30px">
+                                            <table id="ethTable" class="table" width="100%" cellspacing="0">
+                                                <thead class="m-datatable__head">
+                                                    <tr class="m-datatable__row" style="height: 56px;">
+                                                        <th>
+                                                            #
+                                                        </th>
+                                                        <th>
+                                                            TRANSACTION ID
+                                                        </th>
+                                                        <th>
+                                                            DATE
+                                                        </th>
+                                                        <th>
+                                                            TYPE
+                                                        </th>
+                                                        <th>
                                                             STATUS
                                                         </th>
-                                                    <th class="text-right">
-                                                        AMOUNT
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @if (BTC != null && BTC.InOutRecord != null && BTC.InOutRecord.Count > 0)
-                                                {
-                                                    int tempIndex = 1;
-                                                    foreach (var item in BTC.InOutRecord)
+                                                        <th class="text-right">
+                                                            AMOUNT
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (ETH != null && ETH.InOutRecord != null && ETH.InOutRecord.Count > 0)
                                                     {
-                                                        <tr>
-                                                            <td>@tempIndex</td>
-                                                            <td>@(!string.IsNullOrEmpty(item.IdNvarchar) ? item.IdNvarchar.Replace("-", "") : "")</td>
-                                                            <td>@item.CreateTimeDatetime.ToString("yyyy-MM-dd")</td>
-                                                            <td>@item.TypeNameNvarchar</td>
-                                                            <td>complete</td>
-                                                            <td>@item.AmountDecimal</td>
-                                                        </tr>
-                                                        tempIndex++;
+                                                        int tempIndex = 1;
+                                                        foreach (var item in ETH.InOutRecord)
+                                                        {
+                                                            <tr>
+                                                                <td>@tempIndex</td>
+                                                                <td>@(!string.IsNullOrEmpty(item.IdNvarchar) ? item.IdNvarchar.Replace("-", "") : "")</td>
+                                                                <td>@item.CreateTimeDatetime.ToString("yyyy-MM-dd")</td>
+                                                                <td>@item.TypeNameNvarchar</td>
+                                                                <td>complete</td>
+                                                                <td class="text-right">@item.AmountDecimal</td>
+                                                            </tr>
+                                                            tempIndex++;
+                                                        }
                                                     }
-
-                                                }
-                                                else
-                                                {
-                                                    <tr><td colspan="7">No data available in table</td></tr>
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="m_tab_eth_tab" role="tabpanel">
-                                    <div class="pd-30 m-portlet m-portlet--bordered-semi m-portlet--full-height">
-                                        <div class="m-portlet__head">
-                                            <div class="m-portlet__head-caption">
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="m-portlet__head-title pull-left">
-                                                            <div style="display: table-cell;vertical-align: middle;">
-                                                                <img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAADIElEQVQ4jX2VW2hUVxSGv733nMycMTNjgmIuEy8NQhq1VpSxOFVR0bYgoka84gVE7JuIL31QCKIUC0Jt8UZ9EqQPpYVAHiQgim3QMlhDq+IVLzWXiUk0M8dxxnjO6cOkw8yZPVkvB/611rfX3uz9H3HgcBcTRBxYD3wGTAUUMAL8BVwGOio1+irom4B9wJoK+RjwNfAPcAY45y2QmqZLwC/FUCHAcVxsx0WIktp5wNnxHdRMBO4CtutGfJf9gGW9x7bL4AALgATQrAN3AKu9HUpJXvSmWPn5THZtnkd/0sJ1dUvTDHR7wV8A67yVQgiGRjJE68Ns29DKivgM4rEofQMWUpaPDUwDvi0Gn9FVOY5LKp1j345PC9ruLZ9gGJJMZkx3JADfAA0S2Ah85M0qJfm3d5R4rIm5H08t6DWRAFvWt9I7kEZUIAPtEtjtVYWA16NZGupC7N+5oKxr3ZrZxGNR+pMWUg9fLoGFZbILo6ks29vmEqqu0o60bcMcAMZsR5eulUCtVx1+845F8+tZsqhRCwWYEY2waW0LycG3urQpgbK9mAGDN6ksnV2PSKVzWvCV359x9+EQkbBflxYSKFvSpwRVhqJv0OJQ+xV+7bxfyN281cveg53cfzxM0DQqXbucD7gDLC9WlZK8eJmibW0LX65o5tRPCR48GUYpSd+AxZ6t85k9q4ajJ/9AKS14VJL3hZJQSmCaPk78eINQdRUn21cxs2ky/irFqWOrWbq4iROnb5KycgT8Wh/7Wxw43BUgb4VmCVwKXo1kCJoG5777qqTr+Pfd9NxNMr0xgq2/FTEJZMm/lpKwHZcptUFeDWW4cKmnoF/tfk7idj+NdaFK0A4g8f+T/gF46a1wHJdoQ5iOyw9J9PTRn7Q4f/E29dOqJ3p1O6HU6JcB14DpxVVSChrrQ/z82z2kElRPMjBNH45TZnE20AakodQ2nwKLx7+FcF2XSUGDTHaMVDpHJOzXQR1gJUW/Kq/RDwCtwDHAKoxiuwT8PoKmgW2XQc8CLcD1YlF3V7LAEfLnvp+8V9cB4fFB0sAg8CdwHrinYfAfhyjzYwYT1iQAAAAASUVORK5CYII=">
-                                                            </div>
-                                                            <h3 class="m-portlet__head-text " style="padding-left: 10px">
-                                                                WALLET
-                                                                <span class="m-portlet__head-desc">
-                                                                    Balance
-                                                                </span>
-                                                            </h3>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6" style="text-align: right;">
-                                                        <button id="btnDepositEth" type="button" class="btn m-btn--pill btn-primary" onclick="onDepositEth();" style="margin: 7px 0px 5px;">
-                                                            Deposit ETH
-                                                        </button>
-                                                        <!-- <button
-                                                          data-target="#m_aml_msg"
-                                                         type="button" style="margin: 7px 0px 5px;" class="btn m-btn--pill btn-default" data-toggle="modal" >
-                                                            Withdraw ETH
-                                                        </button> -->
-                                                        <button data-target="#m_withdraw_eth" data-toggle="modal" type="button" style="margin: 7px 0px 5px;" class="btn m-btn--pill btn-default" data-toggle="modal">
-                                                            Withdraw ETH
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="m-portlet__body">
-                                            <div class="m-widget25">
-                                                <span class="m-widget25__price eth-color" style="font-size: 60px" id="eth-balance">
-                                                    @if (ETH != null)
+                                                    else
                                                     {
-                                                        @ETH.WalletInfo.AmountBalanceDecimal
-                                                    } ETH
-                                                </span>
-                                                <span style="font-size: 24px" id="">
-                                                    ~ $0.00
-                                                </span>
-                                            </div>
+                                                        <tr><td colspan="7">No data available in table</td></tr>
+                                                    }
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
-                                    <div class="table-responsive" style="padding: 0px 0px 50px 30px">
-                                        <table id="ethTable" class="table" width="100%" cellspacing="0">
-                                            <thead class="m-datatable__head">
-                                                <tr class="m-datatable__row" style="height: 56px;">
-                                                    <th>
-                                                        #
-                                                    </th>
-                                                    <th>
-                                                        TRANSACTION ID
-                                                    </th>
-                                                    <th>
-                                                        DATE
-                                                    </th>
-                                                    <th>
-                                                        TYPE
-                                                    </th>
-                                                    <th>
-                                                        STATUS
-                                                    </th>
-                                                    <th class="text-right">
-                                                        AMOUNT
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @if (ETH != null && ETH.InOutRecord != null && ETH.InOutRecord.Count > 0)
-                                                {
-                                                    int tempIndex = 1;
-                                                    foreach (var item in ETH.InOutRecord)
-                                                    {
-                                                        <tr>
-                                                            <td>@tempIndex</td>
-                                                            <td>@(!string.IsNullOrEmpty(item.IdNvarchar) ? item.IdNvarchar.Replace("-", "") : "")</td>
-                                                            <td>@item.CreateTimeDatetime.ToString("yyyy-MM-dd")</td>
-                                                            <td>@item.TypeNameNvarchar</td>
-                                                            <td>complete</td>
-                                                            <td class="text-right">@item.AmountDecimal</td>
-                                                        </tr>
-                                                        tempIndex++;
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <tr><td colspan="7">No data available in table</td></tr>
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
                                 </div>
-							</div>
-						</div>
+                            </div>
                         *@
-					</div>
-				</div>
-			</div>
-		</div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="m-portlet m-portlet--mobile m-portlet--skin-dark mb-0">
@@ -553,7 +627,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @{ 
+                                            @{
                                                 List<TypeModel> withDrawType = new List<TypeModel>();
                                                 foreach (var item in Enum.GetValues(typeof(EnumWidthDraw)))
                                                 {
@@ -569,8 +643,8 @@
                                                     <tr>
                                                         <td>@(item.CreateTimeDatetime.ToString("HH:mm MM/dd"))</td>
                                                         <td>@(item.CoinAddressNvarchar)</td>
-                                                        <td>@(temp_item!=null? Html.GetTansByLan(temp_item.Params,temp_item.Text): Html.GetTansByLan("wallet-index-type-default", item.StatusNameInt))</td>
-                                                        <td>@(item.AmountDecimal.ToString("n2"))@(item.CoinTypeNvarchar)</td>
+                                                        <td>@(temp_item != null ? Html.GetTansByLan(temp_item.Params, temp_item.Text) : Html.GetTansByLan("wallet-index-type-default", item.StatusNameInt))</td>
+                                                        <td>@Html.AmountFormat(item.AmountDecimal) @(item.CoinTypeNvarchar)</td>
                                                     </tr>
                                                 }
                                             }
@@ -584,340 +658,340 @@
                 </div>
             </div>
         </div>
-	</div>
+    </div>
 </div>
 @*
-<div class="modal fade" id="m_withdraw_silk" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-                <h5 class="modal-title">
-                    @Html.GetTansByLan("wallet-index-12", "WITHDRAW SILK Token")
-                </h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
-					<span aria-hidden="true">
-						&times;
-					</span>
-				</button>
-			</div>
-			<form method="POST" action="/Wallet/Withdraw" id="form_withdraw_silk" autocomplete="off">
-				<input type="hidden" id="UserID" name="UserID" value="@SKCModel.WalletInfo.UserIdNvarchar" />
-				<input type="hidden" id="CoinType" name="CoinType" value="@SKCModel.WalletInfo.CoinTypeNvarchar" />
-				<div class="modal-body" style="padding:25px 25px 0px">
-					<div class="form-group">
-                        <label for="WithdrawalAddress" class="form-control-label">
-                            @Html.GetTansByLan("wallet-index-13", "Withdraw from")
-                        </label>
-						<div class="alert m-alert m-alert--default display-table" style="padding: 5px">
-							<div style="vertical-align: middle;height: 54px;">
-								<img alt="" style="position: absolute;" class="mr-2" src="/images/ba-common/ic_silk.png">
-								<span style="margin-left: 30px" class="font-size-18"> SILK Wallet</span>
-							</div>
-							<div class="des-deposit text-right">
-								<span class="font-size-18">@SKCModel.WalletInfo.AmountBalanceDecimal SILK</span>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-                        <label for="WithdrawalAddress" class="form-control-label">
-                            @Html.GetTansByLan("wallet-index-14", "Recipient SILK address")
-                        </label>
-						<input type="text" class="form-control form-control-lg" id="WithdrawalAddress" name="WithdrawalAddress" placeholder="Please input the ERC20 address" required>
-					</div>
-					<div class="form-group" style="margin-bottom: 0px">
-                        <label for="WithdrawalAmount" class="form-control-label">
-                            @Html.GetTansByLan("wallet-index-15", "Amount")
-                        </label>
-						<div class="display-table">
-							<div>
-								<div class="input-group m-input-group m-input-icon m-input-icon--right">
-									<input type="text" class="form-control form-control-lg" id="WithdrawalAmount" name="WithdrawalAmount" required>
-									<span class="m-input-icon__icon m-input-icon__icon--right" style="display:inline-block;right:60px;z-index:99; top:7px;">
-										<span>
-											<img onclick="withdrawMaxSilk('@SKCModel.WalletInfo.AmountBalanceDecimal')" style="padding:9px;margin-top:1px;position:absolute;right:-7px;cursor:pointer;" id="imgBtcUseMax" src="/images/ba-common/ic_usemax.png">
-										</span>
-									</span>
-									<span class="input-group-addon font-size-18" id="basic-addon1">@SKC.Common.GlobalConfig.Coin_ShortName</span>
-								</div>
-							</div>
-						</div>
-						<div class="display-table">
-							<div style="text-align: left;">
-								<label class="form-control-label">
-                                    <i>@Html.GetTansByLan("wallet-index-16", "Transaction fees")</i>
-								</label>
-								<label for="ezt_fee" class="form-control-label" style="font-style: italic;font-size: 12px">
-									<span class="m--font-danger" style="font-size: 14px">0</span>
-								</label>
-							</div>
-						</div>
-					</div>
-					<div class="form-group has-danger">
-						<div id="silk_withdraw_error" class="form-control-feedback"></div>
-					</div>
-					<div class="m-loader m-loader--brand" style="width: 30px; display: none;"></div>
-				</div>
-				<div style="border-top: 1px solid #e9ecef;padding:25px 25px 25px">
-					<div class="row">
-						<div class="col-lg-12 text-right">
-                            <button id="btnResetEzt" type="button" data-dismiss="modal" aria-label="Close" onclick="resetForm('#form_withdraw_silk')" class="btn btn-default m-btn--pill">
-                                @Html.GetTansByLan("wallet-index-17", "CANCEL")
-                            </button>
-                            <button type="submit" class="btn btn-primary m-btn--pill" id="btn_silk_withdraw">
-                                @Html.GetTansByLan("wallet-index-18", "WITHDRAW")
-                            </button>
-						</div>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-	<div class="modal fade " id="m_withdraw_eth" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content ">
-				<div class="modal-header">
-					<h5 class="modal-title">
-						WITHDRAW ETHEREUM
-					</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
-						<span aria-hidden="true">
-							&times;
-						</span>
-					</button>
-				</div>
-				<form method="POST" action="/wallet/withdraweth" id="form_withdraw_eth" autocomplete="off">
-					<!-- remove auto fill -->
-					<input class="autoFill" type="text" style="display:none">
-					<input class="autoFill" type="password" style="display:none">
-					<div class="modal-body" style="padding:25px 25px 0px">
-						<input type="hidden" name="_token" value="4byV87InJp0fKNWC3pEZhzg0CZSnMHLdImi3Lryp">
-						<div class="form-group">
-							<label for="btc_to_address" class="form-control-label">
-								Withdraw from
-							</label>
-							<div class="alert m-alert m-alert--default display-table" style="padding: 5px">
-								<div style="vertical-align: middle;height: 54px;">
-									<img alt="" style="position: absolute;" class="mr-2" src="/images/ba-common/ic_ethereum.png">
-									<span style="font-size: 18px;margin-left: 30px"> ETH Wallet</span>
-								</div>
-								<div class="des-deposit text-right">
-									<span class="eth-color" style="font-size: 18px;" id="eth_balance_p">0 ETH</span>
-									<span class="desc-info" style="font-size: 18px;" id="eth_balance_usd_p">~ $0.00 </span>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="eth_recipient" class="form-control-label">
-								Recipient Ethereum address
-							</label>
-							<input type="text" class="form-control form-control-lg" id="eth_recipient" name="eth_recipient" value="" required>
-						</div>
-						<div class="form-group " style="margin-bottom: 0px">
-							<label for="btc_amount" class="form-control-label">
-								Amount
-							</label>
-							<div class="display-table">
-								<div>
-									<div class="input-group m-input-group  m-input-icon m-input-icon--right">
-										<input oninput="calcUsdRate(this ,'#lblRemaining',866.54881116180000000000,0.00000000000000001 ,'ETH' )" type="text" class="form-control form-control-lg" id="eth_amount" name="eth_amount" required autocomplete="off">
-										<span class="input-group-addon font-size-18" id="basic-addon1">ETH</span>
-										<span class="m-input-icon__icon m-input-icon__icon--right" id="btnEztWithdrawMax" style="display: inline-block;right: 55px;z-index: 99; top: 7px;">
-											<span>
-												<img onclick="withdrawMaxEth('-0.000420000000000000 ')" style="padding: 9px;margin-top: 1px;position: absolute;right: -7px;cursor: pointer;" id="imgBtcUseMax" src="data:image/png;base64,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">
-											</span>
-										</span>
-									</div>
-								</div>
-								<div class="text-center font-size-18">~</div>
-								<div>
-									<div class="input-group m-input-group">
-										<input type="text" class="form-control text-right form-control-lg" disabled="disabled" id="lblRemaining" />
-										<span class="input-group-addon font-size-18" id="basic-addon1">USD</span>
-									</div>
-								</div>
-							</div>
-							<div class="display-table">
-								<div style="text-align: left;">
-									<label class="form-control-label">
-										<i>Transaction fees</i>
-									</label>
-								</div>
-								<div style="text-align: right;">
-									<label for="eth_fee" class="form-control-label" style="font-style: italic;font-size: 12px">
-										<span class="m--font-danger font-size-16"> - 0.00042 ETH (~ $0.36) </span>
-									</label>
-								</div>
-							</div>
-						</div>
+    <div class="modal fade" id="m_withdraw_silk" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        @Html.GetTansByLan("wallet-index-12", "WITHDRAW SILK Token")
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <form method="POST" action="/Wallet/Withdraw" id="form_withdraw_silk" autocomplete="off">
+                    <input type="hidden" id="UserID" name="UserID" value="@SKCModel.WalletInfo.UserIdNvarchar" />
+                    <input type="hidden" id="CoinType" name="CoinType" value="@SKCModel.WalletInfo.CoinTypeNvarchar" />
+                    <div class="modal-body" style="padding:25px 25px 0px">
+                        <div class="form-group">
+                            <label for="WithdrawalAddress" class="form-control-label">
+                                @Html.GetTansByLan("wallet-index-13", "Withdraw from")
+                            </label>
+                            <div class="alert m-alert m-alert--default display-table" style="padding: 5px">
+                                <div style="vertical-align: middle;height: 54px;">
+                                    <img alt="" style="position: absolute;" class="mr-2" src="/images/ba-common/ic_silk.png">
+                                    <span style="margin-left: 30px" class="font-size-18"> SILK Wallet</span>
+                                </div>
+                                <div class="des-deposit text-right">
+                                    <span class="font-size-18">@SKCModel.WalletInfo.AmountBalanceDecimal SILK</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="WithdrawalAddress" class="form-control-label">
+                                @Html.GetTansByLan("wallet-index-14", "Recipient SILK address")
+                            </label>
+                            <input type="text" class="form-control form-control-lg" id="WithdrawalAddress" name="WithdrawalAddress" placeholder="Please input the ERC20 address" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0px">
+                            <label for="WithdrawalAmount" class="form-control-label">
+                                @Html.GetTansByLan("wallet-index-15", "Amount")
+                            </label>
+                            <div class="display-table">
+                                <div>
+                                    <div class="input-group m-input-group m-input-icon m-input-icon--right">
+                                        <input type="text" class="form-control form-control-lg" id="WithdrawalAmount" name="WithdrawalAmount" required>
+                                        <span class="m-input-icon__icon m-input-icon__icon--right" style="display:inline-block;right:60px;z-index:99; top:7px;">
+                                            <span>
+                                                <img onclick="withdrawMaxSilk('@SKCModel.WalletInfo.AmountBalanceDecimal')" style="padding:9px;margin-top:1px;position:absolute;right:-7px;cursor:pointer;" id="imgBtcUseMax" src="/images/ba-common/ic_usemax.png">
+                                            </span>
+                                        </span>
+                                        <span class="input-group-addon font-size-18" id="basic-addon1">@SKC.Common.GlobalConfig.Coin_ShortName</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="display-table">
+                                <div style="text-align: left;">
+                                    <label class="form-control-label">
+                                        <i>@Html.GetTansByLan("wallet-index-16", "Transaction fees")</i>
+                                    </label>
+                                    <label for="ezt_fee" class="form-control-label" style="font-style: italic;font-size: 12px">
+                                        <span class="m--font-danger" style="font-size: 14px">0</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group has-danger">
+                            <div id="silk_withdraw_error" class="form-control-feedback"></div>
+                        </div>
+                        <div class="m-loader m-loader--brand" style="width: 30px; display: none;"></div>
+                    </div>
+                    <div style="border-top: 1px solid #e9ecef;padding:25px 25px 25px">
+                        <div class="row">
+                            <div class="col-lg-12 text-right">
+                                <button id="btnResetEzt" type="button" data-dismiss="modal" aria-label="Close" onclick="resetForm('#form_withdraw_silk')" class="btn btn-default m-btn--pill">
+                                    @Html.GetTansByLan("wallet-index-17", "CANCEL")
+                                </button>
+                                <button type="submit" class="btn btn-primary m-btn--pill" id="btn_silk_withdraw">
+                                    @Html.GetTansByLan("wallet-index-18", "WITHDRAW")
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+        <div class="modal fade " id="m_withdraw_eth" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content ">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            WITHDRAW ETHEREUM
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
+                            <span aria-hidden="true">
+                                &times;
+                            </span>
+                        </button>
+                    </div>
+                    <form method="POST" action="/wallet/withdraweth" id="form_withdraw_eth" autocomplete="off">
+                        <!-- remove auto fill -->
+                        <input class="autoFill" type="text" style="display:none">
+                        <input class="autoFill" type="password" style="display:none">
+                        <div class="modal-body" style="padding:25px 25px 0px">
+                            <input type="hidden" name="_token" value="4byV87InJp0fKNWC3pEZhzg0CZSnMHLdImi3Lryp">
+                            <div class="form-group">
+                                <label for="btc_to_address" class="form-control-label">
+                                    Withdraw from
+                                </label>
+                                <div class="alert m-alert m-alert--default display-table" style="padding: 5px">
+                                    <div style="vertical-align: middle;height: 54px;">
+                                        <img alt="" style="position: absolute;" class="mr-2" src="/images/ba-common/ic_ethereum.png">
+                                        <span style="font-size: 18px;margin-left: 30px"> ETH Wallet</span>
+                                    </div>
+                                    <div class="des-deposit text-right">
+                                        <span class="eth-color" style="font-size: 18px;" id="eth_balance_p">0 ETH</span>
+                                        <span class="desc-info" style="font-size: 18px;" id="eth_balance_usd_p">~ $0.00 </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="eth_recipient" class="form-control-label">
+                                    Recipient Ethereum address
+                                </label>
+                                <input type="text" class="form-control form-control-lg" id="eth_recipient" name="eth_recipient" value="" required>
+                            </div>
+                            <div class="form-group " style="margin-bottom: 0px">
+                                <label for="btc_amount" class="form-control-label">
+                                    Amount
+                                </label>
+                                <div class="display-table">
+                                    <div>
+                                        <div class="input-group m-input-group  m-input-icon m-input-icon--right">
+                                            <input oninput="calcUsdRate(this ,'#lblRemaining',866.54881116180000000000,0.00000000000000001 ,'ETH' )" type="text" class="form-control form-control-lg" id="eth_amount" name="eth_amount" required autocomplete="off">
+                                            <span class="input-group-addon font-size-18" id="basic-addon1">ETH</span>
+                                            <span class="m-input-icon__icon m-input-icon__icon--right" id="btnEztWithdrawMax" style="display: inline-block;right: 55px;z-index: 99; top: 7px;">
+                                                <span>
+                                                    <img onclick="withdrawMaxEth('-0.000420000000000000 ')" style="padding: 9px;margin-top: 1px;position: absolute;right: -7px;cursor: pointer;" id="imgBtcUseMax" src="data:image/png;base64,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">
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="text-center font-size-18">~</div>
+                                    <div>
+                                        <div class="input-group m-input-group">
+                                            <input type="text" class="form-control text-right form-control-lg" disabled="disabled" id="lblRemaining" />
+                                            <span class="input-group-addon font-size-18" id="basic-addon1">USD</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="display-table">
+                                    <div style="text-align: left;">
+                                        <label class="form-control-label">
+                                            <i>Transaction fees</i>
+                                        </label>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <label for="eth_fee" class="form-control-label" style="font-style: italic;font-size: 12px">
+                                            <span class="m--font-danger font-size-16"> - 0.00042 ETH (~ $0.36) </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
 
-						<div class="form-group">
-							<input type="hidden" class="form-control" id="eth_fee" name="eth_fee" disabled value="0.00042" autocomplete="off">
-						</div>
-						<div class="form-group has-danger">
-							<div id="eth_withdraw_error" class="form-control-feedback"></div>
-						</div>
-						<div class="m-loader m-loader--brand" style="width: 30px; display: none;"></div>
-					</div>
-					<div style="border-top: 1px solid #e9ecef;padding:15px 25px 25px">
-						<div class="row" style="margin-bottom: 15px">
-							<div class="col-lg-12">
-								<div class="form-group">
-									<label for="eth_password" class="form-control-label"> Password </label>
-									<input class="form-control form-control form-control-lg" id="eth_password" name="eth_password"
-										   type="password" required autocomplete="off">
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-12 text-right">
-								<button type="button" id="btnResetEth"
-										onclick="resetForm('#form_withdraw_eth')"
-										class="btn btn-default m-btn--pill">
-									RESET
-								</button>
-								<button type="submit" class="btn btn-primary m-btn--pill"
-										id='btn_eth_withdraw'>
-									WITHDRAW
-								</button>
-							</div>
-						</div>
-					</div>
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" id="eth_fee" name="eth_fee" disabled value="0.00042" autocomplete="off">
+                            </div>
+                            <div class="form-group has-danger">
+                                <div id="eth_withdraw_error" class="form-control-feedback"></div>
+                            </div>
+                            <div class="m-loader m-loader--brand" style="width: 30px; display: none;"></div>
+                        </div>
+                        <div style="border-top: 1px solid #e9ecef;padding:15px 25px 25px">
+                            <div class="row" style="margin-bottom: 15px">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="eth_password" class="form-control-label"> Password </label>
+                                        <input class="form-control form-control form-control-lg" id="eth_password" name="eth_password"
+                                               type="password" required autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 text-right">
+                                    <button type="button" id="btnResetEth"
+                                            onclick="resetForm('#form_withdraw_eth')"
+                                            class="btn btn-default m-btn--pill">
+                                        RESET
+                                    </button>
+                                    <button type="submit" class="btn btn-primary m-btn--pill"
+                                            id='btn_eth_withdraw'>
+                                        WITHDRAW
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
 
-				</form>
-			</div>
-		</div>
-	</div>
-	<div class="modal fade" id="m_withdraw_btc" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">
-						WITHDRAW BITCOIN
-					</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
-						<span aria-hidden="true">
-							&times;
-						</span>
-					</button>
-				</div>
-				<form method="POST" action="/wallet/withdrawbtc" id="form_withdraw_btc" autocomplete="off">
-					<input class="autoFill" type="text" style="display:none">
-					<input class="autoFill" type="password" style="display:none">
-					<div class="modal-body" style="padding:25px 25px 0px">
-						<input type="hidden" name="_token" value="4byV87InJp0fKNWC3pEZhzg0CZSnMHLdImi3Lryp">
-						<div class="form-group">
-							<label for="btc_to_address" class="form-control-label">
-								Withdraw from
-							</label>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="m_withdraw_btc" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            WITHDRAW BITCOIN
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
+                            <span aria-hidden="true">
+                                &times;
+                            </span>
+                        </button>
+                    </div>
+                    <form method="POST" action="/wallet/withdrawbtc" id="form_withdraw_btc" autocomplete="off">
+                        <input class="autoFill" type="text" style="display:none">
+                        <input class="autoFill" type="password" style="display:none">
+                        <div class="modal-body" style="padding:25px 25px 0px">
+                            <input type="hidden" name="_token" value="4byV87InJp0fKNWC3pEZhzg0CZSnMHLdImi3Lryp">
+                            <div class="form-group">
+                                <label for="btc_to_address" class="form-control-label">
+                                    Withdraw from
+                                </label>
 
-							<div class="alert m-alert m-alert--default display-table" style="padding: 5px">
-								<div style="vertical-align: middle;height: 54px;">
-									<img alt="" style="position: absolute;" class="mr-2" src="/images/ba-common/ic_bitcon.png">
-									<span style="margin-left: 30px" class="font-size-18"> BTC Wallet</span>
-								</div>
-								<div class="des-deposit text-right">
-									<span class="btc-color font-size-18" id="btc_balance_p"> 0BTC</span>
-									<span class="desc-info font-size-18" id="btc_balance_usd_p">~ $0.00</span>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="btc_to_address" class="form-control-label">
-								Recipient Bitcoin address
-							</label>
-							<input type="text" class="form-control form-control-lg" id="btc_to_address" name="btc_to_address" required>
-						</div>
-						<div class="form-group" style="margin-bottom: 0px">
-							<label for="btc_amount" class="form-control-label">
-								Amount
-							</label>
-							<div class="display-table">
-								<div>
-									<div class="input-group m-input-group m-input-icon m-input-icon--right">
-										<input oninput="calcUsdRate(this ,'#lblBtcRemaining',10189.53000000000000000000 ,0.0000001,'BTC')"
-											   type="text" class="form-control form-control-lg"
-											   id="btc_amount" name="btc_amount" required>
-										<span class="input-group-addon font-size-18" id="basic-addon1">BTC</span>
-										<span class="m-input-icon__icon m-input-icon__icon--right" id="btnEztWithdrawMax" style="display: inline-block;right: 55px;z-index: 99; top: 7px;">
-											<span>
-												<img onclick="withdrawMaxBtc('-0.00050000 ')" style="padding: 9px;margin-top: 1px;position: absolute;right: -7px;cursor: pointer;" id="imgBtcUseMax" src="data:image/png;base64,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">
-											</span>
-										</span>
-									</div>
-								</div>
-								<div style="width: 15px;" class="text-center">~</div>
-								<div>
-									<div class="input-group m-input-group">
-										<input type="text" class="form-control text-right form-control-lg" disabled="disabled" id="lblBtcRemaining" />
-										<span class="input-group-addon font-size-18" id="basic-addon1">USD</span>
-									</div>
-								</div>
-							</div>
-							<div class="display-table">
-								<div style="text-align: left;">
-									<label class="form-control-label">
-										<i>Transaction fees</i>
-									</label>
-								</div>
-								<div style="text-align: right;">
-									<label for="eth_fee" class="form-control-label" style="font-style: italic;font-size: 12px">
-										<span class="m--font-danger" style="font-size: 14px"> - 0.0005 BTC (~ $5.09) </span>
-									</label>
-								</div>
-							</div>
-						</div>
+                                <div class="alert m-alert m-alert--default display-table" style="padding: 5px">
+                                    <div style="vertical-align: middle;height: 54px;">
+                                        <img alt="" style="position: absolute;" class="mr-2" src="/images/ba-common/ic_bitcon.png">
+                                        <span style="margin-left: 30px" class="font-size-18"> BTC Wallet</span>
+                                    </div>
+                                    <div class="des-deposit text-right">
+                                        <span class="btc-color font-size-18" id="btc_balance_p"> 0BTC</span>
+                                        <span class="desc-info font-size-18" id="btc_balance_usd_p">~ $0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="btc_to_address" class="form-control-label">
+                                    Recipient Bitcoin address
+                                </label>
+                                <input type="text" class="form-control form-control-lg" id="btc_to_address" name="btc_to_address" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0px">
+                                <label for="btc_amount" class="form-control-label">
+                                    Amount
+                                </label>
+                                <div class="display-table">
+                                    <div>
+                                        <div class="input-group m-input-group m-input-icon m-input-icon--right">
+                                            <input oninput="calcUsdRate(this ,'#lblBtcRemaining',10189.53000000000000000000 ,0.0000001,'BTC')"
+                                                   type="text" class="form-control form-control-lg"
+                                                   id="btc_amount" name="btc_amount" required>
+                                            <span class="input-group-addon font-size-18" id="basic-addon1">BTC</span>
+                                            <span class="m-input-icon__icon m-input-icon__icon--right" id="btnEztWithdrawMax" style="display: inline-block;right: 55px;z-index: 99; top: 7px;">
+                                                <span>
+                                                    <img onclick="withdrawMaxBtc('-0.00050000 ')" style="padding: 9px;margin-top: 1px;position: absolute;right: -7px;cursor: pointer;" id="imgBtcUseMax" src="data:image/png;base64,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">
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div style="width: 15px;" class="text-center">~</div>
+                                    <div>
+                                        <div class="input-group m-input-group">
+                                            <input type="text" class="form-control text-right form-control-lg" disabled="disabled" id="lblBtcRemaining" />
+                                            <span class="input-group-addon font-size-18" id="basic-addon1">USD</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="display-table">
+                                    <div style="text-align: left;">
+                                        <label class="form-control-label">
+                                            <i>Transaction fees</i>
+                                        </label>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <label for="eth_fee" class="form-control-label" style="font-style: italic;font-size: 12px">
+                                            <span class="m--font-danger" style="font-size: 14px"> - 0.0005 BTC (~ $5.09) </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
 
-						<div class="form-group">
-							<input type="hidden" class="form-control" id="btc_fee" name="btc_fee" disabled value="0.1522805442209">
-						</div>
-						<div class="form-group has-danger">
-							<div id="btc_withdraw_error" class="form-control-feedback"></div>
-						</div>
-						<div class="m-loader m-loader--brand" style="width: 30px; display: none;"></div>
-					</div>
-					<div style="border-top: 1px solid #e9ecef;padding:15px 25px 25px">
-						<div class="row" style="margin-bottom: 15px">
-							<div class="col-lg-12">
-								<div class="form-group">
-									<label for="btc_password" class="form-control-label">
-										Password
-									</label>
-									<input class="form-control form-control-lg" id="btc_password" name="btc_password" type="password" required autocomplete="off">
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-12 text-right">
-								<button id="btnResetBtc" type="button" onclick="resetForm('#form_withdraw_btc')" class="btn btn-default m-btn--pill">
-									RESET
-								</button>
-								<button type="submit" class="btn btn-primary m-btn--pill" id='btn_btc_withdraw'>
-									WITHDRAW
-								</button>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" id="btc_fee" name="btc_fee" disabled value="0.1522805442209">
+                            </div>
+                            <div class="form-group has-danger">
+                                <div id="btc_withdraw_error" class="form-control-feedback"></div>
+                            </div>
+                            <div class="m-loader m-loader--brand" style="width: 30px; display: none;"></div>
+                        </div>
+                        <div style="border-top: 1px solid #e9ecef;padding:15px 25px 25px">
+                            <div class="row" style="margin-bottom: 15px">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="btc_password" class="form-control-label">
+                                            Password
+                                        </label>
+                                        <input class="form-control form-control-lg" id="btc_password" name="btc_password" type="password" required autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 text-right">
+                                    <button id="btnResetBtc" type="button" onclick="resetForm('#form_withdraw_btc')" class="btn btn-default m-btn--pill">
+                                        RESET
+                                    </button>
+                                    <button type="submit" class="btn btn-primary m-btn--pill" id='btn_btc_withdraw'>
+                                        WITHDRAW
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 *@
 <div class="modal fade warning-pop" id="m_show_msg" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog " role="document">
-		<div class="modal-content ">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content ">
             <div class="modal-body">
                 @Html.GetTansByLan("wallet-index-19", "Withdraw will be enabled after ICO ends")
                 <a class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
                     <i class="la la-close"></i>
                 </a>
             </div>
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 <div class="modal fade warning-pop" id="m_show_msg_kyc" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog " role="document">
-		<div class="modal-content ">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content ">
             <div class="modal-body">
                 @*@Html.GetTansByLan("wallet-index-20", "You have to verify your ")<a href="/account/index?mode=1">KYC</a> @Html.GetTansByLan("wallet-index-21", "to withdraw SILK")*@
                 @Html.GetTansByLan("wallet-index-20", "You have not yet completed the ")<a href="/Account/KYC">KYC</a> @Html.GetTansByLan("wallet-index-32", " verification, please finish it to enjoy more SILK privileged operations.")
@@ -925,116 +999,116 @@
                     <i class="la la-close"></i>
                 </a>
             </div>
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade warning-pop" id="m_show_msg_balance_zero" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog " role="document">
-		<div class="modal-content ">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content ">
             <div class="modal-body">
                 @Html.GetTansByLan("wallet-index-22", "The banlance of your wallet is 0")
                 <a class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
                     <i class="la la-close"></i>
                 </a>
             </div>
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade warning-pop warning-text-2line" id="m_show_msg_CantWithdraw" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog " role="document">
-		<div class="modal-content ">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content ">
             <div class="modal-body">
                 @Html.GetTansByLan("wallet-index-23", "Cant withdraw SILK to private wallet unitl token unlock")
                 <a class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
                     <i class="la la-close"></i>
                 </a>
             </div>
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade warning-pop" id="m_enough_msg" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog " role="document">
-		<div class="modal-content ">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content ">
             <div class="modal-body">
                 @Html.GetTansByLan("wallet-index-24", "Balance not enough")
                 <a class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
                     <i class="la la-close"></i>
                 </a>
             </div>
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 <div class="modal fade warning-pop" id="m_aml_msg" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog " role="document">
-		<div class="modal-content ">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content ">
             <div class="modal-body">
                 @Html.GetTansByLan("wallet-index-25", "You must complete AML/CFT before withdrawing")
                 <a class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
                     <i class="la la-close"></i>
                 </a>
             </div>
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade " id="modalDetails" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content ">
-			<div class="modal-header">
-				<h5 class="modal-title" style="text-transform: uppercase;" id="lblTitle"></h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
-					<span aria-hidden="true">
-						&times;
-					</span>
-				</button>
-			</div>
-			<div class="modal-body" style="padding:50px 25px">
-				<div class="row">
-					<div class="col-lg-12 text-center">
-						<img alt="" src="" id="lblImg" />
-					</div>
-					<div class="col-lg-12 text-center" style="margin: 15px 0px">
-						<span style="font-weight: 700;font-size: 36px;" id="lblAmount">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" style="text-transform: uppercase;" id="lblTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding:50px 25px">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <img alt="" src="" id="lblImg" />
+                    </div>
+                    <div class="col-lg-12 text-center" style="margin: 15px 0px">
+                        <span style="font-weight: 700;font-size: 36px;" id="lblAmount">
 
-						</span>
-					</div>
-					<div class="col-lg-12 text-center">
-						<span style="font-size: 24px" id="lblUsd"></span>
-					</div>
-				</div>
-			</div>
-			<hr />
-			<div style="padding:0px 30px">
-				<table class="table noBoderFrist" id="detailsTable">
-					<tr>
+                        </span>
+                    </div>
+                    <div class="col-lg-12 text-center">
+                        <span style="font-size: 24px" id="lblUsd"></span>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div style="padding:0px 30px">
+                <table class="table noBoderFrist" id="detailsTable">
+                    <tr>
                         <td style="min-width: 130px">@Html.GetTansByLan("wallet-index-26", "Transaction id")</td>
-						<td class="text-right">
-							<span id="lblTnx" class="txId" style="width: 50%;display: inline-block;overflow: hidden;"></span><button class="btn btn-secondary btnNoneBorder" onclick="return copyValToClipboard('#detailsTable #lblTnx' ,'#detailsTable' )"><i class="io-copy"></i></button>
-						</td>
-					</tr>
-					<tr class="withdrawDetailRow">
+                        <td class="text-right">
+                            <span id="lblTnx" class="txId" style="width: 50%;display: inline-block;overflow: hidden;"></span><button class="btn btn-secondary btnNoneBorder" onclick="return copyValToClipboard('#detailsTable #lblTnx' ,'#detailsTable' )"><i class="io-copy"></i></button>
+                        </td>
+                    </tr>
+                    <tr class="withdrawDetailRow">
                         <td>@Html.GetTansByLan("wallet-index-27", "To")</td>
-						<td class="text-right" id="lblTo"></td>
-					</tr>
-					<tr>
+                        <td class="text-right" id="lblTo"></td>
+                    </tr>
+                    <tr>
                         <td>@Html.GetTansByLan("wallet-index-28", "Date")</td>
-						<td class="text-right" id="lblDate"></td>
-					</tr>
-					<tr class="withdrawDetailRow">
+                        <td class="text-right" id="lblDate"></td>
+                    </tr>
+                    <tr class="withdrawDetailRow">
                         <td>@Html.GetTansByLan("wallet-index-29", "Fee")</td>
-						<td class="text-right" id="lblFee"></td>
-					</tr>
-					<tr>
+                        <td class="text-right" id="lblFee"></td>
+                    </tr>
+                    <tr>
                         <td>@Html.GetTansByLan("wallet-index-30", "Status")</td>
-						<td class="text-right" id="lblStatus"></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-	</div>
+                        <td class="text-right" id="lblStatus"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade" id="modal_errors" tabindex="-1" role="dialog" style="display: none;z-index: 1042;" aria-hidden="true">
@@ -1055,9 +1129,10 @@
 </div>
 
 @section script{
-	<script src="~/js/sweetalert.min.js"></script>
-	<script src="https://cdn.bootcss.com/bignumber.js/5.0.0/bignumber.min.js"></script>
-	<script src="/js/web3.min.js"></script>
+    <script src="~/js/sweetalert.min.js"></script>
+    <script src="https://cdn.bootcss.com/bignumber.js/5.0.0/bignumber.min.js"></script>
+    <script src="/js/web3.min.js"></script>
+    <script src="~/js/loading.js"></script>
     <script type="text/javascript">
     if (typeof web3 !== 'undefined') {
         web3 = new Web3(web3.currentProvider);
@@ -1355,6 +1430,7 @@ $("#form_withdraw_silk").submit(function (event) {
                 }, 1000);
             },
             request_data: function (url, params, opt) {
+                var error_code_msg = '@Html.Raw(Html.GetLang()=="en"? "The verification code has failed to be sent. Please click to reacquire or contact us via" : "验证码发送失败，请点击重新获取或联系客服")\r\nsupport@mail.silkchain.io';
                 $.ajax({
                     type: 'post',
                     url: url,
@@ -1362,10 +1438,12 @@ $("#form_withdraw_silk").submit(function (event) {
                     beforeSend: function () {
                         $("#but_phone_code").attr("disabled", true);
                         $("#btn_silk_withdraw").attr("disabled", true);
+                        $.showLoading('@Html.Raw(Html.GetTansByLan("account-kyc-tip001", "Waiting"))');
                     },
                     complete: function () {
                         $("#but_phone_code").attr("disabled", false);
                         $("#btn_silk_withdraw").attr("disabled", false);
+                        $.hideLoading();
                     },
                     success: function (data) {
                         switch (opt.value) {
@@ -1373,9 +1451,10 @@ $("#form_withdraw_silk").submit(function (event) {
                                 var obj = $("#but_phone_code");
                                 if (data.result) {
                                     valid.show_wait(obj);
+                                    swal(data.successmessage);
                                 } else {
                                     obj.attr("disabled", false);
-                                    swal(data.message);
+                                    swal(error_code_msg);
                                 }
                                 break;
                             default:

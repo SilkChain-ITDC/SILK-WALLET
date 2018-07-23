@@ -46,10 +46,13 @@
     </script>*@
 </head>
 <body>
-    <input type="file" name="MyFile" id="input_file">
-    <img id="img_demo" style="width:100px;height:100px;" />
-    <input type="button" id="but_sub" value="上传" />
-    上传成功：<input id="size" name="size" />KB<img src="" style="width:100px;height:100px;" id="img_upload" />
+    <form id="form_file">
+        <input type="file" name="MyFile" id="input_file">
+        <img id="img_demo" style="width:100px;height:100px;" />
+        <input type="button" id="but_sub" value="上传" />
+        上传成功：<input id="size" name="size" />KB<img src="" style="width:100px;height:100px;" id="img_upload" />
+    </form>
+    <img src="/Test/Code" />
 </body>
 </html>
 <!--图片压缩 新版本-->
@@ -97,8 +100,9 @@
             var img_data_uri = $("#img_demo").attr("src");
             if (img_data_uri != "") {
                 var blob = $.dataURItoBlob(img_data_uri);
-                var data = new FormData();
-                data.append("imgFile", blob);
+                var data = new FormData($("#form_file").get(0));
+                //data.append("imgFile", blob);
+                //data.append("imgFile", $("#input_file").get(0));
                 $.ajax({
                     type: "POST",
                     url: '/Test/FileUpload',

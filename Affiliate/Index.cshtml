@@ -107,7 +107,7 @@ h5 {text-transform:capitalize;}
                                 <th class="col-6" style="height:auto;padding:5px 0px;background:none;">
                                     <h5 class="dark-color">@Html.GetTansByLan("affiliate-index-03", "Total referraled amount")</h5>
                                     <h1 class="dark-color" style="margin: 0">
-                                        @Model.CountAllAffiliateCandy.ToString("N1") @SKC.Common.GlobalConfig.Coin_ShortName
+                                        @Html.AmountFormat(Model.CountAllAffiliateCandy) @SKC.Common.GlobalConfig.Coin_ShortName
                                     </h1>
                                 </th>
                             </tr>
@@ -137,7 +137,7 @@ h5 {text-transform:capitalize;}
                                         {
                                     <tr>
                                         <td>@item.CreateTimeDatetime.ToShortDateString()</td>
-                                        <td class="text-right">@item.AmountDecimal.ToString("N1")</td>
+                                        <td class="text-right">@Html.AmountFormat(item.AmountDecimal)</td>
                                     </tr>
                                         }
                                     }

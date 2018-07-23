@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>@Html.GetTansByLan("account-findpwd-19", "SilkChain - Email Reset Password")</title>
+    <title>@Html.GetTansByLan("account-google2FA-security-01", "SilkChain - Two Factor Authentication")</title>
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -106,7 +106,7 @@
 </html>
 <script type="text/javascript">
     if ('@(Model.Error)' != "") { 
-        swal('@(Model.Error)');
+        swal('@Html.Raw(Model.Error)');
     }
     function ChkValid() { 
         var code = $("#txt_valid").val();

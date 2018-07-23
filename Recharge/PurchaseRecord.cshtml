@@ -12,6 +12,8 @@
     List<CoinPriceRange> coin_price_range = ViewBag.CoinPriceRange as List<CoinPriceRange>;
     List<SkcVoucherListModel> voucherList = ViewBag.VoucherList;
     List<RealRatePriceModel> now_rare = ViewBag.NowRate as List<RealRatePriceModel>;
+    KYCPromotionRatio now_promotion = ViewBag.Nowpromotion as KYCPromotionRatio;
+
 }
 <style>
     .light-color {
@@ -25,6 +27,8 @@
     .usdt-color {
         color: #26a17b;
     }
+
+    .text-block {display:block;}
 
     .btn-alert {
         background-color: #b4dcf0 !important;
@@ -359,6 +363,46 @@
             color: #f4a62b;
         }
 
+    .modal .invt-promo {
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+    }
+
+        .modal .invt-promo .label-tip {
+            display: inline-block;
+            width: 7.6rem;
+            text-align: center;
+            border: 1px solid #f00000;
+            color: #f00000;
+            border-radius: 6px;
+            margin-right: 6px;
+        }
+
+    .modal .total-box {
+        max-width: 24rem;
+        padding-left: 3.2rem;
+    }
+
+        .modal .total-box label {
+            float: left;
+            margin-top: 0.6rem;
+            margin-left: -3.2rem;
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+
+        .modal .total-box .amount-numb {
+            display: block;
+            border-bottom: 1px solid #999;
+            text-align: right;
+            color: #f00000;
+            font-size: 1.25rem;
+        }
+
+            .modal .total-box .amount-numb strong {
+                margin-right: 0.4rem;
+            }
+
     @@media (max-width: 1599px) {
         .ptlet-amount-box .ptlet-amount {
             padding-bottom: 56px;
@@ -427,6 +471,10 @@
         .form-control-lg {
             padding: 0.65rem 0.25rem;
             font-size: 14px;
+        }
+
+        .modal .total-box {
+            max-width: none;
         }
     }
 
@@ -526,6 +574,7 @@
             position: absolute;
             top: 0;
             right: -1px;
+            z-index: 9;
             content: "";
             display: block;
             width: 24px;
@@ -633,10 +682,12 @@
             right: -100px;
             width: 100px;
             padding: 0 12px 4px 5px;
-            color: #fff;
+            color: #333;
             text-align: center;
             font-size: 12px;
         }
+        .red-card .expire-peak {position:absolute;left:0;top:0;display:block;width:69px;height:85px;opacity:0.9;overflow:hidden;}
+        .red-card .expire-peak .hor {position:absolute;left:-21px;top:11px;width:90px;height:22px;line-height:22px;color:#fff;font-size:12px;font-weight:normal;font-style:normal;text-align:center;transform:rotate(-45deg);background-color:#bbb;}
 
         .red-card.expire {
             background-color: #ddd;
@@ -735,6 +786,31 @@
             border-left: 1px solid #ddd;
         }
     }
+
+    .modal-footer-wrapper {
+        text-align: right;
+    }
+
+    .panel-body span {
+        padding-left: 4%;
+    }
+
+    .panel-body .container {
+        margin-top: 20px;
+    }
+
+    .col-xs-6 {
+        width: 50%;
+    }
+
+    .turn-on-secondary-ver {
+        text-align: right;
+    }
+
+    .tutorial-wrapper {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
 </style>
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
     <div class="m-content">
@@ -770,7 +846,7 @@
                                                         </div>
                                                         <div class="rate-deposit">
                                                             <span class="font-size-18 eth-color">1 ETH</span>
-                                                            <span class="val-desc-info font-s14">= <span class="sp_ethtosilk" style="display:inline;"></span>SILK</span>
+                                                            <span class="val-desc-info font-s14">= <span class="sp_ethtosilk" style="display:inline;"></span> SILK</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -790,7 +866,7 @@
                                                         </div>
                                                         <div class="rate-deposit">
                                                             <span class="font-size-18 usdt-color">1 USDT</span>
-                                                            <span class="val-desc-info font-s14">= <span class="sp_usdttosilk" style="display:inline;"></span>SILK</span>
+                                                            <span class="val-desc-info font-s14">= <span class="sp_usdttosilk" style="display:inline;"></span> SILK</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -810,7 +886,7 @@
                                                         </div>
                                                         <div class="rate-deposit">
                                                             <span class="font-size-18 btc-color">1 BTC</span>
-                                                            <span class="val-desc-info font-s14">= <span class="sp_btctosilk" style="display:inline;"></span>SILK</span>
+                                                            <span class="val-desc-info font-s14">= <span class="sp_btctosilk" style="display:inline;"></span> SILK</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -818,28 +894,52 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if (now_promotion != null)
+                                {
+                                    <div class="form-group">
+                                        <p class="invt-promo"><span class="label-tip">@Html.GetTansByLan("recharge-purchase-bonus-1", "PROMOTION") </span>@("en".Equals(Html.GetLang()) ? now_promotion.AdEN : now_promotion.AdCN)</p>
+                                        <p class="invt-promo"><span class="label-tip">@Html.GetTansByLan("recharge-purchase-bonus-2", "VALID PERIOD")</span>@(now_promotion.StartTime.ToString("yyyy-MM-dd HH:mm:ss"))-@(now_promotion.EndTime.ToString("yyyy-MM-dd HH:mm:ss"))</p>
+                                    </div>
+                                }
                                 <div class="form-group" style="margin-bottom: 0px">
                                     <label for="ezt_amount" class="form-control-label">@Html.GetTansByLan("recharge-purchase-29", "Amount of Silk")</label>
-                                    <div class="display-table width-xl-auto">
+                                    <div class="display-table width-xl-auto @(now_promotion!=null?" display-sm-block":"")">
                                         <div>
                                             <div class="input-group m-input-group m-input-icon">
                                                 <input type="text" class="form-control" id="ezt_amount" name="DealAmount">
                                                 <span class="input-group-addon font-size-18" id="sp_choose_cointype">ETH</span>
                                             </div>
                                         </div>
-                                        <div style="width: 15px;" class="text-center">=</div>
+                                        <div style="width:15px;height:auto;" class="text-center">=</div>
                                         <div>
                                             <div class="input-group m-input-group">
                                                 <input type="text" class="form-control" disabled="disabled" id="lblEztRemaining" />
                                                 <span class="input-group-addon font-size-18" id="basic-addon1">@SKC.Common.GlobalConfig.Coin_ShortName</span>
                                             </div>
                                         </div>
+                                        @if (now_promotion != null)
+                                        {
+                                            <div style="width:15px;height:auto;" class="text-center">+</div>
+                                            <div>
+                                                <div class="input-group m-input-group">
+                                                    <input type="text" class="form-control" disabled="disabled" id="txt_bonus" />
+                                                    <span class="input-group-addon font-size-18">@Html.GetTansByLan("recharge-purchase-bonus-3", "SILK BONUS")</span>
+                                                </div>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
 
                                 <div class="form-group has-danger">
                                     <div id="ezt_withdraw_error" class="form-control-feedback" style="display:none;">@Html.GetTansByLan("recharge-purchase-chk-1", "Required Number") <label class="lb_coin_type"></label>@Html.GetTansByLan("recharge-purchase-chk-2", "Range From") <label class="lb_min_price"></label>  @Html.GetTansByLan("recharge-purchase-chk-3", "to") <label class="lb_max_price"></label></div>
                                 </div>
+
+                                @if (now_promotion != null)
+                                {
+                                    <div class="form-group">
+                                        <div class="total-box"><label>@Html.GetTansByLan("recharge-purchase-bonus-4", "Total"):</label><span class="amount-numb"><strong id="strong_total"></strong>SILK</span></div>
+                                    </div>
+                                }
                             </div>
                             <div style="border-top:1px solid #efefef;padding-top:20px;">
                                 <div class="row">
@@ -877,11 +977,9 @@
                                                             <li class="card-hd"><i class="ico-coin"></i>@Html.GetTansByLan("inviting-newuser-packet-02", "免费新用户邀请红包")</li>
                                                             <li class="price-digg">
                                                                 <div class="pri-lab">@Html.GetTansByLan("inviting-newuser-packet-23", "已获得")</div>
-                                                                <div class="price"><strong> @item.Amount.ToString("N2")</strong><span class="unit">@Html.GetTansByLan("packet-silk-alias-01", "SILK")</span></div>
+                                                                <div class="price"><strong> @Html.AmountFormat(item.Amount)</strong><span class="unit">@Html.GetTansByLan("packet-silk-alias-01", "SILK")</span></div>
                                                             </li>
-                                                            <li class="price-digg">
-                                                                <div class="pri-lab">@Html.GetTansByLan("inviting-newuser-packet-07", "已过期")</div>
-                                                            </li>
+                                                            <i class="expire-peak"><span class="hor">@Html.GetTansByLan("inviting-newuser-packet-07", "已过期")</span></i>
                                                         </ul>
                                                         @if (item.IsExist)
                                                         {
@@ -908,11 +1006,11 @@
                                                             {
                                                                 <li class="price-digg">
                                                                     <div class="pri-lab">@Html.GetTansByLan("inviting-newuser-packet-23", "已获得")</div>
-                                                                    <div class="price"><strong> @item.Amount.ToString("N2")</strong><span class="unit">@Html.GetTansByLan("packet-silk-alias-01", "SILK")</span></div>
+                                                                    <div class="price"><strong> @Html.AmountFormat(item.Amount)</strong><span class="unit">@Html.GetTansByLan("packet-silk-alias-01", "SILK")</span></div>
                                                                 </li>
                                                             }
                                                             <li class="price-digg">
-                                                                 <div class="pri-lab">@item.Countdown @Html.GetTansByLan("inviting-newuser-packet-09", "天后过期")</div>
+                                                                <div class="pri-lab">@item.Countdown @Html.GetTansByLan("inviting-newuser-packet-09", "天后过期")</div>
                                                             </li>
                                                         </ul>
                                                         @if (item.IsExist)
@@ -940,7 +1038,6 @@
                                             <dd><i>@Html.GetTansByLan("inviting-newuser-packet-15", "2.")</i>@Html.GetTansByLan("inviting-newuser-packet-16", "每个链接仅限新用户注册领取，不限个数；")</dd>
                                             <dd><i>@Html.GetTansByLan("inviting-newuser-packet-17", "3.")</i>@Html.GetTansByLan("inviting-newuser-packet-18", "每个链接会按领取顺序随机发放一个大额红包；")</dd>
                                             <dd><i>@Html.GetTansByLan("inviting-newuser-packet-19", "4.")</i>@Html.GetTansByLan("inviting-newuser-packet-20", "红包领取人手机号/邮箱地址、提取Silk时输入的手机号/邮箱地址需为同一号码；")</dd>
-                                            <dd><i>@Html.GetTansByLan("inviting-newuser-packet-21", "5.")</i>@Html.GetTansByLan("inviting-newuser-packet-22", "其他未尽事宜，请详询客服；")</dd>
                                         </dl>
                                     </div>
                                 </div>
@@ -980,8 +1077,14 @@
                                                 {
                                                     <tr>
                                                         <td>@item.CreateTimeDatetime.ToString("HH:mm MM/dd")</td>
-                                                        <td class="text-right">@(item.AmountDecimal.ToString("N2")) SILK</td>
-                                                        <td class="text-right"><span class="text-nowrap eth-color">@(item.SourceNvarchar == "在线购买" ? item.DealAmountDecimal + item.CoinTypeNvarchar : "-") </span></td>
+                                                        <td class="text-right">@Html.AmountFormat(item.AmountDecimal) SILK</td>
+                                                        <td class="text-right">
+                                                            @if(item.SourceNvarchar == "在线购买"){
+                                                            <span class="text-nowrap eth-color">@(item.SourceNvarchar == "在线购买" ? Html.GetTansByLan("recharge-purchase-expired-03", "Order Amount:") + Html.AmountFormat(item.DealAmountDecimal) +" "+ item.CoinTypeNvarchar : "-") </span><span class="text-nowrap text-block">@Html.GetTansByLan("recharge-purchase-expired-02", "Paid: ")@item.AmountReceived.ToString("N2") @item.CoinTypeNvarchar (@((item.AmountReceived * 100 / item.DealAmountDecimal).ToString("N2") + "%"))</span>
+                                                            }else{
+                                                            <span class="text-nowrap eth-color">-</span>
+                                                            }
+                                                        </td>
                                                         <td class="text-center">
                                                             @if (item.StatusInt == (int)SKCPublishStatus.确认收款 || item.StatusInt == (int)SKCPublishStatus.已发币)
                                                             {
@@ -990,6 +1093,7 @@
                                                             else if (item.StatusInt < (int)SKCPublishStatus.确认收款)
                                                             {
                                                                 <span class="text-nowrap eth-color">@Html.GetTansByLan("recharge-purchase-13", "Pending")</span>
+                                                                <span class="text-nowrap text-block">@Html.GetTansByLan("recharge-purchase-expired-01", "Expired Date:")@(item.LimitTimeDatetime==null?(item.CreateTimeDatetime.AddDays(1).ToString("MM-dd HH:mm")) : Convert.ToDateTime(item.LimitTimeDatetime).ToString("MM-dd HH:mm"))</span>
                                                             }
                                                             else
                                                             {
@@ -1004,15 +1108,16 @@
                                                                 else if (item.StatusInt == (int)SKCPublishStatus.过期)
                                                                 {
                                                                     <span class="text-nowrap eth-color">@Html.GetTansByLan("recharge-purchase-16", "Expired")</span>
+                                                                    <span class="text-nowrap text-block">@Html.GetTansByLan("recharge-purchase-expired-01", "Expired Date:")@(item.LimitTimeDatetime==null?(item.CreateTimeDatetime.AddDays(1).ToString("MM-dd HH:mm")) : Convert.ToDateTime(item.LimitTimeDatetime).ToString("MM-dd HH:mm"))</span>
                                                                 }
                                                             }
 
                                                         </td>
                                                         <td class="text-right">
-                                                            @if (!string.IsNullOrEmpty(item.FinanceAddressNvarchar) && item.StatusInt != (int)SKCPublishStatus.过期)
+                                                            @if (!string.IsNullOrEmpty(item.FinanceAddressNvarchar) && item.StatusInt != (int)SKCPublishStatus.过期 && item.StatusInt != (int)SKCPublishStatus.确认收款)
                                                             {
                                                                 var address = JsonConvert.DeserializeObject<ReceiptAdressJsonModel>(item.FinanceAddressNvarchar);
-                                                                <a class="btn btn-alert m-btn--pill btn-sm" href="javascript:void(0)" data-address="@address.Adress" data-cointype="@item.CoinTypeNvarchar" data-dealamount="@item.DealAmountDecimal" onclick="buy_silk.show_pay_address(this)">@Html.GetTansByLan("recharge-purchase-17", "Payment Address")</a>
+                                                                <a class="btn btn-alert m-btn--pill btn-sm" href="javascript:void(0)" data-address="@address.Adress" data-cointype="@item.CoinTypeNvarchar" data-dealamount="@Html.AmountFormat(item.DealAmountDecimal) " onclick="buy_silk.show_pay_address(this)">@Html.GetTansByLan("recharge-purchase-17", "Payment Address")</a>
                                                             }
 
                                                             @if (item.StatusInt < (int)SKCPublishStatus.确认收款 || item.StatusInt == (int)SKCPublishStatus.过期)
@@ -1267,7 +1372,42 @@
         </div>
     </div>
 </div>
+@if (accountModel.FactorAuthenticationBit != true)
+{
+    <div class="modal fade" id="m_modal_prompt_2fa" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
 
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        @Html.Raw(Html.GetTansByLan("account-security-prompt_01", "SilkChain")) 
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            × 
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="panel-body">
+                        @Html.Raw(Html.GetTansByLan("account-security-prompt_02", "尊敬的丝链用户，"))@(accountModel.FullNameNvarchar ?? accountModel.UserNameNvarchar)
+                        <br /><span>@Html.Raw(Html.GetTansByLan("account-security-prompt_03", "您好！"))</span>
+                        <br />@Html.Raw(Html.GetTansByLan("account-security-prompt_04", "为了您的资金安全，强烈建议您开启谷歌二次验证功能。"))<br />
+                        <div class="tutorial-wrapper">
+                            <a href="/Account/Guideline">@Html.Raw(Html.GetTansByLan("account-security-prompt_05", "查看谷歌二次验证教程"))</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<a href="/Account/Index/1">@Html.Raw(Html.GetTansByLan("account-security-prompt_06", "立刻去开启二次验证"))</a>
+                        </div>
+                        <br />@Html.Raw(Html.GetTansByLan("account-security-prompt_09", "谢谢！"))
+                    </div>
+                    <div class="turn-on-secondary-ver">
+                        @Html.Raw(Html.GetTansByLan("account-security-prompt_08", "国际贸易化数字委员会"))
+                        <br /><span>@DateTime.Now.ToString("yyyy-MM-dd")</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 <form action="/Packet/GetPacketIndex/" method="POST" id="J_modal_add_purchase">
     <input type="hidden" id="OnlyCode" name="OnlyCode" value="" />
 </form>
@@ -1275,8 +1415,38 @@
     <script src="~/js/sweetalert.min.js"></script>
     <script src="~/js/bignumber.js"></script>
     <script type="text/javascript">
+        function getCookie(c_name) {
+            if (document.cookie.length > 0) {
+                c_start = document.cookie.indexOf(c_name + "=");
+                if (c_start != -1) {
+                    c_start = c_start + c_name.length + 1
+                    c_end = document.cookie.indexOf(";", c_start)
+                    if (c_end == -1) c_end = document.cookie.length
+                    return unescape(document.cookie.substring(c_start, c_end))
+                } else {
+                    return "";
+                }
+            }
+            return ""
+        }
+        function setCookie(c_name, value, expiredays) {
+            var exdate = new Date()
+            exdate.setDate(exdate.getDate() + expiredays)
+            document.cookie = c_name + "=" + escape(value) + ";expires=" + exdate.toGMTString() + ";path=/;domain=silkchain.io";
+            document.cookie = c_name + "=" + escape(value) + ";expires=" + exdate.toGMTString() + ";path=/;domain=silkb2b.io";
+        }
+        $(function () {
+            if (getCookie("_2fa") == "") {
+                $("#m_modal_prompt_2fa").modal();
+                setCookie('_2fa', 1, 1);
+                return false;
+            }
+            return false;
+        })
         var coin_price_range = @Html.Raw(JsonConvert.SerializeObject(coin_price_range));
         var now_rates = @Html.Raw(JsonConvert.SerializeObject(now_rare));
+        var now_promotion = @Html.Raw(now_promotion != null ? JsonConvert.SerializeObject(now_promotion) : "{}");
+        var has_bonus = $.isEmptyObject(now_promotion) ? false : true;
         var buy_silk = {
             params: { eth_silk_rate: 1, url: '/Recharge/CheckSkcPublish',rate:[] },
             inItControl: function () {
@@ -1296,6 +1466,16 @@
                         var silk_num = new BigNumber((silk_count_num).toString());
                         $("#hd_silk_num").val(silk_count_num);
                         eth_count_tag.val(silk_num.toFormat());
+                        if (has_bonus) {
+                            var silk_bonus = new BigNumber(0);
+                            if (silk_count_num >= now_promotion.MOQ) {
+                                var r = new BigNumber(now_promotion.PromotionRatio);
+                                silk_bonus = silk_num.multipliedBy(r);
+                            }
+                            var silk_total = silk_num.plus(silk_bonus);
+                            $("#txt_bonus").val(silk_bonus.toFormat());
+                            $("#strong_total").text(silk_total.toFormat());
+                        }
                     }
                     if (chk_range_price.ok) {
                         error_num_tag.hide();

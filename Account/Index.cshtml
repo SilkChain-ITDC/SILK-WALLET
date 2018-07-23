@@ -1,9 +1,11 @@
 ﻿@model SKC.Entity.DBModels.SkcUser
 @using SKC.Entity.DBModels;
 @using SKC.Entity.Enums;
+@using SKC.Entity.Models;
 @{
     ViewData["Title"] = "SilkChain - Profile";
     var user_audit = ViewBag.UserAudit as SkcUserAuthentication;
+    var countrys = ViewBag.Lang as List<CountryModel>;
 }
 <style>
     h3, .h3, h4, .h4 {
@@ -71,14 +73,14 @@
             <div class="m-portlet__head">
                 <div class="m-portlet__head-tools">
                     <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--left" id="profile_tab" role="tablist">
-                        <li class="nav-item m-tabs__item"><a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_user_profile_tab" role="tab">@Html.Raw(Html.GetTansByLan("account-index-profile", "Profile"))</a></li>
-                        @*<li class="nav-item m-tabs__item"><a class="nav-link m-tabs__link" data-toggle="tab" href="#m_user_security_tab" role="tab" id="securityTab">@Html.Raw(Html.GetTansByLan("account-index-security", "Security"))</a></li>*@
+                        <li class="nav-item m-tabs__item"><a class="nav-link m-tabs__link @(ViewBag.Source!=1?"active":"")" data-toggle="tab" href="#m_user_profile_tab" role="tab">@Html.Raw(Html.GetTansByLan("account-index-profile", "Profile"))</a></li>
+                        <li class="nav-item m-tabs__item"><a class="nav-link m-tabs__link @(ViewBag.Source==1?"active":"")" data-toggle="tab" href="#m_user_security_tab" role="tab" id="securityTab">@Html.Raw(Html.GetTansByLan("account-index-security", "Security"))</a></li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="tab-content">
-            <div class="tab-pane active" id="m_user_profile_tab">
+            <div class="tab-pane @(ViewBag.Source!=1?"active":"")" id="m_user_profile_tab">
                 <form class="m-form m-form--fit m-form--label-align-right" id="form_valid_fullname" method="POST" action="/Account/CheckAccountInfo">
                     <input type="hidden" name="_token" value="4byV87InJp0fKNWC3pEZhzg0CZSnMHLdImi3Lryp">
                     <input type="hidden" name="Option" value="EditFullName" />
@@ -112,6 +114,26 @@
                                             <label for="example_input_full_name" class="form-control-label">@Html.GetTansByLan("account_index_tag2", "Email")</label>
                                             <input class="form-control m-input form-control-lg" type="text" name="Email" value="@(Model.EmailNvarchar)" @(!string.IsNullOrEmpty(Model.EmailNvarchar) ? "disabled=\"disabled\"" : "") />
                                         </div>
+                                        <div class="form-group mb-0">
+                                            <label for="example_input_full_name" class="form-control-label">@Html.GetTansByLan("account_index_tag3", "Phone")</label>
+                                            <select class="form-control" id="sub_phone" name="AreaCode" @(!string.IsNullOrEmpty(Model.PhoneSysbomNvarchar) ? "disabled=\"disabled\"" : "") style="padding-right:0;padding-top:0;padding-bottom:0px;height:3.571428rem;margin-bottom:20px;">
+                                                @if (countrys != null && countrys.Count > 0)
+                                                {
+                                                    foreach (var item in countrys)
+                                                    {
+                                                        if (item.Code.Equals((Model.PhoneSysbomNvarchar ?? "").Replace("+", "")))
+                                                        {
+                                                            <option data-label="+@(item.AreaCode)" data-code="@item.Code" selected="selected" value="+@(item.AreaCode)"> @(item.Name) +@(item.AreaCode)</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option data-label="+@(item.AreaCode)" data-code="@item.Code" value="+@(item.AreaCode)"> @(item.Name) +@(item.AreaCode)</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                            <input class="form-control m-input form-control-lg" type="text" name="PhoneNum" value="@(Model.PhoneNvarchar)" @(!string.IsNullOrEmpty(Model.PhoneNvarchar) ? "disabled=\"disabled\"" : "") />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +151,7 @@
                     </div>
                 </form>
             </div>
-            <div class="tab-pane" id="m_user_security_tab" >
+            <div class="tab-pane @(ViewBag.Source==1?"active":"")" id="m_user_security_tab">
                 <div class="m-portlet m-portlet--mobile m-portlet--skin-dark mb-0">
                     <div class="m-portlet__body form-ft-oop">
                         <div class="row" style="margin:0;height: 150px">
@@ -139,8 +161,8 @@
                             <div class="col-lg-3">
                                 @if (Model.FactorAuthenticationBit.HasValue && Model.FactorAuthenticationBit.Value == true)
                                 {<p id="a_disable_2fa" class="btn btn-warning m-btn--pill">@Html.Raw(Html.GetTansByLan("account-index-security-disable", "Disable 2FA"))</p>}
-                                else
-                                {<p id="a_enable_2fa" class="btn btn-primary m-btn--pill">@Html.Raw(Html.GetTansByLan("account-index-security-enable", "Enable 2FA"))</p>}
+                            else
+                            {<p id="a_enable_2fa" class="btn btn-primary m-btn--pill">@Html.Raw(Html.GetTansByLan("account-index-security-enable", "Enable 2FA"))</p>}
                             </div>
                             <p class="col-lg-12 security-p-help" style="font-size:1rem;"><a href="/Account/Guideline"><i class="la la-question-circle" style="font-size:1.5rem;vertical-align:text-top;"></i>@Html.Raw(Html.GetTansByLan("account-index-security-guideline", "Google 2FA Guideline"))</a></a>
                         </div>
@@ -153,51 +175,51 @@
 </div>
 @if (!Model.FactorAuthenticationBit.HasValue || Model.FactorAuthenticationBit.Value == false)
 {
-<div class="modal fade" id="m_modal_enable_2fa" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+    <div class="modal fade" id="m_modal_enable_2fa" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
 
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    @Html.Raw(Html.GetTansByLan("account-index-security-enabletitle", "Enable Two-Factor Authentication")) 
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">
-                        ×
-                    </span>
-                </button>
-            </div>
-            <form>
-                <div class="modal-body" id="2faEnableResponse">
-                    <div class="panel-body">
-                        1. @Html.Raw(Html.GetTansByLan("account-index-security-enable-01", "Download and Install Authy or Google Authenticator."))
-                        <br />2. @Html.Raw(Html.GetTansByLan("account-index-security-enable-02", "Scan this barcode OR Type this secret key into you app"))
-                        <br />
-                        <code style="display: inline-block;">@SKC.Utility.Helper.GoogleAuthenticatorHelper.GetUserSecretKey(Model.UserIdNvarchar)</code>
-                        <div id="img_2fa_enable_address" style="width:260px;height:260px;padding:40px;margin-left:auto;margin-right:auto;"></div>
-                        <input class="form-control m-input form-control-lg" type="text" id="verify_secret" style="margin-top:4px;" placeholder="@Html.Raw(Html.GetTansByLan("account-index-security-enable-03", "Enter the token from your app to verify"))" required="">
-                        <div class="has-danger" style="display: none"><div class="form-control-feedback">@Html.Raw(Html.GetTansByLan("account-index-security-error", "Incorrect Token, Please try again"))!</div></div>
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        @Html.Raw(Html.GetTansByLan("account-index-security-enabletitle", "Enable Two-Factor Authentication"))
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body" id="2faEnableResponse">
+                        <div class="panel-body">
+                            1. @Html.Raw(Html.GetTansByLan("account-index-security-enable-01", "Download and Install Authy or Google Authenticator."))
+                            <br />2. @Html.Raw(Html.GetTansByLan("account-index-security-enable-02", "Scan this barcode OR Type this secret key into you app"))
+                            <br />
+                            <code style="display: inline-block;">@SKC.Utility.Helper.GoogleAuthenticatorHelper.GetUserSecretKey(Model.UserIdNvarchar)</code>
+                            <div id="img_2fa_enable_address" style="width:260px;height:260px;padding:40px;margin-left:auto;margin-right:auto;"></div>
+                            <input class="form-control m-input form-control-lg" type="text" id="verify_secret" style="margin-top:4px;" placeholder="@Html.Raw(Html.GetTansByLan("account-index-security-enable-03", "Enter the token from your app to verify"))" required="">
+                            <div class="has-danger" style="display: none"><div class="form-control-feedback">@Html.Raw(Html.GetTansByLan("account-index-security-error", "Incorrect Token, Please try again"))!</div></div>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="reset" class="btn btn-default m-btn--pill">
-                        @Html.Raw(Html.GetTansByLan("account-index-security-enable-reset", "Reset"))
-                    </button>
-                    <button type="submit" id="btn_verify_enable_2fa" class="btn btn-primary m-btn m-btn--air m-btn--custom m-btn--pill">
-                        @Html.Raw(Html.GetTansByLan("account-index-security-enable-enable", "Enable"))                        
-                    </button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-default m-btn--pill">
+                            @Html.Raw(Html.GetTansByLan("account-index-security-enable-reset", "Reset"))
+                        </button>
+                        <button type="submit" id="btn_verify_enable_2fa" class="btn btn-primary m-btn m-btn--air m-btn--custom m-btn--pill">
+                            @Html.Raw(Html.GetTansByLan("account-index-security-enable-enable", "Enable"))
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 }
 <div class="modal fade" id="m_modal_disable_2fa" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-                    @Html.Raw(Html.GetTansByLan("account-index-security-disable-01", "Disable Two-Factor Authentication"))                    
+                    @Html.Raw(Html.GetTansByLan("account-index-security-disable-01", "Disable Two-Factor Authentication"))
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">
@@ -211,7 +233,7 @@
                         <div class="col-md-10 col-md-offset-1">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    @Html.Raw(Html.GetTansByLan("account-index-security-disable-02", "Enter token to verify"))                                    
+                                    @Html.Raw(Html.GetTansByLan("account-index-security-disable-02", "Enter token to verify"))
                                     <input class="form-control m-input form-control-lg" type="text" id="disable_verify_secret" style="margin-top: 4px;" placeholder="@Html.Raw(Html.GetTansByLan("account-index-security-enable-03", "Enter the token from your app to verify"))" required="">
                                     <div class="has-danger" style="display: none">
                                         <div class="form-control-feedback">
@@ -229,7 +251,7 @@
                         @Html.Raw(Html.GetTansByLan("account-index-security-enable-reset", "Reset"))
                     </button>
                     <button type="submit" id="btn_verify_disable_2fa" class="btn btn-primary m-btn m-btn--air m-btn--custom m-btn--pill">
-                        @Html.Raw(Html.GetTansByLan("account-index-security-enable-disable", "Disable"))                        
+                        @Html.Raw(Html.GetTansByLan("account-index-security-enable-disable", "Disable"))
                     </button>
                 </div>
             </form>
@@ -477,7 +499,7 @@
                     '_token': "KVPxnFiUjsWV85Qv8W8BkhEmBKRYnbZboiNQo21O"
                 },
                 url: "/Account/GoolgeKeySet",
-            }).done(function (data) {            
+            }).done(function (data) {
                 if (data.result) {
                     window.location.href = window.location.href;
                 } else {
@@ -499,7 +521,7 @@
                     '_token': "KVPxnFiUjsWV85Qv8W8BkhEmBKRYnbZboiNQo21O"
                 },
                 url: "/Account/GoolgeKeySet",
-            }).done(function (data) {                
+            }).done(function (data) {
                 if (data.result) {
                     window.location.href = window.location.href;
                 } else {

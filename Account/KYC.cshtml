@@ -11,41 +11,166 @@
     string KycValidateCode = SKC.DAO.SystemParametersDAO.GetParamValue(SKC.Common.GlobalConfig.SysParams_KYCValidateCode, "0");//2018-05-16 增加kyc验证码开关
 
     var hide_info = Model.StatusInt == 1 || (user_audit != null && already_audit.Contains(user_audit.AuthStatusInt)) ? "true" : "false";
-}<style>
-h3,.h3,h4,.h4 {margin:20px 0px 15px;}
-label.m-dropzone {margin-bottom:0;}
-.mb3 {margin-bottom:30px}
-.account-status{display:inline-block;vertical-align:top;padding:0 16px 0 5px;margin-top:5px;margin-right:10px;height:40px;border-radius:20px;color:#fff;background:#77b71b;line-height:0;}
-.account-status .fa{font-size:36px;margin-right:6px;vertical-align: middle;}
-.account-status span{display:inline-block;vertical-align:middle;line-height:40px;font-size:20px}
-.account-status.no{background:#666;}
-.form-ft-oop .btn {min-width:100px;}
-.form-control[readonly], .form-control {border-color:#ccc;}
-.form-control[disabled] {border-color:#ccc;}
-select.form-control-lg {height:calc(3.42857rem + 2px) !important;}
-.form-control-lg, .input-group-lg > .form-control, .input-group-lg > .input-group-addon, .input-group-lg > .input-group-btn > .btn {padding:0.75rem 1rem;}
-select.custom-select {padding:0.375rem 1.75rem 0.375rem 0.75rem;}
-.carousel {cursor:default;}
-.carousel .carousel-item img {max-width:100%;}
-.carousel .carousel-indicators {margin-bottom:0;}
-.carousel .carousel-indicators li {width:10px;height:10px;background-color:rgba(0,0,0,0.5);border-radius:50%;margin-left:6px;margin-right:6px;}
-.carousel .carousel-indicators .active {background-color:#2485c9;}
-.yet-uploaded {width:100%;height:100%;padding:10px;background-color:#f1f3f6;border-radius:8px;}
-.dp-eq-ht {height:270px;}
-.mid-demo-arrow {text-align:center;display:inline-flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;justify-content:center;}
-@@media (max-width: 768px) {
-    .row {margin-left:-5px;margin-right:-5px;}
-    .row .col,
-    .row [class*="col-"] {padding-left:5px;padding-right:5px;}
-    label, input, .form-control {font-size:1.2307rem;}
-    .font-s14 {font-size:1.0769rem;}
-    .dp-eq-ht {height:calc(100%*0.63 + 80px);}
-    .mid-demo-arrow.dp-eq-ht {height:40px;}
-    label.dp-eq-ht {height:270px;}
-    .hold-xs-ft12 {font-size:12px;margin-bottom:0.5rem;}
-    select.form-control-lg,
-    .btn.btn-outline-focus {height:42px !important;}
+
+    //已上传图片
+    var ready_upload_img = Model.StatusInt == 1 || (user_audit != null && already_audit.Contains(user_audit.AuthStatusInt)) ? true : false;
 }
+<style>
+    h3, .h3, h4, .h4 {
+        margin: 20px 0px 15px;
+    }
+
+    label.m-dropzone {
+        margin-bottom: 0;
+    }
+
+    .mb3 {
+        margin-bottom: 30px
+    }
+
+    .account-status {
+        display: inline-block;
+        vertical-align: top;
+        padding: 0 16px 0 5px;
+        margin-top: 5px;
+        margin-right: 10px;
+        height: 40px;
+        border-radius: 20px;
+        color: #fff;
+        background: #77b71b;
+        line-height: 0;
+    }
+
+        .account-status .fa {
+            font-size: 36px;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+
+        .account-status span {
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 40px;
+            font-size: 20px
+        }
+
+        .account-status.no {
+            background: #666;
+        }
+
+    .form-ft-oop .btn {
+        min-width: 100px;
+    }
+
+    .form-control[readonly], .form-control {
+        border-color: #ccc;
+    }
+
+        .form-control[disabled] {
+            border-color: #ccc;
+        }
+
+    select.form-control-lg {
+        height: calc(3.42857rem + 2px) !important;
+    }
+
+    .form-control-lg, .input-group-lg > .form-control, .input-group-lg > .input-group-addon, .input-group-lg > .input-group-btn > .btn {
+        padding: 0.75rem 1rem;
+    }
+
+    select.custom-select {
+        padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+    }
+
+    .carousel {
+        cursor: default;
+    }
+
+        .carousel .carousel-item img {
+            max-width: 100%;
+        }
+
+        .carousel .carousel-indicators {
+            margin-bottom: 0;
+        }
+
+            .carousel .carousel-indicators li {
+                width: 10px;
+                height: 10px;
+                background-color: rgba(0,0,0,0.5);
+                border-radius: 50%;
+                margin-left: 6px;
+                margin-right: 6px;
+            }
+
+            .carousel .carousel-indicators .active {
+                background-color: #2485c9;
+            }
+
+    .yet-uploaded {
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        background-color: #f1f3f6;
+        border-radius: 8px;
+    }
+
+    .dp-eq-ht {
+        height: 270px;
+    }
+
+    .mid-demo-arrow {
+        text-align: center;
+        display: inline-flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @@media (max-width: 768px) {
+        .row {
+            margin-left: -5px;
+            margin-right: -5px;
+        }
+
+            .row .col,
+            .row [class*="col-"] {
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+
+        label, input, .form-control {
+            font-size: 1.2307rem;
+        }
+
+        .font-s14 {
+            font-size: 1.0769rem;
+        }
+
+        .dp-eq-ht {
+            height: calc(100%*0.63 + 80px);
+        }
+
+        .mid-demo-arrow.dp-eq-ht {
+            height: 40px;
+        }
+
+        label.dp-eq-ht {
+            height: 270px;
+        }
+
+        .hold-xs-ft12 {
+            font-size: 12px;
+            margin-bottom: 0.5rem;
+        }
+
+        select.form-control-lg,
+        .btn.btn-outline-focus {
+            height: 42px !important;
+        }
+        label.dp-eq-ht .upload_img {max-width:264px !important;}
+    }
 </style>
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
     <div class="m-content">
@@ -91,26 +216,26 @@ select.custom-select {padding:0.375rem 1.75rem 0.375rem 0.75rem;}
                                 }
                                 else
                                 {
-                                        @if (user_audit != null && user_audit.AuthStatusInt == (int)EnumUserAuthStatus.不通过)
-                                        {
-                                            <div class="account-status no">
-                                                <i class="fa fa-exclamation-circle" aria-hidden="true"></i><span>@Html.GetTansByLan("account_index_tab2_state3", "Verification Failed") </span>
-                                            </div>
-                                            <p class="font-s14" style="display: block;font-style: italic;margin-top:15px;">
-                                                @Html.GetTansByLan("account_index_no_check2", "Your KYC has not been approved, and here is the reason")
-                                                <span>:@(user_audit.AuthMessageNvarchar)</span>
-                                                <span>,@Html.GetTansByLan("account_index_no_check3", "please resubmit KYC information.")</span>
-                                            </p>
-                                        }
-                                        else
-                                        {
-                                                <div class="account-status no">
-                                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i><span>@Html.GetTansByLan("account_index_tab2_state4", "In Verification")</span>
-                                                </div>
-                                                <p class="font-s14" style="display: block;font-style: italic;margin-top:15px;">
-                                                    @Html.GetTansByLan("account_index_in_check1", "Your KYC is under review, please be patient.")
-                                                </p>
-                                        }
+                                    @if (user_audit != null && user_audit.AuthStatusInt == (int)EnumUserAuthStatus.不通过)
+                                    {
+                                        <div class="account-status no">
+                                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i><span>@Html.GetTansByLan("account_index_tab2_state3", "Verification Failed") </span>
+                                        </div>
+                                        <p class="font-s14" style="display: block;font-style: italic;margin-top:15px;">
+                                            @Html.GetTansByLan("account_index_no_check2", "Your KYC has not been approved, and here is the reason")
+                                            <span>:@((user_audit.AuthMessageNvarchar ?? "").Contains("account-lock") ? Html.GetTansByLan(user_audit.AuthMessageNvarchar, "Verification Failed") : user_audit.AuthMessageNvarchar) </span>
+                                            <span>,@Html.GetTansByLan("account_index_no_check3", "please resubmit KYC information.")</span>
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <div class="account-status no">
+                                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i><span>@Html.GetTansByLan("account_index_tab2_state4", "In Verification")</span>
+                                        </div>
+                                        <p class="font-s14" style="display: block;font-style: italic;margin-top:15px;">
+                                            @Html.GetTansByLan("account_index_in_check1", "Your KYC is under review, please be patient.")
+                                        </p>
+                                    }
                                 }
 
                             }
@@ -127,13 +252,13 @@ select.custom-select {padding:0.375rem 1.75rem 0.375rem 0.75rem;}
                                 @Html.GetTansByLan("account_index_tab2_text2", "Anti-Money Laundering and Countering the Financing of Terrorism")
                             </p>
                             @if (Model.StatusInt != 1)
-                    {
-                        @*<p class="font-s14" style="margin-bottom: 30px">
-                        @Html.GetTansByLan("account_index_tab2_text3", "Your account hasn't validated with KYC yet.")
-                        <br>
-                        @Html.GetTansByLan("account_index_tab2_text4", "Please update your KYC information to allow trading.")
-                    </p>*@
-            }
+                            {
+                                @*<p class="font-s14" style="margin-bottom: 30px">
+                                        @Html.GetTansByLan("account_index_tab2_text3", "Your account hasn't validated with KYC yet.")
+                                        <br>
+                                        @Html.GetTansByLan("account_index_tab2_text4", "Please update your KYC information to allow trading.")
+                                    </p>*@
+                            }
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group m-form__group row mb3">
@@ -147,16 +272,16 @@ select.custom-select {padding:0.375rem 1.75rem 0.375rem 0.75rem;}
                                 </div>
                             </div>
                             @*<div class="form-group m-form__group mb3">
-                            <label for="country_of_residence">@Html.GetTansByLan("account_index_tab2_tag3", "Phone number")<span class="m--font-danger">*</span></label>
-                            <p class="light-color font-s14"><i>** @Html.GetTansByLan("account_index_tab2_tag4", "Example"): +84  988666888</i></p>
-                            <div class="form-group m-form__group row">                                
-                                    </select>
-                                </div>
-                                <div class="col-7 col-sm-8 col-lg-10">
-                                    <input class="form-control form-control-lg m-input" name="User.PhoneNvarchar" id="phone" type="text" value="@(item_user.PhoneNvarchar)" required placeholder="" style="    display: inline-block;    padding-right: 5px;">
-                                </div>
-                            </div>
-                        </div>*@
+                                    <label for="country_of_residence">@Html.GetTansByLan("account_index_tab2_tag3", "Phone number")<span class="m--font-danger">*</span></label>
+                                    <p class="light-color font-s14"><i>** @Html.GetTansByLan("account_index_tab2_tag4", "Example"): +84  988666888</i></p>
+                                    <div class="form-group m-form__group row">
+                                            </select>
+                                        </div>
+                                        <div class="col-7 col-sm-8 col-lg-10">
+                                            <input class="form-control form-control-lg m-input" name="User.PhoneNvarchar" id="phone" type="text" value="@(item_user.PhoneNvarchar)" required placeholder="" style="    display: inline-block;    padding-right: 5px;">
+                                        </div>
+                                    </div>
+                                </div>*@
                             <div class="form-group m-form__group mb3">
                                 <label for="Nationality">@Html.GetTansByLan("account_index_tab2_tag5", "Nationality") <span class="m--font-danger">*</span></label>
                                 <div class="form-group m-form__group row">
@@ -169,11 +294,11 @@ select.custom-select {padding:0.375rem 1.75rem 0.375rem 0.75rem;}
                                                 {
                                                     if (item_user.NationalityCodeNvarchar == item.Code)
                                                     {
-                                                        <option  value="@item.Code" selected="selected">@item.Name</option>
+                                                        <option value="@item.Code" selected="selected">@item.Name</option>
                                                     }
                                                     else
-                                                    { 
-                                                        <option  value="@item.Code">@item.Name</option>
+                                                    {
+                                                        <option value="@item.Code">@item.Name</option>
                                                     }
 
                                                 }
@@ -187,7 +312,7 @@ select.custom-select {padding:0.375rem 1.75rem 0.375rem 0.75rem;}
                                 <div class="form-group m-form__group row">
                                     <div class="col-12">
                                         <select class="custom-select form-control form-control-lg" name="User.IdentificationTypeNvarchar" id="idType" required>
-                                            <option value="FOREIGN IDENTITY CARD" selected="@(item_user.IdentificationTypeNvarchar=="FOREIGN IDENTITY CARD"||item_user.IdentificationTypeNvarchar==null?"selected":"")" >@Html.GetTansByLan("account_index_tab2_sel_tag1", "IDENTITY CARD")</option>
+                                            <option value="FOREIGN IDENTITY CARD" selected="@(item_user.IdentificationTypeNvarchar=="FOREIGN IDENTITY CARD"||item_user.IdentificationTypeNvarchar==null?"selected":"")">@Html.GetTansByLan("account_index_tab2_sel_tag1", "IDENTITY CARD")</option>
                                             <option value="PASSPORT" selected="@(item_user.IdentificationTypeNvarchar=="PASSPORT"?"selected":"")">@Html.GetTansByLan("account_index_tab2_sel_tag2", "PASSPORT")</option>
                                             <option value="DRIVING LICENSE" selected="@(item_user.IdentificationTypeNvarchar=="DRIVING LICENSE"?"selected":"")">@Html.GetTansByLan("account_index_tab2_sel_tag3", "DRIVING LICENSE")</option>
                                         </select>
@@ -199,12 +324,12 @@ select.custom-select {padding:0.375rem 1.75rem 0.375rem 0.75rem;}
                                 <div class="form-group m-form__group row">
                                     <div class="col-12">
                                         @if (Model.StatusInt == 1 || (user_audit != null && already_audit.Contains(user_audit.AuthStatusInt)))
-    {<input class="form-control form-control-lg m-input" name="User.IdentificationNumberNvarchar" id="identificationNumber" type="text" placeholder="******">
-}
-else
-{
-                                    <input class="form-control form-control-lg m-input" name="User.IdentificationNumberNvarchar" id="identificationNumber" type="text" placeholder="******" value="@item_user.IdentificationNumberNvarchar" required>
-}
+                                        {<input class="form-control form-control-lg m-input" name="User.IdentificationNumberNvarchar" id="identificationNumber" type="text" placeholder="******">
+                                        }
+                                        else
+                                        {
+                                            <input class="form-control form-control-lg m-input" name="User.IdentificationNumberNvarchar" id="identificationNumber" type="text" value="@item_user.IdentificationNumberNvarchar" required>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -222,7 +347,7 @@ else
                         <label for="id_number" style="margin-bottom: 20px"><span id="fontTitle">@Html.GetTansByLan("account_index_tab2_tag8", "Identity Card Front Side")  </span> <span class="m--font-danger">*</span></label>
                         <div class="form-group m-form__group row">
                             <div class="col-12">
-                                <label for="photoFrontSide" class="btn btn-primary m-btn--pill">@Html.GetTansByLan("account_index_tab2_tag9", "Choose file")</label>
+                                <label for="photoFrontSide" onclick="javascript: $('#sp_photo_front_side').click();" class="btn btn-primary m-btn--pill @(ready_upload_img?"disabled":"")">@Html.GetTansByLan("account_index_tab2_tag9", "Choose file")</label>
                             </div>
                             <div class="col-12">
                                 <p class="light-color font-s14" style="display: block;font-style: italic;">**@Html.GetTansByLan("account_index_tab2_text5", "Please make sure that the photo is complete and clearly visible.") </p>
@@ -233,20 +358,21 @@ else
                         <div class="col-md-5">
                             <div id="divPhotoFrontSide">
                                 <label class="m-dropzone dropzone dz-clickable dp-eq-ht" style="width:100%;">
-                                    @if (Model.StatusInt == 1 || (user_audit != null && already_audit.Contains(user_audit.AuthStatusInt)))
-                            {
-                                <div class="yet-uploaded">
-                                    <img class="default_img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAsCAYAAAANUxr1AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RkMzMjY5NjU1MjY2MTFFOEE1MTg5NzA4QzQ5M0QzRTEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RkMzMjY5NjY1MjY2MTFFOEE1MTg5NzA4QzQ5M0QzRTEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGQzMyNjk2MzUyNjYxMUU4QTUxODk3MDhDNDkzRDNFMSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGQzMyNjk2NDUyNjYxMUU4QTUxODk3MDhDNDkzRDNFMSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pp9z5YYAAAG/SURBVHja7JjNKwRhHMef3XZWxsHbgROpOTgSuXiJUFM25eSfcFDKxSoK5z1wc3BRmgOR1RI3orzEUbZECQfhtLjwnfantm1m2mfN88xo51ef5pmd56nPzvN7XuYJGYbBEA1gBuigHoSYu/EOjsEsOHGqGAFNVLmOiYtK+rP9YBRsOAnNk8wVmABvLsu0gGUqK2ANjIAdOyGdynPgQMDbKc+7j4J1MAz28iuHQTWVM0x8XNK1jLqt10pIZgyACyqrYBt0ein0Qol9SvcVIAk6vBJiNGgGwVHOCNwFrV4ItREaiIM7+r0K7IPGiGShM4dnNWDaiy5zij4ZQoe0FDnRTXVr/faGWCAUCP01eOchnTZzPHEPUqKExsAQZ5ukSKE0OC+iDVeXZSw2UXYxLiOpv4JR9g+EolZJ/VFAwwTosnnW7saHQK7QZwENNdpg+WZiXARbAn0UXqGU4FxSg1Hmdg5p9NnCe/KRFiWUKHJxjZVMl8VKLqkDoUDITSHFL0JPVO7x0EOl66s5D22CSeIGXEuWMQ+r4r+7CVNogWWPaJvBqodv6RlMhWnxM09Cl8AD+JYs8ghWWPbg8/ZHgAEAFmtEminiBVoAAAAASUVORK5CYII=" style="margin-top:60px;margin-left:auto;margin-right:auto;display:block" />
-                                    <span class="file_label" style="margin-top:20px;width:100%;display:block;color:#2485c9;">@Html.GetTansByLan("account_index_tab2_sub1", "Document submitted")</span>
-                                </div>
-                    }
-                    else
-                    {
-                        <img class="upload_img" style="max-width: 300px;max-height: 226px;margin: auto auto;" />
-                        <img class="default_img" src="/images/ba-common/ic_image_default.png" style="margin-top:60px;margin-left:auto;margin-right:auto;" />
-                        <span class="file_label" style="margin-top: 20px;width: 100%;font-weight: 600;display: block;">@Html.GetTansByLan("account_index_tab2_text20", "Click to upload")</span>
-                        <input type="file" name="photoFrontSide" id="photoFrontSide" style="display: none" >
-            }
+                                    @if (ready_upload_img)
+                                    {
+                                        <div class="yet-uploaded">
+                                            <img class="default_img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAsCAYAAAANUxr1AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RkMzMjY5NjU1MjY2MTFFOEE1MTg5NzA4QzQ5M0QzRTEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RkMzMjY5NjY1MjY2MTFFOEE1MTg5NzA4QzQ5M0QzRTEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGQzMyNjk2MzUyNjYxMUU4QTUxODk3MDhDNDkzRDNFMSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGQzMyNjk2NDUyNjYxMUU4QTUxODk3MDhDNDkzRDNFMSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pp9z5YYAAAG/SURBVHja7JjNKwRhHMef3XZWxsHbgROpOTgSuXiJUFM25eSfcFDKxSoK5z1wc3BRmgOR1RI3orzEUbZECQfhtLjwnfantm1m2mfN88xo51ef5pmd56nPzvN7XuYJGYbBEA1gBuigHoSYu/EOjsEsOHGqGAFNVLmOiYtK+rP9YBRsOAnNk8wVmABvLsu0gGUqK2ANjIAdOyGdynPgQMDbKc+7j4J1MAz28iuHQTWVM0x8XNK1jLqt10pIZgyACyqrYBt0ein0Qol9SvcVIAk6vBJiNGgGwVHOCNwFrV4ItREaiIM7+r0K7IPGiGShM4dnNWDaiy5zij4ZQoe0FDnRTXVr/faGWCAUCP01eOchnTZzPHEPUqKExsAQZ5ukSKE0OC+iDVeXZSw2UXYxLiOpv4JR9g+EolZJ/VFAwwTosnnW7saHQK7QZwENNdpg+WZiXARbAn0UXqGU4FxSg1Hmdg5p9NnCe/KRFiWUKHJxjZVMl8VKLqkDoUDITSHFL0JPVO7x0EOl66s5D22CSeIGXEuWMQ+r4r+7CVNogWWPaJvBqodv6RlMhWnxM09Cl8AD+JYs8ghWWPbg8/ZHgAEAFmtEminiBVoAAAAASUVORK5CYII=" style="margin-top:60px;margin-left:auto;margin-right:auto;display:block" />
+                                            <span class="file_label" style="margin-top:20px;width:100%;display:block;color:#2485c9;">@Html.GetTansByLan("account_index_tab2_sub1", "Document submitted")</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span id="sp_photo_front_side"  onclick="UploadImg.ShowUpload('sp_photo_front_side','', 'https://i.silkchain.io', 20, 0, 5,'@Html.GetLang()')">
+                                            <img class="upload_img" style="max-width: 300px;max-height: 226px;margin: auto auto;" onerror="resetImgUrl(this)" />
+                                            <img class="default_img" src="/images/ba-common/ic_image_default.png" style="margin-top:60px;margin-left:auto;margin-right:auto;" />
+                                            <span class="file_label" style="margin-top: 20px;width: 100%;font-weight: 600;display: block;">@Html.GetTansByLan("account_index_tab2_text20", "Click to upload")</span>
+                                        </span>
+                                    }
                                 </label>
                             </div>
                         </div>
@@ -265,7 +391,7 @@ else
                                             <img src="/images/ba-common/id_front.png" />
                                         </div>
                                         <div class="carousel-item">
-                                            <img src="/images/ba-common/id_front.png" />
+                                            <img src="/images/ba-common/id_front2.png" />
                                         </div>
                                     </div>
                                 </div>
@@ -277,7 +403,7 @@ else
                         <label for="id_number" style="margin-bottom: 20px"><span id="backTitle">@Html.GetTansByLan("account_index_tab2_text6", "Identity Card Back Side")   </span><span class="m--font-danger">*</span></label>
                         <div class="form-group m-form__group row">
                             <div class="col-12">
-                                <label for="photoBackSide" class="btn btn-primary m-btn--pill">@Html.GetTansByLan("account_index_tab2_but1", "Choose file")</label>
+                                <label for="photoBackSide"  onclick="javascript: $('#sp_photo_back_side').click();" class="btn btn-primary m-btn--pill @(ready_upload_img?"disabled":"")">@Html.GetTansByLan("account_index_tab2_but1", "Choose file")</label>
                             </div>
                             <div class="col-12">
                                 <p class="light-color font-s14" style="display: block;font-style: italic;">**@Html.GetTansByLan("account_index_tab2_text7", "Please make sure that the photo is complete and clearly visible.")  <span class="card_type2">@Html.GetTansByLan("account_index_tab2_text8", "ID card")</span>@Html.GetTansByLan("account_index_tab2_text9", "must be in the valid period.") </p>
@@ -288,20 +414,21 @@ else
                         <div class="col-md-5">
                             <div id="divPhotoBackSide">
                                 <label class="m-dropzone dropzone dz-clickable dp-eq-ht" style="width:100%;">
-                                    @if (Model.StatusInt == 1 || (user_audit != null && already_audit.Contains(user_audit.AuthStatusInt)))
-                            {
-                                <div class="yet-uploaded">
-                                    <img class="default_img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAsCAYAAAANUxr1AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RkMzMjY5NjU1MjY2MTFFOEE1MTg5NzA4QzQ5M0QzRTEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RkMzMjY5NjY1MjY2MTFFOEE1MTg5NzA4QzQ5M0QzRTEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGQzMyNjk2MzUyNjYxMUU4QTUxODk3MDhDNDkzRDNFMSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGQzMyNjk2NDUyNjYxMUU4QTUxODk3MDhDNDkzRDNFMSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pp9z5YYAAAG/SURBVHja7JjNKwRhHMef3XZWxsHbgROpOTgSuXiJUFM25eSfcFDKxSoK5z1wc3BRmgOR1RI3orzEUbZECQfhtLjwnfantm1m2mfN88xo51ef5pmd56nPzvN7XuYJGYbBEA1gBuigHoSYu/EOjsEsOHGqGAFNVLmOiYtK+rP9YBRsOAnNk8wVmABvLsu0gGUqK2ANjIAdOyGdynPgQMDbKc+7j4J1MAz28iuHQTWVM0x8XNK1jLqt10pIZgyACyqrYBt0ein0Qol9SvcVIAk6vBJiNGgGwVHOCNwFrV4ItREaiIM7+r0K7IPGiGShM4dnNWDaiy5zij4ZQoe0FDnRTXVr/faGWCAUCP01eOchnTZzPHEPUqKExsAQZ5ukSKE0OC+iDVeXZSw2UXYxLiOpv4JR9g+EolZJ/VFAwwTosnnW7saHQK7QZwENNdpg+WZiXARbAn0UXqGU4FxSg1Hmdg5p9NnCe/KRFiWUKHJxjZVMl8VKLqkDoUDITSHFL0JPVO7x0EOl66s5D22CSeIGXEuWMQ+r4r+7CVNogWWPaJvBqodv6RlMhWnxM09Cl8AD+JYs8ghWWPbg8/ZHgAEAFmtEminiBVoAAAAASUVORK5CYII=" style="margin-top:60px;margin-left:auto;margin-right:auto;display:block" />
-                                    <span class="file_label" style="margin-top: 20px;width: 100%;display:block;color:#2485c9;">@Html.GetTansByLan("account_index_tab2_sub1", "Document submitted")</span>
-                                </div>
-                    }
-                    else
-                    {
-                        <img class="upload_img" style="max-width: 300px;max-height: 226px;margin: auto auto;" char" />
-                        <img class="default_img" src="/images/ba-common/ic_image_default.png" style="margin-top:60px;margin-left:auto;margin-right:auto;" />
-                        <span class="file_label" style="margin-top: 20px;width: 100%;font-weight: 600;display: block;">@Html.GetTansByLan("account_index_tab2_text20", "Click to upload")</span>
-                        <input type="file" name="photoBackSide" id="photoBackSide" style="display: none;">
-            }
+                                    @if (ready_upload_img)
+                                    {
+                                        <div class="yet-uploaded">
+                                            <img class="default_img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAsCAYAAAANUxr1AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RkMzMjY5NjU1MjY2MTFFOEE1MTg5NzA4QzQ5M0QzRTEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RkMzMjY5NjY1MjY2MTFFOEE1MTg5NzA4QzQ5M0QzRTEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGQzMyNjk2MzUyNjYxMUU4QTUxODk3MDhDNDkzRDNFMSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGQzMyNjk2NDUyNjYxMUU4QTUxODk3MDhDNDkzRDNFMSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pp9z5YYAAAG/SURBVHja7JjNKwRhHMef3XZWxsHbgROpOTgSuXiJUFM25eSfcFDKxSoK5z1wc3BRmgOR1RI3orzEUbZECQfhtLjwnfantm1m2mfN88xo51ef5pmd56nPzvN7XuYJGYbBEA1gBuigHoSYu/EOjsEsOHGqGAFNVLmOiYtK+rP9YBRsOAnNk8wVmABvLsu0gGUqK2ANjIAdOyGdynPgQMDbKc+7j4J1MAz28iuHQTWVM0x8XNK1jLqt10pIZgyACyqrYBt0ein0Qol9SvcVIAk6vBJiNGgGwVHOCNwFrV4ItREaiIM7+r0K7IPGiGShM4dnNWDaiy5zij4ZQoe0FDnRTXVr/faGWCAUCP01eOchnTZzPHEPUqKExsAQZ5ukSKE0OC+iDVeXZSw2UXYxLiOpv4JR9g+EolZJ/VFAwwTosnnW7saHQK7QZwENNdpg+WZiXARbAn0UXqGU4FxSg1Hmdg5p9NnCe/KRFiWUKHJxjZVMl8VKLqkDoUDITSHFL0JPVO7x0EOl66s5D22CSeIGXEuWMQ+r4r+7CVNogWWPaJvBqodv6RlMhWnxM09Cl8AD+JYs8ghWWPbg8/ZHgAEAFmtEminiBVoAAAAASUVORK5CYII=" style="margin-top:60px;margin-left:auto;margin-right:auto;display:block" />
+                                            <span class="file_label" style="margin-top: 20px;width: 100%;display:block;color:#2485c9;">@Html.GetTansByLan("account_index_tab2_sub1", "Document submitted")</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span id="sp_photo_back_side" onclick="UploadImg.ShowUpload('sp_photo_back_side','', 'https://i.silkchain.io', 20, 0, 5,'@Html.GetLang()')">
+                                            <img class="upload_img" style="max-width: 300px;max-height: 226px;margin: auto auto;"  onerror="resetImgUrl(this)" />
+                                            <img class="default_img" src="/images/ba-common/ic_image_default.png" style="margin-top:60px;margin-left:auto;margin-right:auto;" />
+                                            <span class="file_label" style="margin-top: 20px;width: 100%;font-weight: 600;display: block;">@Html.GetTansByLan("account_index_tab2_text20", "Click to upload")</span>
+                                        </span>
+                                    }
                                 </label>
                             </div>
                         </div>
@@ -320,7 +447,7 @@ else
                                             <img src="/images/ba-common/id_back.png" />
                                         </div>
                                         <div class="carousel-item">
-                                            <img src="/images/ba-common/id_back.png" />
+                                            <img src="/images/ba-common/id_back2.png" />
                                         </div>
                                     </div>
                                 </div>
@@ -332,7 +459,7 @@ else
                         <label for="id_number" style="margin-bottom: 20px" class="selfie_text">@Html.GetTansByLan("account_index_tab2_text10", "Selfie With Photo ID And Note.")  <span class="m--font-danger">*</span></label>
                         <div class="form-group m-form__group row">
                             <div class="col-12">
-                                <label for="photoSelfie" class="btn btn-primary m-btn--pill">@Html.GetTansByLan("account_index_tab2_tag9", "Choose file")</label>
+                                <label for="photoSelfie"  onclick="javascript: $('#sp_photo_selfie').click();" class="btn btn-primary m-btn--pill  @(ready_upload_img?"disabled":"")">@Html.GetTansByLan("account_index_tab2_tag9", "Choose file")</label>
                             </div>
                             <div class="col-12">
                                 <p class="light-color font-s14" style="display: block;font-style: italic;">
@@ -349,21 +476,22 @@ else
                         <div class="col-md-5">
                             <div id="fileIdPhotoUpload">
                                 <label class="m-dropzone dropzone dz-clickable dp-eq-ht" style="width:100%;">
-                                    @if (Model.StatusInt == 1 || (user_audit != null && already_audit.Contains(user_audit.AuthStatusInt)))
-                            {
-                                <div class="yet-uploaded">
-                                    <img class="default_img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAsCAYAAAANUxr1AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RkMzMjY5NjU1MjY2MTFFOEE1MTg5NzA4QzQ5M0QzRTEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RkMzMjY5NjY1MjY2MTFFOEE1MTg5NzA4QzQ5M0QzRTEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGQzMyNjk2MzUyNjYxMUU4QTUxODk3MDhDNDkzRDNFMSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGQzMyNjk2NDUyNjYxMUU4QTUxODk3MDhDNDkzRDNFMSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pp9z5YYAAAG/SURBVHja7JjNKwRhHMef3XZWxsHbgROpOTgSuXiJUFM25eSfcFDKxSoK5z1wc3BRmgOR1RI3orzEUbZECQfhtLjwnfantm1m2mfN88xo51ef5pmd56nPzvN7XuYJGYbBEA1gBuigHoSYu/EOjsEsOHGqGAFNVLmOiYtK+rP9YBRsOAnNk8wVmABvLsu0gGUqK2ANjIAdOyGdynPgQMDbKc+7j4J1MAz28iuHQTWVM0x8XNK1jLqt10pIZgyACyqrYBt0ein0Qol9SvcVIAk6vBJiNGgGwVHOCNwFrV4ItREaiIM7+r0K7IPGiGShM4dnNWDaiy5zij4ZQoe0FDnRTXVr/faGWCAUCP01eOchnTZzPHEPUqKExsAQZ5ukSKE0OC+iDVeXZSw2UXYxLiOpv4JR9g+EolZJ/VFAwwTosnnW7saHQK7QZwENNdpg+WZiXARbAn0UXqGU4FxSg1Hmdg5p9NnCe/KRFiWUKHJxjZVMl8VKLqkDoUDITSHFL0JPVO7x0EOl66s5D22CSeIGXEuWMQ+r4r+7CVNogWWPaJvBqodv6RlMhWnxM09Cl8AD+JYs8ghWWPbg8/ZHgAEAFmtEminiBVoAAAAASUVORK5CYII=" style="margin-top:60px;margin-left:auto;margin-right:auto;display:block" />
-                                    <span class="file_label" style="margin-top: 20px;width: 100%;display:block;color:#2485c9;">@Html.GetTansByLan("account_index_tab2_sub1", "Document submitted")</span>
-                                </div>
-                    }
-                    else
-                    {
-                        <img class="upload_img" style="max-width: 300px;max-height: 226px;margin: auto auto;"   />
-                        <img class="default_img" src="/images/ba-common/ic_image_default.png" style="margin-top:60px;margin-left:auto;margin-right:auto;" />
-                        <span class="file_label" style="margin-top: 20px;width: 100%;font-weight: 600;display: block;">@Html.GetTansByLan("account_index_tab2_text20", "Click to upload")</span>
-                        <input type="file" name="photoSelfie" id="photoSelfie" style="display: none;">
-            }
-                                </label>
+                                    @if (ready_upload_img)
+                                    {
+                                        <div class="yet-uploaded">
+                                            <img class="default_img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAsCAYAAAANUxr1AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RkMzMjY5NjU1MjY2MTFFOEE1MTg5NzA4QzQ5M0QzRTEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RkMzMjY5NjY1MjY2MTFFOEE1MTg5NzA4QzQ5M0QzRTEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGQzMyNjk2MzUyNjYxMUU4QTUxODk3MDhDNDkzRDNFMSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGQzMyNjk2NDUyNjYxMUU4QTUxODk3MDhDNDkzRDNFMSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pp9z5YYAAAG/SURBVHja7JjNKwRhHMef3XZWxsHbgROpOTgSuXiJUFM25eSfcFDKxSoK5z1wc3BRmgOR1RI3orzEUbZECQfhtLjwnfantm1m2mfN88xo51ef5pmd56nPzvN7XuYJGYbBEA1gBuigHoSYu/EOjsEsOHGqGAFNVLmOiYtK+rP9YBRsOAnNk8wVmABvLsu0gGUqK2ANjIAdOyGdynPgQMDbKc+7j4J1MAz28iuHQTWVM0x8XNK1jLqt10pIZgyACyqrYBt0ein0Qol9SvcVIAk6vBJiNGgGwVHOCNwFrV4ItREaiIM7+r0K7IPGiGShM4dnNWDaiy5zij4ZQoe0FDnRTXVr/faGWCAUCP01eOchnTZzPHEPUqKExsAQZ5ukSKE0OC+iDVeXZSw2UXYxLiOpv4JR9g+EolZJ/VFAwwTosnnW7saHQK7QZwENNdpg+WZiXARbAn0UXqGU4FxSg1Hmdg5p9NnCe/KRFiWUKHJxjZVMl8VKLqkDoUDITSHFL0JPVO7x0EOl66s5D22CSeIGXEuWMQ+r4r+7CVNogWWPaJvBqodv6RlMhWnxM09Cl8AD+JYs8ghWWPbg8/ZHgAEAFmtEminiBVoAAAAASUVORK5CYII=" style="margin-top:60px;margin-left:auto;margin-right:auto;display:block" />
+                                            <span class="file_label" style="margin-top: 20px;width: 100%;display:block;color:#2485c9;">@Html.GetTansByLan("account_index_tab2_sub1", "Document submitted")</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span id="sp_photo_selfie" onclick="UploadImg.ShowUpload('sp_photo_selfie','', 'https://i.silkchain.io', 20, 0, 5,'@Html.GetLang()')">
+                                            <img class="upload_img" style="max-width: 300px;max-height: 226px;margin: auto auto;"  onerror="resetImgUrl(this)" />
+                                            <img class="default_img" src="/images/ba-common/ic_image_default.png" style="margin-top:60px;margin-left:auto;margin-right:auto;" />
+                                            <span class="file_label" style="margin-top: 20px;width: 100%;font-weight: 600;display: block;">@Html.GetTansByLan("account_index_tab2_text20", "Click to upload")</span>
+                                        </span>
+                                    }
+                                    </label>
                             </div>
                         </div>
                         <div class="col-md-2 mid-demo-arrow dp-eq-ht">
@@ -403,45 +531,45 @@ else
                 {
                     if (KycValidateCode == "1")
                     {
-                    <div class="m-portlet m-portlet--mobile m-portlet--skin-dark">
-                        <div class="m-portlet__body">
-                            @*<div class="form-group m-form__group row">
-                                <div class="col-5 col-sm-4 col-lg-2" style="padding-right:5px;">
-                                    <select class="custom-select form-control form-control-lg" id="sel_area_code">
-                                        @if (countrys != null && countrys.Count > 0)
-                                        {
-                                            foreach (var item in countrys)
-                                            {
-                                                <option value="@item.AreaCode"> @item.Name +@(item.AreaCode)</option>
-                                            }
-                                        }
-                                    </select>
-                                </div>
-                                <div class="col-7 col-sm-8 col-lg-10" style="padding-left:5px;">
-                                    <input class="form-control form-control-lg m-input" id="txt_phone_no" data-opt="CheckPhone" type="text" placeholder="@Html.GetTansByLan("account-register-6", "Phone Number")" style="display:inline-block;padding-right: 5px;">
-                                </div>
-                            </div>*@
-                            <div class="form-group m-form__group row mb-0">
-                                <div class="col-9" style="padding-right:5px;">
-                                    <input class="form-control form-control-lg m-input" type="text" id="txt_valid" name="ValidCode" placeholder="@Html.GetTansByLan("account-register-valid-7", "Click to get verification code")">
-                                </div>
-                                <div class="col-3" style="padding-left:5px;">
-                                    <button class="btn btn-outline-focus" type="button" id="but_phone_code" style="padding-left:0;padding-right:0;text-align:center;width:100%;height:3.571428rem;">@Html.GetTansByLan("account-register-8", "Send")</button>
+                        <div class="m-portlet m-portlet--mobile m-portlet--skin-dark">
+                            <div class="m-portlet__body">
+                                @*<div class="form-group m-form__group row">
+                                        <div class="col-5 col-sm-4 col-lg-2" style="padding-right:5px;">
+                                            <select class="custom-select form-control form-control-lg" id="sel_area_code">
+                                                @if (countrys != null && countrys.Count > 0)
+                                                {
+                                                    foreach (var item in countrys)
+                                                    {
+                                                        <option value="@item.AreaCode"> @item.Name +@(item.AreaCode)</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-7 col-sm-8 col-lg-10" style="padding-left:5px;">
+                                            <input class="form-control form-control-lg m-input" id="txt_phone_no" data-opt="CheckPhone" type="text" placeholder="@Html.GetTansByLan("account-register-6", "Phone Number")" style="display:inline-block;padding-right: 5px;">
+                                        </div>
+                                    </div>*@
+                                <div class="form-group m-form__group row mb-0">
+                                    <div class="col-9" style="padding-right:5px;">
+                                        <input class="form-control form-control-lg m-input" type="text" id="txt_valid" name="ValidCode" placeholder="@Html.GetTansByLan("account-register-valid-7", "Click to get verification code")">
+                                    </div>
+                                    <div class="col-3" style="padding-left:5px;">
+                                        <button class="btn btn-outline-focus" type="button" id="but_phone_code" style="padding-left:0;padding-right:0;text-align:center;width:100%;height:3.571428rem;">@Html.GetTansByLan("account-register-8", "Send")</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>}
+                        </div>}
                     <div class="m-portlet m-portlet--mobile m-portlet--skin-dark mb-0">
-                    <div class="m-portlet__body form-ft-oop">
-                        <button type="reset" class="btn btn-default m-btn--pill" onclick="resetAMLForm()">
-                            @Html.GetTansByLan("account_index_tab2_but11", "Reset")
-                        </button>
-                        <span>&nbsp; &nbsp;</span>
-                        <button class="btn btn-primary m-btn--pill" type="submit" id="aml_submit_button">
-                            @Html.GetTansByLan("account_index_tab2_but12", "Submit")
-                        </button>
+                        <div class="m-portlet__body form-ft-oop">
+                            <button type="reset" class="btn btn-default m-btn--pill" onclick="resetAMLForm()">
+                                @Html.GetTansByLan("account_index_tab2_but11", "Reset")
+                            </button>
+                            <span>&nbsp; &nbsp;</span>
+                            <button class="btn btn-primary m-btn--pill" type="submit" id="aml_submit_button">
+                                @Html.GetTansByLan("account_index_tab2_but12", "Submit")
+                            </button>
+                        </div>
                     </div>
-                </div>
                 }
             }
         </form>
@@ -480,9 +608,12 @@ else
         </div>
     </div>
 </div>
-<script src="~/js/sweetalert.min.js"></script>
+
 @section script{
-<script type="text/javascript">
+    <script src="~/js/sweetalert.min.js"></script>
+    <script src="~/js/loading.js"></script>
+    <script src="https://imgserver.silkchain.io/js/UploadImg.js?t=1532077334076"></script>
+    <script type="text/javascript">
     var status = "EMPTY";
     var isAddNew = 'no';
     var validatedPhone = true;
@@ -500,7 +631,7 @@ else
         $("#sel_nationality").val('@item_user.NationalityNvarchar');
         $("#idType").val('@item_user.IdentificationTypeNvarchar');*@
 
-        if (@hide_info==true) { 
+        if (@hide_info==true) {
             $("#sel_nationality").prepend("<option value='' selected='selected'>******</option>");
             $("#idType").prepend("<option value='' selected='selected'>******</option>");
         }
@@ -550,75 +681,32 @@ else
                 var photoSelfie = $('input[name="photoSelfie"]')[0];
                 var isValid = true;
                 var msg = "";
-                if (isAddNew == '') {
-                    if (photoFrontSide.files.length == 0) {
-                        msg = $("#fontTitle").text() + " is empty";
-                        isValid = false;
-                    } else if (!(/\.(gif|jpg|jpeg|tiff|png)$/i).test(photoFrontSide.value)) {
-                        msg = $("#fontTitle").text() + " must be image";
-                        isValid = false;
-                    } else if (photoFrontSide.files[0].size > (5242880)) {
-                        msg = $("#fontTitle").text() + " great than 5mb";
-                        isValid = false;
-                    } else if (photoBackSide.files.length == 0) {
-                        msg = $("#backTitle").text() + " is empty";
-                        isValid = false;
-                    } else if (!(/\.(gif|jpg|jpeg|tiff|png)$/i).test(photoBackSide.value)) {
-                        msg = $("#backTitle").text() + " must be image";
-                        isValid = false;
-                    } else if (photoBackSide.files[0].size > (5242880)) {
-                        msg = $("#backTitle").text() + " great than 5mb";
-                        isValid = false;
-                    } else if (photoSelfie.files.length == 0) {
-                        msg = "Selfie photo is empty";
-                        isValid = false;
-                    } else if (!(/\.(gif|jpg|jpeg|tiff|png)$/i).test(photoSelfie.value)) {
-                        msg = "Selfie photo must be image";
-                        isValid = false;
-                    } else if (photoSelfie.files[0].size > (5242880)) {
-                        msg = "Selfie great than 5mb";
-                        isValid = false;
-                    }
-                } else {
-                    if ($("#isChangeFront").val() == 'true' && photoFrontSide.files.length == 0) {
-                        msg = $("#fontTitle").text() + " is empty";
-                        isValid = false;
-                    } else if ($("#isChangeFront").val() == 'true' && !(/\.(gif|jpg|jpeg|tiff|png)$/i).test(photoFrontSide.value)) {
-                        msg = $("#fontTitle").text() + " must be image";
-                        isValid = false;
-                    } else if ($("#isChangeFront").val() == 'true' && photoFrontSide.files[0].size > (5242880)) {
-                        msg = $("#fontTitle").text() + " great than 5mb";
-                        isValid = false;
-                    } else if ($("#isChangeBack").val() == 'true' && photoBackSide.files.length == 0) {
-                        msg = $("#backTitle").text() + " is empty";
-                        isValid = false;
-                    } else if ($("#isChangeBack").val() == 'true' && !(/\.(gif|jpg|jpeg|tiff|png)$/i).test(photoBackSide.value)) {
-                        msg = $("#backTitle").text() + " must be image";
-                        isValid = false;
-                    } else if ($("#isChangeBack").val() == 'true' && photoBackSide.files[0].size > (5242880)) {
-                        msg = $("#backTitle").text() + " great than 5mb";
-                        isValid = false;
-                    } else if ($("#isChangeSelfie").val() == 'true' && photoSelfie.files.length == 0) {
-                        msg = "Selfie photo is empty";
-                        isValid = false;
-                    } else if ($("#isChangeSelfie").val() == 'true' && !(/\.(gif|jpg|jpeg|tiff|png)$/i).test(photoSelfie.value)) {
-                        msg = "Selfie photo must be image";
-                        isValid = false;
-                    } else if ($("#isChangeSelfie").val() == 'true' && photoSelfie.files[0].size > (5242880)) {
-                        msg = "Selfie great than 5mb";
-                        isValid = false;
-                    }
-                    else if ("@KycValidateCode"=="1"&&$.trim($("#txt_valid").val()) == "") { 
-                        msg = "Input verification code";
-                        isValid = false;
-                    }
+
+                if (valid.params.font_side == "") { 
+                    msg += '@Html.GetTansByLan("account-kyc-img-tip001", "Identity Card Front Side is Empty")<br>';
+                    isValid = false;
                 }
+
+                if (valid.params.back_side == "") { 
+                    msg += '@Html.GetTansByLan("account-kyc-img-tip002", "Identity Card Back Side is Empty")<br>';
+                    isValid = false;
+                }
+
+                if (valid.params.selfie == "") { 
+                    msg += '@Html.GetTansByLan("account-kyc-img-tip003", "Selfie With Photo ID And Note is Empty")<br>';
+                    isValid = false;
+                }
+                
                 if (isValid) {
                     var resend = "resend";
                     if (validatedPhone) {
                         $(".m-loader").show();
                         $('#amlcftForm .form-control-feedback').empty();
                         var data = new FormData($('#amlcftForm')[0]);
+                        data.append("User.FrontSideUrlNvarchar", valid.params.font_side);
+                        data.append("User.BackSideUrlNvarchar", valid.params.back_side);
+                        data.append("User.IdandNoteUrlNvarchar", valid.params.selfie);
+
                         $.ajax({
                             type: "POST",
                             url: $(this).attr('action'),
@@ -627,6 +715,12 @@ else
                             processData: false,
                             contentType: false,
                             cache: false,
+                            beforeSend: function () {
+                                $.showLoading('@Html.Raw(Html.GetTansByLan("account-kyc-tip001", "Waiting"))');
+                            },
+                            complete: function () {
+                                $.hideLoading();
+                            }
                         }).done(function (data) {
                             $('#amlcftForm').find('input[type=submit]').prop('disabled', false);
                             $('#amlcftForm').find('button[type=submit]').prop('disabled', false);
@@ -678,6 +772,7 @@ else
         });
 
         var valid = {
+            params: {font_side:'',back_side:'',selfie:''},
             inItControl: function () {
                 $("#but_phone_code").click(function () {
                     valid.request_data('/Account/CheckAccountInfo', { Option: 'KYCPhoneCode' }, { value:'KYCPhoneCode'});
@@ -701,10 +796,12 @@ else
                     beforeSend: function () {
                         $("#but_phone_code").attr("disabled", true);
                         $("#aml_submit_button").attr("disabled", true);
+                        $.showLoading('@Html.Raw(Html.GetTansByLan("account-kyc-tip001", "Waiting"))');
                     },
                     complete: function () {
                         $("#but_phone_code").attr("disabled", false);
                         $("#aml_submit_button").attr("disabled", false);
+                        $.hideLoading();
                     },
                     success: function (data) {
                         switch (opt.value) {
@@ -729,6 +826,32 @@ else
 
         $(function () {
             valid.inItControl();
+            UploadImg.Init();    //页面加载时初始化上传图片
         });
-</script>
+    </script>
+    <script type="text/javascript">
+        function resetImgUrl(obj) {
+            obj.src = obj.src.replace("https://i.silkchain.io", "https://imgserver.silkchain.io");
+        }
+
+        window.onmessage = function (e) {
+            e = e || event;
+            var result = e.data;
+            var data = JSON.parse(result)
+            var array = data.array;
+            var sign = data.Sign;
+            $("#" + sign).find(".upload_img").attr("src", array[0]).siblings(".default_img").hide();
+            if (sign == "sp_photo_selfie") {
+                valid.params.selfie = array[0];
+            } else if (sign == "sp_photo_front_side") {
+                valid.params.font_side = array[0];
+            } else if (sign = "sp_photo_back_side") {
+                valid.params.back_side = array[0];
+            }
+            
+
+            UploadImg.HideUpload();   //关闭上传图片页面
+        }
+    </script>
 }
+

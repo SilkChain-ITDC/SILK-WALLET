@@ -1,0 +1,420 @@
+﻿@using SKC.Entity.Models
+@model SilkPayPageModel
+@{
+    // Layout = null;
+}
+<style>
+    .m-portlet.m-portlet--skin-dark {
+        position: relative;
+    }
+
+    .m-portlet .m-portlet__head .m-portlet__head-caption {
+        width: 120px;
+        white-space: nowrap;
+    }
+
+        .m-portlet .m-portlet__head .m-portlet__head-caption .m-portlet__head-title .m-portlet__head-text.head-text-nobd {
+            border-bottom: none;
+        }
+
+    .m-portlet.m-portlet--skin-dark .m-portlet__head .m-portlet__head-text.head-text-nobd:after {
+        width: 0;
+        height: 20px;
+        border-bottom: none;
+        border-right: 2px solid #ddd;
+        left: 100%;
+        bottom: auto;
+        top: 50%;
+        margin-top: -8px;
+    }
+
+    .m-portlet .m-portlet__head .m-portlet__head-tools {
+        padding-left: 1rem;
+    }
+
+    .m-portlet .m-portlet__head .sus-dropmenu {
+        text-align: left;
+    }
+
+        .m-portlet .m-portlet__head .sus-dropmenu .nav-link {
+            display: inline-block;
+            font-size: 16px;
+            padding: 0.5rem 1rem 0.3rem 1rem;
+            color: #333;
+        }
+
+    .m-portlet .m-portlet__body table th {
+        border-bottom: 1px solid #f1f5ff;
+        background: #f1f5ff;
+    }
+
+    .m-portlet .m-portlet__head .m-portlet__head-caption {
+        width: 120px;
+        white-space: nowrap;
+    }
+
+    .wel-01 {
+        height: 378px;
+        background: url(/images/ba-silkpay/pay-wel-bg.jpg) no-repeat center right;
+        background-size: cover;
+    }
+
+        .wel-01 .wel-p-area {
+            float: right;
+            width: 500px;
+            margin-right: 100px;
+            margin-top: 110px;
+            color: #333;
+        }
+
+        .wel-01 .p1 {
+            font-size: 22px;
+        }
+
+        .wel-01 .p2 {
+            font-size: 14px;
+        }
+
+    .wel-features {
+        background-color: #2882c8;
+        color: #fff;
+        text-align: center;
+        padding-bottom: 40px;
+    }
+
+        .wel-features h4 {
+            font-size: 22px;
+            padding: 40px 0;
+        }
+
+        .wel-features .trait {
+            position: relative;
+            padding: 0 30px;
+        }
+
+            .wel-features .trait > i {
+                display: block;
+                width: 60px;
+                height: 60px;
+                margin: 0 auto;
+                background-repeat: no-repeat;
+                background-position: center center;
+            }
+
+            .wel-features .trait .trt-icon-01 {
+                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAADIWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMTQgNzkuMTUxNDgxLCAyMDEzLzAzLzEzLTEyOjA5OjE1ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjkwNEE1NzgzODY0OTExRThCQzVERjVBNzlGRkI3RjlGIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjkwNEE1Nzg0ODY0OTExRThCQzVERjVBNzlGRkI3RjlGIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6OTA0QTU3ODE4NjQ5MTFFOEJDNURGNUE3OUZGQjdGOUYiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6OTA0QTU3ODI4NjQ5MTFFOEJDNURGNUE3OUZGQjdGOUYiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4E+0hAAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFFQTFRFR3BM+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5G4r7oAAAABp0Uk5TAJ/aIxlhuvbRcTPKSLDhPKeL6ynDlg5XB3+XJMOgAAACWElEQVRIx9VX25arIAxtFbl7BS/N/3/oALYzgkFrZ521zuTFCt0Qkp1NvN3+hulx+hxMYf4cfIfqn4NbMVJVNAXvr4L12MDL7tfAFV9hA7eWN/oKeA5QPs4mZGW5cGbSBVfbTwKmBw8tP4p25R3W+NT9ByzvZv8H4bBjZt0O6AtsGMIzv6/IOTVZsH6JymMfe1o4bHXIa3t7gJkwrBvM7/tEdx3UDYJ1UzGZUDTgJ5sBmjcqEvfOkVlu300GLfAMd9t3m8kZyp8CgGxeF7aJgClPqhegjgYk+x6ZWFOeKAQkrPxGkyZPu9UGGNKhJ7p0WEqOsDIJ1xobB+tajz3RDpSYZNWi+iT5IwBW/gGNYFvOxTb3DD0WYcCRYRMtyXPUZKjTy+DL8wdcJMGiRTAAFp7NuMRc5gfgB6RmYj7yA7dJzZUzp8LMPyx95HdWMCzYkR3FKX5mtVU3KC8ErIw41afUXirhzY03fbCo1jVspWhOBULsAlbGs3PkR52KUmwDidWIRLFnccRMK6XWFQPlfkjZTnEYI971gDcbDFPUCmL1dWy1OLeRaPM0NyoRzwNwu6twF331Jljt65djpyaIjMzICZ0SsV13N+3lyTkD+wuhx2Kmx5S2FqDHdf/spgtVUGQ050Sgg77jghVu9/vZvpBrlFy+jgS+dEkCne+knOdDrrUQflIe+GV8+2ex1bWfUeQ4JL0vQCXiDBkResrHaTJkHQpY9bMk00TKthrVeu2Yt1rt+qkAbBjYSw1q/W5DXwrKtjJChbldMaJF31Fr6Sj0L75o/kv7AkflNFZ4LC2hAAAAAElFTkSuQmCC);
+            }
+
+            .wel-features .trait .trt-icon-02 {
+                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAADIWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMTQgNzkuMTUxNDgxLCAyMDEzLzAzLzEzLTEyOjA5OjE1ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjk1QjkyMEQxODY0OTExRTg5QzNERDIyNzc1MTVENDBBIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjk1QjkyMEQyODY0OTExRTg5QzNERDIyNzc1MTVENDBBIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6OTVCOTIwQ0Y4NjQ5MTFFODlDM0REMjI3NzUxNUQ0MEEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6OTVCOTIwRDA4NjQ5MTFFODlDM0REMjI3NzUxNUQ0MEEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz55nm3ZAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAF1QTFRFR3BM////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////hB0c0wAAAB50Uk5TAKRtYvV6gw0FMK9Z3yfHS+7YOI0cvuYTQpjPt1L8hyRCHAAAAotJREFUSMftV9uyqyAMVRERVLxrrZr//8wdbJ0qRGxfz5zMfilhSa4r2UHwX3YRkvFJKTVx1ow/ITumBvhINUfFt9AmjMGWdS6/gqrtdq6S7NGgLDyst5P+cQdNkw3ZPtLjqeRPczwJL7Ywl2qWupqyNx/1PZ6hsytPaeWSIzy6xDLU6uu4ihD1iQc7eb2KLtHlhUYe3FguLO8usBmEwRnduJcwziGBHWPoLcsrQbhTU87MAPx0oNxHuhWgII0GyM5lVDmGYxZaKjumygvne/pcWehJShsNg62oracT27OP0TATOVWnXNZakJFeY8cdgYmJg7K9aTEFcaGteAUB79FufX6c6ASAJYidmihe9ODvboy0xpuxE0husLG4MXodsXaersbwW39nNAuClkr/4mnNPdImRxr42KGclZrsjo9MUCFCVJisGP/O5SxhPURCdq5f2buaXnKOj84PP/raBbcZY9kzLFEiiM9To5OHH7mTtn1iDOJVkNeZKVYnI1GOUg9bT3WVj9sM9TGb/lGwYbAKRe7N6gQXLakN3fVQ+ebkFlOiJ7GMO6yT1Tcj36UuA7eKtXFp8RVEix0GWnHC6rKjTEoPsU9YUGG4U4LKVU4QsngO0iLAkpwuVFclVl9IirbNVCUCbShV2jzJ3MYiu2dyaF+6Y8Ql/P2mMx9asDmNHgRpThyng5WUEUiGxFlVp6Q5R7dFnadUTdBDjdk+XmAzstK4d2MxX5s8N8wSFl53kHze7kMDuxgCyXpj2cMsW5poozEymuFmyBi3oE6aY7TGcqrA79L+eP/aXEOelY1syix578/6dnPdpvcMrszLtyt3wefqtK1z+dO2PzZREs79HCbR47f/E/5t+QMdvUEpesGL/wAAAABJRU5ErkJggg==);
+            }
+
+            .wel-features .trait .trt-icon-03 {
+                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAADIWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMTQgNzkuMTUxNDgxLCAyMDEzLzAzLzEzLTEyOjA5OjE1ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjlBNzFDNzFCODY0OTExRThCNTkzQjU1Q0ZGNTkyM0EyIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjlBNzFDNzFDODY0OTExRThCNTkzQjU1Q0ZGNTkyM0EyIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6OUE3MUM3MTk4NjQ5MTFFOEI1OTNCNTVDRkY1OTIzQTIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6OUE3MUM3MUE4NjQ5MTFFOEI1OTNCNTVDRkY1OTIzQTIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4fulnqAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFRQTFRFR3BM+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5ZxaOMgAAABt0Uk5TAHMLkj8y9iXT1xNTrMyInMFrA7fk3B1ifl7uNMI3agAAAddJREFUSMftlteShCAQRUUBIyBm5f//cwnjGgADT1tb0y9jOXXs5tIpir52sIaxYBbmQmQwCE0roY0N79FEgZn0LTB9h0OmnSZRpL+BE/SULMZao5UmkIm+HYtbMIagxQb9VQoaHLcAxR6s5IBWZDEiLewQJ2Lre1JRwEsLNv601dwKseD19v9iwbmJjSSlR9t0ZsR4yFwwLeGNKgOcqQd+lrIeOH2UPV/4j8OoDIebTkxxKKzKYgiEVUXDwLBlMYg58MxcsiBQ7dK0wiAYqfb35p6LbU4MsnuQN0nStIKv7bQToovfwGA7pbxgPNymZ7aD9ZiqGvnUygd0loC48mDXj9WUyQv9c+rSs/ysBU/7+zB3myX7C94+C+zZJoXZVwLE66w72nI+h7b+GGGT9sIRocyY3JEM4CxjXLsvhbsGJLbEsae6lAs7R6WUbIlvRjd2yfXpFvsk9vSE3rdMSIWmK5YKp9R20TtsvP54bWfUsa6vjtVkft/KL7mWMxcePVWlZXeXoWjHxskesJImKryTpki9rG/Zj5OjqpNwh+M7nujH5iPiqBel8ekCifTS1VFYFJD2ejVLo+fGO7OWmaLuxuiVxSBfFz7Cm4BFn9Zd305hq/6/tR/yiTOrDpUHvgAAAABJRU5ErkJggg==);
+            }
+
+            .wel-features .trait .trt-icon-04 {
+                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAADIWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMTQgNzkuMTUxNDgxLCAyMDEzLzAzLzEzLTEyOjA5OjE1ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjlFQTY1ODgyODY0OTExRTg5MzgxODg3QzQyRjQzRjI4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjlFQTY1ODgzODY0OTExRTg5MzgxODg3QzQyRjQzRjI4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6OUVBNjU4ODA4NjQ5MTFFODkzODE4ODdDNDJGNDNGMjgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6OUVBNjU4ODE4NjQ5MTFFODkzODE4ODdDNDJGNDNGMjgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7LRpCOAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAF1QTFRFR3BM////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////hB0c0wAAAB50Uk5TAIBKpFNEIGAK4Soa8+p3bovAM8i2rQOW2ToR0vn8/nwG5AAAA3tJREFUSMedV9e2rCAMFWxgQaw4xfz/Z95QRlHx3HF40IWQkLJ3iFF0PZ5iGMQz+mnQGnDU9BfZAtwofhBuAVRRKID2vmwG0Ot3D1DeFk4BGv1uANJfXI71O/7SaSpVztYZB8ijKAfg6yeWS/IIirLBZCb5zBOc9egxbF9M7kYWEH65zKweEjsnbjo93Ib+LIuB4TmNfSvpUNcD9f2Iac5dIA8HVzol42VwMfwjvsoKXiePKxjMaSHFkZ+zAaqj11NtFeYmxp908TlbJ5+VF9TTUTHaKxBX6NJ5/wdyHJcEWBN3o8M4tkPloOF8Gf28oPpqQMRDINXCJuLFrjDEXDJFaDFBRHCJNmymlhsn8i5iElHSJ1dMKjAU5YYLdKXbEIM1hXX/wfkmPCUbNq3wF3xCs53jxKlhxuwvB6mJP5W1uEHmCt769UgSk5YFqhvCSYu+NrNOzNy46eXo0iwKQM6O8ZwVuuEkxyOW+BBMJCcMhOgKER/SodXODgzSHsCfBwK+DZXp+0DSrPaKhC4QsZwP9Rkx7MoAPawgDmcZO4gPhjpTb9CUIh5ZapDSe7vxa4q5zlJzVj8ZwmlyOSKbKtBAzXBzrIG5ZlpqtSMe/3zjFuFMQlob4d5ZL/Q+Zj74wkQL91jbngBSzx7Wnto8352NbhoxgYYVpNTMXyk/6PpQEqQEJUxbqKPfvc2ZaH0lcgz/rrq81oqCeuZ9vYIxF5XjzAcNuwKBKm39yma/FrnswJZ9ZWCYnm7YSlIqq9MdmxrYyjXvjaBXRSdUmGiTZ39QWj2iSS1adFFT1Mk73QE3HMwaKZvMMHS+IRzvyTAeufFHB4U2uppDHY8xEQX7SrZeU5NuhMoPrAvVdVs91VlY2b5mugxxzOtWdxJqPSNZM/hUuJIMfFbBwNMdcMJhNLlLg30XvLkPHX1/icNlViPgIAupjcspWfyezbsx0PAFlmQq44BxE7fNCPFp4N1VhirEAohPF21F6rcVU5Z91VagQsNn6Vu6vwhsOJDP/LSGUm1RovpNb0nalqwRYFiDm7Jo9yF18dBxxPXN5UR/gSrxnDYbqgDUinnfNOgmZdGs7PYtIQ/etVMzDqrzi7sqS+W3iw/VDuIbgmSu/LQhUPy3f3Y5E+u9c69ZH11t/eEPxba3DdwqQT7LuGbKTz9W4o+G74sfnJjz+K9fm3+hnFOQdCnkzAAAAABJRU5ErkJggg==);
+            }
+
+            .wel-features .trait > h6 {
+                font-size: 16px;
+                font-weight: normal;
+                margin-top: 1em;
+                margin-bottom: 1em;
+            }
+
+            .wel-features .trait > p {
+                font-size: 12px;
+                margin-bottom: 0;
+            }
+
+            .wel-features .trait:after {
+                position: absolute;
+                top: 5%;
+                right: 0;
+                content: "";
+                display: block;
+                width: 0;
+                height: 90%;
+                border-right: 1px solid rgba(255,255,255,0.2);
+            }
+
+    .wel-03 {
+        padding: 40px 0 60px 0;
+        text-align: center;
+    }
+
+        .wel-03 .wel-03-tle {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+    .silk-wealth {
+        padding: 30px;
+    }
+
+        .silk-wealth .wealth-wrap {
+            padding-left: 42px;
+        }
+
+            .silk-wealth .wealth-wrap:before {
+                content: "";
+                float: left;
+                width: 32px;
+                height: 32px;
+                background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAADIWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMTQgNzkuMTUxNDgxLCAyMDEzLzAzLzEzLTEyOjA5OjE1ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjBCQzlBMDZGODY3NjExRTg4Mjc2OTYyQjUyNENDNkJFIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjBCQzlBMDcwODY3NjExRTg4Mjc2OTYyQjUyNENDNkJFIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MEJDOUEwNkQ4Njc2MTFFODgyNzY5NjJCNTI0Q0M2QkUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MEJDOUEwNkU4Njc2MTFFODgyNzY5NjJCNTI0Q0M2QkUiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7atCFqAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAKJQTFRFR3BM/ckX/ckX/cse/ckX/coZ/s4t/coc/ckX/ckX/ckX/s4u/tRM/ckX/ckX/ckX/ckX/ckX/ckX/c8x/ckY/dNB/ckX/c0n/ckX/csf/txp/ckX/dNA/cwi/tlc/tpi/dI//dxp/uqi/t5w/ckX/ckX/uGA/c4u/dNE/dtk/eGB/cQG/tdS/ckX/ckX/dZQ/dRJ/ckX/cMA/cYG/ccO/b8AtP0aUQAAADF0Uk5TAFb5FxTmCCTqbPAMBdGpgJyZObrIrInWtKlEMoveclCgHiqEybNqzYVaOPlTiIpce3KpfvkAAAF5SURBVDjLjVPnmoIwEAwlGJr08qkoenrWK6S8/6tdICGAeufNDyDLbna2DAAKrhalSNdRGmkueMQsdEo7NizLiO3SCWd3v60PFJjD0QhQbk3C/bkxjTDm/uiSJbQfc9pwqeKh9oQU0KC8w/Jt8BS2L3jkc/AL5nmXAPX8FqesQE6VrDayAgO1ScJAnM4FwYQ2DSWEwLWwBSHvnyPqf2e4USDsrTOajgu0UjgT0oxAsbCWGohkCQkbO7CjLCQCaSwpJhhT2kVTjFNPGOMUIDkCF1zqqmVIG5gtgHQwEdDlJ83a53a327bvWhdWT1cOkNHsPGsP21vdsMGhT7GDjGHa0CtPg9n1olIokuC74L84CIWr3sZJqjI3vLWb9Wm1vnEWi0yV2TcKY869H0qNh0YNrWZEL5IsSwqdsFGr1bC+io5Bh/GwJuNOjlVV3I/7r4X5fLVy7v+W9vXavxYO55FPpGfeS0+I98DF63lcvIdH8Ur571v57yfy/wHwASlDx/wlkAAAAABJRU5ErkJggg==) no-repeat center center;
+                margin-left: -42px;
+            }
+
+        .silk-wealth .wealth-tle {
+            font-size: 16px;
+            border-bottom: 1px solid #eee;
+            padding: 0.35rem 0 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .silk-wealth .wealth-num {
+            font-size: 34px;
+            color: #2882c8;
+        }
+
+    .wel-result {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 9;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: #919191;
+    }
+
+        .wel-result .digi-icon {
+            width: 169px;
+            height: 100px;
+            margin: 0 auto;
+        }
+
+        .wel-result .result-h4 {
+            font-size: 1.375rem;
+            margin-top: 24px;
+            color: #333;
+        }
+
+        .wel-result .result-msg {
+            font-size: 1rem;
+            height: 3em;
+            line-height: 1.5;
+            margin-top: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .wel-result .wel-success,
+        .wel-result .wel-failed {
+            width: 400px;
+            margin: 0 auto;
+        }
+
+            .wel-result .wel-success .result-h4 {
+                color: #2882c8;
+            }
+
+            .wel-result .wel-failed .result-h4 {
+                color: #dfab81;
+            }
+
+            .wel-result .wel-success .digi-icon {
+                background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKkAAABkCAMAAADKfeB3AAADIWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMTQgNzkuMTUxNDgxLCAyMDEzLzAzLzEzLTEyOjA5OjE1ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjU4MEU3QzEwODhEQTExRThCNjc2QjAxOTZCRTZDMERGIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjU4MEU3QzExODhEQTExRThCNjc2QjAxOTZCRTZDMERGIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NTgwRTdDMEU4OERBMTFFOEI2NzZCMDE5NkJFNkMwREYiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NTgwRTdDMEY4OERBMTFFOEI2NzZCMDE5NkJFNkMwREYiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz622D/wAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMNQTFRFR3BMmL3mfq3g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) no-repeat;
+                background-size: contain;
+            }
+
+            .wel-result .wel-failed .digi-icon {
+                background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKkAAABkCAMAAADKfeB3AAADIWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMTQgNzkuMTUxNDgxLCAyMDEzLzAzLzEzLTEyOjA5OjE1ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjY3M0Y0MUMwODhEQTExRTg5RUQ5QUIwMDEyNkY0NDc5IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjY3M0Y0MUMxODhEQTExRTg5RUQ5QUIwMDEyNkY0NDc5Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NjczRjQxQkU4OERBMTFFODlFRDlBQjAwMTI2RjQ0NzkiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NjczRjQxQkY4OERBMTFFODlFRDlBQjAwMTI2RjQ0NzkiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5GZ+o+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAALFQTFRFR3BM48270auN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) no-repeat;
+                background-size: contain;
+            }
+
+    @@media (max-width: 767.98px) {
+        .wel-01 .wel-p-area {
+            width: 100%;
+            margin-right: 0;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .wel-features .trait {
+            margin-bottom: 40px;
+        }
+
+            .wel-features .trait:last-child {
+                margin-bottom: 0;
+            }
+
+        .wel-result {
+            align-items: center;
+            align-items: flex-start;
+        }
+
+            .wel-result .wel-success,
+            .wel-result .wel-failed {
+                width: 100%;
+                margin-top: 10rem;
+            }
+    }
+</style>
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+    <div class="m-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="m-portlet m-portlet--mobile m-portlet--skin-dark">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title"><h3 class="m-portlet__head-text head-text-nobd"><span class="font-weight-bold">Silk Pay</span></h3></div>
+                        </div>
+                        <div class="m-portlet__head-tools">
+                            <div class="sus-dropmenu">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">我的钱包</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/SilkPay/Index">我的钱包</a>
+                                    @if (Model.SilkPayStatus)
+                                    {
+                                        <a class="dropdown-item" href="/SilkPay/Recharge">充币</a>
+                                        <a class="dropdown-item" href="#">提币</a>
+                                        <a class="dropdown-item" href="#">资金记录</a>
+                                        <a class="dropdown-item" href="#">开发对接</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body m-portlet__body--no-padding">
+                        @if (!Model.SilkPayStatus)
+                        {
+                            <div class="wel-01">
+                                <div class="wel-p-area">
+                                    <p class="p1">随着您业务的发展支付方式也如此，使用SILKPAY开拓您的网上业务吧!</p>
+                                    <p class="p2">支付产品多样化：专注全球收付款（银行转账、国际电汇）、法币及Silk支付、社交红包等等</p>
+                                </div>
+                            </div>
+                            <div class="wel-features">
+                                <h4>优惠，高效，安全，合规</h4>
+                                <div class="row">
+                                    <div class="col-12 col-md-3 trait">
+                                        <i class="trt-icon-01"></i>
+                                        <h6>费用低</h6>
+                                        <p>收付款免费，为您节省更多。</p>
+                                    </div>
+                                    <div class="col-12 col-md-3 trait">
+                                        <i class="trt-icon-02"></i>
+                                        <h6>高效</h6>
+                                        <p>简单动下手指，您的交易即可<br />安全完成，可随时随地<br />完成任何交易。</p>
+                                    </div>
+                                    <div class="col-12 col-md-3 trait">
+                                        <i class="trt-icon-03"></i>
+                                        <h6>安全合规</h6>
+                                        <p>持有PCI&amp;DSS证书，<br />KYC, AML/CFT 认证。</p>
+                                    </div>
+                                    <div class="col-12 col-md-3 trait">
+                                        <i class="trt-icon-04"></i>
+                                        <h6>包容性</h6>
+                                        <p>SilkPay可为您不断发展的<br />业务专业定制支付解决方案，<br />使用SILKPAY开拓您的网上业务吧。</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wel-03">
+                                <div class="wel-03-tle">管理您的资金</div>
+                                <a class="btn btn-primary m-btn--pill" href="javascript:;" onclick="OpenUserSilkPay()"> &nbsp; 免费开设Silk Pay帐户 &nbsp; </a>
+                            </div>
+                            <div class="wel-result" style="display:none;">
+                                <div class="wel-success">
+                                    <div class="digi-icon"></div>
+                                    <div class="result-h4">开通成功</div>
+                                    <p class="result-msg"></p>
+                                    <a class="btn btn-outline-focus m-btn--pill" href="/SilkPay/Index">立即进入</a>
+                                </div>
+                            </div>
+                            <div class="wel-result" style="display:none;">
+                                <div class="wel-failed">
+                                    <div class="digi-icon"></div>
+                                    <div class="result-h4">SILKPAY 开通失败</div>
+                                    <p class="result-msg">请再次尝试或联系客服处理</p>
+                                    <a class="btn btn-outline-focus m-btn--pill" href="/SilkPay/Index"> &nbsp; 返回 &nbsp; </a>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="silk-wealth">
+                                <div class="wealth-wrap">
+                                    <div class="wealth-tle">资产折合</div>
+                                    <div class="wealth-num">≈ @Html.AmountFormat(Model.UsdValuationTotal) $</div>
+                                </div>
+                            </div>
+                            <div style="padding:50px 0px 15px 0px">
+                                <div class="table-responsive">
+                                    <table class="table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="p-md-l-30">币种</th>
+                                                <th class="text-center">可用</th>
+                                                <th class="text-center">锁定</th>
+                                                <th class="text-center">USD估值</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.AssetsData != null && Model.AssetsData.Count() > 0)
+                                            {
+                                                foreach (var item in Model.AssetsData)
+                                                {
+                                                    <tr>
+                                                        <td class="p-md-l-30">@item.CoinType</td>
+                                                        <td class="text-center">
+                                                            @Html.AmountFormat(item.AmountBalance)
+                                                        </td>
+                                                        <td class="text-center">
+                                                            @Html.AmountFormat(item.AmountForzen)
+                                                        </td>
+                                                        <td class="text-center">
+                                                            @Html.AmountFormat(item.UsdValuation) $
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="3">@Html.GetTansByLan("recharge-summary-nodata", "No data available")</td></tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section script{
+    <script src="~/js/loading.js"></script>
+    <script>
+    function OpenUserSilkPay() {
+        $.showLoading('@Html.Raw(Html.GetTansByLan("packet-send-34", "Waiting"))');
+        $.post('/SilkPay/OpenSilkPayment', function (data) {
+            if (data == 1) {
+                $.hideLoading();
+                $(".wel-success").parent().show();
+            } else {
+                $.hideLoading();
+                $(".wel-failed .result-msg").text(data);
+                $(".wel-failed").parent().show();
+            }
+        });
+    }
+    </script>
+}

@@ -1,0 +1,46 @@
+﻿@{
+    Layout = null;
+}<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pay Fail</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site2.css" />
+</head>
+<body>
+    <div class="m-grid m-grid--hor m-grid--root">
+        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor">
+
+            <div class="m-grid__item m-grid__item--fluid login-wrapper">
+                <div class="login-container">
+                    <div class="pay-msg-wrap">
+                        <div class="icon-area">
+                            <span class="icon-fail-box"></span>
+                        </div>
+                        <div class="pay-result">支付失败</div>
+                        <div class="pay-fail-msg">@ViewBag.Message</div>
+                        <div class="pay-afterbtn">
+                            @if (ViewBag.ReturnUrl != null)
+                            {
+                                <a href="@ViewBag.ReturnUrl" class="btn btn-default btn-block">返回</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="login-footer text-center">
+                <div class="login-terms">
+                    <a href="https://wallet.silkchain.io/Affirm/Clause">Terms and Conditions  |  FAQ</a>
+                </div>
+                <div>International Trade Digitalization Commission / Copyright itdc.org 2017-2018 All Rights Reserved.</div>
+            </footer>
+
+        </div>
+    </div>
+</body>
+</html>

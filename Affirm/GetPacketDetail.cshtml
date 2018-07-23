@@ -1,0 +1,485 @@
+﻿@using SKC.Entity.DBModels
+@using SKC.Entity.Models
+@using SKC.Entity.Enums
+@model PacketsRecPageModel
+@{
+    Layout = null;
+    List<ReceListPageModel> receList = Model.ReceList;
+    List<SkcRedPacket> sendList = Model.SendList;
+    List<SkcInOutRecord> inOutRecordList = Model.InOutRecordList;
+    string Lan = ViewBag.Lan as string;
+    string UserId = ViewBag.UserId as string;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="/css/vendors.stripped.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="/css/style.bundle.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="/css/main.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+</head>
+<style>
+    .m-grid.m-grid--ver-desktop.m-grid--desktop {
+        display: flex;
+        flex-direction: row;
+    }
+
+        .m-grid.m-grid--ver-desktop.m-grid--desktop > .m-grid__item.m-grid__item--fluid {
+            flex: 1 0 auto;
+        }
+
+    .rowitem-none {
+        text-align: center;
+        padding: 1rem 0;
+    }
+
+    .m-content,
+    .m-packet__container {
+        height: 100%;
+    }
+
+    .m-packet__wrapper {
+        padding-top: 20px;
+        width: 430px;
+        margin: 0 auto;
+    }
+
+    .m-stack.m-stack--flex-general .m-packet__wrapper {
+        flex: 1 0 auto;
+    }
+
+    .m-packet__wrapper .red-packet {
+        position: relative;
+        padding: 30px 0;
+        text-align: center;
+        color: #333;
+    }
+
+    .m-packet__wrapper .avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 4rem;
+        height: 4rem;
+        margin: 0 auto;
+        border-radius: 0.4285714rem;
+        border: 1px solid #feb041;
+        background-color: #fff;
+    }
+
+        .m-packet__wrapper .avatar > img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+    .m-packet__wrapper .sendname {
+        font-size: 1.15rem;
+        margin: 1rem 0 0.3rem 0;
+    }
+
+    .m-packet__wrapper .sendopt {
+        font-size: 1rem;
+    }
+
+    .m-packet__wrapper .price {
+        margin-top: 10px;
+        margin-bottom: 4px;
+        line-height: 1;
+    }
+
+        .m-packet__wrapper .price > strong {
+            font-size: 3rem;
+            font-family: arial;
+        }
+
+        .m-packet__wrapper .price > em {
+            font-size: 1.15rem;
+            font-style: normal;
+        }
+
+    .m-packet__wrapper .total {
+        margin-top: 20px;
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+        .m-packet__wrapper .total .total-numb {
+            color: #888;
+            font-size: 1em;
+        }
+
+            .m-packet__wrapper .total .total-numb strong {
+                display: block;
+                font-weight: normal;
+                font-size: 2.4rem;
+                line-height: 1;
+            }
+
+    .m-packet__wrapper .btn-outline-danger {
+        background-color: #fff;
+        color: #ff9600;
+        border-color: #ff9600;
+    }
+
+        .m-packet__wrapper .btn-outline-danger:hover {
+            background-color: #ff9600;
+            color: #fff;
+        }
+
+    .m-packet__wrapper .total .btn-outline-danger {
+        margin-top: 4px;
+        padding-left: 3.25rem;
+        padding-right: 3.25rem;
+    }
+
+    .m-packet__wrapper .date-filter {
+        position: absolute;
+        top: 0px;
+        right: 20px;
+    }
+
+        .m-packet__wrapper .date-filter .filter-control-select {
+            border: none;
+            background: none;
+            padding-right: 0 \9;
+            background: none \9;
+            outline: none;
+            color: #ff9400;
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .m-packet__wrapper .date-filter .arrow-btm {
+            font-size: 0;
+            text-align: center;
+        }
+
+            .m-packet__wrapper .date-filter .arrow-btm:after {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                overflow: hidden;
+                content: "";
+                border-right: 1px solid #ff9400;
+                border-bottom: 1px solid #ff9400;
+                transform: rotate(45deg);
+            }
+
+    .m-packet__wrapper .draw-packet {
+        position: relative;
+        background-color: #fff;
+        flex: 1 0 auto;
+        overflow: hidden;
+    }
+
+    .m-packet__wrapper .draw-packet-inner {
+        width: 100%;
+        height: 100%;
+    }
+
+    .m-packet__wrapper .draw-packet-tle {
+        padding: 10px 15px;
+        border-bottom: 1px solid #ddd;
+        font-size: 1rem;
+        color: #888;
+    }
+
+    .m-packet__wrapper .rowitem {
+        border-bottom: 1px solid #ddd;
+        padding: 10px 0;
+        position: relative;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-items: flex-star;
+        align-items: flex-star;
+    }
+
+        .m-packet__wrapper .rowitem:last-child {
+            border-bottom: none;
+        }
+
+    .m-packet__wrapper .rowitem-has-operate .rowitem:nth-child(2n+1) {
+        border-bottom: 1px dotted #f0f0f0;
+    }
+
+    .m-packet__wrapper .rowmd {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+    }
+
+    .m-packet__wrapper .rowitem-ul {
+        padding: 0 15px;
+    }
+
+    .m-packet__wrapper .nametxt {
+        font-size: 1.15rem;
+        line-height: 1;
+        margin-bottom: 0.4rem;
+    }
+
+    .m-packet__wrapper .datenub {
+        font-size: 1em;
+        color: #bbb;
+        line-height: 1;
+    }
+
+    .m-packet__wrapper .distrib {
+        text-align: right;
+        line-height: 1;
+    }
+
+    .m-packet__wrapper .linefeed {
+        margin-top: 0.5rem;
+    }
+
+    .m-packet__wrapper .text-orange {
+        color: #ff9600;
+    }
+
+    .m-packet__wrapper .text-gray {
+        color: #bbb;
+    }
+
+    @@media (max-width: 767.98px) {
+        .m-packet__wrapper {
+            width: 100%;
+            padding-top: 0;
+        }
+
+        .m-body .m-content {
+            padding: 0;
+        }
+
+        .m-packet__wrapper .red-packet {
+            background-color: #f0f0f0;
+        }
+
+        .m-content--skin-light2 .m-body {
+            background-color: #fff;
+        }
+
+        .m-packet__wrapper .red-packet {
+            padding-top: 50px;
+        }
+
+        .m-packet__wrapper .date-filter {
+            top: 20px;
+        }
+    }
+
+    @@media (min-width: 992px) {
+        .m-packet__wrapper {
+            background-color: #fff;
+        }
+
+            .m-packet__wrapper .rowitem:first-child {
+                border-top: 1px solid #ddd;
+            }
+    }
+</style>
+<body class="m-grid m-grid--hor m-content--skin-light2">
+<div class="m-grid__item m-grid__item--fluid m-wrapper m-body">
+    <div class="m-content">
+        @if (Model.PacketType == "rece")
+        {
+            <div class="m-packet__container m-stack m-stack--flex-general">
+                <div class="m-packet__wrapper">
+                    <div class="red-packet">
+                        <div class="avatar"><img width="80%" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAABCCAYAAADjVADoAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NThERUNCNTExREJCMTFFOEE2NjhGNUIwQUU1NDU1NUMiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NThERUNCNTIxREJCMTFFOEE2NjhGNUIwQUU1NDU1NUMiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1OERFQ0I0RjFEQkIxMUU4QTY2OEY1QjBBRTU0NTU1QyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1OERFQ0I1MDFEQkIxMUU4QTY2OEY1QjBBRTU0NTU1QyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PnOyT70AAAplSURBVHja7FwLlFVV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" /></div>
+                        <div class="sendname"><span>@Model.UserName</span>@Html.GetTansByLan("packet-packetList-01", " Received", Lan)</div>
+                        <div class="price"><strong>@Model.Amount.ToString("0.00")</strong></div>
+                        <div class="row total" style="margin-left:0;margin-right:0;">
+                            <div class="col col-6">
+                                <div class="total-numb">
+                                    <strong>@Model.Total</strong>@Html.GetTansByLan("packet-packetList-02", "Total Number", Lan)
+                                </div>
+                            </div>
+                            <div class="col col-6">
+                                <div class="total-numb">
+                                    <strong>@Model.Luckiest_count</strong>@Html.GetTansByLan("packet-packetList-03", "Luckiest Draw", Lan)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row total" style="margin-left:0;margin-right:0;">
+                            <div class="col col-6" style="padding:0;">
+                                <div class="total-numb">
+                                    <strong>@inOutRecordList.Count()</strong>@Html.GetTansByLan("packet-packetList-04", "Shared Packets", Lan)
+                                </div>
+                            </div>
+                            <div class="col col-6" style="padding:0;">
+                                <div class="total-numb">
+                                    <strong>@((inOutRecordList.Sum(t => t.AmountDecimal)).ToString("0.00"))<small style="font-size:40%;">@Html.GetTansByLan("packet-silk-alias-01", "SILK", Lan)</small></strong>@Html.GetTansByLan("packet-packetList-05", "Bonus by Sharing", Lan)
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display:none" id="lucky-money-type">@Model.PacketType</div>
+                        <div class="date-filter">
+                            <select class="filter-control-select" onchange="OnChange()">
+                                @if (Model.Years == "2019")
+                                {
+                                    <option value="2019" selected="selected">@Html.GetTansByLan("packet-packetList-08", "2019 years", Lan)</option>}
+                                else
+                                {
+                                    <option value="2019">@Html.GetTansByLan("packet-packetList-08", "2016 years", Lan)</option>}
+                                @if (Model.Years == "2018")
+                                {
+                                    <option value="2018" selected="selected">@Html.GetTansByLan("packet-packetList-06", "2018 years", Lan)</option> }
+                                else
+                                {
+                                    <option value="2018">@Html.GetTansByLan("packet-packetList-06", "2018 years", Lan)</option>
+                                }
+                                @if (Model.Years == "2017")
+                                {
+                                    <option value="2017" selected="selected">@Html.GetTansByLan("packet-packetList-07", "2017 years", Lan)</option>}
+                                else
+                                {
+                                    <option value="2017">@Html.GetTansByLan("packet-packetList-07", "2017 years", Lan)</option>}
+                            </select>
+                            <div class="arrow-btm"></div>
+                        </div>
+                    </div>
+                    <div class="draw-packet">
+                        <div class="draw-packet-inner">
+                            <div class="rowitem-ul">
+
+                                @if (receList != null && receList.Count > 0)
+                                {
+                                    foreach (var item in receList)
+                                    {
+                                        <div class="rowitem">
+                                            <div class="rowmd">
+                                                <div class="nametxt">@item.SendUserName</div>
+                                                <div class="datenub">@item.Data.CreateTimeDatetime.ToString("MM-dd HH:mm")</div>
+                                            </div>
+                                            <div class="rowft">
+                                            <div class="distrib">@item.Data.AmountDecimal.ToString("0.00") @Html.GetTansByLan("packet-silk-alias-01", "SILK", Lan)<div class="linefeed">
+                                                <a href="/Affirm/GetPacketIndex?OnlyCode=@item.OnlyCode&from=2&UserId=@(UserId)&Lan=@Lan">@Html.GetTansByLan("packet-packetList-09", "check details", Lan)</a>
+                                                    </div></div></div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="rowitem-none">
+                                        @Html.GetTansByLan("packet-packetList-10", "No data available", Lan)
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="m-packet__container m-stack m-stack--flex-general">
+                <div class="m-packet__wrapper">
+                    <div class="red-packet">
+                        <div class="avatar"><img width="80%" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAABCCAYAAADjVADoAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NThERUNCNTExREJCMTFFOEE2NjhGNUIwQUU1NDU1NUMiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NThERUNCNTIxREJCMTFFOEE2NjhGNUIwQUU1NDU1NUMiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1OERFQ0I0RjFEQkIxMUU4QTY2OEY1QjBBRTU0NTU1QyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1OERFQ0I1MDFEQkIxMUU4QTY2OEY1QjBBRTU0NTU1QyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PnOyT70AAAplSURBVHja7FwLlFVV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" /></div>
+                        <div class="sendname"><span>@Model.UserName</span>@Html.GetTansByLan("packet-packetList-11", " total sent", Lan)</div>
+                        <div class="price"><strong>@Model.Amount.ToString("0.00")</strong></div>
+                        <div class="total">
+                            <div class="send-sum">@Html.GetTansByLan("packet-packetList-19", "sent", Lan)<span class="text-orange">@sendList.Count()</span>@Html.GetTansByLan("packet-packetList-12", " red packets", Lan)</div>
+                            @*<a class="btn btn-outline-danger m-btn--pill" href="/Packet/SendluckyMoney">@Html.GetTansByLan("packet-packetList-13", "I want to send a red packet", Lan)</a>*@
+                        </div>
+                        <div style="display:none" id="lucky-money-type">@Model.PacketType</div>
+                        <div class="date-filter">
+                            <select class="filter-control-select" onchange="OnChange()">
+                                @if (Model.Years == "2019")
+                                {
+                                    <option value="2019" selected="selected">@Html.GetTansByLan("packet-packetList-08", "2019 years", Lan)</option>}
+                                else
+                                {
+                                    <option value="2019">@Html.GetTansByLan("packet-packetList-08", "2016 years", Lan)</option>}
+                                @if (Model.Years == "2018")
+                                {
+                                    <option value="2018" selected="selected">@Html.GetTansByLan("packet-packetList-06", "2018 years", Lan)</option> }
+                                else
+                                {
+                                    <option value="2018">@Html.GetTansByLan("packet-packetList-06", "2018 years", Lan)</option>
+                                }
+                                @if (Model.Years == "2017")
+                                {
+                                    <option value="2017" selected="selected">@Html.GetTansByLan("packet-packetList-07", "2017 years", Lan)</option>}
+                                else
+                                {
+                                    <option value="2017">@Html.GetTansByLan("packet-packetList-07", "2017 years", Lan)</option>}
+                            </select>
+                            <div class="arrow-btm"></div>
+                        </div>
+                    </div>
+                    <div class="draw-packet">
+                        <div class="draw-packet-inner">
+                            <div class="rowitem-ul rowitem-has-operate">
+
+                                @if (sendList != null && sendList.Count > 0)
+                                {
+                                    foreach (var item in sendList)
+                                    {
+                                        <div class="rowitem">
+                                            <div class="rowmd">
+                                                @if (item.UseTypeInt == 0)
+                                                {
+                                                    <div class="nametxt">@Html.GetTansByLan("packet-packetList-14", "Random Amount", Lan)</div>
+                                                }
+                                                else if (item.UseTypeInt == 1)
+                                                {
+                                                    <div class="nametxt">@Html.GetTansByLan("packet-packetList-15", "Identical Amount", Lan)</div>
+                                                }
+                                                <div class="datenub">@item.CreateTimeDatetime.ToString("MM-dd HH:mm")</div>
+                                            </div>
+                                            <div class="rowft"><div class="distrib text-dark">@item.AmountDecimal.ToString("0.00") @Html.GetTansByLan("packet-silk-alias-01", "SILK", Lan)<div class="linefeed"><span class="text-gray">@Html.GetTansByLan("packet-packetList-16", "opened", Lan) <span class="text-dark">@item.CountUsedInt</span>/<span>@item.CountInt</span></span></div></div></div>
+                                        </div>
+                                        <div class="rowitem">
+                                            <div class="rowmd text-right">
+                                                @if (item.CountInt > item.CountUsedInt && item.ValidityTimeDatetime >= DateTime.Now)
+                                                {
+                                                    <a class="btn btn btn-outline-danger m-btn--pill btn-sm" href="javascript:;" onclick="GetSharePage('@item.PackedIdNvarchar')" id="">@Html.GetTansByLan("packet-packetList-17", "Copy address", Lan)</a>
+                                                }
+                                                &nbsp;
+                                                <a class="btn btn btn-outline-danger m-btn--pill btn-sm" href="/Affirm/GetPacketIndex?OnlyCode=@item.PackedIdNvarchar&from=1&userId=@UserId&lan=@Lan">@Html.GetTansByLan("packet-packetList-18", "View details", Lan)</a>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="rowitem-none">
+                                        @Html.GetTansByLan("packet-packetList-10", "No data available", Lan)
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form action="/Affirm/GetPacketIndex/" method="POST" id="J_modal_add_purchase">
+                <input type="hidden" id="OnlyCode" name="OnlyCode" value="" />
+                <input type="hidden" name="Lan" value="@(Lan)" />
+            </form>
+        }
+    </div>
+</div>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"></script>
+<script>
+    function OnChange() {
+        var url = "/Affirm/GetPacketDetail" + "?type=" + $("#lucky-money-type").text() + "&years=" + $('.filter-control-select option:selected').val()+"&Lan=@(Lan)&userId=@UserId";
+        window.location.href = url;
+    }
+    function GetSharePage(id) {
+        $("#OnlyCode").val(id);
+        $("#J_modal_add_purchase").attr("action", "/Packet/" + id);
+        $("#J_modal_add_purchase").submit();
+    }
+</script>
+</body>
+</html>

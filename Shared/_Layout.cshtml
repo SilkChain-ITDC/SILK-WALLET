@@ -78,11 +78,11 @@
 
 
 <!DOCTYPE html>
-<html lang="en" >
-	<!-- begin::Head -->
+<html lang="en">
+<!-- begin::Head -->
 <head>
     <meta charset="utf-8" />
-    <title>@(ViewBag.Title??SKC.Common.GlobalConfig.Coin_FullName +"- Wallet")</title>
+    <title>@(ViewBag.Title ?? SKC.Common.GlobalConfig.Coin_FullName + "- Wallet")</title>
     <meta name="description" content="@(ViewBag.Description??"")">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -113,50 +113,61 @@
     <!--end::Base Styles -->
     <!-- Google Tag Manager -->
     <script>
-(function (w, d, s, l, i) {
-        w[l] = w[l] || []; w[l].push({
-            'gtm.start':
-                new Date().getTime(), event: 'gtm.js'
-        }); var f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-5Q7VH5Q');</script>
     <!-- End Google Tag Manager -->
     <script>
 /*<![CDATA[*/window.zEmbed || function (e, t) { var n, o, d, i, s, a = [], r = document.createElement("iframe"); window.zEmbed = function () { a.push(arguments) }, window.zE = window.zE || window.zEmbed, r.src = "javascript:false", r.title = "", r.role = "presentation", (r.frameElement || r).style.cssText = "display: none", d = document.getElementsByTagName("script"), d = d[d.length - 1], d.parentNode.insertBefore(r, d), i = r.contentWindow, s = i.document; try { o = s } catch (e) { n = document.domain, r.src = 'javascript:var d=document.open();d.domain="' + n + '";void(0);', o = s } o.open()._l = function () { return false; var e = this.createElement("script"); n && (this.domain = n), e.id = "js-iframe-async", e.src = "https://assets.zendesk.com/embeddable_framework/main.js", this.t = +new Date, this.zendeskHost = "eztoken.zendesk.com", this.zEQueue = a, this.body.appendChild(e) }, o.write('<body onload="document._l();">'), o.close() }();
             /*]]>*/</script>
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/5b21d3c870971d3d70af6fe3/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
 </head>
-    <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
-        <div class="m-grid m-grid--hor m-grid--root m-page">
-            <header class="m-grid__item    m-header " data-minimize-offset="200" data-minimize-mobile-offset="200">
-                <div class="m-container m-container--fluid m-container--full-height">
-                    <div class="m-stack m-stack--ver m-stack--desktop">
-                        <div class="m-stack__item m-brand  m-brand--skin-dark ">
-                            <div class="m-stack m-stack--ver m-stack--general">
-                                <div class="m-stack__item m-stack__item--middle m-brand__logo">
-                                    <a href="//www.silkchain.io/" class="m-brand__logo-wrapper" target="_blank"><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAAeCAMAAADZ/IrdAAADImlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMTEgNjYuMTQ1NjYxLCAyMDEyLzAyLzA2LTE0OjU2OjI3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5QkNFMEY1MzUzNkUxMUU4OUQ5NTk4QjhFN0NFMDBCMCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo5QkNFMEY1NDUzNkUxMUU4OUQ5NTk4QjhFN0NFMDBCMCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjlCQ0UwRjUxNTM2RTExRTg5RDk1OThCOEU3Q0UwMEIwIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjlCQ0UwRjUyNTM2RTExRTg5RDk1OThCOEU3Q0UwMEIwIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+tRL6QQAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABRUExURUdwTP///////////////////////////////////////////////////////////////////////////////////////////////////////2OVdPMAAAAadFJOUwBiHwfUDvvv9t5x57xCnagWOUyFErGReSvK9lM6GQAAAndJREFUSMfFl9uWgyAMRREUglatd83/f+gkRKvj6Ky+lPKgIOCG5BBAqS31+cM7Sv6R9ypueta2GKZynstpKGz9jMnOMW33UptiHo/9wISeZTd4P3QlZRN8xGKnVhMvRUTv6ZHStDWmseZtlKqRsTQQftdKmThzz5Hl5ZhNgzBMdyzBGH7Pgr8nQkKvmkY9gbJT8Hv2cfhQkM3Z1djRbMkKHec9Wb4YPs02WNIcQ2rUiDiqRkqJalkLn/U40BQFp0l6JDMtJTIIvLyuaxc+kghZEM5tFRB8M4e1kVXSiNrAWimNKouL5LgCEDqOqBbVMqgSt5l3bPt15mSRYdkXhPOcRuqPMoD1bwHeBHgljVJpo16vBgFwfn1BtNjyYkZV5NRJ0qgyHuu4FiuVFxvDYr/j7uBg+0Ob/TXi1NHPd3jHzRnuSlWC0CjUaOi0lRJQhVO///Y/HM/N5WUc6hkLs8N7T4oK8HmfKzw3hwc7qPng2qo193CJxjfwlh2+YLvDs5bG0p/grDkNV/CEpOTqxFzAeRvGECvOX53Aa67MyYs7nDQ0ZWezd0D0K7Mr07KUWf4XcOB4fAfPghR6C9kBPiPMZ8FR/+xScCufV8qF2Vvx6LXZk82qyQFOTKK+udTW5PDa5+kfs++vBxa8AAuRxQbXQAZ+M8isJy1rpb87LCoRnL9bahpdUCpZXx/gYTN5M7ymIcQ49i33P4YT/pMpWMyXQWYSpXFtfoQbz/m3NpZVg3UvMdNU8AqkRrbl5Sa8prZZz2Z2kS9ow26ZUHg9bqnP6FvqVw8T3z1G/TpAsvDTJOIB8rtH5+9eGk7XJYh7XdouigAxL4o/w6JORVazjrwAAAAASUVORK5CYII=" /></a>
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+    <div class="m-grid m-grid--hor m-grid--root m-page">
+        <header class="m-grid__item    m-header " data-minimize-offset="200" data-minimize-mobile-offset="200">
+            <div class="m-container m-container--fluid m-container--full-height">
+                <div class="m-stack m-stack--ver m-stack--desktop">
+                    <div class="m-stack__item m-brand  m-brand--skin-dark ">
+                        <div class="m-stack m-stack--ver m-stack--general">
+                            <div class="m-stack__item m-stack__item--middle m-brand__logo">
+                                <a href="//www.silkchain.io/" class="m-brand__logo-wrapper" target="_blank"><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAAeCAMAAADZ/IrdAAADImlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMTEgNjYuMTQ1NjYxLCAyMDEyLzAyLzA2LTE0OjU2OjI3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5QkNFMEY1MzUzNkUxMUU4OUQ5NTk4QjhFN0NFMDBCMCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo5QkNFMEY1NDUzNkUxMUU4OUQ5NTk4QjhFN0NFMDBCMCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjlCQ0UwRjUxNTM2RTExRTg5RDk1OThCOEU3Q0UwMEIwIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjlCQ0UwRjUyNTM2RTExRTg5RDk1OThCOEU3Q0UwMEIwIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+tRL6QQAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABRUExURUdwTP///////////////////////////////////////////////////////////////////////////////////////////////////////2OVdPMAAAAadFJOUwBiHwfUDvvv9t5x57xCnagWOUyFErGReSvK9lM6GQAAAndJREFUSMfFl9uWgyAMRREUglatd83/f+gkRKvj6Ky+lPKgIOCG5BBAqS31+cM7Sv6R9ypueta2GKZynstpKGz9jMnOMW33UptiHo/9wISeZTd4P3QlZRN8xGKnVhMvRUTv6ZHStDWmseZtlKqRsTQQftdKmThzz5Hl5ZhNgzBMdyzBGH7Pgr8nQkKvmkY9gbJT8Hv2cfhQkM3Z1djRbMkKHec9Wb4YPs02WNIcQ2rUiDiqRkqJalkLn/U40BQFp0l6JDMtJTIIvLyuaxc+kghZEM5tFRB8M4e1kVXSiNrAWimNKouL5LgCEDqOqBbVMqgSt5l3bPt15mSRYdkXhPOcRuqPMoD1bwHeBHgljVJpo16vBgFwfn1BtNjyYkZV5NRJ0qgyHuu4FiuVFxvDYr/j7uBg+0Ob/TXi1NHPd3jHzRnuSlWC0CjUaOi0lRJQhVO///Y/HM/N5WUc6hkLs8N7T4oK8HmfKzw3hwc7qPng2qo193CJxjfwlh2+YLvDs5bG0p/grDkNV/CEpOTqxFzAeRvGECvOX53Aa67MyYs7nDQ0ZWezd0D0K7Mr07KUWf4XcOB4fAfPghR6C9kBPiPMZ8FR/+xScCufV8qF2Vvx6LXZk82qyQFOTKK+udTW5PDa5+kfs++vBxa8AAuRxQbXQAZ+M8isJy1rpb87LCoRnL9bahpdUCpZXx/gYTN5M7ymIcQ49i33P4YT/pMpWMyXQWYSpXFtfoQbz/m3NpZVg3UvMdNU8AqkRrbl5Sa8prZZz2Z2kS9ow26ZUHg9bqnP6FvqVw8T3z1G/TpAsvDTJOIB8rtH5+9eGk7XJYh7XdouigAxL4o/w6JORVazjrwAAAAASUVORK5CYII=" /></a>
 
-                                </div>
-                                <div class="m-stack__item m-stack__item--middle m-brand__tools">
-                                    <a href="javascript:;" id="m_aside_left_minimize_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-desktop-inline-block ">
-                                        <span></span>
-                                    </a>
-                                    <a href="javascript:;" id="m_aside_left_offcanvas_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-tablet-and-mobile-inline-block">
-                                        <span></span>
-                                    </a>
-                                    <a id="m_aside_header_topbar_mobile_toggle" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
-                                        <i class="flaticon-more"></i>
-                                    </a>
-                                </div>
+                            </div>
+                            <div class="m-stack__item m-stack__item--middle m-brand__tools">
+                                <a href="javascript:;" id="m_aside_left_minimize_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-desktop-inline-block ">
+                                    <span></span>
+                                </a>
+                                <a href="javascript:;" id="m_aside_left_offcanvas_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-tablet-and-mobile-inline-block">
+                                    <span></span>
+                                </a>
+                                <a id="m_aside_header_topbar_mobile_toggle" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
+                                    <i class="flaticon-more"></i>
+                                </a>
                             </div>
                         </div>
-                        <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav">
-                            <button class="m-aside-header-menu-mobile-close  m-aside-header-menu-mobile-close--skin-dark " id="m_aside_header_menu_mobile_close_btn">
-                                <i class="la la-close"></i>
-                            </button>
-                            <div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-light m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-dark m-aside-header-menu-mobile--submenu-skin-dark " style="vertical-align: middle;display: none;"></div>
-                            <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
-                                @*<div id="m_header_topbar_item">
+                    </div>
+                    <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav">
+                        <button class="m-aside-header-menu-mobile-close  m-aside-header-menu-mobile-close--skin-dark " id="m_aside_header_menu_mobile_close_btn">
+                            <i class="la la-close"></i>
+                        </button>
+                        <div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-light m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-dark m-aside-header-menu-mobile--submenu-skin-dark " style="vertical-align: middle;display: none;"></div>
+                        <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
+                            @*<div id="m_header_topbar_item">
                                 <div id="m_header_topbar_item_dropdown" class="m-dropdown-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-center" data-dropdown-toggle="click" aria-expanded="true">
                                     <a href="#" id="plusMenu" class="m-portlet__nav-link m-dropdown__toggle btn m-btn m-btn--link">
                                         <img alt="add_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAWCAYAAAArdgcFAAAAWklEQVQ4je3TsQ2AMAxE0W/kGrIlDRuwLBMgMgEpkj52h9Bd48Z+cnO2HyeJbMADFKDOlpeMnI1w4R/BHTB6KSJZxyzMH3t9HNzJp67ATnV6jS2Iqv7Chf8Gb/1aCm/0quReAAAAAElFTkSuQmCC"></a>
@@ -218,150 +229,150 @@
                                     </li>
                                 </ul>
                             </div>*@
-                                <div class="m-stack__item m-topbar__userinfo-wrapper">
-                                    <div class="m-topbar__username">@Html.GetTansByLan("common-index-h1", "Hello"), @(string.IsNullOrEmpty(user.FullNameNvarchar) ? user.UserNameNvarchar : user.FullNameNvarchar)</div>
-                                    @if (user.StatusInt != 1)
+                            <div class="m-stack__item m-topbar__userinfo-wrapper">
+                                <div class="m-topbar__username">@Html.GetTansByLan("common-index-h1", "Hello"), @(string.IsNullOrEmpty(user.FullNameNvarchar) ? user.UserNameNvarchar : user.FullNameNvarchar)</div>
+                                @if (user.StatusInt != 1)
                             {
                                 <div class="m-topbar__verify">@Html.GetTansByLan("common-index-07", "您尚未实名认证，为保障你的资金安全，在完成实名认证之前，您将不能进行提币等操作。")<a class="btn btn-primary m-btn--pill btn-sm" href="/Account/KYC" style="position:absolute;line-height:1;margin-top:-12px;">@Html.GetTansByLan("common-index-08", "立即去认证")</a></div>
-                    }
-                                </div>
-                                <div class="m-stack__item m-topbar__lang-wrapper" style="cursor:pointer">
-                                    
-                                        @if (Html.GetLang() == "en")
-        {<span id="chinesesLanguage"><img src="/images/chinese-language.png" /> <span style="vertical-align:middle;">中文</span></span>}
-else
-{<span id="englishLanguage"><img src="/images/english-language.png" /> <span style="vertical-align:middle;">English</span></span>}
-                                  
-                                </div>
+                        }
+                            </div>
+                            <div class="m-stack__item m-topbar__lang-wrapper" style="cursor:pointer">
+                                
+                                @if (Html.GetLang() == "en")
+                            {<span id="chinesesLanguage"><img src="/images/chinese-language.png" /> <span style="vertical-align:middle;">中文</span></span>}
+                        else
+                        {<span id="englishLanguage"><img src="/images/english-language.png" /> <span style="vertical-align:middle;">English</span></span>}
 
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
-                <button class="m-aside-left-close  m-aside-left-close--skin-dark " id="m_aside_left_close_btn">
-                    <i class="la la-close"></i>
-                </button>
-                <div id="m_aside_left" class="m-grid__item	m-aside-left  m-aside-left--skin-dark ">
-                    <div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark " data-menu-vertical="true" data-menu-scrollable="false" data-menu-dropdown-timeout="500">
-                        <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow fixed" style="    position: fixed;">
-                            <li class="m-menu__item" aria-haspopup="true">
-                                <a href="/Recharge/PurchaseRecord" class="m-menu__link ">
-                                    <i class="m-menu__link-icon la la-dollar" style="font-size:1.6rem;"></i>
-                                    <span class="m-menu__link-title">
-                                        <span class="m-menu__link-wrap">
-                                            <span class="m-menu__link-text">@Html.GetTansByLan("common-index-20", "Buy Silk")</span>
-                                        </span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="m-menu__item  " aria-haspopup="true">
-                                <a href="/Recharge/Summary" class="m-menu__link ">
-                                    <i class="m-menu__link-icon flaticon-coins"></i>
-                                    <span class="m-menu__link-title">
-                                        <span class="m-menu__link-wrap">
-                                            <span class="m-menu__link-text">@Html.GetTansByLan("common-index-16", "Summary")</span>
-                                        </span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="m-menu__item  " aria-haspopup="true">
-                                <a href="/wallet/index" class="m-menu__link ">
-                                    <i class="m-menu__link-icon la la-money" style="font-size:1.6rem;"></i>
-                                    <span class="m-menu__link-title">
-                                        <span class="m-menu__link-wrap">
-                                            <span class="m-menu__link-text">@Html.GetTansByLan("common-index-10", "Withdraw")</span>
-                                        </span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="m-menu__item  " aria-haspopup="true">
-                                <a href="/Packet/SendluckyMoney" class="m-menu__link ">
-                                    <i class="m-menu__link-icon flaticon-gift"></i>
-                                    <span class="m-menu__link-title">
-                                        <span class="m-menu__link-wrap">
-                                            <span class="m-menu__link-text">@Html.GetTansByLan("common-index-17", "Lucky Money")</span>
-                                        </span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="m-menu__item  " aria-haspopup="true">
-                                <a href="/Candy/CandyIndex" class="m-menu__link ">
-                                    <i class="m-menu__link-icon flaticon-piggy-bank"></i>
-                                    <span class="m-menu__link-title">
-                                        <span class="m-menu__link-wrap">
-                                            <span class="m-menu__link-text">@Html.GetTansByLan("common-index-11", "Candy")</span>
-                                        </span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="m-menu__item  " aria-haspopup="true">
-                                <a href="/affiliate/index" class="m-menu__link ">
-                                    <i class="m-menu__link-icon flaticon-map"></i>
-                                    <span class="m-menu__link-title">
-                                        <span class="m-menu__link-wrap">
-                                            <span class="m-menu__link-text">@Html.GetTansByLan("common-index-12", "Referral")</span>
-                                        </span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="m-menu__separator"></li>
-                            <li class="m-menu__item  " aria-haspopup="true">
-                                <a href="/Account/KYC" class="m-menu__link ">
-                                    <i class="m-menu__link-icon flaticon-list-1"></i>
-                                    <span class="m-menu__link-title">
-                                        <span class="m-menu__link-wrap">
-                                            <span class="m-menu__link-text">@Html.GetTansByLan("common-index-18", "KYC")</span>
-                                        </span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="m-menu__item  " aria-haspopup="true">
-                                <a href="/account/index" class="m-menu__link ">
-                                    <i class="m-menu__link-icon flaticon-user"></i>
-                                    <span class="m-menu__link-title">
-                                        <span class="m-menu__link-wrap">
-                                            <span class="m-menu__link-text">@Html.GetTansByLan("common-index-13", "My profile")</span>
-                                        </span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="m-menu__separator"></li>
-                            <li class="m-menu__item  " aria-haspopup="true">
-                                <a href="/Account/LogOut" class="m-menu__link ">
-                                    <i class="m-menu__link-icon la la-power-off" style="font-size:1.6rem;"></i>
-                                    <span class="m-menu__link-title">
-                                        <span class="m-menu__link-wrap">
-                                            <span class="m-menu__link-text">@Html.GetTansByLan("common-index-46", "Logout")</span>
-                                        </span>
-                                    </span>
-                                </a>
-                            </li>
 
-                        </ul>
-                    </div>
-                </div>
-                @RenderBody()
-            </div>
-            <footer class="m-grid__item	m-footer">
-                <div class="m-container m-container--fluid m-container--full-height m-page__container">
-                    <div class="m-stack m-stack--flex-tablet-and-mobile m-stack--ver m-stack--desktop">
-                        <div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last">
-                            <span class="m-footer__copyright"><a href="/Affirm/Clause" target="_blank" style="color:inherit;">@Html.GetTansByLan("common-index-14", "Terms and Conditions")</a></span>
                         </div>
-                        <div class="m-stack__item m-stack__item--right m-stack__item--middle m-stack__item--first"><span class="m-footer__copyright" style="color:#999999">@Html.GetTansByLan("common-index-15", "Copyright itdc.org 2018")</span></div>
                     </div>
                 </div>
-            </footer>
-            <div class="m-scroll-top m-scroll-top--skin-top" data-toggle="m-scroll-top" data-scroll-offset="500" data-scroll-speed="300">
-                <i class="la la-arrow-up"></i>
             </div>
-            <script src="/js/vendors.stripped.min.js" type="text/javascript"></script>
-            <script src="/js/scripts.core.min.js" type="text/javascript"></script>
-            <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
-            <script src="/js/clipboard.min.js" type="text/javascript"></script>
-            <script>
+        </header>
+        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+            <button class="m-aside-left-close  m-aside-left-close--skin-dark " id="m_aside_left_close_btn">
+                <i class="la la-close"></i>
+            </button>
+            <div id="m_aside_left" class="m-grid__item	m-aside-left  m-aside-left--skin-dark ">
+                <div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark " data-menu-vertical="true" data-menu-scrollable="false" data-menu-dropdown-timeout="500">
+                    <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow fixed" style="    position: fixed;">
+                        <li class="m-menu__item" aria-haspopup="true">
+                            <a href="/Recharge/PurchaseRecord" class="m-menu__link ">
+                                <i class="m-menu__link-icon la la-dollar" style="font-size:1.6rem;"></i>
+                                <span class="m-menu__link-title">
+                                    <span class="m-menu__link-wrap">
+                                        <span class="m-menu__link-text">@Html.GetTansByLan("common-index-20", "Buy Silk")</span>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item  " aria-haspopup="true">
+                            <a href="/Recharge/Summary" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-coins"></i>
+                                <span class="m-menu__link-title">
+                                    <span class="m-menu__link-wrap">
+                                        <span class="m-menu__link-text">@Html.GetTansByLan("common-index-16", "Summary")</span>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item  " aria-haspopup="true">
+                            <a href="/wallet/index" class="m-menu__link ">
+                                <i class="m-menu__link-icon la la-money" style="font-size:1.6rem;"></i>
+                                <span class="m-menu__link-title">
+                                    <span class="m-menu__link-wrap">
+                                        <span class="m-menu__link-text">@Html.GetTansByLan("common-index-10", "Withdraw")</span>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item  " aria-haspopup="true">
+                            <a href="/Packet/SendluckyMoney" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-gift"></i>
+                                <span class="m-menu__link-title">
+                                    <span class="m-menu__link-wrap">
+                                        <span class="m-menu__link-text">@Html.GetTansByLan("common-index-17", "Lucky Money")</span>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item  " aria-haspopup="true">
+                            <a href="/Candy/CandyIndex" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-piggy-bank"></i>
+                                <span class="m-menu__link-title">
+                                    <span class="m-menu__link-wrap">
+                                        <span class="m-menu__link-text">@Html.GetTansByLan("common-index-11", "Candy")</span>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item  " aria-haspopup="true">
+                            <a href="/affiliate/index" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-map"></i>
+                                <span class="m-menu__link-title">
+                                    <span class="m-menu__link-wrap">
+                                        <span class="m-menu__link-text">@Html.GetTansByLan("common-index-12", "Referral")</span>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__separator"></li>
+                        <li class="m-menu__item  " aria-haspopup="true">
+                            <a href="/Account/KYC" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-list-1"></i>
+                                <span class="m-menu__link-title">
+                                    <span class="m-menu__link-wrap">
+                                        <span class="m-menu__link-text">@Html.GetTansByLan("common-index-18", "KYC")</span>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item  " aria-haspopup="true">
+                            <a href="/account/index" class="m-menu__link ">
+                                <i class="m-menu__link-icon flaticon-user"></i>
+                                <span class="m-menu__link-title">
+                                    <span class="m-menu__link-wrap">
+                                        <span class="m-menu__link-text">@Html.GetTansByLan("common-index-13", "My profile")</span>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-menu__separator"></li>
+                        <li class="m-menu__item  " aria-haspopup="true">
+                            <a href="/Account/LogOut" class="m-menu__link ">
+                                <i class="m-menu__link-icon la la-power-off" style="font-size:1.6rem;"></i>
+                                <span class="m-menu__link-title">
+                                    <span class="m-menu__link-wrap">
+                                        <span class="m-menu__link-text">@Html.GetTansByLan("common-index-46", "Logout")</span>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            @RenderBody()
+        </div>
+        <footer class="m-grid__item	m-footer">
+            <div class="m-container m-container--fluid m-container--full-height m-page__container">
+                <div class="m-stack m-stack--flex-tablet-and-mobile m-stack--ver m-stack--desktop">
+                    <div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last">
+                        <span class="m-footer__copyright"><a href="/Affirm/Clause" target="_blank" style="color:inherit;">@Html.GetTansByLan("common-index-14", "Terms and Conditions")</a></span>
+                    </div>
+                    <div class="m-stack__item m-stack__item--right m-stack__item--middle m-stack__item--first"><span class="m-footer__copyright" style="color:#999999">@Html.GetTansByLan("common-index-15", "Copyright itdc.org 2018")</span></div>
+                </div>
+            </div>
+        </footer>
+        <div class="m-scroll-top m-scroll-top--skin-top" data-toggle="m-scroll-top" data-scroll-offset="500" data-scroll-speed="300">
+            <i class="la la-arrow-up"></i>
+        </div>
+        <script src="/js/vendors.stripped.min.js" type="text/javascript"></script>
+        <script src="/js/scripts.core.min.js" type="text/javascript"></script>
+        <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+        <script src="/js/clipboard.min.js" type="text/javascript"></script>
+        <script>
 			 $(function () {
                  setNavigation();
                  $("#a_logout").click(function () {
@@ -413,6 +424,7 @@ else
                         var exp = new Date();
                         exp.setTime(new Date().getTime() + 365 * 24 * 60 * 60 * 1000);
                         document.cookie = "lang=" + escape(lan) + ";expires=" + exp.toGMTString() + ";path=/;domain=silkchain.io";
+                        document.cookie = "lang=" + escape(lan) + ";expires=" + exp.toGMTString() + ";path=/;domain=silkb2b.io";
                        // document.cookie = "lang=" + escape(lan) + ";expires=" + exp.toGMTString() + ";path=/";
                     }
                 }
@@ -484,75 +496,74 @@ else
 
 				return false;
 			}
-            </script>
-            @RenderSection("script", false)
-            <div class="modal fade" id="m_deposit_btc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">DEPOSIT BITCOIN</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group" id="form_deposit_bitcoin" style="text-align: center;">
-                                <div id="img_qr_btc_address" style="width:320px;height:320px;margin-left:auto;margin-right:auto;"></div>
-                                <label for="btc_address" class="form-control-label" style="text-align: center;font-size: 16px;margin: 20px">To deposit Bitcoin to your account, please send Bitcoin to the address below. You can scan the QR code in order to copy the address.</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" style="display:inline-block;" id="tx_btc_address" readonly value="" style="text-align: center;">
-                                    <span class="input-group-btn" id="tx_btc_trigger" data-clipboard-target="#tx_btc_address">
-                                        <button class="btn btn-secondary" onclick="return copyValToClipboard('#tx_btc_trigger')" type="button">
-                                            <i class="io-copy"></i>
-                                        </button>
-                                    </span>
-                                </div>
+        </script>
+        @RenderSection("script", false)
+        <div class="modal fade" id="m_deposit_btc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">DEPOSIT BITCOIN</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" id="form_deposit_bitcoin" style="text-align: center;">
+                            <div id="img_qr_btc_address" style="width:320px;height:320px;margin-left:auto;margin-right:auto;"></div>
+                            <label for="btc_address" class="form-control-label" style="text-align: center;font-size: 16px;margin: 20px">To deposit Bitcoin to your account, please send Bitcoin to the address below. You can scan the QR code in order to copy the address.</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" style="display:inline-block;" id="tx_btc_address" readonly value="" style="text-align: center;">
+                                <span class="input-group-btn" id="tx_btc_trigger" data-clipboard-target="#tx_btc_address">
+                                    <button class="btn btn-secondary" onclick="return copyValToClipboard('#tx_btc_trigger')" type="button">
+                                        <i class="io-copy"></i>
+                                    </button>
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="m_deposit_eth" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">DEPOSIT ETHEREUM</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group" id="form_deposit_bitcoin" style="text-align: center;">
-                                <div id="img_qr_eth_address" style="width:320px;height:320px;margin-left:auto;margin-right:auto;"></div>
-                                <label for="btc_address" class="form-control-label" style="text-align: center;font-size: 14px;margin: 20px">To deposit Ethereum to your account, please send Ethereum to the address below. You can scan the QR code in order to copy the address.</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" style="display:inline-block;" id="tx_eth_address" readonly value="" style="text-align: center;">
-                                    <span class="input-group-btn" id="tx_eth_trigger" data-clipboard-target="#tx_eth_address">
-                                        <button class="btn btn-secondary" onclick="return copyValToClipboard('#tx_eth_trigger')">
-                                            <i class="io-copy"></i>
-                                        </button>
-                                    </span>
-                                </div>
+        </div>
+        <div class="modal fade" id="m_deposit_eth" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">DEPOSIT ETHEREUM</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" id="form_deposit_bitcoin" style="text-align: center;">
+                            <div id="img_qr_eth_address" style="width:320px;height:320px;margin-left:auto;margin-right:auto;"></div>
+                            <label for="btc_address" class="form-control-label" style="text-align: center;font-size: 14px;margin: 20px">To deposit Ethereum to your account, please send Ethereum to the address below. You can scan the QR code in order to copy the address.</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" style="display:inline-block;" id="tx_eth_address" readonly value="" style="text-align: center;">
+                                <span class="input-group-btn" id="tx_eth_trigger" data-clipboard-target="#tx_eth_address">
+                                    <button class="btn btn-secondary" onclick="return copyValToClipboard('#tx_eth_trigger')">
+                                        <i class="io-copy"></i>
+                                    </button>
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="modal fade" tabindex="-1" id="div_logout" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">@Html.GetTansByLan("common-index-46", "Logout")</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" onclick="javascript: location.href='/Account/LogOut'" class="btn btn-primary">@Html.GetTansByLan("common-index-opt-46", "Sure")</button>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div>
-
+        </div>
+        <div class="modal fade" tabindex="-1" id="div_logout" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">@Html.GetTansByLan("common-index-46", "Logout")</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style=" height:18px;">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="javascript: location.href='/Account/LogOut'" class="btn btn-primary">@Html.GetTansByLan("common-index-opt-46", "Sure")</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
 </body>
 </html>

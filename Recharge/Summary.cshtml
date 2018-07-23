@@ -179,6 +179,7 @@
             position: absolute;
             top: 0;
             right: -1px;
+            z-index: 9;
             content: "";
             display: block;
             width: 24px;
@@ -290,6 +291,8 @@
             text-align: center;
             font-size: 12px;
         }
+        .red-card .expire-peak {position:absolute;left:0;top:0;display:block;width:69px;height:85px;opacity:0.9;overflow:hidden;}
+        .red-card .expire-peak .hor {position:absolute;left:-21px;top:11px;width:90px;height:22px;line-height:22px;color:#fff;font-size:12px;font-weight:normal;font-style:normal;text-align:center;transform:rotate(-45deg);background-color:#bbb;}
 
         .red-card.expire {
             background-color: #ddd;
@@ -414,7 +417,7 @@
                                             </li>
                                             <li>
                                                 <span class="tle-label">@Html.GetTansByLan("recharge-summary-t2", "Blocked Balance"):</span>
-                                                <span class="numb-cnt"><strong>@((Count.BlockedBalance).ToString("0.###"))</strong> SILK</span>
+                                                <span class="numb-cnt"><strong>@Html.AmountFormat(Count.BlockedBalance)</strong> SILK</span>
                                                 <div style="color:#999">
                                                     @Html.GetTansByLan("recharge-summary-tip-123", "For any questions about locked period of Silk, please contact 3790@mail.silkchain.io for help")
                                                 </div>
@@ -436,15 +439,15 @@
                                         <ul class="show-list">
                                             <li>
                                                 <span class="tle-label">@Html.GetTansByLan("recharge-summary-sp1", "Accumulated Purchase"):</span>
-                                                <div class="numb-cnt"><strong>@((Count.AccumulatedPurchase).ToString("0.###"))</strong> SILK</div>
+                                                <div class="numb-cnt"><strong>@Html.AmountFormat(Count.AccumulatedPurchase)</strong> SILK</div>
                                             </li>
                                             <li>
                                                 <span class="tle-label">@Html.GetTansByLan("recharge-summary-sp2", "Recent 7-days purchase"):</span>
-                                                <div class="numb-cnt"><strong>@((Count.Recent7DaysPurchase).ToString("0.###"))</strong> SILK</div>
+                                                <div class="numb-cnt"><strong>@Html.AmountFormat(Count.Recent7DaysPurchase)</strong> SILK</div>
                                             </li>
                                             <li class="no-btm">
                                                 <span class="tle-label">@Html.GetTansByLan("recharge-summary-sp3", "Recent 30-days purchase"):</span>
-                                                <div class="numb-cnt"><strong>@((Count.Recent30DaysPurchase).ToString("0.###"))</strong> SILK</div>
+                                                <div class="numb-cnt"><strong>@Html.AmountFormat(Count.Recent30DaysPurchase)</strong> SILK</div>
                                             </li>
                                         </ul>
                                     </div>
@@ -459,11 +462,11 @@
                                         <ul class="show-list">
                                             <li>
                                                 <span class="tle-label">@Html.GetTansByLan("recharge-summary-16", "Total Candy Received")</span>
-                                                <div class="numb-cnt"><strong>@((Count.AccumulatedCandy).ToString("0.###"))</strong> SILK≈ $@((Count.AccumulatedCandy / Count.USDT_Rate).ToString("0.###"))</div>
+                                                <div class="numb-cnt"><strong>@Html.AmountFormat(Count.AccumulatedCandy)</strong> SILK≈ $@((Count.AccumulatedCandy / Count.USDT_Rate).ToString("0.###"))</div>
                                             </li>
                                             <li>
                                                 <span class="tle-label">@Html.GetTansByLan("recharge-summary-17", "Total Candy Sent") / @Html.GetTansByLan("recharge-summary-18", "Packet Received")</span>
-                                                <div class="numb-cnt"><strong>@((Count.EmitRedEnvelopes).ToString("0.###")) / @((Count.ReceiveRedEnvelopes).ToString("0.###"))</strong> SILK</div>
+                                                <div class="numb-cnt"><strong>@Html.AmountFormat(Count.EmitRedEnvelopes)/ @Html.AmountFormat(Count.ReceiveRedEnvelopes)</strong> SILK</div>
                                             </li>
                                         </ul>
                                         <div class="ft-opts">
@@ -499,10 +502,8 @@
                                                                 <div class="pri-lab">@Html.GetTansByLan("inviting-newuser-packet-23", "已获得")</div>
                                                                 <div class="price"><strong> @item.Amount.ToString("N2")</strong><span class="unit">@Html.GetTansByLan("packet-silk-alias-01", "SILK")</span></div>
                                                             </li>
-                                                            <li class="price-digg">
-                                                                <div class="pri-lab">@Html.GetTansByLan("inviting-newuser-packet-07", "已过期")</div>
-                                                            </li>
                                                         </ul>
+                                                        <i class="expire-peak"><span class="hor">@Html.GetTansByLan("inviting-newuser-packet-07", "已过期")</span></i>
                                                         @if (item.IsExist) { 
                                                             <div class="opts-box">
                                                                 <button class="btn btn-block btn-alert m-btn--pill btn-sm" onclick="GetInviteRedPacket('@item.Data.VoucherIdNvarchar',1)">@Html.GetTansByLan("inviting-newuser-packet-08", "查看详情")</button>
@@ -609,30 +610,30 @@
                                                         <td class="text-right">
                                                             @{
                                                                 var add_type = new List<int>() {
-                                                                                                                                                                                                                                                                                                                                                                (int)EnumInOutRecordType.买入,
-                                                                                                                                                                                                                                                                                                                                                                (int)EnumInOutRecordType.充值,
-                                                                                                                                                                                                                                                                                                                                                                (int)EnumInOutRecordType.领红包,
-                                                                                                                                                                                                                                                                                                                                                                (int)EnumInOutRecordType.领糖果,
-                                                                                                                                                                                                                                                                                                                                                                (int)EnumInOutRecordType.红包退款,
-                                                                                                                                                                                                                                                                                                                                                                (int)EnumInOutRecordType.发币
-                                                                                                                                                                                                                                                                                                                                                            };
+                                                                   (int)EnumInOutRecordType.买入,
+                                                                   (int)EnumInOutRecordType.充值,
+                                                                   (int)EnumInOutRecordType.领红包,
+                                                                   (int)EnumInOutRecordType.领糖果,
+                                                                   (int)EnumInOutRecordType.红包退款,
+                                                                   (int)EnumInOutRecordType.发币
+                                                               };
                                                                 var cut_type = new List<int>() {
-                                                                                                                                                                                                                                                                                                                                                            (int)EnumInOutRecordType.卖出,
-                                                                                                                                                                                                                                                                                                                                                            (int)EnumInOutRecordType.提现,
-                                                                                                                                                                                                                                                                                                                                                            (int)EnumInOutRecordType.发红包
-                                                                                                                                                                                                                                                                                                                                                        };
+                                                                       (int)EnumInOutRecordType.卖出,
+                                                                       (int)EnumInOutRecordType.提现,
+                                                                       (int)EnumInOutRecordType.发红包
+                                                                   };
                                                             }
                                                             @if (add_type.Contains(item.TypeInt))
                                                             {
-                                                                <span class="m--font-success">+ @item.AmountDecimal.ToString("F4")</span>
+                                                                <span class="m--font-success">+ @Html.AmountFormat(item.AmountDecimal)</span>
                                                             }
                                                             else if (cut_type.Contains(item.TypeInt))
                                                             {
-                                                                <span>- @item.AmountDecimal.ToString("F4")</span>
+                                                                <span>- @Html.AmountFormat(item.AmountDecimal)</span>
                                                             }
                                                             else
                                                             {
-                                                                <span>@item.AmountDecimal.ToString("F4")</span>
+                                                                <span>@Html.AmountFormat(item.AmountDecimal)</span>
                                                             }
                                                         </td>
                                                     </tr>

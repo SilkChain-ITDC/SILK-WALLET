@@ -4,6 +4,11 @@
     Layout = null;
     string picUrl = ViewBag.DefaultPic;
     string picUrl_En = ViewBag.DefaultPic_EN;
+    string errMsg = string.Empty;
+    if (!string.IsNullOrEmpty(Model.ErrorMsg))
+    {
+        errMsg = Model.ErrorMsg;
+    }
 }
 
 <!DOCTYPE html>
@@ -73,6 +78,11 @@
                     </div>
                 </header>
 
+                <div class="alert alert-warning alert-dismissible" role="alert" style="display:none;margin-bottom:-20px;background-color:#fff3cd;color:#856404;border:none;border-radius:0;text-align:center;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding-top:0.25rem;top:0;color:#856404;"></button>
+                    <span>@Html.GetTansByLan("account-login-12", "SilkChain will never ask members to provide any passwords, please stay alert with the scammers, if you have any problem, contact us with silkchain@itdc.org or join telegram group for help")</span>
+                </div>
+
                 <div class="m-grid__item m-grid__item--fluid m-login__wrapper" style="padding-top:4rem;">
                     <div class="m-login__container">
                         <div class="m-login__logo">
@@ -86,7 +96,7 @@
                                     @Html.GetTansByLan("account-login-01", "Sign In")
                                 </h3>
                             </div>
-                            <form class="m-login__form m-form" method="POST" action="/Account/ChkLogin" style="margin-top: 0;">
+                            <form class="m-login__form m-form" method="POST" action="/Account/Login" style="margin-top: 0;">
                                 <input type="hidden" name="_token" value="nQKKO9jaGOmHTAM41HwtACNeadXEOJUAStuQVabb">
                                 <input type="hidden" name="BackUrl" value="@Html.Raw(Model.BackUrl)" />
                                 <div class="form-group m-form__group">
@@ -106,7 +116,7 @@
                                         </label>
                                     </div>
                                     <div class="col m--align-right m-login__form-right" style="">
-                                        <a href="/account/FindPassWord" id="m_login_forget_password" class="m-link">@Html.GetTansByLan("account-login-05", "Forget Password?")</a>
+                                        <a href="/account/FindPassWord?reset=true" id="m_login_forget_password" class="m-link">@Html.GetTansByLan("account-login-05", "Forget Password?")</a>
                                     </div>
                                 </div>
                                 <div class="text-xs-center"></div>
@@ -121,7 +131,7 @@
                                 @Html.GetTansByLan("account-login-07", "Don't have an account yet?")
                             </span>
                             &nbsp;&nbsp;
-                            <a href="/Account/register" id="m_login_signup" class="m-link m-link--light m-login__account-link">
+                            <a href="/Account/register?Code=@Model.affi" id="m_login_signup" class="m-link m-link--light m-login__account-link">
                                 @Html.GetTansByLan("account-login-08", "Sign Up")
                             </a>
                         </div>
@@ -324,7 +334,7 @@
                             </div>*@
                         </div>
                         <div class="login-box-wrapper">
-                            <form class="m-login__form m-form" method="POST" action="/Account/ChkLogin" style="margin-top: 0;">
+                            <form class="m-login__form m-form" method="POST" action="/Account/Login" style="margin-top: 0;">
                                 <input type="hidden" name="_token" value="nQKKO9jaGOmHTAM41HwtACNeadXEOJUAStuQVabb">
                                 <input type="hidden" name="BackUrl" value="@Html.Raw(Model.BackUrl)" />
                                 <div class="form-group m-form__group">
@@ -875,7 +885,7 @@
                                             {
                                                 <div class="col-12">
                                                     <div class="m-img-square">
-                                                        <div class="m-bg-img"><img src="@("https://kycimg1.silkchain.io"+item.FileUrl)" /></div>
+                                                        <div class="m-bg-img"><img src="@Html.GetImageUrl(item.FileUrl)" onerror="resetImgUrl(this)"  /></div>
                                                     </div> 
                                                 </div>
                                             }
@@ -887,11 +897,11 @@
                                                     <div class="m-bg-img">
                                                         @if (Html.GetLang() == "en")
                                                         {
-                                                            <img src="@picUrl_En" />
+                                                            <img src="@Html.GetImageUrl(picUrl_En)" onerror="resetImgUrl(this)" />
                                                         }
                                                         else
                                                         { 
-                                                            <img src="@picUrl" />
+                                                            <img src="@Html.GetImageUrl(picUrl)" onerror="resetImgUrl(this)" />
                                                         }
                                                     </div>
                                                 </div>
@@ -936,7 +946,7 @@
                             <div class="modal-content">
                                 <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
                                 <div class="modal-body">
-                                    <form class="m-login__form m-form" method="POST" action="/Account/ChkLogin" style="margin-top: 0;">
+                                    <form class="m-login__form m-form" method="POST" action="/Account/Login" style="margin-top: 0;">
                                         <input type="hidden" name="_token" value="nQKKO9jaGOmHTAM41HwtACNeadXEOJUAStuQVabb">
                                         <input type="hidden" name="BackUrl" value="@Html.Raw(Model.BackUrl)" />
                                         <input type="hidden" name="PacketID" value="@Html.Raw(Model.LuckMoneyInfo.PacketID)" />
@@ -1015,17 +1025,15 @@
 </environment> *@
 
 <script type="text/javascript">
+    function resetImgUrl(obj) {
+        obj.src = obj.src.replace("https://i.silkchain.io", "https://imgserver.silkchain.io");
+        obj.onerror = null;
+    };
     $(document).ready(function () {
-        $('img').on('error', function () {
-                newsrc = $(this).attr('src').replace('kycimg1.silkchain.io', 'kycimg2.silkchain.io');
-                $(this).attr('src', newsrc);
-        });
-
         var host = window.location.host;
         if (isWeiXin() && host != "wallet.silkb2b.io") {
             window.location.href = window.location.href.replace('wallet.silkchain.io', '@ViewBag.Host_Wx');
         }
-
     });
 
     function isWeiXin() {
@@ -1114,11 +1122,12 @@ jQuery(document).ready(function() {
             var exp = new Date();
             exp.setTime(new Date().getTime() + 365 * 24 * 60 * 60 * 1000);
             document.cookie = "lang=" + escape(lan) + ";expires=" + exp.toGMTString() + ";path=/;domain=silkchain.io";
+            document.cookie = "lang=" + escape(lan) + ";expires=" + exp.toGMTString() + ";path=/;domain=silkb2b.io";
             //document.cookie = "lang=" + escape(lan) + ";expires=" + exp.toGMTString() + ";path=/";
     }
 </script>
 <script type="text/javascript">
-    
+
     $(function () {
         $('#modalDrawSignin').on('hidden.bs.modal', function(){
             $(document.body).addClass('modal-open');
@@ -1129,6 +1138,12 @@ jQuery(document).ready(function() {
         $('#modalDrawNotes').on('shown.bs.modal', function(){
             $(document.body).addClass('modal-open');
         });
+
+        if ('@errMsg' != "") {
+            $('#notesshow').html('@errMsg');
+            $("#modalDrawNotes").modal('show');
+        }
+
     });
 
     function GetPacketNotLogin(onlycode, shareuserid) {

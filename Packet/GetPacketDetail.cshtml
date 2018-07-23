@@ -153,7 +153,11 @@
                         <div class="sendname"><span>@Model.UserName</span>@Html.GetTansByLan("packet-packetList-11", " total sent")</div>
                         <div class="price"><strong>@Model.Amount.ToString("0.00")</strong></div>
                         <div class="total">
-                            <div class="send-sum">@Html.GetTansByLan("packet-packetList-19", "sent")<span class="text-orange">@sendList.Count()</span>@Html.GetTansByLan("packet-packetList-12", " red packets")</div>
+                            <div class="send-sum">
+                                @Html.GetTansByLan("packet-packetList-19", "sent")
+                                <span class="text-orange">@sendList.Count()</span>
+                                @Html.GetTansByLan("packet-packetList-12", " red packets")
+                            </div>
                             <a class="btn btn-outline-danger m-btn--pill" href="/Packet/SendluckyMoney">@Html.GetTansByLan("packet-packetList-13", "I want to send a red packet")</a>
                         </div>
                         <div style="display:none" id="lucky-money-type">@Model.PacketType</div>

@@ -59,6 +59,11 @@
         {
             viewmodel = "4";    // 红包已被领完，且该红包当前人未领取过
         }
+
+        //if (!string.IsNullOrEmpty(Model.ErrorCode) && Model.ErrorCode == "-100")
+        //{
+        //    viewmodel = "8";    // 红包URL中的分享人异常
+        //}
     }
 
 }
@@ -82,7 +87,7 @@
     .modal .modal-draw .modal-content .sendopt { font-size: 1rem; }
     .modal .modal-draw .modal-content .leavemessage { display: table; width: 100%; height: 90px; font-size: 1.5rem; line-height: 1.2; }
     .modal .modal-draw .modal-content .message-cell { display: table-cell; vertical-align: middle; padding: 10px 0; }
-    .modal .modal-draw .modal-content .draw-silk { display: inline-block; width: 100px; height: 100px; margin-top: 20px; background-color: #f0c88c; background-image: url(/images/ba-active/red-packet-open@(Html.GetLang()=="en"? "-en" : "").png); background-repeat: no-repeat; background-position: center center; background-size: contain; cursor: pointer; border: none; outline: 0; border-radius: 50%; }
+    .modal .modal-draw .modal-content .draw-silk { display: inline-block; width: 100px; height: 100px; margin-top: 20px; background-color: #f0c88c; background-image: url(/images/ba-active/red-packet-open@(Html.GetLang() == "en" ? "-en" : "").png); background-repeat: no-repeat; background-position: center center; background-size: contain; cursor: pointer; border: none; outline: 0; border-radius: 50%; }
     .modal .modal-draw .modal-content .btnspace { display: inline-block; width: 100px; height: 100px; margin-top: 20px; }
     .modal .modal-draw .modal-content .viewdetail { position: absolute; width: 100%; bottom: 10px; text-align: center; line-height: 1; }
     .modal .modal-draw .modal-content .viewdelnk { font-size: 1rem; color: #f0c88c; text-decoration: none; }
@@ -144,7 +149,7 @@
     .modal .modal-shareby .modal-content .modal-header { position: absolute; top: 0; right: 0; z-index: 9; border-bottom: none; padding: 20px 18px 0 0; }
     .modal .modal-shareby .modal-content .modal-header .close { color: #666; opacity: 1; height: 18px; cursor: pointer; }
     .modal .modal-shareby .modal-content .modal-body {padding:0;}
-    .modal .modal-shareby .modal-content .celeb-packet {position:relative;padding-top:160.8%;background:url(/images/ba-active/red-packet-qr@(Html.GetLang()=="en"? "-en" : "").png) no-repeat center top;background-size:contain;}
+    .modal .modal-shareby .modal-content .celeb-packet {position:relative;padding-top:160.8%;background:url(/images/ba-active/red-packet-qr@(Html.GetLang() == "en" ? "-en" : "").png) no-repeat center top;background-size:contain;}
     .modal .modal-shareby .modal-content .leavemessage {position:absolute;left:9%;top:20%;display:table;width:82%;height:90px;font-size:1rem;line-height: 1.2;}
     .modal .modal-shareby .modal-content .message-cell {display: table-cell; vertical-align: top; padding: 10px; }
     .modal .modal-shareby .modal-content .sendname {position:absolute;left:0;width:100%;top:14%;padding:0 25px;font-size: 1.15rem;text-align:center;color:#333;}
@@ -223,7 +228,7 @@
     .btn-outline-primary:active, .btn-outline-primary.active {color:#fff;background-color:#e13c23;border-color:#e13c23;}
     @* 新用户分享红包新增样式 *@
     .m-footer--push.m-aside-left--enabled:not(.m-footer--fixed) .m-footer {z-index:-1;}
-    .m-packet__wrapper.newshare {padding-top:20.5rem;background:url(/images/ba-active/red-packet-newshare@(Html.GetLang()=="en"? "-en" : "").jpg) no-repeat center top;background-size:contain;}
+    .m-packet__wrapper.newshare {padding-top:20.5rem;background:url(/images/ba-active/red-packet-newshare@(Html.GetLang() == "en" ? "-en" : "").jpg) no-repeat center top;background-size:contain;}
     .m-packet__wrapper.newshare .m-packet_copybtn .share-item {background-color:rgba(255,255,255,0.8);border-color:rgba(220,137,42,0.8);}
     .m-packet__wrapper.newshare .m-packet_copybtn .m-pill-round {border-color:#ddd;}
     .m-packet__wrapper.newshare .m-packet_copybtn .m-packet_copy-input {background-color:#fff;}
@@ -238,7 +243,7 @@
     .modal .modal-newby .modal-content .modal-header { position: absolute; top: 0; right: 0; z-index: 9; border-bottom: none; padding: 20px 18px 0 0; }
     .modal .modal-newby .modal-content .modal-header .close { color: #666; opacity: 1; height: 18px; cursor: pointer; }
     .modal .modal-newby .modal-content .modal-body {padding:0;}
-    .modal .modal-newby .modal-content .celeb-packet {position:relative;padding-top:182%;background:url(/images/ba-active/red-packet-newby@(Html.GetLang()=="en"? "-en" : "").jpg) no-repeat center top;background-size:contain;}
+    .modal .modal-newby .modal-content .celeb-packet {position:relative;padding-top:182%;background:url(/images/ba-active/red-packet-newby@(Html.GetLang() == "en" ? "-en" : "").jpg) no-repeat center top;background-size:contain;}
     .modal .modal-newby .modal-content .qrcode-box {position:absolute;left:32%;top:46%;z-index:9;width:36%;padding:5px;background-color:#fff;}
     .modal .modal-newby .modal-content .qrcode-box canvas {vertical-align:middle;}
     .modal .modal-newby .modal-content .scan-tips {position:absolute;left:-50%;bottom:-38px;width:200%;text-align:center;color:#fff;font-size:1rem;}
@@ -577,10 +582,9 @@ else
                                     {
                                         foreach (var item in Model.FileList)
                                         {
-                                            string imgUrl = "https://kycimg1.silkchain.io" + item.FileUrl;
                                             <div class="col-12">
                                                 <div class="m-img-square">
-                                                    <div class="m-bg-img"><img src="@imgUrl" /></div>
+                                                    <div class="m-bg-img"><img src="@Html.GetImageUrl(item.FileUrl)" onerror="resetImgUrl(this)" /></div>
                                                 </div>
                                             </div>
                                         }
@@ -591,12 +595,12 @@ else
                                             <div class="m-img-square">
                                                 @if (Html.GetLang() == "en")
                                                 {
-                                                    <div class="m-bg-img"><img src="@picUrl_En" /></div>
+                                                    <div class="m-bg-img"><img src="@Html.GetImageUrl(picUrl_En)" onerror="resetImgUrl(this)" /></div>
 
                                                 }
                                                 else
                                                 {
-                                                    <div class="m-bg-img"><img src="@picUrl" /></div>
+                                                    <div class="m-bg-img"><img src="@Html.GetImageUrl(picUrl)" onerror="resetImgUrl(this)" /></div>
                                                 }
                                             </div>
                                         </div>
@@ -672,7 +676,9 @@ else
                     <div class="red-packet">
                         <div class="avatar"><img width="90%" src="/images/ba-active/red-packet-logo.png" /></div>
                         <div class="sendname">@Model.CreateUserName</div>
-                        <div class="leavemessage"><div class="message-cell">@Html.GetTansByLan("packet-packetIndex-62", "The hand is slow and the red packet is finished")</div></div>
+                        <div class="leavemessage">
+                            <div class="message-cell">@Html.GetTansByLan("packet-packetIndex-62", "The hand is slow and the red packet is finished")</div>
+                        </div>
                         <div class="btnspace"></div>
                         <div class="viewdetail">
                             <a class="viewdelnk" href="#" onclick="ViewDetail('2');">
@@ -730,10 +736,9 @@ else
                                     {   
                                         foreach (var item in Model.FileList)
                                         {
-                                            string imgUrl = "https://kycimg1.silkchain.io" + item.FileUrl;
                                             <div class="col-12">
                                                 <div class="m-img-square">
-                                                    <div class="m-bg-img"><img src="@imgUrl" /></div>
+                                                    <div class="m-bg-img"><img src="@Html.GetImageUrl(item.FileUrl)" onerror="resetImgUrl(this)" /></div>
                                                 </div>
                                             </div>
                                         }
@@ -745,11 +750,11 @@ else
                                                 <div class="m-bg-img">
                                                     @if (Html.GetLang() == "en")
                                                     {
-                                                        <img src="@picUrl_En" />
+                                                        <img src="@Html.GetImageUrl(picUrl_En)" onerror="resetImgUrl(this)" />
                                                     }
                                                     else
                                                     {
-                                                        <img src="@picUrl" />
+                                                        <img src="@Html.GetImageUrl(picUrl)" onerror="resetImgUrl(this)" />
                                                     }
                                                 </div>
                                             </div>
@@ -788,6 +793,14 @@ else
 
     @section script{
     <script type="text/javascript">
+        function resetImgUrl(obj) {
+            obj.src = obj.src.replace("https://i.silkchain.io", "https://imgserver.silkchain.io");
+            obj.onerror = null;
+        };
+        $('img').on('error', function () {
+            newsrc = $(this).attr('src').replace("https://i.silkchain.io", "https://imgserver.silkchain.io");
+            $(this).attr('src', newsrc);
+        });
             var v = "1";
 
             function GetPacket(onlycode, shareuserid) {

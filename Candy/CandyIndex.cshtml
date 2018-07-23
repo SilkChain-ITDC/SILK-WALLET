@@ -9,7 +9,8 @@
     {
         sign = Html.GetTansByLan("candy-index-24", "CHECKED IN");
     }
-    int user_status = (int)ViewBag.UserStatus;
+    //int user_status = (int)ViewBag.UserStatus;
+    int user_publish = (int)ViewBag.Publish;
     ViewBag.Title = "SilkChain - Candy";
 
     string contactUrl = "https://t.me/silkchain";
@@ -111,7 +112,7 @@
                     </div>
                     <div class="m-portlet__body">
                         <div class="text-center">
-                            <button class="btn btn-primary m-btn--pill btn-action-sign" @Html.Raw(user_status == 1 && (sign != "CHECKED IN"&&sign != "今日已打卡") ? "" : "disabled=\"disabled\"") onclick="GetCandy('@if (!Model.IsSign) { @Model.OnlyCode; }');">@sign<small>+@Model.Amount.ToString("f0") SILK</small></button>
+                            <button id="btnSign" name="btnSign" class="btn btn-primary m-btn--pill btn-action-sign" @Html.Raw(user_publish > 0 && (sign != "CHECKED IN"&&sign != "今日已打卡") ? "" : "disabled=\"disabled\"") onclick="GetCandy('@if (!Model.IsSign) { @Model.OnlyCode; }');">@sign<small>+@Model.Amount.ToString("f0") SILK</small></button>
                             
                             @*<div class="input-group mb-3">
                                 <input type="text" class="form-control" placeholder="Only Code">
@@ -119,11 +120,12 @@
                                     <button class="btn btn-primary" type="button" @Html.Raw(user_status == 1 ? "" : "disabled=\"disabled\"") onclick="GetCandy('@(!Model.IsSign?"1":"")');">@sign</button>
                                 </div>
                             </div>*@
-                            @if (user_status != 1)
+                            @if (user_publish == 0)
                             {
                             <div class="text-center">
                                 <div class="alert-notify-card alert alert-dark fade show" role="alert">
-                                    <div class="alert-cont">@Html.GetTansByLan("candy-index-12", "Please complete the ")<a href="/Account/KYC">@Html.GetTansByLan("candy-index-10", "KYC certification")</a></div>
+                                    @*<div class="alert-cont">@Html.GetTansByLan("candy-index-12", "Please complete the ")<a href="/Account/KYC">@Html.GetTansByLan("candy-index-10", "KYC certification")</a></div>*@
+                                    <div class="alert-cont">@Html.GetTansByLan("candy-index-error-09", "Purchase member only")</div>
                                 </div>
                             </div>
                             }
@@ -196,6 +198,23 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal_errors" tabindex="-1" role="dialog" style="display: none;z-index: 1042;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show m-0" role="alert">
+                <div class="m-alert__icon p-0" style="padding: 15px !important;">
+                    <i class="flaticon-exclamation-2"></i>
+                </div>
+                <div class="m-alert__text dark-color font-size-16" style="padding-right: 0;padding-left: 10px;">
+                </div>
+                <div class="m-alert__close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section script{
     <script src="~/lib/calendar/calendar.js"></script>
     <script type="text/javascript">
@@ -218,11 +237,13 @@
 
         // 打卡
         function GetCandy(type) {
+            $("#btnSign").attr("disabled", true);
             $.post('/Candy/GetDaliyMarkCandy', {}, function (data) {
-                if (data == "1") {
+                if (data.code == "1") {
                     location.reload();
                 } else {
-                    alert(data);
+                    $('#modal_errors .m-alert__text').html(data.msg);
+                    $('#modal_errors').modal();
                 }
             });
         }

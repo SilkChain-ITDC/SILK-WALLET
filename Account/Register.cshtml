@@ -59,6 +59,10 @@
     .m-form .m-form__group label.error {
         color: #f4516c;
     }
+    @@media (max-width:768px) {
+        .m-form__group .btn.btn-outline-focus {height:42px !important;}
+    }
+    .m-login.m-login--2 .m-login__wrapper .m-login__container .m-login__form .m-form__group.m-form-terms {margin-top:1.5rem;}
     .m-topbar {width:100%;box-shadow:0px 1px 10px 1px rgba(113, 106, 202, 0.2);}
 </style>
 </head>
@@ -120,121 +124,137 @@ else
                     <div class="tab-content">
                         <div role = "tabpanel" class="tab-pane @Html.Raw(IsEmail?"":"active")" id="phone">
                             <form class="m-login__form m-form register-form" id="form_phone">
-                                <input type = "hidden" name="_token" value="Tz5iJktAYKDt8l4LDmmgoZ7dn3E522Hrwtxu9Zbf">
-                                <input type = "hidden" name="Code" value="@ViewBag.Code" />
-                                <input type = "hidden" name="OnlyCode" value="@ViewBag.OnlyCode"/>
+                                <input type="hidden" name="_token" value="Tz5iJktAYKDt8l4LDmmgoZ7dn3E522Hrwtxu9Zbf">
+                                <input type="hidden" name="Code" value="@ViewBag.Code" />
+                                <input type="hidden" name="OnlyCode" value="@ViewBag.OnlyCode" />
                                 <div class="form-group m-form__group">
                                     <input class="form-control " type="text" placeholder="@Html.GetTansByLan("account-register-5","UserName")" data-opt="CheckUserName" name="User.UserNameNvarchar">
                                 </div>
                                 <div>
 
 
-        </div>
-                                        <div class="form-group m-form__group">
-                                            <div class="row">
-                                                <div class="col-5" style="padding-right:5px;">
-                                                    <select class="form-control" id="sub_phone" name="User.PhoneSysbomNvarchar" style="padding-right:0;padding-top:0;padding-bottom:0;height:3.571428rem;">
-                                                        @if (countrys != null && countrys.Count > 0)
-                                                        {
-                                                            foreach (var item in countrys)
-                                                            {
-                                                                <option data-label="+@(item.AreaCode)" data-code="@item.Code" value="+@(item.AreaCode)"> @(item.Name) +@(item.AreaCode)</option>
-                                                            }
-                                                        }
-                                                    </select>
-                                                </div>
-                                                <div class="col-7" style="padding-left:5px;">
-                                                    <input class="form-control m-input" name="User.PhoneNvarchar" id="phone" data-opt="CheckPhone" type="text" value="@(IsEmail?"":OpenKey)" placeholder="@Html.GetTansByLan("account-register-6","Phone Number")" style="display:inline-block;padding-right: 5px;">
-                                                </div>
-                                            </div>
+                                </div>
+                                <div class="form-group m-form__group controls-wrap">
+                                    <div class="row">
+                                        <div class="col-5" style="padding-right:5px;">
+                                            <select class="form-control" id="sub_phone" name="User.PhoneSysbomNvarchar" style="padding-right:0;padding-top:0;padding-bottom:0;height:3.571428rem;">
+                                                @if (countrys != null && countrys.Count > 0)
+                                                {
+                                                    foreach (var item in countrys)
+                                                    {
+                                                        <option data-label="+@(item.AreaCode)" data-code="@item.Code" value="+@(item.AreaCode)"> @(item.Name) +@(item.AreaCode)</option>
+                                                    }
+                                                }
+                                            </select>
                                         </div>
-                                        <div class="form-group m-form__group">
-                                            <div class="row">
-                                                <div class="col-9" style="padding-right:5px;">
-                                                    <input class="form-control" type="text" name="ValidCode" placeholder="@Html.GetTansByLan("account-register-7","Verification Code")">
-                                                </div>
-                                                <div class="col-3" style="padding-left:5px;">
-                                                    <button class="btn btn-outline-focus" type="button" id="but_phone_code" style="margin-top:1.5rem;padding-left:0;padding-right:0;text-align:center;width:100%;height:3.571428rem;">@Html.GetTansByLan("account-register-8", "Send")</button>
-                                                </div>
-                                            </div>
+                                        <div class="col-7" style="padding-left:5px;">
+                                            <input class="form-control m-input" name="User.PhoneNvarchar" id="phone" data-opt="CheckPhone" type="text" value="@(IsEmail?"":OpenKey)" placeholder="@Html.GetTansByLan("account-register-6","Phone Number")" style="display:inline-block;padding-right: 5px;">
                                         </div>
-                                        <div class="form-group m-form__group">
-                                            <input class="form-control m-input" type="password" id="register_phone_password" placeholder="@Html.GetTansByLan("account-register-9", "Password")" name="User.UserPwdNvarchar">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group controls-wrap">
+                                    <div class="m-input-icon">
+                                        <input class="form-control" type="text" name="ImgValidCode" id="txt_phone_img_valid" placeholder="@Html.GetTansByLan("account-findpwd-tip1", "Captcha Text")">
+                                        <span class="m-input-icon__icon m-input-icon__icon--right" style="top:15%;height:70%;width:auto;padding:0 10px;border-left:1px solid #eee;display:flex;justify-content:center;align-items:center;"><img src="@(ViewBag.ImgCode)" onclick="register.change_code(this)"  id="img_phone_img_code" style="cursor:pointer" alt="@(Html.GetLang()=="en"?"Refresh":"刷新")" title="@(Html.GetLang()=="en"?"Refresh":"刷新")"/></span>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <div class="row">
+                                        <div class="col-9" style="padding-right:5px;">
+                                            <input class="form-control" type="text" name="ValidCode" placeholder="@Html.GetTansByLan("account-register-7","Verification Code")">
                                         </div>
-                                        <div class="form-group m-form__group">
-                                            <input class="form-control m-input m-login__form-input--last" type="password" placeholder="@Html.GetTansByLan("account-register-10", "Confirm Password")" name="RepeatPwd">
+                                        <div class="col-3" style="padding-left:5px;">
+                                            <button class="btn btn-outline-focus" type="button" id="but_phone_code" style="margin-top:1.5rem;padding-left:0;padding-right:0;text-align:center;width:100%;height:3.571428rem;">@Html.GetTansByLan("account-register-8", "Send")</button>
                                         </div>
-                                        <div class="form-group m-form__group">
-                                            <input class="form-control m-input m-login__form-input--last" type="text" value="@(visit_code)" placeholder="@Html.GetTansByLan("account-register-11", "Invitation code (optional)")" name="Invitation">
-                                        </div>
-                                        <div class="form-group text-xs-center">
-                                        </div>
-                                        <div class="m-login__form-action">
-                                            <input type = "hidden" id="client_ip" name="client_ip">
-                                            <input type = "hidden" id="referrer_code" name="referrer_code">
-                                            <input value = "@Html.GetTansByLan("account-register-1", "Sign Up")" type="button" id="m_login_phone_signup" class="btn btn-focus m-btn  m-btn--custom m-btn--air  m-login__btn" />
-                                            &nbsp;&nbsp;
-                                            <a href="/Account/login" class="btn btn-outline-focus m-btn m-btn--custom  m-login__btn"> @Html.GetTansByLan("account-register-12", "Cancel")</a>
-                                        </div>
-                                        <div class="form-group m-form__group text-center" style="margin-top: 20px">
-                                            @Html.GetTansByLan("account-register-13", "By clicking \"Sign Up\" I agree to SilkChain's")  
-                                            <a href="https://www.silkchain.io/paper/SilkChainChinese.pdf" target="_blank" style="color: #2485c9;">@Html.GetTansByLan("account-register-14", "Terms and Conditions")</a>
-                                        </div>
-                                    </form>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <input class="form-control m-input" type="password" id="register_phone_password" placeholder="@Html.GetTansByLan("account-register-9", "Password")" name="User.UserPwdNvarchar">
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <input class="form-control m-input m-login__form-input--last" type="password" placeholder="@Html.GetTansByLan("account-register-10", "Confirm Password")" name="RepeatPwd">
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <input class="form-control m-input m-login__form-input--last" type="text" value="@(visit_code)" @if (!string.IsNullOrEmpty(visit_code)) { @Html.Raw("readonly='readonly'") } placeholder="@Html.GetTansByLan("account-register-11", "Invitation code (optional)")" name="Invitation">
+
+                                </div>
+                                <div class="form-group m-form__group m-form-terms"><label class="m-checkbox  m-checkbox--focus"><input type="checkbox" checked="checked" name="Agree" value="yes">@Html.GetTansByLan("account-register-agreen-01", "I agree to SilkChain's") <a href="/Affirm/Clause" target="_blank">@Html.GetTansByLan("account-register-agreen-02", "Terms and Conditions")</a><span></span></label></div>
+
+                                <div class="form-group text-xs-center">
+                                </div>
+                                <div class="m-login__form-action">
+                                    <input type="hidden" id="client_ip" name="client_ip">
+                                    <input type="hidden" id="referrer_code" name="referrer_code">
+                                    <input value="@Html.GetTansByLan("account-register-1", "Sign Up")" type="button" id="m_login_phone_signup" class="btn btn-focus m-btn  m-btn--custom m-btn--air  m-login__btn" />
+                                    &nbsp;&nbsp;
+                                    <a href="/Account/login" class="btn btn-outline-focus m-btn m-btn--custom  m-login__btn"> @Html.GetTansByLan("account-register-12", "Cancel")</a>
+                                </div>
+                                <div class="form-group m-form__group text-center" style="display:none;margin-top: 20px">
+                                    @Html.GetTansByLan("account-register-13", "By clicking \"Sign Up\" I agree to SilkChain's")
+                                    <a href="/Affirm/Clause" target="_blank" style="color: #2485c9;">@Html.GetTansByLan("account-register-14", "Terms and Conditions")</a>
+                                </div>
+                            </form>
                                 </div>
                         <div role = "tabpanel" class="tab-pane @Html.Raw(IsEmail?"active":"")" id="mail">
-                                    <form class="m-login__form m-form register-form" id="form_mail">
-                                        <input type = "hidden" name="_token" value="Tz5iJktAYKDt8l4LDmmgoZ7dn3E522Hrwtxu9Zbf">
-                                        <input type = "hidden" name="Code" value="@ViewBag.Code" />
-                                        <input type = "hidden" name="OnlyCode" value="@ViewBag.OnlyCode" />
-                                        <div class="form-group m-form__group">
-                                            <input class="form-control " type="text" placeholder="@Html.GetTansByLan("account-register-5","UserName")" data-opt="CheckUserName" name="User.UserNameNvarchar">
-                                        </div>
-                                        <div>
+                            <form class="m-login__form m-form register-form" id="form_mail">
+                                <input type="hidden" name="_token" value="Tz5iJktAYKDt8l4LDmmgoZ7dn3E522Hrwtxu9Zbf">
+                                <input type="hidden" name="Code" value="@ViewBag.Code" />
+                                <input type="hidden" name="OnlyCode" value="@ViewBag.OnlyCode" />
+                                <div class="form-group m-form__group">
+                                    <input class="form-control " type="text" placeholder="@Html.GetTansByLan("account-register-5","UserName")" data-opt="CheckUserName" name="User.UserNameNvarchar">
+                                </div>
+                                <div>
 
 
 
-        </div>
-                                        <div class="form-group m-form__group">
-                                            <input class="form-control m-input" type="text" placeholder="@Html.GetTansByLan("account-register-15","Email")" data-opt="CheckEmail" name="User.EmailNvarchar" autocomplete="off" value="@(IsEmail?OpenKey:"")">
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <input class="form-control m-input" type="text" placeholder="@Html.GetTansByLan("account-register-15","Email")" data-opt="CheckEmail" name="User.EmailNvarchar" autocomplete="off" value="@(IsEmail?OpenKey:"")">
+                                </div>
+                                <div class="form-group m-form__group controls-wrap">
+                                    <div class="m-input-icon">
+                                        <input class="form-control" type="text" name="ImgValidCode" id="txt_mail_img_valid" placeholder="@Html.GetTansByLan("account-findpwd-tip1", "Captcha Text")">
+                                        <span class="m-input-icon__icon m-input-icon__icon--right" style="top:15%;height:70%;width:auto;padding:0 10px;border-left:1px solid #eee;display:flex;justify-content:center;align-items:center;"><img src="@(ViewBag.ImgCode)" onclick="register.change_code(this)" id="img_email_code" style="cursor:pointer" alt="@(Html.GetLang()=="en"?"Refresh":"刷新")" title="@(Html.GetLang()=="en"?"Refresh":"刷新")" /></span>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <div class="row">
+                                        <div class="col-9" style="padding-right:5px;">
+                                            <input class="form-control" type="text" name="ValidCode" placeholder="@Html.GetTansByLan("account-register-7","Verification Code")">
                                         </div>
-                                        <div class="form-group m-form__group">
-                                            <div class="row">
-                                                <div class="col-9" style="padding-right:5px;">
-                                                    <input class="form-control" type="text" name="ValidCode" placeholder="@Html.GetTansByLan("account-register-7","Verification Code")">
-                                                </div>
-                                                <div class="col-3" style="padding-left:5px;">
-                                                    <button class="btn btn-outline-focus" id="but_email_code" style="margin-top:1.5rem;padding-left:0;padding-right:0;text-align:center;width:100%;height:3.571428rem;">@Html.GetTansByLan("account-register-8", "Send")</button>
-                                                </div>
-                                            </div>
+                                        <div class="col-3" style="padding-left:5px;">
+                                            <button class="btn btn-outline-focus" id="but_email_code" style="margin-top:1.5rem;padding-left:0;padding-right:0;text-align:center;width:100%;height:3.571428rem;">@Html.GetTansByLan("account-register-8", "Send")</button>
                                         </div>
-                                        <div class="form-group m-form__group">
-                                            <input class="form-control m-input" type="password" id="register_email_password" placeholder="@Html.GetTansByLan("account-register-9", "Password")" name="User.UserPwdNvarchar">
-                                        </div>
-                                        <div class="form-group m-form__group">
-                                            <input class="form-control m-input m-login__form-input--last" type="password" placeholder="@Html.GetTansByLan("account-register-10", "Confirm Password")" name="RepeatPwd">
-                                        </div>
-                                        <div class="form-group m-form__group">
-                                            <input class="form-control m-input m-login__form-input--last" type="text" value="@(visit_code)" placeholder="@Html.GetTansByLan("account-register-11", "Invitation code (optional)")" name="Invitation">
-                                        </div>
-                                        <div class="form-group text-xs-center">
-                                        </div>
-                                        <div class="m-login__form-action">
-                                            <input type = "hidden" id="client_ip_2" name="client_ip">
-                                            <input type = "hidden" id="referrer_code_2" name="referrer_code">
-                                            <input value = "@Html.GetTansByLan("account-register-1", "Sign Up")" type="button" id="m_login_email_signup" class="btn btn-focus m-btn  m-btn--custom m-btn--air  m-login__btn" />
-                                            &nbsp;&nbsp;
-                                            <a href="/Account/login" class="btn btn-outline-focus m-btn m-btn--custom  m-login__btn">
-                                                @Html.GetTansByLan("account-register-12", "Cancel")
-                                            </a>
-                                        </div>
-                                        <div class="form-group m-form__group text-center" style="margin-top: 20px">
-                                            @Html.GetTansByLan("account-register-13", "By clicking \"Sign Up\" I agree to SilkChain's")  
-                                            <a href="https://www.silkchain.io/paper/SilkChainChinese.pdf" target="_blank" style="color: #2485c9;">
-                                                @Html.GetTansByLan("account-register-14", "Terms and Conditions")
-                                            </a>
-                                        </div>
-                                    </form>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <input class="form-control m-input" type="password" id="register_email_password" placeholder="@Html.GetTansByLan("account-register-9", "Password")" name="User.UserPwdNvarchar">
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <input class="form-control m-input m-login__form-input--last" type="password" placeholder="@Html.GetTansByLan("account-register-10", "Confirm Password")" name="RepeatPwd">
+                                </div>
+                                <div class="form-group m-form__group">
+                                    <input class="form-control m-input m-login__form-input--last" type="text" value="@(visit_code)" placeholder="@Html.GetTansByLan("account-register-11", "Invitation code (optional)")" name="Invitation">
+                                </div>
+                                <div class="form-group m-form__group m-form-terms"><label class="m-checkbox  m-checkbox--focus"><input type="checkbox" checked="checked" name="Agree" value="yes">@Html.GetTansByLan("account-register-agreen-01", "I agree to SilkChain's") <a href="/Affirm/Clause" target="_blank">@Html.GetTansByLan("account-register-agreen-02", "Terms and Conditions")</a><span></span></label></div>
+                                <div class="form-group text-xs-center">
+                                </div>
+                                <div class="m-login__form-action">
+                                    <input type="hidden" id="client_ip_2" name="client_ip">
+                                    <input type="hidden" id="referrer_code_2" name="referrer_code">
+                                    <input value="@Html.GetTansByLan("account-register-1", "Sign Up")" type="button" id="m_login_email_signup" class="btn btn-focus m-btn  m-btn--custom m-btn--air  m-login__btn" />
+                                    &nbsp;&nbsp;
+                                    <a href="/Account/login" class="btn btn-outline-focus m-btn m-btn--custom  m-login__btn">
+                                        @Html.GetTansByLan("account-register-12", "Cancel")
+                                    </a>
+                                </div>
+                                <div class="form-group m-form__group text-center" style="display:none;margin-top: 20px">
+                                    @Html.GetTansByLan("account-register-13", "By clicking \"Sign Up\" I agree to SilkChain's")
+                                    <a href="/Affirm/Clause" target="_blank" style="color: #2485c9;">
+                                        @Html.GetTansByLan("account-register-14", "Terms and Conditions")
+                                    </a>
+                                </div>
+                            </form>
                                 </div>
                             </div>
                         </div>
@@ -387,6 +407,7 @@ var user = {
         var exp = new Date();
         exp.setTime(new Date().getTime() + 365 * 24 * 60 * 60 * 1000);
         document.cookie = "lang=" + escape(lan) + ";expires=" + exp.toGMTString() + ";path=/;domain=silkchain.io";
+        document.cookie = "lang=" + escape(lan) + ";expires=" + exp.toGMTString() + ";path=/;domain=silkb2b.io";
         //document.cookie = "lang=" + escape(lan) + ";expires=" + exp.toGMTString() + ";path=/";
     }
 </script>
@@ -394,7 +415,7 @@ var user = {
     var register = {
         params: { url: '/Account/CheckUserParams', adopt_email: false, email: '', adopt_phone: false, phone: '' },
         inItControl: function () {
-            if ('@Html.GetLang()' == "cn") { 
+            if ('@Html.GetLang()' == "cn") {
                 $("#sub_phone").val("+86");
             }
             $("#m_login_phone_signup").click(function () { $("#form_phone").submit(); });
@@ -405,16 +426,21 @@ var user = {
                 var area_code = form_tag.find('select[name="User.PhoneSysbomNvarchar"]').val();
                 var phone_no_tag = form_tag.find("input[name='User.PhoneNvarchar']");
                 var country_info = form_tag.find('select[name="User.PhoneSysbomNvarchar"]').find('option:selected').text().split('+');
+                var img_code_valid = $("#txt_phone_img_valid").val();
+                if ($.trim(img_code_valid) == "") {
+                     swal('@Html.Raw(Html.GetTansByLan("account-findpwd-imgcode-01", " Tunning code is incorrect, please try again"))');
+                     return;
+                 }
                 if (phone_no_tag.valid()) {
                     swal({
                         text: '@Html.Raw(Html.GetTansByLan("account_register_chk_phone", "Please confirm your phone number for verification code")):' + area_code + '(' + country_info[0] + ')' + '-' + phone_no_tag.val(),
                         buttons: ["@Html.Raw(Html.GetTansByLan("account-register-12", "Cancel"))", "@Html.Raw(Html.GetTansByLan("account-register-sure1", "OK"))"]
                     }).then(function(value){
-                        if (value) {                       
+                        if (value) {
                             phone_tag.attr("disabled", true);
                             var obj = $("#but_phone_code");
                             $(obj).html("Sending");
-                            var data = { Option: 'SendPhoneCode', AreaCode: area_code, UserParmas: register.params.phone };
+                            var data = { Option: 'SendPhoneCode', AreaCode: area_code, UserParmas: register.params.phone, ImgCode: img_code_valid };
                             register.request_data(register.params.url, data, { value: 'SendPhoneCode' });
                         }
                     });
@@ -424,6 +450,11 @@ var user = {
             $("#but_email_code").click(function () {
                 var form_tag = $("#form_mail");
                 var email_tag = $(this);
+                var img_code_valid = $("#txt_mail_img_valid").val();
+                if ($.trim(img_code_valid) == "") {
+                     swal('@Html.Raw(Html.GetTansByLan("account-findpwd-imgcode-01", "Tunning code is incorrect, please try again"))');
+                     return;
+                 }
                 if (form_tag.find("input[name='User.EmailNvarchar']").valid()) {
                     swal({
                         text: '@Html.Raw(Html.GetTansByLan("account_register_chk_email", "Please confirm your email address for verification code")):' + form_tag.find("input[name='User.EmailNvarchar']").val(),
@@ -431,7 +462,7 @@ var user = {
                     }).then(function(value){
                         if (value) {
                             email_tag.attr("disabled", true);
-                            var data = { Option: 'SendEmailCode', UserParmas: register.params.email };
+                            var data = { Option: 'SendEmailCode', UserParmas: register.params.email, ImgCode: img_code_valid };
                             register.request_data(register.params.url, data, { value: 'SendEmailCode' });
                         }
                     });
@@ -463,7 +494,9 @@ var user = {
                     "User.PhoneNvarchar": { required: true, digits: true, rangelength: [6, 15], has_phone: true },
                     "ValidCode": { required: true },
                     "User.UserPwdNvarchar": { required: true, rangelength: [6, 20] },
-                    "RepeatPwd": { required: true, equalTo: "#register_phone_password" }
+                    "RepeatPwd": { required: true, equalTo: "#register_phone_password" },
+                    "Agree": { required: true },
+                    "ImgValidCode": { required: true}
                 },
                 messages: {
                     "User.UserNameNvarchar": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", rangelength: "@Html.Raw(Html.GetTansByLan("account-register-verify-12", "The length is 4 to 20"))" },
@@ -472,7 +505,17 @@ var user = {
                     "User.PhoneNvarchar": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", digits: "@Html.Raw(Html.GetTansByLan("account-register-verify-15", "Integer"))", rangelength: "@Html.Raw(Html.GetTansByLan("account-register-verify-16", "The length is 6 to 15"))" },
                     "ValidCode": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))" },
                     "User.UserPwdNvarchar": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", rangelength: "@Html.Raw(Html.GetTansByLan("account-register-verify-19", "The length is 6 to 20"))" },
-                    "RepeatPwd": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", equalTo: "@Html.Raw(Html.GetTansByLan("account-register-verify-21", "The two passwords must be the same"))" }
+                    "RepeatPwd": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", equalTo: "@Html.Raw(Html.GetTansByLan("account-register-verify-21", "The two passwords must be the same"))" },
+                    "Agree": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))" },
+                    "ImgValidCode": {required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))"}
+                },
+                errorPlacement: function(err, ipt){
+                    var $wrap = ipt.parents(".controls-wrap");
+                    if (!$wrap[0]) {
+                        err.insertAfter(ipt);
+                    }else{
+                        err.appendTo($wrap[0]);
+                    }
                 },
                 onkeyup: false,
                 onfocusout: function (element) { $(element).valid(); },
@@ -493,7 +536,9 @@ var user = {
                     "User.EmailNvarchar": { required: true, email: true, rangelength: [6, 30], has_useremail: true },
                     "ValidCode": { required: true },
                     "User.UserPwdNvarchar": { required: true, rangelength: [6, 20] },
-                    "RepeatPwd": { required: true, equalTo: "#register_email_password" }
+                    "RepeatPwd": { required: true, equalTo: "#register_email_password" },
+                    "Agree": { required: true },
+                    "ImgValidCode": { required: true }
                 },
                 messages: {
                     "User.UserNameNvarchar": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", rangelength: "@Html.Raw(Html.GetTansByLan("account-register-verify-22", "The length is 4 to 20"))" },
@@ -501,7 +546,17 @@ var user = {
                     "User.EmailNvarchar": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", email:"@Html.Raw(Html.GetTansByLan("account-register-verify-23", "Mailbox format is wrong"))", rangelength: "@Html.Raw(Html.GetTansByLan("account-register-verify-24", "The length is 6 to 30"))" },
                     "ValidCode": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))" },
                     "User.UserPwdNvarchar": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", rangelength: "@Html.Raw(Html.GetTansByLan("account-register-verify-25", "The length is 6 to 20"))" },
-                    "RepeatPwd": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", equalTo: "@Html.Raw(Html.GetTansByLan("account-register-verify-26", "The two passwords must be the same"))" }
+                    "RepeatPwd": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))", equalTo: "@Html.Raw(Html.GetTansByLan("account-register-verify-26", "The two passwords must be the same"))" },
+                    "Agree": { required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))" },
+                    "ImgValidCode": {required: "@Html.Raw(Html.GetTansByLan("account-register-verify-11", "Required"))"}
+                },
+                errorPlacement: function(err, ipt){
+                    var $wrap = ipt.parents(".controls-wrap");
+                    if (!$wrap[0]) {
+                        err.insertAfter(ipt);
+                    }else{
+                        err.appendTo($wrap[0]);
+                    }
                 },
                 onkeyup: false,
                 onfocusout: function (element) { $(element).valid(); },
@@ -513,6 +568,9 @@ var user = {
                     register.request_data(register.params.url, data, opt);
                 }
             });
+        },
+        change_code: function (obj) {
+            this.request_data("/Account/ValidateCode", { rand: Math.random() }, { value: $(obj).attr("id") });
         },
         request_data: function (url, params, opt) {
             $.ajax({
@@ -528,6 +586,7 @@ var user = {
                     $("#m_login_email_signup").attr("disabled", false);
                 },
                 success: function (data) {
+                    //var error_code_msg = '@Html.Raw(Html.GetLang()=="en"? "The verification code has failed to be sent. Please click to reacquire or contact us via" : "验证码发送失败，请点击重新获取或联系客服")\r\nsupport@mail.silkchain.io';
                     switch (opt.value) {
                         case "SendPhoneCode":
                             var obj = $("#but_phone_code");
@@ -536,7 +595,7 @@ var user = {
                             } else {
                                 obj.attr("disabled", false);
                                 var obj = $("#but_phone_code");
-                           $(obj).html("@Html.GetTansByLan("account-register-8", "Send")");
+                                $(obj).html("@Html.GetTansByLan("account-register-8", "Send")");
                                 swal(data.message);
                             }
                             break;
@@ -562,6 +621,10 @@ var user = {
                             } else {
                                 swal(data.message);
                             }
+                            break;
+                        case "img_phone_img_code":
+                        case "img_email_code":
+                            $("#" + opt.value).attr("src", data.data);
                             break;
                         default:
                             break;

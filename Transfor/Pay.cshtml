@@ -1,0 +1,139 @@
+﻿@model SKC.Entity.DBModels.SkcOutOrder
+@{
+    Layout = null;
+    ViewData["Title"] = "Pay";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pay</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site2.css" />
+</head>
+<body>
+    <div class="m-grid m-grid--hor m-grid--root">
+        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor">
+
+            <div class="m-grid__item m-grid__item--fluid login-wrapper">
+                <div class="login-container">
+                    <div class="login-logo"><a class="site-logo" href="/"><img src="/images/logo.png"></a></div>
+                    <div class="login-signin">
+                        <div class="signin-top">
+                            <div class="trade-info">
+                                Beneficiary：@ViewBag.PayeeUserName<br />
+                                @*Product Name：火车票<br />*@
+                                Serial Number：@Model.IdNvarchar<br />
+                                Transaction Date：@Model.CreateTimeDatetime
+                            </div>
+                            <div class="trade-silk">
+                                <strong>@((Model.AmountDecimal ?? 0).ToString("F4"))</strong> <span class="small">@Model.CoinTypeNvarchar SILK</span>
+                                Wallet Balance:@ViewBag.Yue <span class="small">@Model.CoinTypeNvarchar SILK</span>
+                            </div>
+                        </div>
+                        <form class="signin-form" asp-route="Login" id="form_pay">
+                            <input type="hidden" id="tid" name="tid" value="@Model.IdNvarchar" />
+                            <fieldset>
+                                <div class="form-group">
+                                    <label>Verification code</label>
+                                    <div class="row">
+                                        <div class="col-xs-7 col-md-9" style="padding-right:5px;">
+                                            <input class="form-control" placeholder="Input verification code" id="ValidCode" name="ValidCode">
+                                        </div>
+                                        <div class="col-xs-5 col-md-3" style="padding-left:5px;">
+                                            <button class="btn btn-outline-primary" type="button" id="but_phone_code">Send</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                                        <label>二次验证密码</label>
+                                        <input type="password" class="form-control" placeholder="" autocomplete="off">
+                                    </div>*@
+                                <div class="form-group form-action">
+                                    <button class="btn btn-block btn-seas btn-pill" name="button" value="login" id="topay">Submit</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <footer class="login-footer text-center">
+                <div class="login-terms">
+                    <a href="#">Terms and Conditions  |  FAQ</a>
+                </div>
+                <div>International Trade Digitalization Commission / Copyright itdc.org 2017-2018 All Rights Reserved.</div>
+            </footer>
+
+        </div>
+    </div>
+
+    <script src="~/js/jquery-1.11.2.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/loading.js"></script>
+    <script src="~/js/sweetalert.min.js"></script>
+
+    <script>
+        $(function () {
+            valid.inItControl();
+        });
+
+        var valid = {
+            inItControl: function () {
+                $("#but_phone_code").click(function () {
+                    valid.request_data('/Transfor/SubmitPay', { Option: 'ValidCode' }, { value:'ValidCode'});
+                });
+                $("#topay").click(function () { $("#form_pay").submit(); });
+            },
+            show_wait: function (obj) {
+                var num = 120;
+                var unit = '@Html.Raw(Html.GetTansByLan("account-findpwd-unit-01", " Seconds"))';
+                $(obj).attr("disabled", true);
+                var wait = setInterval(function () {
+                    num--;
+                    $(obj).html(num + unit);
+                    if (num == 0) { $(obj).attr("disabled", false).html("Send"); clearInterval(wait); }
+                }, 1000);
+            },
+            request_data: function (url, params, opt) {
+                $.ajax({
+                    type: 'post',
+                    url: url,
+                    data: params,
+                    beforeSend: function () {
+                        $("#but_phone_code").attr("disabled", true);
+                        $.showLoading('@Html.Raw(Html.GetTansByLan("account-kyc-tip001", "Waiting"))');
+                    },
+                    complete: function () {
+                        $("#but_phone_code").attr("disabled", false);
+                        $.hideLoading();
+                    },
+                    success: function (data) {
+                        switch (opt.value) {
+                            case "ValidCode":
+                                var obj = $("#but_phone_code");
+                                if (data.result) {
+                                    valid.show_wait(obj);
+                                    swal(data.successmessage);
+                                } else {
+                                    obj.attr("disabled", false);
+                                    swal(data.message);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }, error: function () {
+                        $('#modal_errors .m-alert__text').text('Error! Please reload & try again.');
+                    }
+                });
+            }
+        };
+
+
+    </script>
+</body>
+</html>

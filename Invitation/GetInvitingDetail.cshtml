@@ -1,0 +1,148 @@
+﻿@{
+    Layout = null;
+}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>SilkChain</title>
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="~/css/vendors.stripped.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/style.bundle.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/main.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {w[l] = w[l] || []; w[l].push({'gtm.start':new Date().getTime(), event: 'gtm.js'}); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);})(window, document, 'script', 'dataLayer', 'GTM-5Q7VH5Q');</script>
+</head>
+<style>
+.btn-danger{color:#fff;background-color:#e13c23;border-color:#e13c23;}
+.btn-danger:hover{color:#fff;background-color:#f22d4e;border-color:#f12143;}
+.btn-danger:focus, .btn-danger.focus{box-shadow:0 0 0 3px rgba(244, 81, 108, 0.5);}
+.btn-danger.disabled, .btn-danger:disabled{background-color:#e13c23;border-color:#e13c23;}
+.btn-danger:active, .btn-danger.active {background-color:#f22d4e;background-image:none;border-color:#f12143;}
+.btn-lg, .btn-group-lg > .btn {padding:0.65rem 1.75rem;}
+.m-grid.m-grid--ver-desktop.m-grid--desktop { display: flex; flex-direction: row; }
+.m-grid.m-grid--ver-desktop.m-grid--desktop > .m-grid__item.m-grid__item--fluid { flex: 1 0 auto; }
+.m-packet__wrapper {width: 430px; margin: 0 auto; }
+.m-stack.m-stack--flex-general .m-packet__wrapper { flex: 1 0 auto; }
+.m-packet__wrapper.invitebox {position:relative;background:url(/images/ba-active/red-packet-coupon@(Html.GetLang()=="en"? "-en" : "").jpg) no-repeat center top;background-size:contain;}
+.invite-wrap {position:absolute;left:10%;top:0;width:80%;margin-top:75%;padding:0 1.5rem 1.5rem;}
+.invite-wrap .coupon-box {background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAkAAAADYBAMAAADxHkECAAADImlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMTEgNjYuMTQ1NjYxLCAyMDEyLzAyLzA2LTE0OjU2OjI3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo1RDJGNkIyQzY3QzIxMUU4OTlBRENFNzM4NTA3NDE5MyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo1RDJGNkIyRDY3QzIxMUU4OTlBRENFNzM4NTA3NDE5MyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjVEMkY2QjJBNjdDMjExRTg5OUFEQ0U3Mzg1MDc0MTkzIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjVEMkY2QjJCNjdDMjExRTg5OUFEQ0U3Mzg1MDc0MTkzIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8++ZwmagAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAYUExURUdwTP///////////////////////////x1LVb4AAAAHdFJOUwAxzP4SqHWJDZ5SAAADM0lEQVR42u3dwWqTQRSG4YkE1wGh60ILrm0obovgFSi4rbdgEW/fptiaPzP/+TqriDzvJvuXOWdm8s/Hab9Q0iggiCCCCCKIoP9W0PbiioU1br7ftdY2X5gY8nC7a09s3pMx4scfP619ImPA/rq98I2Onp9//VhCI44WUNt85KNr0bsjQWpssIUd+2nvGDnlw0LQG0JO97DLhaC3jJyW2P1C0IaRUxY9um0JOeVuIcilvr/GEzQjSImFEtOkQ5O2zXfcOyjWXLpq1Cfp5VXDZbW+rPq7oxe03/nDrK6xaxVWc/SX62c2RrwsIZ99xtw8fxbz4XCtyA6GthdXD1Ss9OnDp+fHH3v8mqBHNY+C+Fk/C3n+EiGIIIIIIogggggiCAQRRNAZBIkiFIgi1Igi1IgiBEQRakQRXr+AfJsfIIowUWHeBw0WkChCQBQhrCBRhIAoQkAUIV3jCZoRpMRCiWnSoUnb5jtEEWr2oghTVw2X1W4FiSKEFSSKkBBFCIgiJL6KItQ8f/bZ+nC4wq0oQtjJnqIIh+fkWNnqve4Ip0WCIgQRRBBBBBFEEEEEgSCCCDqDIFGEAlGEElMRAqIINaYiBEQRAqIIoUWLIoQtzPugGlGEsIeJIoQSE0UIiCIERBHSNZ6gGUFKLJSYJh2atG2+QxQhIIoQTtKiCDOXVX939IJEEVKNiSIERBESpiIETEWIRSaKEPq0qQhB0N5UhHAW8vwlQhBBBBFEEEEEEUQQCCKIoDMIEkUoEEWoEUWoEUUIiCLUiCK8fgH5Nj9AFGGiwrwPGiwgUYSAKEJYQaIIAVGEgChCusYTNCNIiYUS06RDk7bNd4gi1JiKMHfVcFntVpAoQlhBoggJUYSAKELCVISAqQgJUxHSTmYqQtrqve4Ip0WCIgQRRBBBBBFEEEEEgSCCCDqDIFGEAlGEElMRAqIINaYiBEQRAqIIoUWLIoQtzPugGlGEsIeJIoQSE0UIiCIERBHSNZ6gGUFKLJSYJh2atG2+QxQhIIoQTtKiCDOXVX939IJEEVKNiSIERBESpiIETEWIRSaKEPq0qQhB0N5UhHAW8vwlQhBBBBFE0D/Mb8w1F4LC60HqAAAAAElFTkSuQmCC) no-repeat;background-size:contain;}
+.invite-wrap .coupon-inn {position:relative;padding-top:37.5%;}
+.invite-wrap .coupon-in2 {position:absolute;left:4%;top:6%;width:92%;height:88%;border:1px dashed #f0132d;}
+.invite-wrap .coupon-tx1 {text-align:center;color:#f0132d;font-size:1.15rem;font-weight:bold;margin-top:10px;margin-bottom:4px;}
+.invite-wrap .coupon-tx2 {text-align:center;color:#333;font-size:0.92rem;}
+.invite-wrap .coupon-pull {position:absolute;width:100%;left:0;bottom:-1px;}
+.invite-wrap .coupon-pull .getsilk {display:block;margin:0 -1px;background-color:#f0132d;color:#fff;font-size:1.15rem;padding:5px;text-align:center;text-decoration:none;}
+.invite-wrap .inth-rules strong {color:#fdd772;font-weight:bold;}
+.invite-wrap .inth-rules {margin-top:40px;color:#fff4c7;margin-left:-20px;margin-right:-20px;}
+.invite-wrap .inth-rules dt {font-size:16px;margin-bottom:6px;}
+.invite-wrap .inth-rules dt:before {content:"";float:left;margin-top:2px;margin-right:6px;width:20px;height:20px;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAADImlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMTEgNjYuMTQ1NjYxLCAyMDEyLzAyLzA2LTE0OjU2OjI3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpCQjQ4QUVDNTYwMDkxMUU4OUM1QkJBM0VCQUEzQTlFRiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpCQjQ4QUVDNjYwMDkxMUU4OUM1QkJBM0VCQUEzQTlFRiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkJCNDhBRUMzNjAwOTExRTg5QzVCQkEzRUJBQTNBOUVGIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkJCNDhBRUM0NjAwOTExRTg5QzVCQkEzRUJBQTNBOUVGIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+KQJz5AAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAFNUExURTkAAFUFBWMB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) no-repeat;background-size:cover;}
+.invite-wrap .inth-rules dd {font-size:0.875rem;line-height:1.2;margin-bottom:4px;}
+.m-packet__wrapper .resolved {position:absolute;width:100%;top:0;margin-top:168%;padding:10px;font-size:1rem;color:#fff;text-align:center;}
+.m-packet__wrapper.invitebox .lang-switch {position:absolute;left:0;top:0;z-index:19;width:100%;padding:5px 10px;color:#fff;text-align:right;}
+.m-packet__wrapper.invitebox .lang-switch > span {cursor:pointer;}
+@@media (max-width:576px) {
+    .m-packet__wrapper {width:100%;}
+}
+
+.modal-open .modal.show {display:-webkit-flex !important;-webkit-justify-content:center;-webkit-align-items:center;display:-ms-flex !important;-ms-justify-content:center;-ms-align-items:center;display:flex !important;justify-content:center;align-items:center;}
+.modal .modal-fields .modal-content {height:inherit;background-color:#eee;border-radius:6px;}
+.modal .modal-fields .modal-content .modal-header {position:absolute;top:0;right:0;z-index:9;border-bottom:none;padding:12px 10px 0 0;}
+.modal .modal-fields .modal-content .modal-header .close {color:#666;opacity:1;height:18px;cursor:pointer;}
+.modal .modal-fields .modal-content .has-danger {margin-top:-10px;color:#f4516c;}
+.modal .modal-fields .modal-content .m-login__form-action {margin-top:2rem;}
+.modal .modal-fields .modal-content .m-form .m-form__group + .m-form__group {padding-top:0;}
+@@media (min-width:576px) {
+    .modal-dialog.modal-fields {max-width:360px;width:360px;}
+}
+</style>
+<body class="m--skin- m-header--static m-header--static-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+    <div class="m-grid m-grid--hor m-grid--root m-page">
+        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop" style="height:inherit;background-color:#152659;">
+            <div class="m-packet__wrapper invitebox">
+                <div class="lang-switch">
+                    @if (Html.GetLang() == "en")
+                    {
+                        <span class="ft12" id="chinesesLanguage"><img src="/images/chinese-language.png" /> <span style="vertical-align:middle;">中文</span></span>
+                    }
+                    else
+                    {
+                        <span class="ft12" id="englishLanguage"><img src="/images/english-language.png" /> <span style="vertical-align:middle;">English</span></span>
+                    }
+                </div>
+                <div class="invite-wrap">
+                    <div class="coupon-box">
+                        <div class="coupon-inn">
+                            <div class="coupon-in2">
+                                <div class="coupon-tx1">免费新用户邀请红包券</div>
+                                <div class="coupon-tx2">使用期限：领券后7天内有效</div>
+                                <div class="coupon-pull"><a class="getsilk" href="#">立即领取</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <dl class="inth-rules">
+                        <dt><strong>活动说明</strong></dt>
+                        <dd><strong><em>1</em>.</strong> 领取免费新用户邀请红包券后，可以发送次红包邀请好友进行注册；</dd>
+                        <dd><strong><em>2</em>.</strong> 每个小伙伴领取红包并完成注册KYC后，分享人即可获赠等额Silk积分奖励；</dd>
+                        <dd><strong><em>3</em>.</strong> 每个链接仅限新用户注册领取，不限个数；</dd>
+                        <dd><strong><em>4</em>.</strong> 每个链接会按领取顺序随机发放一个大额红包；</dd>
+                        <dd><strong><em>5</em>.</strong> 红包领取人手机号/邮箱地址、提取Silk时输入的手机号/邮箱地址需为同一号码；</dd>
+                        <dd><strong><em>6</em>.</strong> 其他未尽事宜，请详询客服。</dd>
+                    </dl>
+                </div>
+                <div class="resolved">本活动最终解释权归Silk运营团队所有</div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalDrawSignin" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-fields" role="document">
+            <div class="modal-content">
+                <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+                <div class="modal-body">
+                    <form class="m-login__form m-form" method="POST" action="/Account/ChkLogin" style="margin-top: 0;">
+                        <input type="hidden" name="_token" value="">
+                        @*
+                        <input type="hidden" name="BackUrl" value="@Html.Raw(Model.BackUrl)" />
+                        <input type="hidden" name="PacketID" value="@Html.Raw(Model.LuckMoneyInfo.PacketID)" />
+                        *@
+                        <div class="form-group m-form__group">
+                            <input class="form-control m-input" type="text" placeholder="@Html.GetTansByLan("account-login-02", "Email/UserName")" name="UserName" id="UserName" value="" autocomplete="off" required autofocus>
+                        </div>
+                        <div class="form-group m-form__group">
+                            <input class="form-control m-input" type="password" placeholder="@Html.GetTansByLan("account-login-03", "Password")" name="UserPwd" id="UserPwd" value="" autocomplete="off" required autofocus>
+                        </div>
+                        <div class="has-danger"></div>
+                        <div class="m-login__form-action">
+                            <input value="@Html.Raw(Html.GetTansByLan("account-login-06", "Sign In"))" type="submit" id="m_directly_submit" class="btn btn-block btn-danger m-btn--pill btn-lg" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="/js/vendors.stripped.min.js" type="text/javascript"></script>
+<script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('#modalDrawSignin').modal('show');
+});
+$("#chinesesLanguage").click(function () {
+    setLang('cn');
+    window.location.href = window.location.href;
+});
+$("#englishLanguage").click(function () {
+    setLang('en');        
+    window.location.href = window.location.href;
+});
+function setLang(lan)
+{
+    var exp = new Date();
+    exp.setTime(new Date().getTime() + 365 * 24 * 60 * 60 * 1000);
+    document.cookie = "lang=" + escape(lan) + ";expires=" + exp.toGMTString() + ";path=/;domain=silkchain.io";
+}
+</script>
+</body>
+</html>
