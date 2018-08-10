@@ -263,6 +263,7 @@ else
             </div>
         </div>
     </div>
+    <input type="hidden" id="uuid" name="uuid"/>
 </body>
 
 </html>
@@ -426,7 +427,7 @@ var user = {
                 var area_code = form_tag.find('select[name="User.PhoneSysbomNvarchar"]').val();
                 var phone_no_tag = form_tag.find("input[name='User.PhoneNvarchar']");
                 var country_info = form_tag.find('select[name="User.PhoneSysbomNvarchar"]').find('option:selected').text().split('+');
-                var img_code_valid = $("#txt_phone_img_valid").val();
+                var img_code_valid = $("#txt_phone_img_valid").val() + $("#uuid").val();
                 if ($.trim(img_code_valid) == "") {
                      swal('@Html.Raw(Html.GetTansByLan("account-findpwd-imgcode-01", " Tunning code is incorrect, please try again"))');
                      return;
@@ -450,7 +451,7 @@ var user = {
             $("#but_email_code").click(function () {
                 var form_tag = $("#form_mail");
                 var email_tag = $(this);
-                var img_code_valid = $("#txt_mail_img_valid").val();
+                var img_code_valid = $("#txt_mail_img_valid").val() + $("#uuid").val();
                 if ($.trim(img_code_valid) == "") {
                      swal('@Html.Raw(Html.GetTansByLan("account-findpwd-imgcode-01", "Tunning code is incorrect, please try again"))');
                      return;
@@ -593,6 +594,7 @@ var user = {
                             if (data.result) {
                                 register.show_wait(obj);
                             } else {
+                                register.change_code($("#img_phone_img_code"));
                                 obj.attr("disabled", false);
                                 var obj = $("#but_phone_code");
                                 $(obj).html("@Html.GetTansByLan("account-register-8", "Send")");
@@ -604,6 +606,7 @@ var user = {
                             if (data.result) {
                                 register.show_wait(obj);
                             } else {
+                                register.change_code($("#img_email_code"));
                                 obj.attr("disabled", false);
                                 swal(data.message);
                             }
@@ -625,6 +628,7 @@ var user = {
                         case "img_phone_img_code":
                         case "img_email_code":
                             $("#" + opt.value).attr("src", data.data);
+                            $("#uuid").val(data.param);
                             break;
                         default:
                             break;

@@ -270,7 +270,7 @@
             <div class="collar-num">
                 <div class="invite-p1">@Html.GetTansByLan("inviting-packet-01", "已邀请") @Model.ItemList.Count @Html.GetTansByLan("inviting-packet-02", "个新用户注册")</div>
                 <div class="pri-lab">@Model.Verified @Html.GetTansByLan("inviting-packet-03", "人通过KYC验证，让您获得:")</div>
-                <div class="price"><strong>@Model.VerifiedAmount.ToString("N3") </strong><span class="unit">@Html.GetTansByLan("packet-silk-alias-01", "SILK")</span></div>
+                <div class="price"><strong>@Html.AmountFormat(Model.VerifiedAmount) </strong><span class="unit">@Html.GetTansByLan("packet-silk-alias-01", "SILK")</span></div>
                 <div class="invite-p2"><span class="small-word">@(Model.Countdown < 0 ? Html.GetTansByLan("inviting-packet-12", "已过期"): (Model.Countdown.ToString() + Html.GetTansByLan("inviting-packet-04", "天后过期")))</span><span>@Model.Unverified @Html.GetTansByLan("inviting-packet-05", "人待KYC验证")</span></div>
                 @if (Model.ItemList != null && Model.ItemList.Count() > 0 && !Model.IsExist)
                 {
@@ -303,7 +303,7 @@
                                         </div>
                                         <div class="datenub">@item.GetTime.ToString("MM-dd HH:mm")</div>
                                     </div>
-                                    <div class="rowft"><div class="distrib">@item.GetAmount.ToString("0.00") @Html.GetTansByLan("packet-silk-alias-01", "SILK")<div class="linefeed"><span class="@(item.Status ==1 ? "" : "text-gray")">@(item.Status == 1 ? Html.GetTansByLan("inviting-packet-09","已通过KYC认证") : Html.GetTansByLan("inviting-packet-08", "未通过KYC认证"))</span></div></div></div>
+                                    <div class="rowft"><div class="distrib">@Html.AmountFormat(item.GetAmount) @Html.GetTansByLan("packet-silk-alias-01", "SILK")<div class="linefeed"><span class="@(item.Status ==1 ? "" : "text-gray")">@(item.Status == 1 ? Html.GetTansByLan("inviting-packet-09", "已通过KYC认证") : Html.GetTansByLan("inviting-packet-08", "未通过KYC认证"))</span></div></div></div>
                                 </div>
                             }
                         }

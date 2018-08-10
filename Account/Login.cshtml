@@ -926,7 +926,7 @@
                                 <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
                                 <div class="modal-body">
                                     <div class="form-group m-form__group">
-                                        <input class="form-control m-input" type="text" placeholder="@Html.GetTansByLan("account-login-11", "Input your Email/Phone")" id="OpenNo" name="OpenNo" value="" autocomplete="off" required autofocus>
+                                        <input class="form-control m-input" type="text" placeholder="@Html.GetTansByLan("account-login-11", "Input your Email/Phone")" id="OpenNo" name="OpenNo" value="@ViewBag.OpenKey" autocomplete="off" required autofocus>
                                     </div>
                                     <div class="has-danger"></div>
                                     <div class="m-login__form-action">
@@ -1195,7 +1195,7 @@ jQuery(document).ready(function() {
      }
     function ViewLogin() {
         $("#modalDrawDirectly .has-danger").html("");
-        $("#OpenNo").val("");
+        //$("#OpenNo").val("");
         $('#modalDrawDirectly').modal('show');
     }
 

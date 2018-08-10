@@ -207,10 +207,10 @@
                                     <div class="display-table">
                                         <div>
                                             <div class="input-group m-input-group m-input-icon m-input-icon--right">
-                                                <input type="text" class="form-control" id="WithdrawalAmount" name="WithdrawalAmount" required>
+                                                <input type="text" class="form-control" id="WithdrawalAmount" name="WithdrawalAmount" onkeyup="value=value.replace(/[^\d]+\./g,'');this.value=/^\d+\.?\d{0,4}$/.test(this.value) ? this.value : this.value.split('.')[1].length==1?this.value:this.value=this.value.split('.')[0]+'.'+this.value.split('.')[1].substr(0,4);" required>
                                                 <span class="m-input-icon__icon m-input-icon__icon--right" style="display:inline-block;right:60px;z-index:99; top:7px;">
                                                     <span>
-                                                        <img onclick="withdrawMaxSilk('@SKCModel.WalletInfo.AmountBalanceDecimal')" style="padding:1px 9px;margin-top:1px;position:absolute;right:-7px;cursor:pointer;" id="imgBtcUseMax" src="/images/ba-common/ic_usemax_@(Html.GetLang()).png">
+                                                        <img onclick="withdrawMaxSilk('@SKCModel.WalletInfo.AmountBalanceDecimal.ToString("f4")')" style="padding:1px 9px;margin-top:1px;position:absolute;right:-7px;cursor:pointer;" id="imgBtcUseMax" src="/images/ba-common/ic_usemax_@(Html.GetLang()).png">
                                                     </span>
                                                 </span>
                                                 <span class="input-group-addon font-size-18" id="basic-addon1">@SKC.Common.GlobalConfig.Coin_ShortName</span>

@@ -413,7 +413,7 @@
                                         <ul class="show-list">
                                             <li>
                                                 <span class="tle-label">@Html.GetTansByLan("recharge-summary-t1", "Available Balance"):</span>
-                                                <div class="numb-cnt"><strong>@((Count.AvailableBalance).ToString("0.###"))</strong> SILK ≈ $@((Count.AvailableBalance / Count.USDT_Rate).ToString("0.###"))</div>
+                                                <div class="numb-cnt"><strong>@Html.AmountFormat(Count.AvailableBalance)</strong> SILK ≈ $@Html.AmountFormat(Count.AvailableBalance / Count.USDT_Rate)</div>
                                             </li>
                                             <li>
                                                 <span class="tle-label">@Html.GetTansByLan("recharge-summary-t2", "Blocked Balance"):</span>
@@ -500,7 +500,7 @@
                                                             <li class="card-hd"><i class="ico-coin"></i>@Html.GetTansByLan("inviting-newuser-packet-02", "免费新用户邀请红包")</li>
                                                             <li class="price-digg">
                                                                 <div class="pri-lab">@Html.GetTansByLan("inviting-newuser-packet-23", "已获得")</div>
-                                                                <div class="price"><strong> @item.Amount.ToString("N2")</strong><span class="unit">@Html.GetTansByLan("packet-silk-alias-01", "SILK")</span></div>
+                                                                <div class="price"><strong> @Html.AmountFormat(item.Amount)</strong><span class="unit">@Html.GetTansByLan("packet-silk-alias-01", "SILK")</span></div>
                                                             </li>
                                                         </ul>
                                                         <i class="expire-peak"><span class="hor">@Html.GetTansByLan("inviting-newuser-packet-07", "已过期")</span></i>
@@ -528,7 +528,7 @@
                                                             {
                                                                 <li class="price-digg">
                                                                     <div class="pri-lab">@Html.GetTansByLan("inviting-newuser-packet-23", "已获得")</div>
-                                                                    <div class="price"><strong> @item.Amount.ToString("N2")</strong><span class="unit">@Html.GetTansByLan("packet-silk-alias-01", "SILK")</span></div>
+                                                                    <div class="price"><strong> @Html.AmountFormat(item.Amount)</strong><span class="unit">@Html.GetTansByLan("packet-silk-alias-01", "SILK")</span></div>
                                                                 </li>
                                                             }
                                                                 <li class="price-digg">
@@ -585,6 +585,7 @@
                                                 <th class="d-none d-md-table-cell">@Html.GetTansByLan("recharge-summary-07", "NO.")</th>
                                                 <th class="p-md-l-30">@Html.GetTansByLan("recharge-summary-08", "Date")</th>
                                                 <th class="text-left">@Html.GetTansByLan("recharge-summary-09", "Type")</th>
+                                                <th class="text-left">@Html.GetTansByLan("recharge-summary-101", "Comment")</th>
                                                 <th class="text-right">@Html.GetTansByLan("recharge-summary-10", "Amount")</th>
                                             </tr>
                                         </thead>
@@ -593,36 +594,32 @@
                                             {
                                                 int tempIndex = 1;
                                                 List<TypeModel> recoredType = new List<TypeModel>();
+                                                var comment_type = new List<int> { (int)EnumInOutRecordType.转账支出, (int)EnumInOutRecordType.转账收入 };
+                                                                                                  var add_type = new List<int>() {
+                                                       (int)EnumInOutRecordType.买入,
+                                                       (int)EnumInOutRecordType.充值,
+                                                       (int)EnumInOutRecordType.领红包,
+                                                       (int)EnumInOutRecordType.领糖果,
+                                                       (int)EnumInOutRecordType.红包退款,
+                                                       (int)EnumInOutRecordType.发币
+                                                   };
+                                                    var cut_type = new List<int>() {
+                                                           (int)EnumInOutRecordType.卖出,
+                                                           (int)EnumInOutRecordType.提现,
+                                                           (int)EnumInOutRecordType.发红包
+                                                       };                                                
                                                 foreach (var item in SKCModel.InOutRecord)
-                                                {
-                                                    foreach (EnumInOutRecordTypeEn type in Enum.GetValues(typeof(EnumInOutRecordTypeEn)))
-                                                    {
-                                                        string temp_str = string.Format("recharge-summary-type-{0}", (int)type);
-                                                        recoredType.Add(new TypeModel { Key = (int)type, Params = temp_str, Text = type.ToString() });
-                                                    }
-                                                    var temp_item = recoredType.FirstOrDefault(p => p.Key == item.TypeInt);
+                                                {     
                                                     <tr>
                                                         <td class="d-none d-md-table-cell">@(tempIndex.ToString("d2"))</td>
                                                         <td class="p-md-l-30">@item.CreateTimeDatetime.ToString("HH:mm MM/dd")</td>
-                                                        <td>@(temp_item != null ? Html.GetTansByLan(temp_item.Params, temp_item.Text) : Html.GetTansByLan("recharge-summary-type-default", item.TypeNameNvarchar))</td>
+                                                        <td>@Html.GetTansByLan("recharge-summary-type-"+item.TypeInt, item.TypeNameNvarchar)</td>
+                                                        <td>
+                                                            <span>@(comment_type.Contains(item.TypeInt)?item.CommentNvarchar:"-")</span>
+                                                        </td>
                                                         @*<td>complete</td>*@
                                                         @*<td>@item.CoinAddressNvarchar</td>*@
-                                                        <td class="text-right">
-                                                            @{
-                                                                var add_type = new List<int>() {
-                                                                   (int)EnumInOutRecordType.买入,
-                                                                   (int)EnumInOutRecordType.充值,
-                                                                   (int)EnumInOutRecordType.领红包,
-                                                                   (int)EnumInOutRecordType.领糖果,
-                                                                   (int)EnumInOutRecordType.红包退款,
-                                                                   (int)EnumInOutRecordType.发币
-                                                               };
-                                                                var cut_type = new List<int>() {
-                                                                       (int)EnumInOutRecordType.卖出,
-                                                                       (int)EnumInOutRecordType.提现,
-                                                                       (int)EnumInOutRecordType.发红包
-                                                                   };
-                                                            }
+                                                        <td class="text-right">                                                           
                                                             @if (add_type.Contains(item.TypeInt))
                                                             {
                                                                 <span class="m--font-success">+ @Html.AmountFormat(item.AmountDecimal)</span>

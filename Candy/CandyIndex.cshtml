@@ -175,7 +175,7 @@
                                                         <td class="d-none d-md-table-cell">@index</td>
                                                         <td class="p-md-l-30">@item.CreateTime.ToString("HH:mm MM/dd")</td>
                                                         <td>@Html.GetTansByLan("candy-index-type-"+item.ActivityType, item.ActivityName)</td>
-                                                        <td class="text-right">@item.Amount.ToString("f2")</td>
+                                                        <td class="text-right">@Html.AmountFormat(item.Amount)</td>
                                                     </tr>
                                                 }
                                             }

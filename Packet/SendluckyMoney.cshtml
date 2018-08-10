@@ -553,7 +553,7 @@
                     @if (Model.UseTypeInt == 0)
                     {
                         <div class="m-packet__title">
-                            <div class="m-packet_text">@Html.GetTansByLan("packet-send-01", "Available balance：")<span class="text-danger text-nowrap"><span class="wallet-balance">@accountBalance.ToString("0.00")</span>@Html.GetTansByLan("packet-silk-alias-01", "SILK")</span></div>
+                            <div class="m-packet_text">@Html.GetTansByLan("packet-send-01", "Available balance：")<span class="text-danger text-nowrap"><span class="wallet-balance">@Html.AmountFormat(accountBalance)</span>@Html.GetTansByLan("packet-silk-alias-01", "SILK")</span></div>
                         </div>
                         <div class="m-packet_rowitem m-packet_fielditem">
                             <div class="m-packet_rowlf">

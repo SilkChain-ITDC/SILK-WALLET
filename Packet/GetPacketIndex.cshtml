@@ -449,7 +449,7 @@
                     }
                     $('#modalShareByQrcode').one('shown.bs.modal', function () {
                         var wd = $('#J_qrcode-hook').width();
-                        $("#J_qrcode-hook").empty().qrcode({ width: wd, height: wd, text: $('#send_money_address').val() });
+                        $("#J_qrcode-hook").empty().qrcode({ width: wd, height: wd, correctLevel: 1, text: $('#send_money_address').val() });
                     });
                 });
             </script>
@@ -553,7 +553,7 @@ else
                                 }
                                 else
                                 {
-                                    <strong>@getAmount.ToString("N2")</strong><em>@Html.GetTansByLan("packet-silk-alias-01", "SILK")</em>
+                                    <strong>@Html.AmountFormat(getAmount)</strong><em>@Html.GetTansByLan("packet-silk-alias-01", "SILK")</em>
                                 }
                             </div>
                             @if (Model.IsShare == 1)
@@ -631,23 +631,19 @@ else
                                                 <div class="rowmd">
                                                     <div class="headpic"><span class="default-img"></span></div>
                                                     <div class="nametxt">
-                                                        @if (item.GetUserName.Length == 1)
+                                                        @if (item.GetUserName.Length < 4)
                                                         {
-                                                            <span>@(item.GetUserName + "*****")</span>
-                                                        }
-                                                        else if (item.GetUserName.Length == 2)
-                                                        {
-                                                            <span>@(item.GetUserName + "****")</span>
+                                                            <span>@(item.GetUserName.Substring(0, 1) + "*****")</span>
                                                         }
                                                         else
                                                         {
-                                                            <span>@(item.GetUserName.Substring(0, 2) + "***" + item.GetUserName.Substring(item.GetUserName.Length - 1, 1))</span>
+                                                            <span>@(item.GetUserName.Substring(0, 1) + "****" + item.GetUserName.Substring(item.GetUserName.Length - 1, 1))</span>
                                                         }
                                                     </div>
                                                     <div class="datenub">@item.GetTime.ToString("MM-dd HH:mm")</div>
                                                 </div>
                                                 <div class="rowft">
-                                                    <div class="distrib">@item.GetAmount.ToString("N2")<div class="linefeed"><span class="text-orange">@Html.Raw(luck)</span> <span class="text-bule">@Html.Raw(referal)</span></div></div>
+                                                    <div class="distrib">@Html.AmountFormat(item.GetAmount)<div class="linefeed"><span class="text-orange">@Html.Raw(luck)</span> <span class="text-bule">@Html.Raw(referal)</span></div></div>
                                                 </div>
                                             </div>
                                         }

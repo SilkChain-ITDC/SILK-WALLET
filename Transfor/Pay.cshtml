@@ -22,6 +22,8 @@
             <div class="m-grid__item m-grid__item--fluid login-wrapper">
                 <div class="login-container">
                     <div class="login-logo"><a class="site-logo" href="/"><img src="/images/logo.png"></a></div>
+                    @if (Model != null)
+                    {
                     <div class="login-signin">
                         <div class="signin-top">
                             <div class="trade-info">
@@ -59,6 +61,14 @@
                             </fieldset>
                         </form>
                     </div>
+                    }
+                    else {
+                    <div class="login-signin">
+                        <div class="signin-top">
+                            @ViewBag.Message
+                        </div>
+                    </div>
+                     }
                 </div>
             </div>
             <footer class="login-footer text-center">

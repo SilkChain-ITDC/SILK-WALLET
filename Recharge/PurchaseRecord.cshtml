@@ -1080,7 +1080,7 @@
                                                         <td class="text-right">@Html.AmountFormat(item.AmountDecimal) SILK</td>
                                                         <td class="text-right">
                                                             @if(item.SourceNvarchar == "在线购买"){
-                                                            <span class="text-nowrap eth-color">@(item.SourceNvarchar == "在线购买" ? Html.GetTansByLan("recharge-purchase-expired-03", "Order Amount:") + Html.AmountFormat(item.DealAmountDecimal) +" "+ item.CoinTypeNvarchar : "-") </span><span class="text-nowrap text-block">@Html.GetTansByLan("recharge-purchase-expired-02", "Paid: ")@item.AmountReceived.ToString("N2") @item.CoinTypeNvarchar (@((item.AmountReceived * 100 / item.DealAmountDecimal).ToString("N2") + "%"))</span>
+                                                            <span class="text-nowrap eth-color">@(item.SourceNvarchar == "在线购买" ? Html.GetTansByLan("recharge-purchase-expired-03", "Order Amount:") + Html.AmountFormat(item.DealAmountDecimal) +" "+ item.CoinTypeNvarchar : "-") </span><span class="text-nowrap text-block">@Html.GetTansByLan("recharge-purchase-expired-02", "Paid: ")@Html.AmountFormat(item.AmountReceived) @item.CoinTypeNvarchar (@((item.AmountReceived * 100 / item.DealAmountDecimal).ToString("N2") + "%"))</span>
                                                             }else{
                                                             <span class="text-nowrap eth-color">-</span>
                                                             }

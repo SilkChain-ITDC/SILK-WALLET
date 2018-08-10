@@ -32,6 +32,11 @@
         padding-left: 1rem;
     }
 
+    .m-tabs-line.nav.nav-tabs {border-bottom:none;padding-left:15px;}
+    .m-tabs-line.nav.nav-tabs .nav-link {height:60px;padding-top:21px;}
+    .m-tabs-line.nav.nav-tabs .nav-link:hover,
+    .m-tabs-line.nav.nav-tabs .nav-link.active {border-bottom-color:#2882c8;color:#2882c8;font-weight:normal;}
+
     .m-portlet .m-portlet__head .sus-dropmenu {
         text-align: left;
     }
@@ -265,6 +270,13 @@
                 width: 100%;
                 margin-top: 10rem;
             }
+
+        .sus-m-tabs-lap {display:none;}
+        .sus-dropmenu {display:block;}
+    }
+    @@media (min-width: 768px) {
+        .sus-m-tabs-lap {display:flex;}
+        .sus-dropmenu {display:none;}
     }
 </style>
 <div class="m-grid__item m-grid__item--fluid m-wrapper">
@@ -274,126 +286,96 @@
                 <div class="m-portlet m-portlet--mobile m-portlet--skin-dark">
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
-                            <div class="m-portlet__head-title"><h3 class="m-portlet__head-text head-text-nobd"><span class="font-weight-bold">Silk Pay</span></h3></div>
+                            <a class="m-portlet__head-title" href="/SilkPay/Index"><h3 class="m-portlet__head-text head-text-nobd active"><span class="font-weight-bold">@Html.Raw(Html.GetTansByLan("silkpay-index-01", "Silk Pay"))</span></h3></a>
                         </div>
                         <div class="m-portlet__head-tools">
+                            <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--left sus-m-tabs-lap" id="profile_tab" role="tablist">
+                                @if (Model.SilkPayStatus)
+                                {
+                                <li class="nav-item m-tabs__item"><a class="nav-link m-tabs__link" href="/SilkPay/Wallet">@Html.Raw(Html.GetTansByLan("silkpay-index-02", "我的钱包"))</a></li>
+                                <li class="nav-item m-tabs__item"><a class="nav-link m-tabs__link" href="/SilkPay/Recharge">@Html.Raw(Html.GetTansByLan("silkpay-index-03", "充币"))</a></li>
+                                <li class="nav-item m-tabs__item"><a class="nav-link m-tabs__link" href="/Wallet/Index">@Html.Raw(Html.GetTansByLan("silkpay-index-04", "提币"))</a></li>
+                                <li class="nav-item m-tabs__item"><a class="nav-link m-tabs__link" href="/SilkPay/Transaction">@Html.Raw(Html.GetTansByLan("silkpay-index-05", "资金记录"))</a></li>
+                                <li class="nav-item m-tabs__item"><a class="nav-link m-tabs__link" href="https://api-silk-1000.silkchain.io/Home/Index" target="_blank">@Html.Raw(Html.GetTansByLan("silkpay-index-06", "开发对接"))</a></li>
+                                }
+                            </ul>
                             <div class="sus-dropmenu">
-                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">我的钱包</a>
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@Html.Raw(Html.GetTansByLan("silkpay-index-02", "我的钱包"))</a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="/SilkPay/Index">我的钱包</a>
                                     @if (Model.SilkPayStatus)
                                     {
-                                        <a class="dropdown-item" href="/SilkPay/Recharge">充币</a>
-                                        <a class="dropdown-item" href="#">提币</a>
-                                        <a class="dropdown-item" href="#">资金记录</a>
-                                        <a class="dropdown-item" href="#">开发对接</a>
+                                    <a class="dropdown-item" href="/SilkPay/Index">@Html.Raw(Html.GetTansByLan("silkpay-index-02", "我的钱包"))</a>
+                                    <a class="dropdown-item" href="/SilkPay/Recharge">@Html.Raw(Html.GetTansByLan("silkpay-index-03", "充币"))</a>
+                                    <a class="dropdown-item" href="/Wallet/Index">@Html.Raw(Html.GetTansByLan("silkpay-index-04", "提币"))</a>
+                                    <a class="dropdown-item" href="/SilkPay/Transaction">@Html.Raw(Html.GetTansByLan("silkpay-index-05", "资金记录"))</a>
+                                    <a class="dropdown-item" target="_blank"  href="https://api-silk-1000.silkchain.io/Home/Index">@Html.Raw(Html.GetTansByLan("silkpay-index-06", "开发对接"))</a>
                                     }
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="m-portlet__body m-portlet__body--no-padding">
-                        @if (!Model.SilkPayStatus)
-                        {
                             <div class="wel-01">
                                 <div class="wel-p-area">
-                                    <p class="p1">随着您业务的发展支付方式也如此，使用SILKPAY开拓您的网上业务吧!</p>
-                                    <p class="p2">支付产品多样化：专注全球收付款（银行转账、国际电汇）、法币及Silk支付、社交红包等等</p>
+                                    <p class="p1">@Html.Raw(Html.GetTansByLan("silkpay-index-07", "随着您业务的发展支付方式也如此，使用SILKPAY开拓您的网上业务吧!"))</p>
+                                    <p class="p2">@Html.Raw(Html.GetTansByLan("silkpay-index-08", "支付产品多样化：专注全球收付款（银行转账、国际电汇）、法币及Silk支付、社交红包等等"))</p>
                                 </div>
                             </div>
                             <div class="wel-features">
-                                <h4>优惠，高效，安全，合规</h4>
+                                <h4>@Html.Raw(Html.GetTansByLan("silkpay-index-09", "优惠，高效，安全，合规"))</h4>
                                 <div class="row">
                                     <div class="col-12 col-md-3 trait">
                                         <i class="trt-icon-01"></i>
-                                        <h6>费用低</h6>
-                                        <p>收付款免费，为您节省更多。</p>
+                                        <h6>@Html.Raw(Html.GetTansByLan("silkpay-index-10", "费用低"))</h6>
+                                        <p>@Html.Raw(Html.GetTansByLan("silkpay-index-11", "收付款免费，为您节省更多。"))</p>
                                     </div>
                                     <div class="col-12 col-md-3 trait">
                                         <i class="trt-icon-02"></i>
-                                        <h6>高效</h6>
-                                        <p>简单动下手指，您的交易即可<br />安全完成，可随时随地<br />完成任何交易。</p>
+                                        <h6>@Html.Raw(Html.GetTansByLan("silkpay-index-12", "高效"))</h6>
+                                        <p>@Html.Raw(Html.GetTansByLan("silkpay-index-13", "简单动下手指，您的交易即可<br />安全完成，可随时随地"))<br />@Html.Raw(Html.GetTansByLan("silkpay-index-14", "完成任何交易。"))</p>
                                     </div>
                                     <div class="col-12 col-md-3 trait">
                                         <i class="trt-icon-03"></i>
-                                        <h6>安全合规</h6>
-                                        <p>持有PCI&amp;DSS证书，<br />KYC, AML/CFT 认证。</p>
+                                        <h6>@Html.Raw(Html.GetTansByLan("silkpay-index-15", "安全合规"))</h6>
+                                        <p>@Html.Raw(Html.GetTansByLan("silkpay-index-16", "持有PCI&amp;DSS证书，"))<br />@Html.Raw(Html.GetTansByLan("silkpay-index-17", "KYC, AML/CFT 认证。"))</p>
                                     </div>
                                     <div class="col-12 col-md-3 trait">
                                         <i class="trt-icon-04"></i>
-                                        <h6>包容性</h6>
-                                        <p>SilkPay可为您不断发展的<br />业务专业定制支付解决方案，<br />使用SILKPAY开拓您的网上业务吧。</p>
+                                        <h6>@Html.Raw(Html.GetTansByLan("silkpay-index-18", "包容性"))</h6>
+                                        <p>@Html.Raw(Html.GetTansByLan("silkpay-index-19", "SilkPay可为您不断发展的"))<br />@Html.Raw(Html.GetTansByLan("silkpay-index-20", "业务专业定制支付解决方案，"))<br />@Html.Raw(Html.GetTansByLan("silkpay-index-21", "使用SILKPAY开拓您的网上业务吧。"))</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="wel-03">
-                                <div class="wel-03-tle">管理您的资金</div>
-                                <a class="btn btn-primary m-btn--pill" href="javascript:;" onclick="OpenUserSilkPay()"> &nbsp; 免费开设Silk Pay帐户 &nbsp; </a>
-                            </div>
+                            @if (!Model.SilkPayStatus) { 
+                                <div class="wel-03">
+                                    <div class="wel-03-tle">@Html.Raw(Html.GetTansByLan("silkpay-index-22", "管理您的资金"))</div>
+                                    <a class="btn btn-primary m-btn--pill" href="javascript:;" onclick="OpenUserSilkPay()"> &nbsp; @Html.Raw(Html.GetTansByLan("silkpay-index-23", "免费开设Silk Pay帐户")) &nbsp; </a>
+                                </div>
+                            }
                             <div class="wel-result" style="display:none;">
                                 <div class="wel-success">
                                     <div class="digi-icon"></div>
-                                    <div class="result-h4">开通成功</div>
+                                    <div class="result-h4">@Html.Raw(Html.GetTansByLan("silkpay-index-24", "开通成功"))</div>
                                     <p class="result-msg"></p>
-                                    <a class="btn btn-outline-focus m-btn--pill" href="/SilkPay/Index">立即进入</a>
+                                    <a class="btn btn-outline-focus m-btn--pill" href="/SilkPay/Index">@Html.Raw(Html.GetTansByLan("silkpay-index-25", "立即进入"))</a>
                                 </div>
                             </div>
                             <div class="wel-result" style="display:none;">
                                 <div class="wel-failed">
                                     <div class="digi-icon"></div>
-                                    <div class="result-h4">SILKPAY 开通失败</div>
-                                    <p class="result-msg">请再次尝试或联系客服处理</p>
-                                    <a class="btn btn-outline-focus m-btn--pill" href="/SilkPay/Index"> &nbsp; 返回 &nbsp; </a>
+                                    <div class="result-h4">@Html.Raw(Html.GetTansByLan("silkpay-index-26", "SILKPAY 开通失败"))</div>
+                                    <p class="result-msg">@Html.Raw(Html.GetTansByLan("silkpay-index-27", "请再次尝试或联系客服处理"))</p>
+                                    <a class="btn btn-outline-focus m-btn--pill" href="/SilkPay/Index"> &nbsp; @Html.Raw(Html.GetTansByLan("silkpay-index-28", "返回")) &nbsp; </a>
                                 </div>
                             </div>
-                        }
-                        else
-                        {
-                            <div class="silk-wealth">
-                                <div class="wealth-wrap">
-                                    <div class="wealth-tle">资产折合</div>
-                                    <div class="wealth-num">≈ @Html.AmountFormat(Model.UsdValuationTotal) $</div>
-                                </div>
+                            <div>
+                                官方应用开发者：
+                                @if (Model.AuthorizeList != null && Model.AuthorizeList.Count() > 0) {
+                                    foreach (var item in Model.AuthorizeList) { 
+                                        <div>应用名：@(item.DisplayName??"暂无") Logo地址：@(item.LogoUrl) 应用介绍：@item.Description</div>
+                                    }
+                                }
                             </div>
-                            <div style="padding:50px 0px 15px 0px">
-                                <div class="table-responsive">
-                                    <table class="table" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th class="p-md-l-30">币种</th>
-                                                <th class="text-center">可用</th>
-                                                <th class="text-center">锁定</th>
-                                                <th class="text-center">USD估值</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if (Model.AssetsData != null && Model.AssetsData.Count() > 0)
-                                            {
-                                                foreach (var item in Model.AssetsData)
-                                                {
-                                                    <tr>
-                                                        <td class="p-md-l-30">@item.CoinType</td>
-                                                        <td class="text-center">
-                                                            @Html.AmountFormat(item.AmountBalance)
-                                                        </td>
-                                                        <td class="text-center">
-                                                            @Html.AmountFormat(item.AmountForzen)
-                                                        </td>
-                                                        <td class="text-center">
-                                                            @Html.AmountFormat(item.UsdValuation) $
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            }
-                                            else
-                                            {
-                                                <tr><td colspan="3">@Html.GetTansByLan("recharge-summary-nodata", "No data available")</td></tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        }
                     </div>
                 </div>
             </div>

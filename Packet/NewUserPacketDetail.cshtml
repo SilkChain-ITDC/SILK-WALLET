@@ -130,7 +130,7 @@
                                                 <div class="datenub">@item.GetTime.ToString("MM-dd HH:mm")</div>
                                             </div>
                                             <div class="rowft">
-                                                <div class="distrib">@item.GetAmount.ToString("N2") @Html.GetTansByLan("packet-silk-alias-01", "SILK")<div class="linefeed"><span class="text-orange">@Html.Raw(luck)</span></div></div>
+                                                <div class="distrib">@Html.AmountFormat(item.GetAmount) @Html.GetTansByLan("packet-silk-alias-01", "SILK")<div class="linefeed"><span class="text-orange">@Html.Raw(luck)</span></div></div>
                                             </div>
                                         </div>
                                     }

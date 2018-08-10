@@ -1,15 +1,288 @@
-﻿
+﻿@using SKC.Entity.Models
+@model UserTransactionPageModel
 @{
-    Layout = null;
+    // Layout = null;
 }
+<style>
+    .m-portlet .m-portlet__head .m-portlet__head-caption {
+        width: 120px;
+        white-space: nowrap;
+    }
 
-<!DOCTYPE html>
+        .m-portlet .m-portlet__head .m-portlet__head-caption .m-portlet__head-title .m-portlet__head-text.head-text-nobd {
+            border-bottom: none;
+        }
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Transaction</title>
-</head>
-<body>
-</body>
-</html>
+    .m-portlet.m-portlet--skin-dark .m-portlet__head .m-portlet__head-text.head-text-nobd:after {
+        width: 0;
+        height: 20px;
+        border-bottom: none;
+        border-right: 2px solid #ddd;
+        left: 100%;
+        bottom: auto;
+        top: 50%;
+        margin-top: -8px;
+    }
+
+    .m-portlet .m-portlet__head .m-portlet__head-tools {
+        padding-left: 1rem;
+    }
+
+    .m-tabs-line.nav.nav-tabs {
+        border-bottom: none;
+        padding-left: 15px;
+    }
+
+        .m-tabs-line.nav.nav-tabs .nav-link {
+            height: 60px;
+            padding-top: 21px;
+        }
+
+            .m-tabs-line.nav.nav-tabs .nav-link:hover,
+            .m-tabs-line.nav.nav-tabs .nav-link.active {
+                border-bottom-color: #2882c8;
+                color: #2882c8;
+                font-weight: normal;
+            }
+
+    .m-portlet .m-portlet__head .sus-dropmenu {
+        text-align: left;
+    }
+
+        .m-portlet .m-portlet__head .sus-dropmenu .nav-link {
+            display: inline-block;
+            font-size: 16px;
+            padding: 0.5rem 1rem 0.3rem 1rem;
+            color: #333;
+        }
+
+    .m-portlet .m-portlet__body table th {
+        border-bottom: 1px solid #f1f5ff;
+        background: #f1f5ff;
+    }
+
+    .m-portlet .m-portlet__body .protlet-label {
+        font-size: 1.1rem;
+        margin-right: 4rem;
+    }
+
+    .m-portlet .m-portlet__body .protlet-select {
+        width: 10rem;
+    }
+
+    .m-portlet .m-portlet__body .protlet-input {
+        width: 42rem;
+        display: inline-block;
+        cursor: default;
+        background-color: #f7f9ff;
+        max-width: 100%;
+        font-size: 14px;
+    }
+
+    .m-portlet .m-portlet__body .icon-copy {
+        display: inline-block;
+        width: 13px;
+        height: 13px;
+        background: url('/images/ba-silkpay/icon-copy.png') no-repeat center;
+        background-size: contain;
+        cursor: pointer;
+    }
+
+    .m-portlet .m-portlet__body .icon-qrcode {
+        display: inline-block;
+        width: 15px;
+        height: 13px;
+        background: url('/images/ba-silkpay/icon-qrcode.png') no-repeat center;
+        background-size: contain;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        margin-top: -6.5px;
+        cursor: pointer;
+    }
+
+    .m-portlet .m-portlet__body .protlet-tips {
+        margin-top: 2.7rem;
+        margin-left: 7.7rem;
+        border-top: 1px solid #eee;
+        padding-top: 1.79rem;
+        max-width: 100%;
+        color: #919191;
+    }
+
+    .m-portlet .m-portlet__body .input-group-btn {
+        position: absolute;
+        right: 46px;
+        top: 50%;
+        margin-top: -6.5px;
+        width: 13px;
+        height: 13px;
+    }
+
+    @@media (max-width: 767.98px) {
+        .sus-m-tabs-lap {
+            display: none;
+        }
+
+        .sus-dropmenu {
+            display: block;
+        }
+    }
+
+    @@media (min-width: 768px) {
+        .sus-m-tabs-lap {
+            display: flex;
+        }
+
+        .sus-dropmenu {
+            display: none;
+        }
+    }
+</style>
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+    <div class="m-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="m-portlet m-portlet--mobile m-portlet--skin-dark mb-0">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <a class="m-portlet__head-title" href="/SilkPay/Index"><h3 class="m-portlet__head-text head-text-nobd"><span class="font-weight-bold">@Html.Raw(Html.GetTansByLan("silkpay-index-01", "Silk Pay"))</span></h3></a>
+                        </div>
+                        <div class="m-portlet__head-tools">
+                            <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--left sus-m-tabs-lap" id="profile_tab" role="tablist">
+                                <li class="nav-item m-tabs__item"><a class="nav-link m-tabs__link" href="/SilkPay/Wallet">@Html.Raw(Html.GetTansByLan("silkpay-index-02", "我的钱包"))</a></li>
+                                <li class="nav-item m-tabs__item"><a class="nav-link m-tabs__link" href="/SilkPay/Recharge">@Html.Raw(Html.GetTansByLan("silkpay-index-03", "充币"))</a></li>
+                                <li class="nav-item m-tabs__item"><a class="nav-link m-tabs__link" href="/Wallet/Index">@Html.Raw(Html.GetTansByLan("silkpay-index-04", "提币"))</a></li>
+                                <li class="nav-item m-tabs__item"><a class="nav-link m-tabs__link active " href="/SilkPay/Transaction">@Html.Raw(Html.GetTansByLan("silkpay-index-05", "资金记录"))</a></li>
+                                <li class="nav-item m-tabs__item"><a class="nav-link m-tabs__link" href="https://api-silk-1000.silkchain.io/Home/Index" target="_blank">@Html.Raw(Html.GetTansByLan("silkpay-index-06", "开发对接"))</a></li>
+                            </ul>
+                            <div class="sus-dropmenu">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@Html.Raw(Html.GetTansByLan("silkpay-index-05", "资金记录"))</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/SilkPay/Index">@Html.Raw(Html.GetTansByLan("silkpay-index-02", "我的钱包"))</a>
+                                    <a class="dropdown-item" href="/SilkPay/Recharge">@Html.Raw(Html.GetTansByLan("silkpay-index-03", "充币"))</a>
+                                    <a class="dropdown-item" href="/Wallet/Index">@Html.Raw(Html.GetTansByLan("silkpay-index-04", "提币"))</a>
+                                    <a class="dropdown-item" href="/Silkpay/transaction">@Html.Raw(Html.GetTansByLan("silkpay-index-05", "资金记录"))</a>
+                                    <a class="dropdown-item" target="_blank" href="https://api-silk-1000.silkchain.io/Home/Index">@Html.Raw(Html.GetTansByLan("silkpay-index-06", "开发对接"))</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body m-portlet__body--no-padding">
+                        <form class="form-inline" style="padding:1.78rem;" action="/SilkPay/Transaction" method="post">
+                            <div class="form-group mb-2">
+                                <label class="mr-sm-2" for="inlineFormCustomSelect">@Html.Raw(Html.GetTansByLan("silkpay-transaction-01", "币种"))</label>
+                                <select class="custom-select mr-2" id="inlineFormCustomSelect" name="CoinType">
+                                    @if (Model.CoinType == "SILK")
+                                    {
+                                        <option selected value="SILK">@Html.Raw(Html.GetTansByLan("silkpay-transaction-12", "SILK"))</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="SILK">@Html.Raw(Html.GetTansByLan("silkpay-transaction-12", "SILK"))</option>
+                                    }
+                                    @*@if (Model.CoinType == "ETH")
+                                    {
+                                        <option selected value="ETH">@Html.Raw(Html.GetTansByLan("silkpay-transaction-13", "ETH"))</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="ETH">@Html.Raw(Html.GetTansByLan("silkpay-transaction-13", "ETH"))</option>
+                                    }
+                                    @if (Model.CoinType == "BTC")
+                                    {
+                                        <option selected value="BTC">@Html.Raw(Html.GetTansByLan("silkpay-transaction-14", "BTC"))</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="BTC">@Html.Raw(Html.GetTansByLan("silkpay-transaction-14", "BTC"))</option>
+                                    }
+                                    @if (string.IsNullOrEmpty(Model.CoinType))
+                                    {
+                                        <option value="" selected>@Html.Raw(Html.GetTansByLan("silkpay-transaction-11", "请选择"))</option>
+                                    }
+                                    else
+                                    {
+                                        <option>@Html.Raw(Html.GetTansByLan("silkpay-transaction-11", "请选择"))</option>
+                                    }*@
+                                </select>
+                            </div>
+                            <div class="form-group mx-3 mb-2">
+                                <label class="mr-sm-2" for="inputPassword2">@Html.Raw(Html.GetTansByLan("silkpay-transaction-07", "类型"))</label>
+                                <select class="custom-select mr-2" id="inlineFormCustomSelect" name="TxnType">
+                                    <option value="@Model.TxnType" selected>@Html.Raw(Html.GetTansByLan("silkpay-transactionType" + Model.TxnType.ToString(), Model.TxnType.ToString()))</option>
+                                    @foreach (var item in Model.TxnTypeList) { 
+                                        <option value="@item">@Html.Raw(Html.GetTansByLan("silkpay-transactionType" + item.ToString(), item.ToString()))</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="btn-group btn-group-toggle mx-3 mb-2" data-toggle="buttons">
+
+                                @if (Model.DateRange == 0)
+                                {
+                                    <label class="btn btn-secondary active">
+                                        <input type="radio" name="DateRange" id="option1" value="0" autocomplete="off" checked> @Html.Raw(Html.GetTansByLan("silkpay-transaction-08", "最近两天"))
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="btn btn-secondary">
+                                        <input type="radio" name="DateRange" id="option1" value="0" autocomplete="off"> @Html.Raw(Html.GetTansByLan("silkpay-transaction-08", "最近两天"))
+                                    </label>
+                                }
+                                @if (Model.DateRange == 1)
+                                {
+                                    <label class="btn btn-secondary active">
+                                        <input type="radio" name="DateRange" id="option2" value="1" autocomplete="off" checked> @Html.Raw(Html.GetTansByLan("silkpay-transaction-09", "两天以前"))
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="btn btn-secondary">
+                                        <input type="radio" name="DateRange" id="option2" value="1" autocomplete="off"> @Html.Raw(Html.GetTansByLan("silkpay-transaction-09", "两天以前"))
+                                    </label>
+                                }
+
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">@Html.Raw(Html.GetTansByLan("silkpay-transaction-10", "查询"))</button>
+                        </form>
+                        <div class="table-responsive">
+                            <table class="table" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="p-md-l-30">@Html.Raw(Html.GetTansByLan("silkpay-transaction-01", "币种"))</th>
+                                        <th class="text-left">@Html.Raw(Html.GetTansByLan("silkpay-transaction-02", "时间"))</th>
+                                        <th class="text-left">@Html.Raw(Html.GetTansByLan("silkpay-transaction-03", "类型"))</th>
+                                        <th class="text-right">@Html.Raw(Html.GetTansByLan("silkpay-transaction-04", "金额数量"))</th>
+                                        <th class="text-right">@Html.Raw(Html.GetTansByLan("silkpay-transaction-05", "余额"))</th>
+                                        @*<th class="text-right">@Html.Raw(Html.GetTansByLan("silkpay-transaction-06", "手续费"))</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.RecordData != null && Model.RecordData.Count() > 0)
+                                    {
+                                        foreach (var item in Model.RecordData)
+                                        {
+                                            <tr>
+                                                <td>@item.CoinType</td>
+                                                <td>@item.CreateTime.ToString("MM-dd HH:mm")</td>
+                                                <td>@Html.Raw(Html.GetTansByLan("silkpay-transactionType" + item.Type.ToString(), item.Type.ToString()))</td>
+                                                <td class="text-right">@Html.AmountFormat(item.Amount)</td>
+                                                <td class="text-right">@Html.AmountFormat(item.RealAmountBalance + item.RealAmountFrozen)</td>
+                                                @*<td></td>*@
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr><td colspan="5" style="text-align:center;">@Html.GetTansByLan("recharge-summary-nodata", "No data available")</td></tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
