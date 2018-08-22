@@ -28,13 +28,14 @@
                         <div class="signin-top">
                             <div class="trade-info">
                                 Beneficiary：@ViewBag.PayeeUserName<br />
-                                @*Product Name：火车票<br />*@
-                                Serial Number：@Model.IdNvarchar<br />
-                                Transaction Date：@Model.CreateTimeDatetime
+                                @*Product Name：<br />*@
+                                Order No.：@Model.OutOrderNoNvarchar<br />
+                                Transaction Date：@Model.CreateTimeDatetime<br />
+                                Notes：<br />
+                                @* Wallet Balance:@ViewBag.Yue *@
                             </div>
                             <div class="trade-silk">
-                                <strong>@((Model.AmountDecimal ?? 0).ToString("F4"))</strong> <span class="small">@Model.CoinTypeNvarchar SILK</span>
-                                Wallet Balance:@ViewBag.Yue <span class="small">@Model.CoinTypeNvarchar SILK</span>
+                                <strong>@((Model.AmountDecimal ?? 0).ToString("F4"))</strong> <span class="small">@Model.CoinTypeNvarchar</span>
                             </div>
                         </div>
                         <form class="signin-form" asp-route="Login" id="form_pay">
@@ -43,10 +44,10 @@
                                 <div class="form-group">
                                     <label>Verification code</label>
                                     <div class="row">
-                                        <div class="col-xs-7 col-md-9" style="padding-right:5px;">
+                                        <div class="col-xs-8 col-md-9" style="padding-right:5px;">
                                             <input class="form-control" placeholder="Input verification code" id="ValidCode" name="ValidCode">
                                         </div>
-                                        <div class="col-xs-5 col-md-3" style="padding-left:5px;">
+                                        <div class="col-xs-4 col-md-3" style="padding-left:5px;">
                                             <button class="btn btn-outline-primary" type="button" id="but_phone_code">Send</button>
                                         </div>
                                     </div>
@@ -100,7 +101,7 @@
             },
             show_wait: function (obj) {
                 var num = 120;
-                var unit = '@Html.Raw(Html.GetTansByLan("account-findpwd-unit-01", " Seconds"))';
+                var unit = '@Html.Raw(Html.GetTansByLan("account-findpwd-unit-01", " s"))';
                 $(obj).attr("disabled", true);
                 var wait = setInterval(function () {
                     num--;

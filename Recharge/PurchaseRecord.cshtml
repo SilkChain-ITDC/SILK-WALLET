@@ -544,6 +544,24 @@
         }
     }
 
+.platform {font-size:16px;margin-bottom:1.2rem;}
+.pilot-bd .fig-item{font-size:1rem;text-align:center;margin-top:4px;margin-bottom:2rem;}
+.pilot-bd .phone-bg{padding:24.8% 7% 28%;background:url(/images/ba-silkall/sec-phone-bg.png) no-repeat;background-size:contain}
+.pilot-bd .qrc-wrap {width:460px;padding:0 60px 0 25px;text-align:center;margin-left:20px;}
+.pilot-bd .qrc-wrap .scan-tle {font-size:16px;font-weight:bold;margin-bottom:1rem;}
+.pilot-bd .qrc-wrap .remind {font-size:1rem;margin-top:1rem;margin-bottom:4rem;}
+.pilot-bd .btn-groups {margin:0 50px;}
+.pilot-bd .btn-groups .btn {font-size:16px;margin-bottom:1rem;}
+.pilot-bd .btn-groups .btn .fa {font-size:1.4rem;margin-right:0.5rem;}
+.platform-reminder {margin:2rem -1.78rem -1.78rem;background-color:#b4dcf0;color:#333;font-size:1rem;padding:10px 1.78rem;}
+@@media(min-width: 768px){
+    .d-md-hide {display:none;}
+}
+@@media(max-width: 767.98px){
+    .pilot-bd .qrc-wrap {width:100%;margin-left:0px;padding:0 15px;}
+    .pilot-bd .qrc-wrap .remind {margin-bottom:1rem;}
+}
+
     .red-card {
         background-color: #ea1b33;
         border-radius: 40px 20px 20px 40px/50% 20px 20px 50%;
@@ -824,6 +842,7 @@
                     </div>
                     <div class="m-portlet__body">
 
+                        @*
                         <form method="POST" id="form_buy_silk" autocomplete="off">
                             <div class="modal show" style="position:static;display:block;">
                                 <input type="hidden" name="_token" value="4byV87InJp0fKNWC3pEZhzg0CZSnMHLdImi3Lryp">
@@ -951,7 +970,54 @@
                                 </div>
                             </div>
                         </form>
+                        *@
 
+                        <div class="platform">@Html.GetTansByLan("partner-silkall-pilot-01", "SilkAll丝链生态应用开放平台")</div>
+                        <div class="pilot-bd d-flex flex-column flex-md-row">
+                            <div class="simp-fig">
+                                <div class="row">
+                                    <div class="col-6 col-md">
+                                        <div class="phone-bg"><img class="img-fluid wd-100" src="/images/ba-silkall/etc-01-@(Html.GetLang() == "en" ? "en" : "cn").jpg"></div>
+                                        <p class="fig-item">@Html.GetTansByLan("partner-silkall-pilot-02", "SilkAll首页")</p>
+                                    </div>
+                                    <div class="col-6 col-md">
+                                        <div class="phone-bg"><img class="img-fluid wd-100" src="/images/ba-silkall/etc-02-@(Html.GetLang() == "en" ? "en" : "cn").jpg"></div>
+                                        <p class="fig-item">@Html.GetTansByLan("partner-silkall-pilot-03", "应用页")</p>
+                                    </div>
+                                    <div class="col-6 col-md">
+                                        <div class="phone-bg"><img class="img-fluid wd-100" src="/images/ba-silkall/etc-04-@(Html.GetLang() == "en" ? "en" : "cn").jpg"></div>
+                                        <p class="fig-item">@Html.GetTansByLan("partner-silkall-pilot-05", "Silk钱包")</p>
+                                    </div>
+                                    <div class="col-6 col-md d-md-hide-none">
+                                        <div class="phone-bg"><img class="img-fluid wd-100" src="/images/ba-silkall/etc-03-@(Html.GetLang() == "en" ? "en" : "cn").jpg"></div>
+                                        <p class="fig-item">@Html.GetTansByLan("partner-silkall-pilot-04", "算力任务")</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="qrc-wrap d-flex align-self-center justify-content-center">
+                                <div class="d-none d-md-block">
+                                    <div class="scan-tle" style="@(Html.GetLang() == "en" ? "display:none;" : "")">@Html.Raw(Html.GetTansByLan("partner-silkall-pilot-06", "扫描二维码  即刻体验"))</div>
+                                    <img class="qrc-img" src="/images/ba-silkall/sec-qrc-img@(Html.GetLang() == "en" ? "-en" : "").jpg" />
+                                    <div class="remind">@Html.GetTansByLan("partner-silkall-pilot-07", "已安装SilkAll测试版的用户，为了保证您的资产安全，请务必先卸载测试版App，再重新下载安装正式版。")</div>
+                                </div>
+                                <div class="d-block d-md-none" style="width:100%;">
+                                    <div class="scan-tle">@Html.GetTansByLan("partner-silkall-pilot-08", "下载App 即刻体验")</div>
+                                    <div class="btn-groups">
+                                        <a class="btn btn-primary m-btn--pill btn-block" href="https://www.silkchain.io/@(Html.GetLang() == "en" ? "app/download.html" : "cn/app/download.html")"><i class="fa fa-apple"></i> iPhone</a>
+                                        <a class="btn btn-primary m-btn--pill btn-block" href="https://www.silkchain.io/@(Html.GetLang() == "en" ? "app/download.html" : "cn/app/download.html")"><i class="fa fa-android"></i> Android</a>
+                                    </div>
+                                    <div class="remind" style="@(Html.GetLang() == "en" ? "display:none;" : "")">@Html.Raw(Html.GetTansByLan("partner-silkall-pilot-09", "已安装SilkAll测试版的用户，为了保证您的资产安全，请务必先卸载测试版App，再重新下载安装正式版。"))</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="platform-reminder">
+                            <div class="d-none d-md-block">
+                            @Html.Raw(Html.GetTansByLan("partner-silkall-pilot-10", "温馨提示：官网已关闭购买功能，如需<strong>购买Silk</strong>，请扫描上方二维码下载 SilkAll，登录 App 进行购买体验！"))
+                            </div>
+                            <div class="d-block d-md-none">
+                            @Html.Raw(Html.GetTansByLan("partner-silkall-pilot-11", "温馨提示：官网已关闭购买功能，如需<strong>购买Silk</strong>，请点击上方按钮下载 SilkAll，登录 App 进行购买体验！"))
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
